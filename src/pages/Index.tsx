@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import { useAmbientSound } from "@/hooks/use-ambient-sound";
 
 const crisisWords = [
   "רוצה למות", "אסיים הכול", "אין טעם", "להתאבד",
@@ -62,12 +64,24 @@ const BreathingCircle = () => (
   </div>
 );
 
+const AmbientToggle = ({ isPlaying, onToggle }: { isPlaying: boolean; onToggle: () => void }) => (
+  <button
+    onClick={onToggle}
+    className="fixed bottom-6 right-6 flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-muted/50 text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-500 backdrop-blur-sm"
+    title={isPlaying ? "Mute ambient" : "Play ambient"}
+  >
+    {isPlaying ? <Volume2 className="h-3.5 w-3.5 text-primary" /> : <VolumeX className="h-3.5 w-3.5" />}
+    <span className="hidden sm:inline">{isPlaying ? "ambient on" : "ambient off"}</span>
+  </button>
+);
+
 const Index = () => {
   const [state, setState] = useState<AppState>("entry");
   const [userInput, setUserInput] = useState("");
   const [showBegin, setShowBegin] = useState(false);
   const [groundingStep, setGroundingStep] = useState(0);
   const [checks, setChecks] = useState<boolean[]>([]);
+  const ambient = useAmbientSound();
 
   const checkCrisis = useCallback((text: string) => {
     const lower = text.toLowerCase();
@@ -118,6 +132,7 @@ const Index = () => {
   };
 
   const restart = () => {
+    ambient.stop();
     setState("entry");
     setUserInput("");
     setShowBegin(false);
@@ -126,6 +141,8 @@ const Index = () => {
   };
 
   if (state === "crisis") return <SafetyScreen />;
+
+  const showAmbient = state === "grounding" || state === "resolution";
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
@@ -193,7 +210,6 @@ const Index = () => {
         {/* State 2: Grounding Protocol */}
         {state === "grounding" && (
           <div className="space-y-8 animate-slow-fade-in">
-            {/* Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-mono text-muted-foreground">
                 <span>Step {groundingStep + 1} / {GROUNDING_STEPS.length}</span>
@@ -262,6 +278,11 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      {/* Ambient sound toggle - visible during grounding & resolution */}
+      {showAmbient && (
+        <AmbientToggle isPlaying={ambient.isPlaying} onToggle={ambient.toggle} />
+      )}
     </div>
   );
 };
