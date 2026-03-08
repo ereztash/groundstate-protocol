@@ -14,11 +14,11 @@ const crisisWords = [
 type AppState = "entry" | "deconstruction" | "grounding" | "resolution" | "crisis";
 
 const GROUNDING_STEPS = [
-  { count: 5, sense: "see", prompt: "Acknowledge 5 things you can see right now." },
-  { count: 4, sense: "feel", prompt: "Acknowledge 4 things you can physically feel." },
-  { count: 3, sense: "hear", prompt: "Acknowledge 3 things you can hear." },
-  { count: 2, sense: "smell", prompt: "Acknowledge 2 things you can smell." },
-  { count: 1, sense: "taste", prompt: "Acknowledge 1 thing you can taste." },
+  { count: 5, sense: "ראייה", prompt: "ציין 5 דברים שאתה רואה כרגע." },
+  { count: 4, sense: "מגע", prompt: "ציין 4 דברים שאתה מרגיש פיזית." },
+  { count: 3, sense: "שמיעה", prompt: "ציין 3 דברים שאתה שומע." },
+  { count: 2, sense: "ריח", prompt: "ציין 2 דברים שאתה מריח." },
+  { count: 1, sense: "טעם", prompt: "ציין דבר אחד שאתה טועם." },
 ];
 
 const SafetyScreen = () => (
@@ -54,12 +54,12 @@ const BreathingCircle = () => (
     <div className="relative flex items-center justify-center w-48 h-48">
       <div className="absolute w-48 h-48 rounded-full bg-primary/20 animate-breathe" />
       <div className="absolute w-32 h-32 rounded-full bg-primary/10 animate-breathe" style={{ animationDelay: "-0.5s" }} />
-      <span className="relative text-sm font-mono text-muted-foreground tracking-widest uppercase">
-        breathe
+      <span className="relative text-sm font-mono text-muted-foreground tracking-widest">
+        נשימה
       </span>
     </div>
-    <p className="text-xs text-muted-foreground font-mono tracking-wider">
-      4s inhale · 7s hold · 8s exhale
+    <p className="text-xs text-muted-foreground font-mono tracking-wider" dir="rtl">
+      4 שניות שאיפה · 7 שניות החזקה · 8 שניות נשיפה
     </p>
   </div>
 );
@@ -67,11 +67,11 @@ const BreathingCircle = () => (
 const AmbientToggle = ({ isPlaying, onToggle }: { isPlaying: boolean; onToggle: () => void }) => (
   <button
     onClick={onToggle}
-    className="fixed bottom-6 right-6 flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-muted/50 text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-500 backdrop-blur-sm"
-    title={isPlaying ? "Mute ambient" : "Play ambient"}
+    className="fixed bottom-6 left-6 flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-muted/50 text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-500 backdrop-blur-sm"
+    title={isPlaying ? "השתק רקע" : "הפעל רקע"}
   >
     {isPlaying ? <Volume2 className="h-3.5 w-3.5 text-primary" /> : <VolumeX className="h-3.5 w-3.5" />}
-    <span className="hidden sm:inline">{isPlaying ? "ambient on" : "ambient off"}</span>
+    <span className="hidden sm:inline">{isPlaying ? "רקע פעיל" : "רקע כבוי"}</span>
   </button>
 );
 
@@ -145,7 +145,7 @@ const Index = () => {
   const showAmbient = state === "grounding" || state === "resolution";
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6" dir="rtl">
       <div className="w-full max-w-md space-y-8">
         {/* Header */}
         <div className="text-center animate-slow-fade-in">
@@ -154,7 +154,7 @@ const Index = () => {
           </h1>
           {state === "entry" && (
             <p className="text-xs text-muted-foreground/60 font-mono">
-              system cool-down protocol
+              פרוטוקול איפוס מערכת
             </p>
           )}
         </div>
@@ -166,15 +166,15 @@ const Index = () => {
               dir="auto"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder="What is the system currently processing?"
-              className="bg-muted border-border text-foreground placeholder:text-muted-foreground/50 h-12 font-mono text-sm"
+              placeholder="מה המערכת מעבדת כרגע? (כתוב את מקור העומס העיקרי)"
+              className="bg-muted border-border text-foreground placeholder:text-muted-foreground/50 h-12 font-mono text-sm text-right"
             />
             <Button
               type="submit"
               disabled={!userInput.trim()}
-              className="w-full h-11 font-mono text-sm tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500 disabled:opacity-30"
+              className="w-full h-11 font-mono text-sm tracking-wider bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500 disabled:opacity-30"
             >
-              Initiate Dump
+              התחל פריקה
             </Button>
           </form>
         )}
@@ -189,18 +189,18 @@ const Index = () => {
             </div>
             <div className="text-center animate-slow-fade-in" style={{ animationDelay: "1s", opacity: 0, animationFillMode: "forwards" }}>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Acknowledged. Cognitive loop suspended.
+                התקבל. לולאה קוגניטיבית הושהתה.
                 <br />
-                <span className="text-primary/80">Initiating somatic grounding...</span>
+                <span className="text-primary/80">מאתחל הארקה סומטית...</span>
               </p>
             </div>
             {showBegin && (
               <div className="flex justify-center animate-slow-fade-in">
                 <Button
                   onClick={() => setState("grounding")}
-                  className="h-11 px-10 font-mono text-sm tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500 animate-pulse-glow"
+                  className="h-11 px-10 font-mono text-sm tracking-wider bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500 animate-pulse-glow"
                 >
-                  Begin
+                  התחל
                 </Button>
               </div>
             )}
@@ -212,7 +212,7 @@ const Index = () => {
           <div className="space-y-8 animate-slow-fade-in">
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-mono text-muted-foreground">
-                <span>Step {groundingStep + 1} / {GROUNDING_STEPS.length}</span>
+                <span>שלב {groundingStep + 1} מתוך {GROUNDING_STEPS.length}</span>
                 <span>{GROUNDING_STEPS[groundingStep].sense}</span>
               </div>
               <Progress
@@ -245,9 +245,9 @@ const Index = () => {
               <div className="flex justify-center animate-slow-fade-in">
                 <Button
                   onClick={advanceGrounding}
-                  className="h-11 px-10 font-mono text-sm tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500"
+                  className="h-11 px-10 font-mono text-sm tracking-wider bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-500"
                 >
-                  {groundingStep < GROUNDING_STEPS.length - 1 ? "Continue" : "Complete"}
+                  {groundingStep < GROUNDING_STEPS.length - 1 ? "המשך" : "סיום"}
                 </Button>
               </div>
             )}
@@ -260,26 +260,26 @@ const Index = () => {
             <BreathingCircle />
             <div className="text-center space-y-2">
               <p className="text-sm text-foreground leading-relaxed">
-                System state stabilized. Identity preserved.
+                מצב המערכת יוצב. הזהות נשמרה.
               </p>
               <p className="text-xs text-muted-foreground">
-                You may return to the physical world.
+                אפשר לחזור לעולם הפיזי.
               </p>
             </div>
             <div className="flex justify-center">
               <Button
                 onClick={restart}
                 variant="outline"
-                className="h-11 px-8 font-mono text-xs tracking-wider uppercase border-border text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all duration-500"
+                className="h-11 px-8 font-mono text-xs tracking-wider border-border text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all duration-500"
               >
-                Restart Protocol
+                הפעל מחדש
               </Button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Ambient sound toggle - visible during grounding & resolution */}
+      {/* Ambient sound toggle */}
       {showAmbient && (
         <AmbientToggle isPlaying={ambient.isPlaying} onToggle={ambient.toggle} />
       )}
