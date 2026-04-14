@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Heebo", "Inter", "sans-serif"],
+        heading: ["Heebo", "Inter", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
       colors: {
@@ -54,6 +55,22 @@ export default {
         crisis: {
           DEFAULT: "hsl(var(--crisis))",
           foreground: "hsl(var(--crisis-foreground))",
+        },
+        "cor-opportunity": {
+          DEFAULT: "hsl(var(--cor-opportunity))",
+          foreground: "hsl(var(--cor-opportunity-foreground))",
+        },
+        "cor-success": {
+          DEFAULT: "hsl(var(--cor-success))",
+          foreground: "hsl(var(--cor-success-foreground))",
+        },
+        "cor-warning": {
+          DEFAULT: "hsl(var(--cor-warning))",
+          foreground: "hsl(var(--cor-warning-foreground))",
+        },
+        "cor-insight": {
+          DEFAULT: "hsl(var(--cor-insight))",
+          foreground: "hsl(var(--cor-insight-foreground))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
