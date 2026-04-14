@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -48,6 +48,27 @@
     --crisis: 0 70% 55%;
     --crisis-foreground: 0 0% 100%;
     --glow: 174 60% 40%;
+
+    /* Behavioral semantic tokens (COR SYS inspired, calibrated for dark teal base) */
+    --cor-opportunity: 32 88% 58%;              /* warm CTA orange — Approach Motivation */
+    --cor-opportunity-foreground: 222 47% 6%;
+    --cor-success: 142 55% 52%;                 /* dopamine green — reward/after */
+    --cor-success-foreground: 222 47% 6%;
+    --cor-warning: 38 90% 56%;                  /* loss aversion amber (non-destructive) */
+    --cor-warning-foreground: 222 47% 6%;
+    --cor-insight: 258 65% 68%;                 /* authority indigo — depth/AI */
+    --cor-insight-foreground: 222 47% 6%;
+
+    /* Motion tokens */
+    --dur-instant: 50ms;
+    --dur-fast: 150ms;
+    --dur-normal: 200ms;
+    --dur-slow: 300ms;
+    --dur-slower: 500ms;
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
 
@@ -56,13 +77,133 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Heebo', 'Inter', sans-serif;
+    font-feature-settings: 'ss01', 'kern';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Typography — Modular Scale (Major Third ×1.25) */
+  .cor-display {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .cor-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .cor-heading {
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+  .cor-subheading {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .cor-body-lg {
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+  .cor-overline {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Warm CTA — Approach Motivation (Fogg) */
+  .cta-warm {
+    background: hsl(var(--cor-opportunity));
+    color: hsl(var(--cor-opportunity-foreground));
+    font-weight: 600;
+    transition: filter var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+    box-shadow: 0 4px 14px -2px hsl(var(--cor-opportunity) / 0.35);
+  }
+  .cta-warm:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px -4px hsl(var(--cor-opportunity) / 0.5);
+  }
+  .cta-warm:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Gradients */
+  .funnel-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--cor-success)) 100%);
+  }
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--cor-success)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Card hover elevation (Gestalt depth) */
+  .cor-card-hover {
+    transition: transform var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out);
+  }
+  .cor-card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+    border-color: hsl(var(--primary) / 0.4);
+  }
+
+  /* Behavioral surface utilities */
+  .cor-surface-warning {
+    background: hsl(var(--cor-warning) / 0.08);
+    border: 1px solid hsl(var(--cor-warning) / 0.3);
+    color: hsl(var(--cor-warning));
+  }
+  .cor-surface-success {
+    background: hsl(var(--cor-success) / 0.08);
+    border: 1px solid hsl(var(--cor-success) / 0.3);
+  }
+  .cor-surface-destructive {
+    background: hsl(var(--destructive) / 0.08);
+    border: 1px solid hsl(var(--destructive) / 0.3);
+  }
+  .cor-surface-insight {
+    background: hsl(var(--cor-insight) / 0.08);
+    border: 1px solid hsl(var(--cor-insight) / 0.3);
+  }
+
+  /* Accessibility skip link */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:right-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none;
   }
 }
 
@@ -96,6 +237,14 @@
     0%, 100% { box-shadow: 0 0 20px hsl(var(--glow) / 0.15); }
     50% { box-shadow: 0 0 40px hsl(var(--glow) / 0.3); }
   }
+  @keyframes subtle-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  @keyframes bounce-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
 
   .animate-breathe {
     animation: breathe 19s ease-in-out infinite;
@@ -108,5 +257,11 @@
   }
   .animate-pulse-glow {
     animation: pulse-glow 3s ease-in-out infinite;
+  }
+  .animate-subtle-pulse {
+    animation: subtle-pulse 2.5s ease-in-out infinite;
+  }
+  .animate-bounce-y {
+    animation: bounce-y 2s ease-in-out infinite;
   }
 }
