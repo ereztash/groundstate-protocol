@@ -49,6 +49,11 @@ const PricingSection = () => {
                 </p>
               </div>
               <div className="text-left">
+                {/* Anchor: industry benchmark above actual price
+                    (Tversky & Kahneman 1974 — anchoring & adjustment) */}
+                <p className="font-mono text-xs text-muted-foreground line-through opacity-70">
+                  Fractional B2B: $4K–$20K/חודש
+                </p>
                 <p className="mt-1 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
                   ₪2,000
                 </p>
@@ -73,17 +78,29 @@ const PricingSection = () => {
               ))}
             </ul>
 
+            {/* Honest scarcity — 1:1 format has real capacity ceiling
+                (Cialdini 1984 — scarcity; but only when legitimate,
+                per Aggarwal, Jun & Huh 2011 on backfire of false scarcity) */}
+            <div className="mt-6 flex items-start gap-3 rounded-lg border border-cor-opportunity/30 bg-cor-opportunity/10 p-3">
+              <span className="cor-overline mt-0.5 text-cor-opportunity">
+                Cohort Q2 2026
+              </span>
+              <p className="text-xs leading-relaxed text-foreground/80">
+                הפורמט הוא 1:1 — כל לקוח מקבל את כל תשומת הלב שלי בפגישות ובפניות. Cohort הנוכחי: פתוח ל-4 אנשים בלבד לרבעון.
+              </p>
+            </div>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
                 onClick={open}
                 className="cta-warm-lg inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold tracking-wide sm:flex-none"
               >
                 <Calendar className="h-4 w-4" />
-                קבע שיחת אבחון
+                קבע 20 דקות · 3 שאלות שמכריעות
                 <ArrowLeft className="h-4 w-4" />
               </button>
               <p className="text-xs text-muted-foreground">
-                שיחת 20 דקות · בלי התחייבות · מחליטים יחד אם מתאים.
+                שיחת אבחון · ללא עלות · ללא התחייבות.
               </p>
             </div>
           </div>
