@@ -33,29 +33,32 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-cor-opportunity/40 bg-cor-opportunity/10 px-3 py-1">
                   <span className="cor-overline text-cor-opportunity">
-                    Cohort Q2 2026 · פתוחה
+                    Cohort Q2 2026 · 4 מקומות
                   </span>
                 </div>
               </div>
 
-              {/* Concrete, specific outcome headline (Trope & Liberman 2010 CLT) */}
+              {/* Neurostorytelling: protagonist's internal state → named villain
+                  → concrete promise. Stakes precede taxonomy. */}
               <h1 className="cor-display text-foreground">
-                שלוש חזיתות. במקביל. <br className="hidden md:inline" />
+                אתה יודע מה אתה עושה. <br className="hidden md:inline" />
+                אף אחד לא יודע לחזור על זה במילה אחת. <br className="hidden md:inline" />
                 <span className="text-gradient-primary">
                   לקוח ראשון ב-30 יום.
                 </span>
               </h1>
 
               <p className="cor-body-lg max-w-xl text-muted-foreground">
-                המנסרה שוברת שאלה אחת מעורפלת לשלושה מסלולים שרצים במקביל —{" "}
-                <span className="text-foreground">A</span> איפה אתה עכשיו,{" "}
-                <span className="text-foreground">B</span> לאן אתה רוצה להגיע, ו
-                <span className="text-foreground">Data</span> שמצדיק את המעבר. בפגישה הרביעית אני יוצא איתך לפניות קרות — ליווי אישי עד הלקוח הראשון.
+                ב-30 יום אנחנו עונים על שלוש שאלות שאתה שואל את עצמך כל בוקר —{" "}
+                <span className="text-foreground">איפה אתה היום בעיני הלקוח</span> (A),{" "}
+                <span className="text-foreground">איך אתה רוצה שיקראו לך בעוד שנה</span> (B),{" "}
+                ו<span className="text-foreground">מה הלקוח האמיתי אומר במילים שלו</span> (Data). בפגישה הרביעית אני יושב לידך ושולח איתך את 10 הפניות הראשונות.
               </p>
 
-              {/* Loss-frame microcopy (Kahneman & Tversky 1979 — loss aversion ≈2x gain) */}
+              {/* Loss-frame with named villain (Kahneman & Tversky 1979).
+                  Concrete antagonist outperforms abstract loss. */}
               <p className="text-sm leading-relaxed text-foreground/70">
-                עוד חודש של "אני עדיין מנסח מחדש" שווה לך את הלקוח הבא שלא תפגוש.
+                בכל חודש שאתה "עדיין מחדד את ההצעה" — מישהו פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
               </p>
             </div>
 
@@ -75,7 +78,7 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 onClick={onSecondaryClick}
                 className="cta-ghost inline-flex h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm"
               >
-                ראה איך המנסרה עובדת
+                ראה את 30 הימים יום־ביום
                 <ChevronDown className="h-4 w-4" />
               </button>
             </div>
