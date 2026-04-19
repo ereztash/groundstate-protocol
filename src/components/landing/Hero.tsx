@@ -1,5 +1,5 @@
 import { ArrowLeft, Calendar, ChevronDown } from "lucide-react";
-import ConstellationVisual from "./ConstellationVisual";
+import PrismVisual from "./PrismVisual";
 import { useCalendly } from "./CalendlyProvider";
 
 type HeroProps = {
@@ -34,12 +34,12 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
               </div>
 
               <h1 className="cor-display text-foreground">
-                הבידול שלך מתחיל <br className="hidden md:inline" />
-                <span className="text-gradient-primary">איפה הדיסציפלינות נפגשות</span>
+                שלוש חזיתות. במקביל. <br className="hidden md:inline" />
+                <span className="text-gradient-primary">לקוח ראשון ב-30 יום.</span>
               </h1>
 
               <p className="cor-body-lg max-w-xl text-muted-foreground">
-                פרוטוקול מובנה של 30 ימים לעצמאים ואינטגרטורים שמחזיקים שתי דיסציפלינות בראש אחד — ולא יודעים איך למכור את זה. ארבע פגישות. שלוש פניות שנשלחו. אות שוק אחד.
+                המנסרה שוברת שאלה אחת מעורפלת לשלושה מסלולים שרצים במקביל — <span className="text-foreground">A</span> איפה אתה עכשיו, <span className="text-foreground">B</span> לאן אתה רוצה להגיע, ו<span className="text-foreground">Data</span> שמצדיק את המעבר. שחמט של הנדסה-לאחור גוזר את הדרך, ובפגישה הרביעית אני יוצא איתך לפניות קרות עד הלקוח הראשון.
               </p>
             </div>
 
@@ -57,29 +57,29 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 onClick={onSecondaryClick}
                 className="cta-ghost inline-flex h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm"
               >
-                ראה איך זה עובד
+                ראה איך המנסרה עובדת
                 <ChevronDown className="h-4 w-4" />
               </button>
             </div>
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2">
               <span className="cor-overline text-muted-foreground">
-                ₪2,500–4,000
+                ₪2,000 לתהליך כולו
               </span>
               <span className="h-1 w-1 rounded-full bg-border" />
               <span className="cor-overline text-muted-foreground">
-                4 פגישות · פרוטוקול מדוד
+                4 פגישות · ליווי אישי בשטח
               </span>
               <span className="h-1 w-1 rounded-full bg-border" />
               <span className="cor-overline text-cor-success">
-                Founding tier פתוח
+                לקוח ראשון בפועל
               </span>
             </div>
           </div>
 
           {/* Visual column */}
           <div className="order-1 md:order-2">
-            <ConstellationVisual />
+            <PrismVisual />
           </div>
         </div>
 

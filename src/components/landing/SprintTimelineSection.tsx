@@ -7,34 +7,75 @@ type Session = {
   title: string;
   desc: string;
   marker: string;
+  tracks: { label: string; move: string; tone: "primary" | "opportunity" | "insight" }[];
 };
 
 const sessions: Session[] = [
   {
-    day: "יום 1–3",
-    title: "פגישה 1 · אבחון",
-    desc: "מיפוי דיסציפלינות, איתור החפיר, ניסוח ראשון של בידול.",
+    day: "יום 1–8",
+    title: "פגישה 1 · פתיחת המנסרה",
+    desc: "פותחים את שלושת המסלולים בבת אחת. בסוף הפגישה המשפט הראשון שלך (Statement Mechanism) מוכן — משפט שאפשר לומר בלי למצמץ.",
     marker: "Kickoff",
+    tracks: [
+      { label: "A", move: "Baseline", tone: "primary" },
+      { label: "B", move: "יעד ראשוני", tone: "opportunity" },
+      { label: "Data", move: "מקורות", tone: "insight" },
+    ],
   },
   {
-    day: "יום 8",
-    title: "פגישה 2 · הנדסת הצעה",
-    desc: "מוצר, מבנה, תמחור. הראשון של הצעה שאפשר לתמחר.",
-    marker: "Value",
+    day: "יום 8–15",
+    title: "פגישה 2 · עומק בכל מסלול",
+    desc: "A מתחדד, B הופך להצעה ממוצרת עם Fixed Price, Data מתחיל לייצר מילון כאב ראשוני. ה-One-Pager יוצא החוצה.",
+    marker: "Depth",
+    tracks: [
+      { label: "A", move: "חידוד החפיר", tone: "primary" },
+      { label: "B", move: "Signature Process", tone: "opportunity" },
+      { label: "Data", move: "מילון כאב", tone: "insight" },
+    ],
   },
   {
-    day: "יום 15–20",
-    title: "פגישה 3 · ICP ומילון כאב",
-    desc: "פרופיל לקוח, ניסוח 3 פניות, הכנה לבדיקת שוק אמיתית.",
-    marker: "Signal",
+    day: "יום 15–22",
+    title: "פגישה 3 · השחמט",
+    desc: "מחברים את שלושת המסלולים דרך הנדסה-לאחור. רצף הצעדים מ-B חזרה עד-A הופך לפקודת המבצע. Target List של 10–20 לידים חמים מוכנה.",
+    marker: "Reverse",
+    tracks: [
+      { label: "A", move: "נעילת מיצוב", tone: "primary" },
+      { label: "B", move: "פקודת מבצע", tone: "opportunity" },
+      { label: "Data", move: "Target List", tone: "insight" },
+    ],
   },
   {
     day: "יום 22–30",
-    title: "פגישה 4 · אות שוק",
-    desc: "שלוש פניות נשלחו. ניתוח תשובות. החלטת המשכיות Integration 60.",
-    marker: "Close",
+    title: "פגישה 4 · פניות קרות · ליווי אישי",
+    desc: "אנחנו יושבים יחד ושולחים. 10 פניות חיות בזמן אמת, QA על כל הודעה לפני שליחה, מפת התנגדויות פתוחה לידך. לא אתה לבד — אני בשטח.",
+    marker: "Live Fire",
+    tracks: [
+      { label: "10 פניות", move: "נשלחו", tone: "opportunity" },
+      { label: "לקוח ראשון", move: "החזיר", tone: "primary" },
+    ],
   },
 ];
+
+const toneChip: Record<
+  "primary" | "opportunity" | "insight",
+  { text: string; border: string; bg: string }
+> = {
+  primary: {
+    text: "text-primary",
+    border: "border-primary/30",
+    bg: "bg-primary/10",
+  },
+  opportunity: {
+    text: "text-cor-opportunity",
+    border: "border-cor-opportunity/30",
+    bg: "bg-cor-opportunity/10",
+  },
+  insight: {
+    text: "text-cor-insight",
+    border: "border-cor-insight/30",
+    bg: "bg-cor-insight/10",
+  },
+};
 
 const SprintTimelineSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,10 +95,10 @@ const SprintTimelineSection = () => {
         <Reveal className="mx-auto mb-16 max-w-2xl text-center">
           <p className="cor-overline text-primary">הלוח · 30 ימים</p>
           <h2 id="sprint-title" className="cor-title mt-3 text-foreground">
-            ארבע פגישות שמוציאות את הכוח שלך מהסתתר
+            ארבע פגישות. שלוש חזיתות נעות בכל אחת.
           </h2>
           <p className="cor-body-lg mt-5 text-muted-foreground">
-            מרגע ההתחלה עד אות השוק הראשון — 30 ימים, נעול בלוח, בלי פגישות "לבדוק איפה אנחנו עומדים".
+            כל פגישה מזיזה את A, את B ואת Data בבת אחת. בפגישה הרביעית אני יוצא איתך לשטח — ליווי אישי עד הלקוח הראשון.
           </p>
         </Reveal>
 
@@ -76,7 +117,11 @@ const SprintTimelineSection = () => {
                 initial={{ opacity: 0, x: 12 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0, 0, 0.2, 1] }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.08,
+                  ease: [0, 0, 0.2, 1],
+                }}
                 className="relative"
               >
                 {/* Node marker on rail */}
@@ -101,6 +146,26 @@ const SprintTimelineSection = () => {
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                     {s.desc}
                   </p>
+
+                  {/* Track chips showing what moves in this session */}
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {s.tracks.map((t) => {
+                      const chip = toneChip[t.tone];
+                      return (
+                        <li
+                          key={`${s.title}-${t.label}`}
+                          className={`inline-flex items-center gap-2 rounded-full border ${chip.border} ${chip.bg} px-2.5 py-1`}
+                        >
+                          <span className={`font-mono text-[10px] font-bold ${chip.text}`}>
+                            {t.label}
+                          </span>
+                          <span className="text-xs text-foreground/80">
+                            {t.move}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </motion.li>
             ))}

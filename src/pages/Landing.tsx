@@ -4,6 +4,7 @@ import { CalendlyProvider } from "@/components/landing/CalendlyProvider";
 import Hero from "@/components/landing/Hero";
 import ProblemSection from "@/components/landing/ProblemSection";
 import MethodologySection from "@/components/landing/MethodologySection";
+import ChessSection from "@/components/landing/ChessSection";
 import SprintTimelineSection from "@/components/landing/SprintTimelineSection";
 import DeliverablesSection from "@/components/landing/DeliverablesSection";
 import OutcomesSection from "@/components/landing/OutcomesSection";
@@ -41,6 +42,7 @@ const Landing = () => {
           <Hero onSecondaryClick={scrollToMethodology} />
           <ProblemSection />
           <MethodologySection anchorRef={methodologyRef} />
+          <ChessSection />
           <SprintTimelineSection />
           <DeliverablesSection />
           <OutcomesSection />

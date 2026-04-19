@@ -4,13 +4,13 @@ import { useCalendly } from "./CalendlyProvider";
 
 const inclusions: string[] = [
   "4 פגישות מובנות · 60 דקות כל אחת",
-  "Positioning Memo · עמוד אחד שאפשר להדביק לאתר",
-  "Offer sheet + מחירון שמחזיק ביקורת",
-  "פרופיל ICP + מילון כאב תפעולי",
-  "3 פניות אמיתיות שיצאו החוצה",
-  "זכויות Case Study על התהליך",
+  "שלושה מסלולים מקבילים (A · אבחון / B · עסקי / Data · דאטה)",
+  "Statement Mechanism + הצהרת ויתור + מדד נגדי",
+  "Signature Process + תמחור Fixed Price",
+  "מילון כאב + Target List של 10–20 לידים חמים",
+  "ליווי אישי בשטח · 10 פניות קרות חיות בפגישה 4",
+  "מפת התנגדויות (מחיר / אמון / דחיינות)",
   "ליווי דרך WhatsApp בין הפגישות",
-  "מפת Integration 60 לסוף הספרינט",
 ];
 
 const PricingSection = () => {
@@ -25,12 +25,12 @@ const PricingSection = () => {
     >
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="cor-overline text-cor-insight">Founding tier</p>
+          <p className="cor-overline text-cor-insight">תמחור · לתהליך כולו</p>
           <h2 id="pricing-title" className="cor-title mt-3 text-foreground">
-            תמחור אחד. בלי שכבות. בלי Upsell.
+            ₪2,000 לתהליך כולו. מחיר אחד.
           </h2>
           <p className="cor-body-lg mt-5 text-muted-foreground">
-            מי שנכנס עכשיו משלם כקוהורטה ראשונה — וזוכה לזכויות Case Study מלאות. המחיר עולה אחרי הקוהורטה הזו.
+            4 פגישות. 30 יום. ליווי אישי שלי בפניות הקרות עד הלקוח הראשון. בלי שכבות, בלי חבילות, בלי upsell.
           </p>
         </Reveal>
 
@@ -39,32 +39,21 @@ const PricingSection = () => {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <span className="cor-overline text-cor-insight">
-                  Protocol Ocean Blue · Founding
+                  Protocol Ocean Blue · Sprint 30
                 </span>
                 <h3 className="cor-heading mt-2 text-foreground">
-                  ספרינט 30 ימים
+                  המנסרה המלאה
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  4 פגישות · 30 ימים · 6 תוצרים
+                  4 פגישות · 3 מסלולים מקבילים · לקוח ראשון בשטח
                 </p>
               </div>
               <div className="text-left">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-sm text-muted-foreground line-through">
-                    ₪6,500
-                  </span>
-                  <span className="cor-overline rounded-full border border-cor-opportunity/40 bg-cor-opportunity/10 px-2.5 py-0.5 text-cor-opportunity">
-                    Founding
-                  </span>
-                </div>
-                <p className="mt-1 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                  ₪2,500
-                  <span className="ms-2 text-base font-normal text-muted-foreground">
-                    – ₪4,000
-                  </span>
+                <p className="mt-1 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+                  ₪2,000
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  תלוי היקף · מוסכם בשיחת האבחון
+                  לתהליך כולו · לא לפגישה
                 </p>
               </div>
             </div>
