@@ -65,9 +65,9 @@ const ProblemSection = () => {
                 אין כמעט שחקן שמחזיק את השלושה — עם מוצר, עם תמחור, ועם פרוטוקול מדוד.
               </p>
               <p className="cor-body-lg">
-                אתה — עובד סוציאלי שיודע לקוד. מאמן שמהנדס מערכות. מהנדס עם הבנה פסיכו-חברתית. ואתה מסתתר את הדיסציפלינה השנייה שלך.
+                אבל אתה לא אחד מהם. אתה מחזיק שתי דיסציפלינות לפחות — אחת שאתה מציג, שנייה שאתה מסתיר. והשנייה היא זו שעושה בפועל את העבודה בחדר.
               </p>
-              {/* The flip — turn the hidden identity into the edge.
+              {/* The flip — turn the hidden discipline into the edge.
                   This is the recognition moment the whole page pivots on. */}
               <p className="cor-body-lg text-foreground">
                 וזה, בדיוק, הכוח הגדול ביותר שלך.
