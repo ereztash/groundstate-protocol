@@ -38,27 +38,28 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 </div>
               </div>
 
-              {/* Neurostorytelling: protagonist's internal state → named villain
-                  → concrete promise. Stakes precede taxonomy. */}
+              {/* Recognition → flip → promise.
+                  The core insight: readers hide their second discipline,
+                  and it's precisely the edge. Name the hybrid identity,
+                  flip the shame, land the 30-day promise. */}
               <h1 className="cor-display text-foreground">
-                אתה יודע מה אתה עושה. <br className="hidden md:inline" />
-                אף אחד לא יודע לחזור על זה במילה אחת. <br className="hidden md:inline" />
+                אתה מסתתר את הדיסציפלינה השנייה שלך. <br className="hidden md:inline" />
                 <span className="text-gradient-primary">
-                  לקוח ראשון ב-30 יום.
+                  זה הכוח הגדול ביותר שלך.
                 </span>
               </h1>
 
-              <p className="cor-body-lg max-w-xl text-muted-foreground">
-                ב-30 יום אנחנו עונים על שלוש שאלות שאתה שואל את עצמך כל בוקר —{" "}
-                <span className="text-foreground">איפה אתה היום בעיני הלקוח</span> (A),{" "}
-                <span className="text-foreground">איך אתה רוצה שיקראו לך בעוד שנה</span> (B),{" "}
-                ו<span className="text-foreground">מה הלקוח האמיתי אומר במילים שלו</span> (Data). בפגישה הרביעית אני יושב לידך ושולח איתך את 10 הפניות הראשונות.
+              <p className="cor-body-lg max-w-xl text-foreground/90">
+                עובד סוציאלי שיודע לקוד. מאמן שמהנדס מערכות. מהנדס עם הבנה פסיכו-חברתית.
               </p>
 
-              {/* Loss-frame with named villain (Kahneman & Tversky 1979).
-                  Concrete antagonist outperforms abstract loss. */}
+              <p className="cor-body-lg max-w-xl text-muted-foreground">
+                המנסרה מוציאה את הדיסציפלינה המוסתרת החוצה, הופכת אותה למוצר, ומכניסה אותה לפה של הלקוח. ב-30 יום — לקוח ראשון מחזיר במייל.
+              </p>
+
+              {/* Loss-frame with named antagonist (Kahneman & Tversky 1979). */}
               <p className="text-sm leading-relaxed text-foreground/70">
-                בכל חודש שאתה "עדיין מחדד את ההצעה" — מישהו פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
+                בכל חודש שאתה מסתיר את הדיסציפלינה השנייה — עצמאי פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
               </p>
             </div>
 

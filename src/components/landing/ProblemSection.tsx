@@ -54,27 +54,33 @@ const ProblemSection = () => {
           <Reveal className="space-y-6">
             <p className="cor-overline text-primary">הפער · מה קורה באמת</p>
             <h2 id="problem-title" className="cor-title text-foreground">
-              רוב היועצים יענו על שאלה אחת. <br />
-              אתה שואל את עצמך שלוש — כל יום שני בבוקר.
+              אתה מסתתר את הדיסציפלינה השנייה שלך. <br />
+              וזה, בדיוק, הכוח הגדול ביותר שלך.
             </h2>
 
             <div className="space-y-5 text-foreground/85">
               <p className="cor-body-lg">
-                בישראל יש מי שיחדד לך את הטכנולוגיה. יש מי שיחדד את העסק. יש מי שיחדד את הדאטה.
+                בישראל יש יועצי טכנולוגיה, יש יועצי תרבות, ויש יועצי AI.
                 <br />
-                אין מי שמחזיק את שלושתם ביד אחת — כשהם סותרים זה את זה בפגישה הבאה שלך מול הלקוח.
+                אין כמעט שחקן שמחזיק את השלושה — עם מוצר, עם תמחור, ועם פרוטוקול מדוד.
               </p>
               <p className="cor-body-lg">
-                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את השלישייה הזו. החלון פתוח 18 חודשים — עד שמישהו שיושב עכשיו וכותב SOP ימצא את זה.
+                אתה — עובד סוציאלי שיודע לקוד. מאמן שמהנדס מערכות. מהנדס עם הבנה פסיכו-חברתית. ואתה מסתתר את הדיסציפלינה השנייה שלך.
               </p>
-              {/* Loss-frame with named antagonist (Kahneman & Tversky 1979).
-                  A person out-executing you in real time is a stronger cue
-                  than an abstract "opportunity window closing". */}
+              {/* The flip — turn the hidden identity into the edge.
+                  This is the recognition moment the whole page pivots on. */}
+              <p className="cor-body-lg text-foreground">
+                וזה, בדיוק, הכוח הגדול ביותר שלך.
+              </p>
+              <p className="cor-body-lg">
+                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את השלישייה הזו עם מוצר ותמחור. החלון פתוח 18 חודשים — עד שמישהו שיושב עכשיו וכותב SOP ימצא את זה.
+              </p>
+              {/* Loss-frame with named antagonist (Kahneman & Tversky 1979). */}
               <p className="cor-body-lg text-foreground/85">
-                בכל חודש שאתה "עדיין מחדד" — עצמאי פחות טוב ממך שולח הצעה ראשונה, סוגר לקוח שני, ומופיע ברדאר של שלישי.
+                בכל חודש שאתה מסתיר את הדיסציפלינה השנייה — עצמאי פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
               </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
-                המנסרה — איך מחזיקים את שלושת החידודים ביחד, בלי שאחד גונב את הקצה של השני.
+                המנסרה — איך מוציאים את הדיסציפלינה המוסתרת החוצה, והופכים אותה למוצר שמוכרים.
               </p>
             </div>
           </Reveal>
