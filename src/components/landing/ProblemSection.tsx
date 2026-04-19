@@ -54,8 +54,8 @@ const ProblemSection = () => {
           <Reveal className="space-y-6">
             <p className="cor-overline text-primary">הפער · מה קורה באמת</p>
             <h2 id="problem-title" className="cor-title text-foreground">
-              אתה מסתתר את הדיסציפלינה השנייה שלך. <br />
-              וזה, בדיוק, הכוח הגדול ביותר שלך.
+              אף פעם לא שילמו לך על מה שאתה מוכר. <br />
+              שילמו לך על משהו אחר.
             </h2>
 
             <div className="space-y-5 text-foreground/85">
@@ -65,22 +65,22 @@ const ProblemSection = () => {
                 אין כמעט שחקן שמחזיק את השלושה — עם מוצר, עם תמחור, ועם פרוטוקול מדוד.
               </p>
               <p className="cor-body-lg">
-                אבל אתה לא אחד מהם. אתה מחזיק שתי דיסציפלינות לפחות — אחת שאתה מציג, שנייה שאתה מסתיר. והשנייה היא זו שעושה בפועל את העבודה בחדר.
+                אתה — לא אחד מהם. יש דבר אחד שאתה מוכר בפה, ודבר שני שאתה עושה בידיים. הלקוח משלם על השני.
               </p>
-              {/* The flip — turn the hidden discipline into the edge.
-                  This is the recognition moment the whole page pivots on. */}
+              {/* The flip — buyer-side frame. Name what the client already
+                  paid for, turn it into the business. */}
               <p className="cor-body-lg text-foreground">
-                וזה, בדיוק, הכוח הגדול ביותר שלך.
+                תיתן לו שם. יש לך עסק.
               </p>
               <p className="cor-body-lg">
-                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את השלישייה הזו עם מוצר ותמחור. החלון פתוח 18 חודשים — עד שמישהו שיושב עכשיו וכותב SOP ימצא את זה.
+                <span className="font-mono text-primary">0 שחקנים ישראלים</span> עשו את ההמרה הזו עם מוצר ותמחור. החלון פתוח 18 חודשים — עד שמישהו שיושב עכשיו וכותב SOP ימצא את זה.
               </p>
               {/* Loss-frame with named antagonist (Kahneman & Tversky 1979). */}
               <p className="cor-body-lg text-foreground/85">
-                בכל חודש שאתה מסתיר את הדיסציפלינה השנייה — עצמאי פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
+                כל חודש שאתה לא נותן לו שם — מישהו אחר כן, ולקוח שהיה אמור להיות שלך משלם לו.
               </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
-                המנסרה — איך מוציאים את הדיסציפלינה המוסתרת החוצה, והופכים אותה למוצר שמוכרים.
+                המנסרה — איך מוציאים את הדבר השני החוצה, ונותנים לו שם שהלקוח מוכן לשלם עליו.
               </p>
             </div>
           </Reveal>
