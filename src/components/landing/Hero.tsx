@@ -33,29 +33,33 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-cor-opportunity/40 bg-cor-opportunity/10 px-3 py-1">
                   <span className="cor-overline text-cor-opportunity">
-                    Cohort Q2 2026 · פתוחה
+                    Cohort Q2 2026 · 4 מקומות
                   </span>
                 </div>
               </div>
 
-              {/* Concrete, specific outcome headline (Trope & Liberman 2010 CLT) */}
+              {/* Recognition → flip → promise.
+                  The core insight: readers hide their second discipline,
+                  and it's precisely the edge. Name the hybrid identity,
+                  flip the shame, land the 30-day promise. */}
               <h1 className="cor-display text-foreground">
-                שלוש חזיתות. במקביל. <br className="hidden md:inline" />
+                אתה מסתתר את הדיסציפלינה השנייה שלך. <br className="hidden md:inline" />
                 <span className="text-gradient-primary">
-                  לקוח ראשון ב-30 יום.
+                  זה הכוח הגדול ביותר שלך.
                 </span>
               </h1>
 
-              <p className="cor-body-lg max-w-xl text-muted-foreground">
-                המנסרה שוברת שאלה אחת מעורפלת לשלושה מסלולים שרצים במקביל —{" "}
-                <span className="text-foreground">A</span> איפה אתה עכשיו,{" "}
-                <span className="text-foreground">B</span> לאן אתה רוצה להגיע, ו
-                <span className="text-foreground">Data</span> שמצדיק את המעבר. בפגישה הרביעית אני יוצא איתך לפניות קרות — ליווי אישי עד הלקוח הראשון.
+              <p className="cor-body-lg max-w-xl text-foreground/90">
+                יש לך שתי דיסציפלינות לפחות. אחת שאתה מציג. שנייה שאתה מסתיר.
               </p>
 
-              {/* Loss-frame microcopy (Kahneman & Tversky 1979 — loss aversion ≈2x gain) */}
+              <p className="cor-body-lg max-w-xl text-muted-foreground">
+                המנסרה מוציאה את השנייה החוצה, הופכת אותה למוצר, ומכניסה אותה לפה של הלקוח. ב-30 יום — לקוח ראשון מחזיר במייל.
+              </p>
+
+              {/* Loss-frame with named antagonist (Kahneman & Tversky 1979). */}
               <p className="text-sm leading-relaxed text-foreground/70">
-                עוד חודש של "אני עדיין מנסח מחדש" שווה לך את הלקוח הבא שלא תפגוש.
+                בכל חודש שאתה מסתיר את הדיסציפלינה השנייה — עצמאי פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
               </p>
             </div>
 
@@ -75,7 +79,7 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 onClick={onSecondaryClick}
                 className="cta-ghost inline-flex h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm"
               >
-                ראה איך המנסרה עובדת
+                ראה את 30 הימים יום־ביום
                 <ChevronDown className="h-4 w-4" />
               </button>
             </div>

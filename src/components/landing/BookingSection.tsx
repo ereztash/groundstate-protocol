@@ -30,10 +30,10 @@ const BookingSection = () => {
             שיחת אבחון · 20 דקות · ללא עלות
           </p>
           <h2 id="booking-title" className="cor-title mt-3 text-foreground">
-            אם זה נכון — 30 הימים הבאים שלך נראים אחרת
+            אם התשובות מתאימות — בעוד 30 יום לקוח ראשון מחזיר במייל
           </h2>
           <p className="cor-body-lg mt-5 text-muted-foreground">
-            בחר חלון של 20 דקות בשבוע הקרוב. אני אשאל שלוש שאלות שמכריעות אם הספרינט מתאים לך — ואם לא, אני אומר ישר.
+            בוחרים עשרים דקות השבוע. אני שואל שלוש שאלות שמכריעות אם הספרינט מתאים לך. אם לא — אני אומר ישר, בלי "חבל שלא תצטרף".
           </p>
 
           {/* Implementation-intentions prompt (Gollwitzer 1999).
@@ -42,9 +42,9 @@ const BookingSection = () => {
           <div className="mx-auto mt-6 max-w-xl rounded-xl border border-border/60 bg-card/40 p-4 text-right backdrop-blur-sm">
             <p className="cor-overline text-primary">לפני שאתה קובע</p>
             <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-foreground/85">
-              <li>· בחר זמן בו תהיה ליד מחשב, לא בנסיעה.</li>
-              <li>· פתח מראש את האתר/הלינקדאין שלך.</li>
-              <li>· הקדש 5 דקות אחרי השיחה לכתיבת מה החלטת.</li>
+              <li>· בחר שעה שאתה ליד המחשב — לא בנסיעה, לא בין פגישות.</li>
+              <li>· פתח את האתר והלינקדאין שלך לפני שאני מתקשר.</li>
+              <li>· חמש דקות אחרי השיחה — כתוב במשפט אחד מה החלטת.</li>
             </ul>
           </div>
         </Reveal>
@@ -66,7 +66,7 @@ const BookingSection = () => {
           delay={0.2}
           className="mt-8 text-center text-xs text-muted-foreground"
         >
-          לא נפתח אצלך? פתח ישירות ב-
+          הלוח לא נטען? פתח ישירות ב-
           <a
             href={CALENDLY_URL}
             target="_blank"
