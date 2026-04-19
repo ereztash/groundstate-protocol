@@ -38,28 +38,28 @@ const Hero = ({ onSecondaryClick }: HeroProps) => {
                 </div>
               </div>
 
-              {/* Recognition → flip → promise.
-                  The core insight: readers hide their second discipline,
-                  and it's precisely the edge. Name the hybrid identity,
-                  flip the shame, land the 30-day promise. */}
+              {/* Buyer-side reframe: never paid you for what you sell.
+                  They paid for something else you do without thinking.
+                  Name it — you have a business. */}
               <h1 className="cor-display text-foreground">
-                אתה מסתתר את הדיסציפלינה השנייה שלך. <br className="hidden md:inline" />
+                אף פעם לא שילמו לך על מה שאתה מוכר. <br className="hidden md:inline" />
+                שילמו לך על משהו אחר. <br className="hidden md:inline" />
                 <span className="text-gradient-primary">
-                  זה הכוח הגדול ביותר שלך.
+                  תיתן לו שם — יש לך עסק.
                 </span>
               </h1>
 
               <p className="cor-body-lg max-w-xl text-foreground/90">
-                יש לך שתי דיסציפלינות לפחות. אחת שאתה מציג. שנייה שאתה מסתיר.
+                משהו שאתה עושה בלי לחשוב. הלקוח רואה אותו. אתה — עדיין לא.
               </p>
 
               <p className="cor-body-lg max-w-xl text-muted-foreground">
-                המנסרה מוציאה את השנייה החוצה, הופכת אותה למוצר, ומכניסה אותה לפה של הלקוח. ב-30 יום — לקוח ראשון מחזיר במייל.
+                המנסרה נותנת לדבר הזה שם, הופכת אותו למוצר, ומכניסה אותו לפה של הלקוח. ב-30 יום — לקוח ראשון מחזיר במייל.
               </p>
 
               {/* Loss-frame with named antagonist (Kahneman & Tversky 1979). */}
               <p className="text-sm leading-relaxed text-foreground/70">
-                בכל חודש שאתה מסתיר את הדיסציפלינה השנייה — עצמאי פחות טוב ממך סוגר את הלקוח שהיה אמור להיות שלך.
+                כל חודש שהדבר הזה נשאר בלי שם — מישהו אחר נותן לו שם, ולקוח שהיה אמור להיות שלך משלם לו.
               </p>
             </div>
 
