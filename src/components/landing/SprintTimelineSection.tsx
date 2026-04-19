@@ -14,44 +14,44 @@ const sessions: Session[] = [
   {
     day: "יום 1–8",
     title: "פגישה 1 · פתיחת המנסרה",
-    desc: "פותחים את שלושת המסלולים בבת אחת. בסוף הפגישה המשפט הראשון שלך (Statement Mechanism) מוכן — משפט שאפשר לומר בלי למצמץ.",
+    desc: "שלושת המסלולים נפתחים יחד. אתה יוצא מהפגישה עם משפט אחד שאתה אומר בלי למצמץ — וחוזר הביתה ומספר לבת הזוג בלי להתבלבל.",
     marker: "Kickoff",
     tracks: [
-      { label: "A", move: "Baseline", tone: "primary" },
-      { label: "B", move: "יעד ראשוני", tone: "opportunity" },
-      { label: "Data", move: "מקורות", tone: "insight" },
+      { label: "A", move: "נקודת מוצא", tone: "primary" },
+      { label: "B", move: "יעד בשם ותאריך", tone: "opportunity" },
+      { label: "Data", move: "מקורות האזנה", tone: "insight" },
     ],
   },
   {
     day: "יום 8–15",
     title: "פגישה 2 · עומק בכל מסלול",
-    desc: "A מתחדד, B הופך להצעה ממוצרת עם Fixed Price, Data מתחיל לייצר מילון כאב ראשוני. ה-One-Pager יוצא החוצה.",
+    desc: "המשפט מתחדד. ההצעה הופכת למחיר סגור. מה שהלקוח אמר בלינקדאין — כבר ברשימה שלך. בסוף השבוע יש לך דף אחד שאפשר לשלוח.",
     marker: "Depth",
     tracks: [
-      { label: "A", move: "חידוד החפיר", tone: "primary" },
-      { label: "B", move: "Signature Process", tone: "opportunity" },
-      { label: "Data", move: "מילון כאב", tone: "insight" },
+      { label: "A", move: "המנגנון בגוף המשפט", tone: "primary" },
+      { label: "B", move: "מחיר סגור · דף אחד", tone: "opportunity" },
+      { label: "Data", move: "מילון כאב · 5 משפטים", tone: "insight" },
     ],
   },
   {
     day: "יום 15–22",
     title: "פגישה 3 · השחמט",
-    desc: "מחברים את שלושת המסלולים דרך הנדסה-לאחור. רצף הצעדים מ-B חזרה עד-A הופך לפקודת המבצע. Target List של 10–20 לידים חמים מוכנה.",
+    desc: "אנחנו עומדים ביעד ומחזירים את הצעדים אחורה. לפניך 15 שמות ברשימה, סדר עדיפויות, ובדיוק מה לכתוב לכל אחד — עד הפסיק.",
     marker: "Reverse",
     tracks: [
-      { label: "A", move: "נעילת מיצוב", tone: "primary" },
+      { label: "A", move: "המיצוב ננעל", tone: "primary" },
       { label: "B", move: "פקודת מבצע", tone: "opportunity" },
-      { label: "Data", move: "Target List", tone: "insight" },
+      { label: "Data", move: "15 שמות · מי קודם", tone: "insight" },
     ],
   },
   {
     day: "יום 22–30",
     title: "פגישה 4 · פניות קרות · ליווי אישי",
-    desc: "אנחנו יושבים יחד ושולחים. 10 פניות חיות בזמן אמת, QA על כל הודעה לפני שליחה, מפת התנגדויות פתוחה לידך. לא אתה לבד — אני בשטח.",
+    desc: "ארבע שעות בזום משותף. אתה כותב, אני מסתכל, אנחנו שולחים. עשר פניות יוצאות בזמן אמת. ההתנגדות הראשונה שחוזרת — ענינו עליה יחד.",
     marker: "Live Fire",
     tracks: [
-      { label: "10 פניות", move: "נשלחו", tone: "opportunity" },
-      { label: "לקוח ראשון", move: "החזיר", tone: "primary" },
+      { label: "10 פניות", move: "יצאו בזמן אמת", tone: "opportunity" },
+      { label: "לקוח ראשון", move: "מחזיר במייל", tone: "primary" },
     ],
   },
 ];
@@ -95,10 +95,10 @@ const SprintTimelineSection = () => {
         <Reveal className="mx-auto mb-16 max-w-2xl text-center">
           <p className="cor-overline text-primary">הלוח · 30 ימים</p>
           <h2 id="sprint-title" className="cor-title mt-3 text-foreground">
-            ארבע פגישות. שלוש חזיתות נעות בכל אחת.
+            ארבע פגישות. עד שלקוח ראשון אומר "בוא נדבר".
           </h2>
           <p className="cor-body-lg mt-5 text-muted-foreground">
-            כל פגישה מזיזה את A, את B ואת Data בבת אחת. בפגישה הרביעית אני יוצא איתך לשטח — ליווי אישי עד הלקוח הראשון.
+            בכל פגישה A, B ו-Data זזים יחד. בפגישה הרביעית אני לא שולח לך feedback — אני יושב לידך, ואנחנו שולחים.
           </p>
         </Reveal>
 

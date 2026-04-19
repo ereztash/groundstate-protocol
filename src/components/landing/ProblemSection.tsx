@@ -14,21 +14,21 @@ const tracks: Track[] = [
     icon: MapPin,
     label: "מסלול A · אבחון",
     question: "איפה אתה עכשיו?",
-    detail: "מיפוי המיצוב הנוכחי — לא מה שאתה אומר שאתה, אלא מה שהלקוחות רואים. זיהוי הדיסציפלינה המוסתרת שגונבת לך עסקאות.",
+    detail: "לא מה שכתוב לך ב-About. מה שלקוח אמיתי אמר לחבר שלו עליך בקפה. זו נקודת המוצא — כולל הדיסציפלינה שאתה מחזיק ולא מעז לגבות עליה כסף.",
     tone: "primary",
   },
   {
     icon: Target,
     label: "מסלול B · עסקי",
     question: "לאן אתה רוצה להגיע?",
-    detail: "נקודת היעד במספרים — הלקוח האידיאלי, הצעה ממוצרת, תמחור שמחזיק ביקורת. לא חזון; יעד שאפשר להנדס אליו אחורה.",
+    detail: "לא 'לייצר אימפקט'. שם של לקוח, סכום הצעה, תאריך חתימה. יעד שאפשר לחזור ממנו אחורה — עד הצעד שאתה עושה ביום שני בבוקר.",
     tone: "opportunity",
   },
   {
     icon: Database,
     label: "מסלול Data · דאטה",
     question: "מה מצדיק את ההחלטה?",
-    detail: "המילים המדויקות שלקוחות משתמשים בהן בשטח (Verbatim). Target List של 10–20 לידים חמים. בסיס קשיח להחלטה — לא הערכות.",
+    detail: "המילים שהלקוח עצמו כתב בלינקדאין — לא מה שחשבת שכואב לו. 15 שמות ברשימה, עם אות קנייה מ-14 הימים האחרונים, שאפשר לשלוח אליהם ביום שני.",
     tone: "insight",
   },
 ];
@@ -52,28 +52,29 @@ const ProblemSection = () => {
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-20">
           {/* Editorial copy column */}
           <Reveal className="space-y-6">
-            <p className="cor-overline text-primary">הפער · המציאות</p>
+            <p className="cor-overline text-primary">הפער · מה קורה באמת</p>
             <h2 id="problem-title" className="cor-title text-foreground">
-              רוב היועצים נותנים תשובה אחת. <br />
-              אצלך רצות שלוש חזיתות במקביל.
+              רוב היועצים יענו על שאלה אחת. <br />
+              אתה שואל את עצמך שלוש — כל יום שני בבוקר.
             </h2>
 
             <div className="space-y-5 text-foreground/85">
               <p className="cor-body-lg">
-                בישראל יש יועצי טכנולוגיה, יש יועצי תרבות, ויש יועצי AI.
+                בישראל יש מי שיחדד לך את הטכנולוגיה. יש מי שיחדד את העסק. יש מי שיחדד את הדאטה.
                 <br />
-                אין שחקן שמחזיק את השילוש — התנהגות ארגונית תחת לחץ, ממשק טכנולוגי מדיד, ומתודולוגיה עסקית מדויקת.
+                אין מי שמחזיק את שלושתם ביד אחת — כשהם סותרים זה את זה בפגישה הבאה שלך מול הלקוח.
               </p>
               <p className="cor-body-lg">
-                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את כל השלושה. חלון הזדמנות מוגדר: 18 חודשים לפני שהפער ייסגר.
+                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את השלישייה הזו. החלון פתוח 18 חודשים — עד שמישהו שיושב עכשיו וכותב SOP ימצא את זה.
               </p>
-              {/* Loss-frame (Kahneman & Tversky 1979): losses loom ≈2× gains.
-                  State the cost of inaction in concrete time units. */}
+              {/* Loss-frame with named antagonist (Kahneman & Tversky 1979).
+                  A person out-executing you in real time is a stronger cue
+                  than an abstract "opportunity window closing". */}
               <p className="cor-body-lg text-foreground/85">
-                כל חודש שעובר — עוד עצמאי ישראלי שתופס את השטח הזה לפניך.
+                בכל חודש שאתה "עדיין מחדד" — עצמאי פחות טוב ממך שולח הצעה ראשונה, סוגר לקוח שני, ומופיע ברדאר של שלישי.
               </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
-                המנסרה היא איך אנחנו מחזיקים את השלושה בלי לאבד את הקצה של אף אחד.
+                המנסרה — איך מחזיקים את שלושת החידודים ביחד, בלי שאחד גונב את הקצה של השני.
               </p>
             </div>
           </Reveal>
@@ -104,7 +105,7 @@ const ProblemSection = () => {
             ))}
             <RevealItem className="pt-2 text-sm text-muted-foreground">
               <span className="font-mono text-primary">+ </span>
-              שלושת המסלולים רצים במקביל לאורך 30 הימים. לא שלב-שלב — מנסרה.
+              שלושתם נעים יחד בכל פגישה. לא שלב-שלב — מנסרה.
             </RevealItem>
           </RevealStagger>
         </div>

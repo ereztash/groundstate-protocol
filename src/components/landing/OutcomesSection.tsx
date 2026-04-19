@@ -11,25 +11,25 @@ const metrics: Metric[] = [
   {
     label: "TTV פסיכולוגי",
     value: "יום 8",
-    caption: "Statement Mechanism מוכן — משפט שאפשר לומר בלי למצמץ.",
+    caption: "משפט אחד שאתה אומר בראי בלי לצחקק — וללקוח בלי להצטדק.",
     accent: "primary",
   },
   {
     label: "TTV עסקי",
     value: "יום 30",
-    caption: "10 פניות יצאו לשטח, אות שוק ראשון, לקוח ראשון מחזיר.",
+    caption: "לקוח ראשון פותח את המייל, עונה: 'מתי אפשר לדבר?'",
     accent: "insight",
   },
   {
     label: "תמחור לתהליך",
     value: "₪2,000",
-    caption: "מחיר אחד. 4 פגישות. בלי שכבות, בלי חבילות, בלי upsell.",
+    caption: "מחיר אחד. ארבע פגישות. בלי 'חבילת ליווי מורחבת'. בלי תוספות.",
     accent: "opportunity",
   },
   {
     label: "ליווי בשטח",
     value: "פגישה 4",
-    caption: "אני יושב איתך ושולח — 10 פניות חיות, QA על כל הודעה.",
+    caption: "ארבע שעות בזום משותף. אתה כותב, אני מסתכל, ההודעה יוצאת. עד עשר.",
     accent: "success",
   },
 ];
@@ -64,7 +64,7 @@ const OutcomesSection = () => {
         <Reveal className="mx-auto mb-16 max-w-2xl text-center">
           <p className="cor-overline text-cor-opportunity">מדד · הבטחה</p>
           <h2 id="outcomes-title" className="cor-title mt-3 text-foreground">
-            ארבע נקודות מדידה. בלי רכות, בלי "תלוי."
+            ארבעה מספרים. בלי "תלוי", בלי "בערך".
           </h2>
         </Reveal>
 
