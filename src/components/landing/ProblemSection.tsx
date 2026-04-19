@@ -67,6 +67,11 @@ const ProblemSection = () => {
               <p className="cor-body-lg">
                 <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את כל השלושה. חלון הזדמנות מוגדר: 18 חודשים לפני שהפער ייסגר.
               </p>
+              {/* Loss-frame (Kahneman & Tversky 1979): losses loom ≈2× gains.
+                  State the cost of inaction in concrete time units. */}
+              <p className="cor-body-lg text-foreground/85">
+                כל חודש שעובר — עוד עצמאי ישראלי שתופס את השטח הזה לפניך.
+              </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
                 המנסרה היא איך אנחנו מחזיקים את השלושה בלי לאבד את הקצה של אף אחד.
               </p>
