@@ -9,27 +9,27 @@ type Metric = {
 
 const metrics: Metric[] = [
   {
-    label: "זמן לערך פסיכולוגי",
+    label: "TTV פסיכולוגי",
     value: "יום 8",
-    caption: "הרגע שהשינוי מרגיש אמיתי בתוכך — לא תיאוריה.",
+    caption: "Statement Mechanism מוכן — משפט שאפשר לומר בלי למצמץ.",
     accent: "primary",
   },
   {
-    label: "זמן לאות שוק",
+    label: "TTV עסקי",
     value: "יום 30",
-    caption: "שלוש פניות ששלחת, תשובות שקיבלת, דאטא שבידך.",
+    caption: "10 פניות יצאו לשטח, אות שוק ראשון, לקוח ראשון מחזיר.",
     accent: "insight",
   },
   {
-    label: "תמחור Founding",
-    value: "₪2,500–4,000",
-    caption: "זכויות Case Study · מקומות מוגבלים לקוהורטה הראשונה.",
+    label: "תמחור לתהליך",
+    value: "₪2,000",
+    caption: "מחיר אחד. 4 פגישות. בלי שכבות, בלי חבילות, בלי upsell.",
     accent: "opportunity",
   },
   {
-    label: "המשכיות",
-    value: "Integration 60",
-    caption: "אם אות השוק מגיע — מפה ברורה ל-60 הימים הבאים.",
+    label: "ליווי בשטח",
+    value: "פגישה 4",
+    caption: "אני יושב איתך ושולח — 10 פניות חיות, QA על כל הודעה.",
     accent: "success",
   },
 ];
@@ -74,14 +74,8 @@ const OutcomesSection = () => {
               key={label}
               className={`cor-metric-card group rounded-2xl border border-border/60 bg-card/40 p-5 md:p-6 ${accentMap[accent].border}`}
             >
-              <p
-                className={`cor-overline ${accentMap[accent].text}`}
-              >
-                {label}
-              </p>
-              <p
-                className={`mt-3 text-3xl font-bold tracking-tight text-foreground md:text-4xl`}
-              >
+              <p className={`cor-overline ${accentMap[accent].text}`}>{label}</p>
+              <p className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
                 {value}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

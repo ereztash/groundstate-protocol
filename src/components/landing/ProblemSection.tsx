@@ -1,38 +1,42 @@
-import { Brain, Cpu, TrendingUp, type LucideIcon } from "lucide-react";
+import { MapPin, Target, Database, type LucideIcon } from "lucide-react";
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 
-type Discipline = {
+type Track = {
   icon: LucideIcon;
   label: string;
+  question: string;
   detail: string;
-  tone: "primary" | "insight" | "opportunity";
+  tone: "primary" | "opportunity" | "insight";
 };
 
-const disciplines: Discipline[] = [
+const tracks: Track[] = [
   {
-    icon: Brain,
-    label: "פסיכולוגיה ארגונית",
-    detail: "להבין מה באמת מניע את הלקוח — לא מה שהוא אומר שמניע אותו.",
+    icon: MapPin,
+    label: "מסלול A · אבחון",
+    question: "איפה אתה עכשיו?",
+    detail: "מיפוי המיצוב הנוכחי — לא מה שאתה אומר שאתה, אלא מה שהלקוחות רואים. זיהוי הדיסציפלינה המוסתרת שגונבת לך עסקאות.",
     tone: "primary",
   },
   {
-    icon: Cpu,
-    label: "הנדסה טכנולוגית",
-    detail: "לבנות את המערכת, לא רק להמליץ עליה. קוד, דאטא, אינטגרציה.",
-    tone: "insight",
+    icon: Target,
+    label: "מסלול B · עסקי",
+    question: "לאן אתה רוצה להגיע?",
+    detail: "נקודת היעד במספרים — הלקוח האידיאלי, הצעה ממוצרת, תמחור שמחזיק ביקורת. לא חזון; יעד שאפשר להנדס אליו אחורה.",
+    tone: "opportunity",
   },
   {
-    icon: TrendingUp,
-    label: "עסקים מדודים",
-    detail: "להפוך תובנה להצעת ערך שאפשר לתמחר ולמכור, לא לפילוסוף עליה.",
-    tone: "opportunity",
+    icon: Database,
+    label: "מסלול Data · דאטה",
+    question: "מה מצדיק את ההחלטה?",
+    detail: "המילים המדויקות שלקוחות משתמשים בהן בשטח (Verbatim). Target List של 10–20 לידים חמים. בסיס קשיח להחלטה — לא הערכות.",
+    tone: "insight",
   },
 ];
 
-const toneClasses: Record<Discipline["tone"], string> = {
+const toneClasses: Record<Track["tone"], string> = {
   primary: "text-primary",
-  insight: "text-cor-insight",
   opportunity: "text-cor-opportunity",
+  insight: "text-cor-insight",
 };
 
 const ProblemSection = () => {
@@ -48,29 +52,30 @@ const ProblemSection = () => {
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-20">
           {/* Editorial copy column */}
           <Reveal className="space-y-6">
-            <p className="cor-overline text-primary">הבעיה · הפער</p>
+            <p className="cor-overline text-primary">הפער · המציאות</p>
             <h2 id="problem-title" className="cor-title text-foreground">
-              הפער שאף אחד לא מדבר עליו
+              רוב היועצים נותנים תשובה אחת. <br />
+              אצלך רצות שלוש חזיתות במקביל.
             </h2>
 
             <div className="space-y-5 text-foreground/85">
               <p className="cor-body-lg">
                 בישראל יש יועצי טכנולוגיה, יש יועצי תרבות, ויש יועצי AI.
                 <br />
-                אין כמעט שחקן שמחזיק את השלוש — עם מוצר, עם תמחור, ועם פרוטוקול מדוד.
+                אין שחקן שמחזיק את השילוש — התנהגות ארגונית תחת לחץ, ממשק טכנולוגי מדיד, ומתודולוגיה עסקית מדויקת.
               </p>
               <p className="cor-body-lg">
-                אתה — עובד סוציאלי שיודע לקוד. מאמן שיודע להנדס מערכות. מהנדס עם הבנה פסיכו-חברתית. <span className="font-mono text-primary">ואתה מסתתר את הדיסציפלינה השנייה.</span>
+                <span className="font-mono text-primary">0 שחקנים ישראלים</span> מחזיקים את כל השלושה. חלון הזדמנות מוגדר: 18 חודשים לפני שהפער ייסגר.
               </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
-                וזה, בדיוק, הכוח הגדול ביותר שלך.
+                המנסרה היא איך אנחנו מחזיקים את השלושה בלי לאבד את הקצה של אף אחד.
               </p>
             </div>
           </Reveal>
 
-          {/* Three discipline cards */}
+          {/* Three parallel tracks */}
           <RevealStagger className="flex flex-col gap-4" as="ul">
-            {disciplines.map(({ icon: Icon, label, detail, tone }) => (
+            {tracks.map(({ icon: Icon, label, question, detail, tone }) => (
               <RevealItem
                 key={label}
                 as="li"
@@ -82,8 +87,11 @@ const ProblemSection = () => {
                   <Icon className="h-5 w-5" strokeWidth={1.75} />
                 </div>
                 <div className="min-w-0">
-                  <p className="cor-subheading text-foreground">{label}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className={`cor-overline ${toneClasses[tone]}`}>{label}</p>
+                  <p className="cor-subheading mt-1 text-foreground">
+                    {question}
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                     {detail}
                   </p>
                 </div>
@@ -91,7 +99,7 @@ const ProblemSection = () => {
             ))}
             <RevealItem className="pt-2 text-sm text-muted-foreground">
               <span className="font-mono text-primary">+ </span>
-              שילוב של שתי דיסציפלינות או יותר = חפיר תחרותי שלא ניתן להעתקה.
+              שלושת המסלולים רצים במקביל לאורך 30 הימים. לא שלב-שלב — מנסרה.
             </RevealItem>
           </RevealStagger>
         </div>
