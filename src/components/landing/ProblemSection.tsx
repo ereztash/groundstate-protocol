@@ -60,7 +60,7 @@ const ProblemSection = () => {
                 אין כמעט שחקן שמחזיק את השלוש — עם מוצר, עם תמחור, ועם פרוטוקול מדוד.
               </p>
               <p className="cor-body-lg">
-                אתה — עובד סוציאלי שיודע לקוד. מאמן שיודע להנדס מערכות. מהנדס עם הבנה פסיכו-חברתית. <span className="font-mono text-primary">ואתה מסתתר את הדיסציפלינה השנייה.</span>
+                אתה מחזיק שילוב נדיר: עובד סוציאלי שמפתח קוד. מאמן שמתכנן מערכות. מהנדס עם אוזן פסיכו-חברתית. <span className="font-mono text-primary">ובכל פעם שאתה מציג את עצמך — אתה מוחק חצי מהתמונה.</span>
               </p>
               <p className="cor-body-lg font-mono text-muted-foreground">
                 וזה, בדיוק, הכוח הגדול ביותר שלך.
