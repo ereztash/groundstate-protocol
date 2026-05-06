@@ -1,52 +1,47 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
-import { CalendlyProvider } from "@/components/landing/CalendlyProvider";
 import Hero from "@/components/landing/Hero";
-import TrustStrip from "@/components/landing/TrustStrip";
-import ProblemSection from "@/components/landing/ProblemSection";
-import MethodologySection from "@/components/landing/MethodologySection";
-import ChessSection from "@/components/landing/ChessSection";
-import SprintTimelineSection from "@/components/landing/SprintTimelineSection";
-import DeliverablesSection from "@/components/landing/DeliverablesSection";
-import OutcomesSection from "@/components/landing/OutcomesSection";
-import PricingSection from "@/components/landing/PricingSection";
+import OriginStorySection from "@/components/landing/OriginStorySection";
+import SequenceSection from "@/components/landing/SequenceSection";
+import FullPackageSection from "@/components/landing/FullPackageSection";
+import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
+import CommitmentSection from "@/components/landing/CommitmentSection";
+import ClientProofSection from "@/components/landing/ClientProofSection";
 import FAQSection from "@/components/landing/FAQSection";
-import BookingSection from "@/components/landing/BookingSection";
+import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
+import { trackScrollDepth } from "@/lib/analytics";
 
-/**
- * Protocol Ocean Blue — landing page.
- *
- * Section order maps a visitor's conversion journey through documented
- * cognitive thresholds:
- *  1. Hero — attention + value prop (5 sec test, Nielsen Norman)
- *  2. TrustStrip — risk reduction pre-body (Thaler 1985 mental accounting)
- *  3. Problem — gap framing + loss aversion (Kahneman & Tversky 1979)
- *  4. Methodology — 3 parallel tracks, under working-memory limit (Cowan 2001)
- *  5. Chess — reverse-engineering, concrete mental model (Trope & Liberman 2010)
- *  6. Timeline — goal gradient cues (Kivetz, Urminsky, Zheng 2006)
- *  7. Deliverables — concrete outcomes (construal level theory)
- *  8. Outcomes — numeric anchors (Tversky & Kahneman 1974)
- *  9. Pricing — value proposition with industry anchor
- * 10. FAQ — objection handling in serial-position order (Ebbinghaus 1885)
- * 11. Booking — implementation intentions (Gollwitzer 1999)
- *
- * StickyMobileCTA persists the primary action after the Hero exits viewport
- * for mobile visitors (Fitts's Law + persistent affordance).
- */
 const Landing = () => {
-  const methodologyRef = useRef<HTMLElement>(null);
+  const reachedRef = useRef<Set<number>>(new Set());
 
-  const scrollToMethodology = () => {
-    methodologyRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
+  useEffect(() => {
+    const milestones = [25, 50, 75, 100];
+    const handleScroll = () => {
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+      const percent = Math.min(
+        100,
+        Math.round((window.scrollY / docHeight) * 100)
+      );
+      for (const m of milestones) {
+        if (percent >= m && !reachedRef.current.has(m)) {
+          reachedRef.current.add(m);
+          trackScrollDepth(m);
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <CalendlyProvider>
+    <DiagnosticFormProvider>
       <a href="#hero" className="skip-to-content">
         דלג לתוכן
       </a>
@@ -55,23 +50,21 @@ const Landing = () => {
         <Header />
 
         <main>
-          <Hero onSecondaryClick={scrollToMethodology} />
-          <TrustStrip />
-          <ProblemSection />
-          <MethodologySection anchorRef={methodologyRef} />
-          <ChessSection />
-          <SprintTimelineSection />
-          <DeliverablesSection />
-          <OutcomesSection />
-          <PricingSection />
+          <Hero />
+          <OriginStorySection />
+          <SequenceSection />
+          <FullPackageSection />
+          <NotForEveryoneSection />
+          <CommitmentSection />
+          <ClientProofSection />
           <FAQSection />
-          <BookingSection />
+          <DiagnosticFormSection />
         </main>
 
         <LandingFooter />
         <StickyMobileCTA />
       </div>
-    </CalendlyProvider>
+    </DiagnosticFormProvider>
   );
 };
 
