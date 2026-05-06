@@ -16,7 +16,6 @@ export default {
       fontFamily: {
         sans: ["Heebo", "Inter", "sans-serif"],
         heading: ["Heebo", "Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -55,6 +54,18 @@ export default {
         crisis: {
           DEFAULT: "hsl(var(--crisis))",
           foreground: "hsl(var(--crisis-foreground))",
+        },
+        copper: {
+          DEFAULT: "#B87333",
+          foreground: "#FFFFFF",
+        },
+        turquoise: {
+          DEFAULT: "#2C5F70",
+          foreground: "#FAF9F6",
+        },
+        cream: {
+          DEFAULT: "#FAF9F6",
+          foreground: "#1A1A1A",
         },
         "cor-opportunity": {
           DEFAULT: "hsl(var(--cor-opportunity))",
