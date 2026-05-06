@@ -1,4 +1,5 @@
 import PrismVisual from "./PrismVisual";
+import FounderMark from "./FounderMark";
 import { trackCtaClick } from "@/lib/analytics";
 
 const Hero = () => {
@@ -13,14 +14,22 @@ const Hero = () => {
     <section
       dir="rtl"
       id="hero"
-      className="relative pt-28 pb-16 md:pt-36 md:pb-24"
+      className="relative pt-24 pb-12 md:pt-32 md:pb-20"
     >
       <div className="mx-auto max-w-5xl px-6">
-        <div className="grid items-center gap-10 md:grid-cols-[1.4fr_1fr] md:gap-16">
-          <div className="space-y-7 animate-slow-fade-in">
-            <p className="cor-overline-he text-muted-foreground">
-              מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי.
-            </p>
+        <div className="grid items-center gap-8 md:grid-cols-[1.4fr_1fr] md:gap-16">
+          <div className="space-y-6 animate-slow-fade-in md:space-y-7">
+            <div className="flex items-center gap-3">
+              <FounderMark size="sm" />
+              <div className="leading-tight">
+                <p className="text-sm font-semibold text-foreground">
+                  ארז טל-שיר
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי.
+                </p>
+              </div>
+            </div>
 
             <h1 className="cor-display text-foreground">
               מנרטיב לרכישת לקוחות בשלושים ימים.
@@ -30,7 +39,7 @@ const Hero = () => {
               אתם כבר חושבים על המוצר, על המכירה, על הלקוחות. אני חושב על הצורה שבה אתם חושבים על זה.
             </p>
 
-            <div className="pt-2">
+            <div className="space-y-3 pt-1">
               <button
                 type="button"
                 onClick={scrollToForm}
@@ -38,8 +47,17 @@ const Hero = () => {
               >
                 20 דקות לזיהוי האירוע שאתה לא מסוגל להחמיא לעצמך עליו היום
               </button>
-              <p className="mt-3 text-xs text-muted-foreground">
-                ללא תשלום. ללא התחייבות. תגיע תשובה תוך 24 שעות.
+              <p className="text-xs text-muted-foreground">
+                ללא תשלום. ללא התחייבות. תשובה תוך 24 שעות.
+              </p>
+            </div>
+
+            <div className="border-r-2 border-accent/40 pr-3 pt-2">
+              <p className="text-sm leading-relaxed text-foreground/85">
+                "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות זה מה שנתן לי ביטחון."
+              </p>
+              <p className="mt-1.5 text-xs text-muted-foreground">
+                לקוחה ראשונה שהשלימה את הרצף. עסקה במספר ארבע ספרות נסגרה.
               </p>
             </div>
           </div>

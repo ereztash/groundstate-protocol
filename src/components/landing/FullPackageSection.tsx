@@ -18,7 +18,11 @@ const FullPackageSection = () => {
       aria-labelledby="full-package-title"
     >
       <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="cor-card-featured p-8 md:p-12">
+        <Reveal className="cor-card-featured relative p-8 md:p-12">
+          <span className="absolute -top-3 right-8 inline-flex items-center rounded-full bg-accent px-3 py-1 text-[11px] font-semibold tracking-wide text-accent-foreground">
+            הבחירה הנפוצה
+          </span>
+
           <p className="cor-overline-he text-accent">
             החבילה המלאה
           </p>
