@@ -6,36 +6,38 @@
 
 @layer base {
   :root {
-    /* Cream base #FAF9F6 */
+    /* PAPER — cream #FAF9F6 */
     --background: 40 30% 97%;
     --foreground: 0 0% 10%;
 
+    /* Surfaces stay near-paper to avoid card-on-card visual debt */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    /* Dark turquoise #2C5F70 (links / brand) */
+    /* PRIMARY — dark turquoise #2C5F70 (used sparingly: brand text, link underlines) */
     --primary: 195 44% 31%;
     --primary-foreground: 40 30% 97%;
 
-    --secondary: 40 25% 92%;
+    --secondary: 40 22% 94%;
     --secondary-foreground: 0 0% 10%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 40 18% 95%;
+    --muted-foreground: 0 0% 32%;
 
-    /* Copper #B87333 (accent / CTA) */
-    --accent: 29 57% 46%;
+    /* ACTION — deepened copper, more bronze gravitas, white passes WCAG AA easily */
+    --accent: 25 60% 39%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 60% 45%;
+    --destructive: 0 60% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 86%;
-    --input: 40 15% 86%;
-    --ring: 29 57% 46%;
+    /* HAIRLINE — quiet enough to read as architecture, not decoration */
+    --border: 0 0% 88%;
+    --input: 0 0% 86%;
+    --ring: 25 60% 39%;
 
     --radius: 0.5rem;
 
@@ -43,28 +45,26 @@
     --sidebar-foreground: 0 0% 10%;
     --sidebar-primary: 195 44% 31%;
     --sidebar-primary-foreground: 40 30% 97%;
-    --sidebar-accent: 40 20% 94%;
+    --sidebar-accent: 40 18% 95%;
     --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 40 15% 86%;
-    --sidebar-ring: 29 57% 46%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 25 60% 39%;
 
     --crisis: 0 70% 45%;
     --crisis-foreground: 0 0% 100%;
-    --glow: 29 57% 46%;
+    --glow: 25 60% 39%;
 
-    /* CTA accent token (copper) */
-    --cor-opportunity: 29 57% 46%;
+    --cor-opportunity: 25 60% 39%;
     --cor-opportunity-foreground: 0 0% 100%;
-    --cor-success: 142 45% 35%;
+    --cor-success: 142 45% 32%;
     --cor-success-foreground: 0 0% 100%;
-    --cor-warning: 38 80% 42%;
+    --cor-warning: 38 80% 38%;
     --cor-warning-foreground: 0 0% 100%;
     --cor-insight: 195 44% 31%;
     --cor-insight-foreground: 0 0% 100%;
 
     --dur-fast: 150ms;
     --dur-normal: 220ms;
-    --dur-slow: 320ms;
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -86,10 +86,11 @@
     font-feature-settings: 'kern';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: hsl(var(--accent) / 0.25);
+    background: hsl(var(--accent) / 0.22);
     color: hsl(var(--foreground));
   }
 
@@ -104,20 +105,21 @@
 }
 
 @layer components {
+  /* Editorial display — generous breathing room, careful tracking */
   .cor-display {
-    font-size: clamp(1.875rem, 4.5vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3.25rem);
     font-weight: 700;
-    line-height: 1.18;
+    line-height: 1.15;
     letter-spacing: -0.02em;
   }
   .cor-title {
-    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
     line-height: 1.25;
     letter-spacing: -0.015em;
   }
   .cor-heading {
-    font-size: clamp(1.25rem, 2.25vw, 1.5rem);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
     font-weight: 600;
     line-height: 1.3;
   }
@@ -128,82 +130,112 @@
   }
   .cor-body-lg {
     font-size: 1.0625rem;
-    line-height: 1.7;
+    line-height: 1.75;
   }
   .cor-overline {
-    font-size: 0.75rem;
+    font-size: 0.7125rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+  }
+  .cor-overline-he {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: hsl(var(--muted-foreground));
   }
 
-  .cta-warm {
+  /* Drop-cap stage number — monumental, subtle */
+  .stage-numeral {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.75rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: hsl(var(--accent));
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+  }
+
+  /* PRIMARY ACTION — filled copper, weighty */
+  .cta-action {
     background: hsl(var(--accent));
     color: hsl(var(--accent-foreground));
     font-weight: 600;
     transition: background var(--dur-fast) var(--ease-out),
                 transform var(--dur-fast) var(--ease-out);
+    box-shadow: 0 1px 0 hsl(var(--accent) / 0.4) inset,
+                0 8px 16px -8px hsl(25 60% 25% / 0.25);
   }
-  .cta-warm:hover {
-    background: hsl(var(--accent) / 0.92);
-    transform: translateY(-1px);
+  .cta-action:hover {
+    background: hsl(25 60% 33%);
   }
-  .cta-warm:active {
-    transform: translateY(0);
+  .cta-action:active {
+    transform: translateY(1px);
   }
-
-  .cta-warm-lg {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
-    font-weight: 600;
-    transition: background var(--dur-fast) var(--ease-out),
-                transform var(--dur-fast) var(--ease-out);
-  }
-  .cta-warm-lg:hover {
-    background: hsl(var(--accent) / 0.92);
-    transform: translateY(-1px);
-  }
-  .cta-warm-lg:active {
-    transform: translateY(0);
+  .cta-action:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 
-  .cta-ghost {
+  /* SECONDARY ACTION — outlined, copper text + hairline border */
+  .cta-line {
     background: transparent;
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--border));
+    color: hsl(var(--accent));
+    border: 1px solid hsl(var(--accent) / 0.35);
     font-weight: 600;
-    transition:
-      border-color var(--dur-fast) var(--ease-out),
-      background var(--dur-fast) var(--ease-out);
+    transition: background var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out);
   }
-  .cta-ghost:hover {
-    border-color: hsl(var(--primary) / 0.6);
-    background: hsl(var(--primary) / 0.04);
+  .cta-line:hover {
+    background: hsl(var(--accent) / 0.06);
+    border-color: hsl(var(--accent) / 0.7);
   }
 
+  /* TERTIARY ACTION — text-only, copper */
+  .cta-text {
+    background: transparent;
+    color: hsl(var(--accent));
+    font-weight: 600;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  .cta-text:hover {
+    opacity: 0.75;
+  }
+
+  /* Legacy aliases — keep working but route to new system */
+  .cta-warm { @apply cta-action; }
+  .cta-warm-lg { @apply cta-action; }
+  .cta-ghost { @apply cta-line; }
+
+  /* Cards — quiet by default; only subtle border lift on hover */
   .cor-card {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
     border-radius: 0.75rem;
-    transition: border-color var(--dur-fast) var(--ease-out),
-                box-shadow var(--dur-fast) var(--ease-out);
+    transition: border-color var(--dur-fast) var(--ease-out);
   }
   .cor-card:hover {
-    border-color: hsl(var(--primary) / 0.4);
-    box-shadow: 0 6px 20px -10px hsl(var(--foreground) / 0.08);
+    border-color: hsl(0 0% 70%);
   }
 
   .cor-card-featured {
     position: relative;
     background: hsl(var(--card));
-    border: 1px solid hsl(var(--accent) / 0.4);
+    border: 1px solid hsl(var(--accent) / 0.5);
     border-radius: 1rem;
   }
 
   .skip-to-content {
-    @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:right-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none;
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:right-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none;
   }
 
+  /* Editorial divider — single hairline used between sections */
+  .editorial-divider {
+    height: 1px;
+    background: hsl(var(--border));
+    width: 100%;
+  }
   .hairline {
     height: 1px;
     background: linear-gradient(
@@ -217,11 +249,40 @@
   .text-link {
     color: hsl(var(--primary));
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.25em;
     text-decoration-thickness: 1px;
   }
   .text-link:hover {
-    color: hsl(var(--primary) / 0.8);
+    color: hsl(var(--primary) / 0.78);
+  }
+
+  /* Pull-quote — magazine treatment for the testimonial */
+  .pull-quote {
+    position: relative;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.6;
+    font-weight: 400;
+    color: hsl(var(--foreground));
+  }
+  .pull-quote::before {
+    content: "”";
+    position: absolute;
+    top: -1.25rem;
+    right: -0.5rem;
+    font-size: 4rem;
+    line-height: 1;
+    color: hsl(var(--accent) / 0.35);
+    font-family: 'Heebo', serif;
+    pointer-events: none;
+  }
+
+  /* Field number prefix in form (editorial cue: "01.", "02.") */
+  .field-num {
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.02em;
+    margin-inline-end: 0.5rem;
   }
 }
 
@@ -232,7 +293,7 @@
   }
   @keyframes subtle-pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+    50% { opacity: 0.55; }
   }
   @keyframes breathe {
     0% { transform: scale(0.4); opacity: 0.4; }
@@ -241,7 +302,7 @@
     100% { transform: scale(0.4); opacity: 0.4; }
   }
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.0); }
+    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0); }
     50% { box-shadow: 0 0 0 8px hsl(var(--accent) / 0.06); }
   }
   @keyframes text-shrink {
@@ -249,17 +310,9 @@
     100% { opacity: 0.3; transform: scale(0.85); }
   }
 
-  .animate-slow-fade-in { animation: slow-fade-in 0.7s ease-out forwards; }
-  .animate-subtle-pulse { animation: subtle-pulse 2.5s ease-in-out infinite; }
+  .animate-slow-fade-in { animation: slow-fade-in 0.75s ease-out forwards; }
+  .animate-subtle-pulse { animation: subtle-pulse 3s ease-in-out infinite; }
   .animate-breathe { animation: breathe 19s ease-in-out infinite; }
   .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
   .animate-text-shrink { animation: text-shrink 2s ease-out forwards; }
-
-  .bg-radial-soft {
-    background-image: radial-gradient(
-      60% 50% at 50% 0%,
-      hsl(var(--accent) / 0.05) 0%,
-      transparent 70%
-    );
-  }
 }

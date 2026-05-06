@@ -69,39 +69,45 @@ const SequenceSection = () => {
     <section
       id="sequence"
       dir="rtl"
-      className="relative bg-secondary/40 py-20 md:py-28"
+      className="relative py-20 md:py-28"
       aria-labelledby="sequence-title"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <Reveal className="mx-auto max-w-2xl text-center">
+        <Reveal className="mx-auto max-w-2xl">
+          <p className="cor-overline-he text-muted-foreground">
+            הרצף
+          </p>
           <h2
             id="sequence-title"
-            className="cor-title text-foreground"
+            className="cor-title mt-2 text-foreground"
           >
-            הרצף, ארבעה שלבים, סדר קבוע
+            ארבעה שלבים. סדר קבוע.
           </h2>
         </Reveal>
 
         <RevealStagger
-          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
           as="ol"
         >
           {stages.map((s) => (
             <RevealItem
               key={s.number}
               as="li"
-              className="cor-card flex flex-col p-6"
+              className="group flex flex-col"
             >
-              <span className="font-mono text-xs tracking-widest text-accent">
-                {s.number}
-              </span>
-              <h3 className="cor-subheading mt-2 text-foreground">
+              <div className="border-t border-foreground pb-2 pt-4">
+                <span className="stage-numeral block">{s.number}</span>
+              </div>
+
+              <h3 className="cor-subheading mt-4 text-foreground">
                 {s.name}
               </h3>
+
               <p className="mt-3 text-sm leading-relaxed text-foreground/80">
                 {s.description}
               </p>
-              <div className="mt-4 rounded-md border border-border bg-background/60 p-3">
+
+              <div className="mt-5 border-r-2 border-border pr-3">
                 <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
                   תוצר ביד
                 </p>
@@ -109,13 +115,15 @@ const SequenceSection = () => {
                   {s.deliverable}
                 </p>
               </div>
-              <p className="mt-4 text-base font-semibold text-foreground">
+
+              <p className="mt-5 text-base font-semibold text-foreground">
                 {s.price}
               </p>
+
               <button
                 type="button"
                 onClick={() => handleClick(s)}
-                className="cta-warm mt-5 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
+                className="cta-line mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
               >
                 {s.ctaLabel}
               </button>
@@ -125,7 +133,7 @@ const SequenceSection = () => {
 
         <Reveal
           delay={0.1}
-          className="mx-auto mt-10 max-w-2xl text-center text-xs text-muted-foreground"
+          className="mx-auto mt-14 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground"
         >
           סיום הרצף הראשון. לקוחה אחת השלימה את הרצף בחודש, ועסקה במספר ארבע ספרות נסגרה אחרי השלב הרביעי.
         </Reveal>

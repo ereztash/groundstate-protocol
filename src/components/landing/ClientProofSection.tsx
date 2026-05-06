@@ -4,26 +4,31 @@ const ClientProofSection = () => {
   return (
     <section
       dir="rtl"
-      className="relative bg-secondary/30 py-20 md:py-28"
+      className="relative py-20 md:py-28"
       aria-labelledby="client-proof-title"
     >
       <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="space-y-8 text-center">
-          <h2
-            id="client-proof-title"
-            className="cor-title text-foreground"
-          >
-            לקוחה ראשונה שהשלימה את הרצף
-          </h2>
+        <Reveal className="space-y-10">
+          <div>
+            <p className="cor-overline-he text-muted-foreground">
+              לקוחה ראשונה שהשלימה את הרצף
+            </p>
+            <h2
+              id="client-proof-title"
+              className="cor-title mt-2 text-foreground"
+            >
+              חודש אחד. ארבעה שלבים. עסקה במספר ארבע ספרות.
+            </h2>
+          </div>
 
-          <blockquote className="rounded-xl border border-border bg-card p-8 text-right md:p-10">
-            <p className="cor-body-lg text-foreground/90">
+          <blockquote className="pull-quote pr-8 md:pr-10">
+            <p>
               המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרן ולהוסיף ערך על מה שאני מביאה זה מה שנתן לי ביטחון.
             </p>
           </blockquote>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
-            חודש אחד. ארבעה שלבים. עסקה במספר ארבע ספרות שנסגרה אחרי השלב הרביעי.
+            עסקה נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו ביחד.
           </p>
         </Reveal>
       </div>

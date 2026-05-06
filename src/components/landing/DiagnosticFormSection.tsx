@@ -89,6 +89,8 @@ const DiagnosticFormSection = () => {
     },
   });
 
+  const challengeLength = form.watch("challenge")?.length || 0;
+
   useEffect(() => {
     if (selectedStage) {
       form.setValue("stage", selectedStage, {
@@ -136,208 +138,230 @@ const DiagnosticFormSection = () => {
     <section
       id="diagnostic-form"
       dir="rtl"
-      className="relative bg-secondary/30 py-20 md:py-28"
+      className="relative py-20 md:py-28"
       aria-labelledby="diagnostic-form-title"
     >
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="mx-auto max-w-2xl px-6">
         {!submitted && (
-          <Reveal className="space-y-8">
-            <div className="space-y-4 text-center">
+          <Reveal className="space-y-10">
+            <div className="space-y-3">
+              <p className="cor-overline-he text-muted-foreground">
+                אבחון התאמה
+              </p>
               <h2
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                אבחון התאמה
-              </h2>
-              <p className="text-sm text-muted-foreground">
                 20 דקות. בלי תשלום. בלי התחייבות.
+              </h2>
+              <p className="cor-body-lg text-foreground/80">
+                שש שאלות. בסוף השיחה אני אומר ישר אם זה מתאים. אם לא, גם זה תשובה.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  onFocusCapture={handleFirstFocus}
-                  className="space-y-6"
-                  noValidate
-                >
-                  <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>שם מלא</FormLabel>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                onFocusCapture={handleFirstFocus}
+                className="space-y-7"
+                noValidate
+              >
+                <FormField
+                  control={form.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <span className="field-num">01.</span>שם מלא
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          autoComplete="name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <span className="field-num">02.</span>מייל
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          dir="ltr"
+                          autoComplete="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <span className="field-num">03.</span>טלפון
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          dir="ltr"
+                          autoComplete="tel"
+                          placeholder="05X-XXXXXXX"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="stage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <span className="field-num">04.</span>שלב או חבילה שמעניינים אתכם
+                      </FormLabel>
+                      <Select
+                        dir="rtl"
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
-                          <Input
-                            type="text"
-                            autoComplete="name"
-                            {...field}
-                          />
+                          <SelectTrigger>
+                            <SelectValue placeholder="בחרו אפשרות" />
+                          </SelectTrigger>
                         </FormControl>
+                        <SelectContent>
+                          {stageOptions.map((opt) => (
+                            <SelectItem key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="challenge"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <span className="field-num">05.</span>במשפט אחד, מה התהליך שאתם מנסים לזוז בו ולא מצליחים
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          rows={4}
+                          maxLength={800}
+                          {...field}
+                        />
+                      </FormControl>
+                      <div className="flex items-center justify-between">
                         <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                        <span className="text-[11px] tabular-nums text-muted-foreground">
+                          {challengeLength} / 50 מינימום
+                        </span>
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>מייל</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="email"
-                              dir="ltr"
-                              autoComplete="email"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>טלפון</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="tel"
-                              dir="ltr"
-                              autoComplete="tel"
-                              placeholder="05X-XXXXXXX"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="stage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>שלב או חבילה שמעניינים אתכם</FormLabel>
-                        <Select
-                          dir="rtl"
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="בחרו אפשרות" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {stageOptions.map((opt) => (
-                              <SelectItem key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="challenge"
-                    render={({ field }) => (
+                <FormField
+                  control={form.control}
+                  name="preferredTimes"
+                  render={({ field }) => {
+                    const value = field.value || [];
+                    const toggle = (id: string, checked: boolean) => {
+                      if (checked) {
+                        field.onChange([...value, id]);
+                      } else {
+                        field.onChange(value.filter((v) => v !== id));
+                      }
+                    };
+                    return (
                       <FormItem>
                         <FormLabel>
-                          במשפט אחד, מה התהליך שאתם מנסים לזוז בו ולא מצליחים
+                          <span className="field-num">06.</span>חלונות זמן נוחים לשיחה
                         </FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={4}
-                            maxLength={800}
-                            {...field}
-                          />
-                        </FormControl>
+                        <div className="mt-2 space-y-2">
+                          {timeWindows.map((tw) => {
+                            const checked = value.includes(tw.id);
+                            return (
+                              <label
+                                key={tw.id}
+                                className="flex cursor-pointer items-center gap-3 rounded-md border border-border bg-card p-3 transition-colors hover:border-foreground/40"
+                              >
+                                <Checkbox
+                                  checked={checked}
+                                  onCheckedChange={(c) =>
+                                    toggle(tw.id, Boolean(c))
+                                  }
+                                />
+                                <span className="text-sm text-foreground">
+                                  {tw.label}
+                                </span>
+                              </label>
+                            );
+                          })}
+                        </div>
                         <FormMessage />
                       </FormItem>
-                    )}
-                  />
+                    );
+                  }}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="preferredTimes"
-                    render={({ field }) => {
-                      const value = field.value || [];
-                      const toggle = (id: string, checked: boolean) => {
-                        if (checked) {
-                          field.onChange([...value, id]);
-                        } else {
-                          field.onChange(value.filter((v) => v !== id));
-                        }
-                      };
-                      return (
-                        <FormItem>
-                          <FormLabel>חלונות זמן נוחים לשיחה</FormLabel>
-                          <div className="mt-2 space-y-3">
-                            {timeWindows.map((tw) => {
-                              const checked = value.includes(tw.id);
-                              return (
-                                <label
-                                  key={tw.id}
-                                  className="flex cursor-pointer items-center gap-3 rounded-md border border-border bg-background p-3 transition-colors hover:border-primary/50"
-                                >
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(c) =>
-                                      toggle(tw.id, Boolean(c))
-                                    }
-                                  />
-                                  <span className="text-sm text-foreground">
-                                    {tw.label}
-                                  </span>
-                                </label>
-                              );
-                            })}
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      );
-                    }}
-                  />
+                {serverError && (
+                  <div
+                    role="alert"
+                    className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive"
+                  >
+                    {serverError}
+                  </div>
+                )}
 
-                  {serverError && (
-                    <div
-                      role="alert"
-                      className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive"
-                    >
-                      {serverError}
-                    </div>
-                  )}
-
+                <div className="space-y-3 pt-2">
                   <button
                     type="submit"
                     disabled={form.formState.isSubmitting}
-                    className="cta-warm-lg inline-flex h-12 w-full items-center justify-center rounded-md text-sm disabled:opacity-60"
+                    className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                   >
                     {form.formState.isSubmitting
-                      ? "שולח..."
-                      : "שליחת אבחון התאמה"}
+                      ? "שולח"
+                      : "אני רוצה לקבוע 20 דקות"}
                   </button>
-                </form>
-              </Form>
-            </div>
+                  <p className="text-center text-xs leading-relaxed text-muted-foreground">
+                    תגיע תשובה תוך 24 שעות. המידע נשמר רק לצורך השיחה ולא נעשה בו שום שימוש אחר.
+                  </p>
+                </div>
+              </form>
+            </Form>
           </Reveal>
         )}
 
         {submitted && (
           <Reveal className="space-y-6 text-center">
+            <p className="cor-overline-he text-muted-foreground">
+              קיבלתי
+            </p>
             <h2 className="cor-title text-foreground">
               תודה. בוא נקבע את הפגישה.
             </h2>

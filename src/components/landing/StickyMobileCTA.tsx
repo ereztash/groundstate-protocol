@@ -36,11 +36,11 @@ const StickyMobileCTA = () => {
           : "pointer-events-none translate-y-full opacity-0"
       }`}
     >
-      <div className="mx-auto flex max-w-xl items-center justify-center">
+      <div className="mx-auto max-w-xl">
         <button
           type="button"
           onClick={handleClick}
-          className="cta-warm inline-flex h-11 w-full items-center justify-center rounded-md px-4 text-sm font-semibold"
+          className="cta-action inline-flex h-12 w-full items-center justify-center rounded-md text-sm font-semibold"
           aria-label="גלילה לטופס אבחון התאמה"
         >
           20 דקות לאבחון התאמה

@@ -8,14 +8,17 @@ const CommitmentSection = () => {
       aria-labelledby="commitment-title"
     >
       <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="rounded-2xl border border-accent/30 bg-card p-8 text-center md:p-10">
+        <Reveal className="space-y-6">
+          <p className="cor-overline-he text-muted-foreground">
+            המחויבות
+          </p>
           <h2
             id="commitment-title"
             className="cor-title text-foreground"
           >
-            המחויבות
+            שעת פגישה אחת. שעת חיסכון בשבוע. לכל החיים.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground/85">
+          <p className="cor-body-lg text-foreground/80">
             על כל שעת פגישה איתי, הארגון או העסק חוסך לפחות שעת עבודה אחת בשבוע, לכל שארית חיי התהליך.
           </p>
         </Reveal>

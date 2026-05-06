@@ -12,19 +12,21 @@ const Hero = () => {
   return (
     <section
       dir="rtl"
-      className="relative overflow-hidden pt-28 pb-20 md:pt-32 md:pb-24"
       id="hero"
+      className="relative pt-28 pb-16 md:pt-36 md:pb-24"
     >
-      <div className="pointer-events-none absolute inset-0 bg-radial-soft" />
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="grid items-center gap-10 md:grid-cols-[1.4fr_1fr] md:gap-16">
+          <div className="space-y-7 animate-slow-fade-in">
+            <p className="cor-overline-he text-muted-foreground">
+              מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי.
+            </p>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-          <div className="order-2 md:order-1 space-y-7 animate-slow-fade-in">
             <h1 className="cor-display text-foreground">
-              מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי. מנרטיב לרכישת לקוחות בשלושים ימים.
+              מנרטיב לרכישת לקוחות בשלושים ימים.
             </h1>
 
-            <p className="cor-body-lg max-w-xl text-foreground/85">
+            <p className="cor-body-lg max-w-xl text-foreground/80">
               אתם כבר חושבים על המוצר, על המכירה, על הלקוחות. אני חושב על הצורה שבה אתם חושבים על זה.
             </p>
 
@@ -32,14 +34,17 @@ const Hero = () => {
               <button
                 type="button"
                 onClick={scrollToForm}
-                className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
+                className="cta-action inline-flex max-w-full items-center justify-center rounded-md px-6 py-4 text-right text-sm leading-snug md:text-base"
               >
                 20 דקות לזיהוי האירוע שאתה לא מסוגל להחמיא לעצמך עליו היום
               </button>
+              <p className="mt-3 text-xs text-muted-foreground">
+                ללא תשלום. ללא התחייבות. תגיע תשובה תוך 24 שעות.
+              </p>
             </div>
           </div>
 
-          <div className="order-1 md:order-2">
+          <div className="hidden md:block">
             <PrismVisual />
           </div>
         </div>
