@@ -4,9 +4,9 @@ import Hero from "@/components/landing/Hero";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
-import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
-import CommitmentSection from "@/components/landing/CommitmentSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
+import CommitmentSection from "@/components/landing/CommitmentSection";
+import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -49,14 +49,14 @@ const Landing = () => {
       <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
         <Header />
 
-        <main>
+        <main className="divide-y divide-border">
           <Hero />
           <OriginStorySection />
           <SequenceSection />
           <FullPackageSection />
-          <NotForEveryoneSection />
-          <CommitmentSection />
           <ClientProofSection />
+          <CommitmentSection />
+          <NotForEveryoneSection />
           <FAQSection />
           <DiagnosticFormSection />
         </main>

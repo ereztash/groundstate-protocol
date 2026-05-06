@@ -43,9 +43,12 @@ const FAQSection = () => {
       className="relative py-20 md:py-28"
       aria-labelledby="faq-title"
     >
-      <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="mb-10 space-y-3 text-center">
-          <h2 id="faq-title" className="cor-title text-foreground">
+      <div className="mx-auto max-w-2xl px-6">
+        <Reveal className="mb-10">
+          <p className="cor-overline-he text-muted-foreground">
+            התנגדויות
+          </p>
+          <h2 id="faq-title" className="cor-title mt-2 text-foreground">
             שאלות
           </h2>
         </Reveal>
@@ -56,7 +59,7 @@ const FAQSection = () => {
               <AccordionItem
                 key={q}
                 value={`item-${i}`}
-                className="border-b border-border px-2"
+                className="border-b border-border"
               >
                 <AccordionTrigger className="gap-4 py-5 text-right text-base font-medium text-foreground hover:no-underline">
                   {q}

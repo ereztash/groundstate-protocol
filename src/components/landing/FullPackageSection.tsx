@@ -18,22 +18,25 @@ const FullPackageSection = () => {
       aria-labelledby="full-package-title"
     >
       <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="cor-card-featured p-8 md:p-10 text-center">
+        <Reveal className="cor-card-featured p-8 md:p-12">
+          <p className="cor-overline-he text-accent">
+            החבילה המלאה
+          </p>
           <h2
             id="full-package-title"
-            className="cor-title text-foreground"
+            className="cor-title mt-2 text-foreground"
           >
-            החבילה המלאה
+            שלושים ימים. ארבע פגישות. הרצף מהקצה לקצה.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground/85">
-            שלושים ימים, ארבע פגישות, ליווי בין הפגישות. כל הרצף מהקצה לקצה.
+          <p className="cor-body-lg mt-5 text-foreground/80">
+            כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך 1,300 ש״ח לעומת רכישה שלב אחר שלב.
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-2">
-            <p className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+          <div className="mt-8 flex items-baseline gap-3">
+            <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               4,500 ש״ח
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-base text-muted-foreground">
               <span className="line-through">5,800 ש״ח</span>
             </p>
           </div>
@@ -41,7 +44,7 @@ const FullPackageSection = () => {
           <button
             type="button"
             onClick={handleClick}
-            className="cta-warm-lg mt-8 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
+            className="cta-action mt-8 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-semibold md:text-base"
           >
             אני רוצה את החבילה המלאה
           </button>

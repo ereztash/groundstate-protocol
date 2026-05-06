@@ -9,7 +9,7 @@ const scrollToForm = () => {
 
 const Header = () => {
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
       <div
         dir="rtl"
         className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5"
@@ -43,20 +43,14 @@ const Header = () => {
           >
             שאלות
           </a>
-          <a
-            href="#diagnostic-form"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            אבחון התאמה
-          </a>
         </nav>
 
         <button
           type="button"
           onClick={scrollToForm}
-          className="cta-warm inline-flex h-9 items-center gap-2 rounded-md px-4 text-xs font-semibold"
+          className="cta-line inline-flex h-9 items-center gap-2 rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
         >
-          20 דקות לאבחון התאמה
+          קביעת אבחון
         </button>
       </div>
     </header>
