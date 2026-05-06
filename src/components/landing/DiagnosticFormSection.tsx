@@ -82,6 +82,7 @@ const DiagnosticFormSection = () => {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const stepOne = useForm<StepOneValues>({
     resolver: zodResolver(stepOneSchema),
@@ -115,6 +116,8 @@ const DiagnosticFormSection = () => {
     one: StepOneValues,
     two: StepTwoValues
   ) => {
+    if (isSending) return;
+    setIsSending(true);
     setServerError(null);
     const stageLabel =
       stageOptions.find((s) => s.value === one.stage)?.label || one.stage;
@@ -132,13 +135,17 @@ const DiagnosticFormSection = () => {
       preferredTimes: timeLabels.length > 0 ? timeLabels : ["(לא מולא)"],
     };
 
-    const result = await submitForm(payload);
-    if (result.success) {
-      trackFormSubmit();
-      setSubmitted(true);
-      return;
+    try {
+      const result = await submitForm(payload);
+      if (result.success) {
+        trackFormSubmit();
+        setSubmitted(true);
+        return;
+      }
+      setServerError(result.message);
+    } finally {
+      setIsSending(false);
     }
-    setServerError(result.message);
   };
 
   const onStepOneSubmit = async (values: StepOneValues) => {
@@ -396,18 +403,16 @@ const DiagnosticFormSection = () => {
                   <div className="space-y-3 pt-2">
                     <button
                       type="submit"
-                      disabled={stepTwo.formState.isSubmitting}
+                      disabled={isSending}
                       className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                     >
-                      {stepTwo.formState.isSubmitting
-                        ? "שולח"
-                        : "אני רוצה לקבוע 20 דקות"}
+                      {isSending ? "שולח" : "אני רוצה לקבוע 20 דקות"}
                     </button>
                     <button
                       type="button"
                       onClick={skipStepTwo}
-                      disabled={stepTwo.formState.isSubmitting}
-                      className="cta-text inline-flex w-full items-center justify-center text-sm"
+                      disabled={isSending}
+                      className="cta-text inline-flex w-full items-center justify-center text-sm disabled:opacity-50"
                     >
                       דלג ושלח עכשיו
                     </button>
