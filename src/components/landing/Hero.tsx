@@ -47,9 +47,27 @@ const Hero = () => {
               >
                 20 דקות לזיהוי האירוע שאתה לא מסוגל להחמיא לעצמך עליו היום
               </button>
-              <p className="text-xs text-muted-foreground">
-                ללא תשלום. ללא התחייבות. תשובה תוך 24 שעות.
-              </p>
+
+              <ul className="flex flex-wrap gap-x-5 gap-y-2 pt-1 text-xs text-muted-foreground">
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden="true" className="text-accent">
+                    ◇
+                  </span>
+                  20 דקות בלבד
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden="true" className="text-accent">
+                    ◇
+                  </span>
+                  ללא תשלום
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden="true" className="text-accent">
+                    ◇
+                  </span>
+                  תשובה תוך 24 שעות
+                </li>
+              </ul>
             </div>
 
             <div className="border-r-2 border-accent/40 pr-3 pt-2">

@@ -45,6 +45,49 @@ const FullPackageSection = () => {
             </p>
           </div>
 
+          <ul className="mt-8 space-y-3 border-t border-border pt-6 text-sm leading-relaxed text-foreground/90">
+            <li className="flex gap-3">
+              <span className="mt-0.5 select-none text-accent" aria-hidden="true">
+                ◇
+              </span>
+              <span>
+                <strong className="font-semibold">ארבע פגישות אישיות</strong> בזום או פנים אל פנים, כל פגישה כ-90 דקות.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-0.5 select-none text-accent" aria-hidden="true">
+                ◇
+              </span>
+              <span>
+                <strong className="font-semibold">ארבעה תוצרים מוכנים</strong>: נרטיב כתוב, הצעת ערך, תיאור מוצר עם תמחור, ועשר פניות מתועדות.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-0.5 select-none text-accent" aria-hidden="true">
+                ◇
+              </span>
+              <span>
+                <strong className="font-semibold">ליווי בין פגישות</strong> ב-WhatsApp לשאלות תפעוליות וחידודי ניסוח.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-0.5 select-none text-accent" aria-hidden="true">
+                ◇
+              </span>
+              <span>
+                <strong className="font-semibold">סיכום בכתב אחרי כל פגישה</strong>, כולל המשימות לשבוע הבא ומה לחפש במה שיצא.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-0.5 select-none text-accent" aria-hidden="true">
+                ◇
+              </span>
+              <span>
+                <strong className="font-semibold">אבחון התאמה</strong> ללא תשלום לפני שמתחילים, כדי לוודא שהרצף מתאים לכם.
+              </span>
+            </li>
+          </ul>
+
           <button
             type="button"
             onClick={handleClick}
@@ -52,6 +95,10 @@ const FullPackageSection = () => {
           >
             אני רוצה את החבילה המלאה
           </button>
+
+          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+            כל שלב נסגר לחוד. אין הסכמים ארוכי טווח.
+          </p>
         </Reveal>
       </div>
     </section>

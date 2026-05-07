@@ -40,3 +40,26 @@ export function trackCtaClick(ctaName: string): void {
 export function trackScrollDepth(percent: number): void {
   trackEvent("scroll_depth", { percent });
 }
+
+export function trackFieldFocus(fieldName: string): void {
+  trackEvent("form_field_focus", { field_name: fieldName });
+}
+
+export function trackFieldBlur(fieldName: string, hasValue: boolean): void {
+  trackEvent("form_field_blur", { field_name: fieldName, has_value: hasValue });
+}
+
+export function trackFieldError(fieldName: string, errorType: string): void {
+  trackEvent("form_field_error", {
+    field_name: fieldName,
+    error_type: errorType,
+  });
+}
+
+export function trackSectionView(sectionName: string): void {
+  trackEvent("section_view", { section_name: sectionName });
+}
+
+export function trackFormAbandon(lastField: string, step: 1 | 2): void {
+  trackEvent("form_abandon", { last_field: lastField, step });
+}
