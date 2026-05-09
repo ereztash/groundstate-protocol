@@ -1,5 +1,5 @@
-import PrismVisual from "./PrismVisual";
 import { trackCtaClick } from "@/lib/analytics";
+import portrait from "@/assets/portrait.png";
 
 const Hero = () => {
   const scrollToForm = () => {
@@ -40,7 +40,18 @@ const Hero = () => {
           </div>
 
           <div className="order-1 md:order-2">
-            <PrismVisual />
+            <div className="relative mx-auto w-full max-w-[420px] aspect-square">
+              <div className="pointer-events-none absolute -inset-6 rounded-full bg-accent/10 blur-3xl" />
+              <div className="pointer-events-none absolute inset-[18%] rounded-full bg-primary/10 blur-2xl" />
+              <div className="relative h-full w-full rounded-full overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-30px_hsl(var(--accent)/0.45)]">
+                <img
+                  src={portrait}
+                  alt="פורטרט — מומחה במטא-תהליכים"
+                  loading="eager"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
