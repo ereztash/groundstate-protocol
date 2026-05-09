@@ -40,18 +40,34 @@ const Hero = () => {
           </div>
 
           <div className="order-1 md:order-2">
-            <div className="relative mx-auto w-full max-w-[420px] aspect-square">
-              <div className="pointer-events-none absolute -inset-6 rounded-full bg-accent/10 blur-3xl" />
-              <div className="pointer-events-none absolute inset-[18%] rounded-full bg-primary/10 blur-2xl" />
+            <figure
+              className="relative mx-auto w-full max-w-[420px] aspect-square"
+              role="group"
+              aria-labelledby="hero-portrait-caption"
+            >
+              <div
+                className="pointer-events-none absolute -inset-6 rounded-full bg-accent/10 blur-3xl"
+                aria-hidden="true"
+              />
+              <div
+                className="pointer-events-none absolute inset-[18%] rounded-full bg-primary/10 blur-2xl"
+                aria-hidden="true"
+              />
               <div className="relative h-full w-full rounded-full overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-30px_hsl(var(--accent)/0.45)]">
                 <img
                   src={portrait}
-                  alt="פורטרט — מומחה במטא-תהליכים"
+                  alt="תמונת פורטרט: גבר במעיל כהה וחולצה לבנה, מבט ישיר למצלמה, רקע ירוק זית."
                   loading="eager"
+                  decoding="async"
+                  width={420}
+                  height={420}
                   className="h-full w-full object-cover"
                 />
               </div>
-            </div>
+              <figcaption id="hero-portrait-caption" className="sr-only">
+                פורטרט מקצועי של בעל האתר — מומחה במטא-תהליכים, עובד סוציאלי בעל רקע טכנולוגי-עסקי.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
