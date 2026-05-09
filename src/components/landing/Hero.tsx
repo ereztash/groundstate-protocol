@@ -63,7 +63,7 @@ const Hero = () => {
                   decoding="async"
                   width={420}
                   height={420}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover object-center"
                 />
               </div>
               <figcaption id="hero-portrait-caption" className="sr-only">
