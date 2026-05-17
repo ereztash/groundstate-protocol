@@ -61,6 +61,7 @@ const Hero = () => {
                   alt="תמונת פורטרט: גבר במעיל כהה וחולצה לבנה, מבט ישיר למצלמה, רקע ירוק זית."
                   loading="eager"
                   decoding="async"
+                  fetchPriority="high"
                   width={420}
                   height={420}
                   className="h-full w-full object-cover object-center"
