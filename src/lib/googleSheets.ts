@@ -1,7 +1,12 @@
 import type { DiagnosticPayload } from "./web3forms";
 
 // Web App URL from Apps Script deployment. See apps-script/Code.gs for setup.
-export const SHEETS_WEB_APP_URL = "PLACEHOLDER_REPLACE_ME";
+export const SHEETS_WEB_APP_URL =
+  "https://script.google.com/macros/s/AKfycbxu9YILo5z5h45xZJ0ne7KW9M_xpzu_zfdHlcSnoe9y3Bj0PpdE65_cMcIGL0VLulfh/exec";
+
+// Shared token the Apps Script checks before writing a row. Frontend-visible
+// by design — this is a spam deterrent against random bots, not real auth.
+export const SHEETS_SECRET = "5e197f8f78d12cdd1e2bb77cc1dd44e9";
 
 export type SheetsResult = {
   success: boolean;
@@ -11,14 +16,8 @@ export type SheetsResult = {
 export async function submitToSheet(
   data: DiagnosticPayload
 ): Promise<SheetsResult> {
-  if (!SHEETS_WEB_APP_URL || SHEETS_WEB_APP_URL === "PLACEHOLDER_REPLACE_ME") {
-    return {
-      success: false,
-      message: "Sheets URL not configured",
-    };
-  }
-
   const body = {
+    secret: SHEETS_SECRET,
     submittedAt: new Date().toISOString(),
     fullName: data.fullName,
     email: data.email,
