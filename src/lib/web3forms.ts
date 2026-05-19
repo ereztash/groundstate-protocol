@@ -1,6 +1,8 @@
 // Google Apps Script Web App endpoint.
-// Replace with the deployed Web App URL (https://script.google.com/macros/s/.../exec).
-export const APPS_SCRIPT_URL = "PLACEHOLDER_REPLACE_ME";
+// Configure via VITE_APPS_SCRIPT_URL in your .env file
+// (https://script.google.com/macros/s/.../exec). See .env.example.
+export const APPS_SCRIPT_URL =
+  (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ?? "";
 
 export type Web3FormsResult = {
   success: boolean;
@@ -20,11 +22,11 @@ export type DiagnosticPayload = {
 export async function submitForm(
   data: DiagnosticPayload
 ): Promise<Web3FormsResult> {
-  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "PLACEHOLDER_REPLACE_ME") {
+  if (!APPS_SCRIPT_URL) {
     return {
       success: false,
       message:
-        "כתובת השליחה לא הוגדרה. יש להחליף את APPS_SCRIPT_URL בקובץ src/lib/web3forms.ts בכתובת ה-Web App של Google Apps Script.",
+        "כתובת השליחה לא הוגדרה. יש להגדיר את VITE_APPS_SCRIPT_URL בקובץ .env בכתובת ה-Web App של Google Apps Script.",
     };
   }
 
