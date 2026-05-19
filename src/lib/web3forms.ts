@@ -36,7 +36,7 @@ export async function submitForm(
     phone: data.phone,
     stage: data.stage,
     challenge: data.challenge,
-    preferredTimes: data.preferredTimes.join(", "),
+    preferredTimes: data.preferredTimes,
     submittedAt: new Date().toISOString(),
   };
 
