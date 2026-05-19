@@ -1,6 +1,13 @@
-export const ACCESS_KEY = "PLACEHOLDER_REPLACE_ME";
+// Google Apps Script Web App endpoint.
+// Configure via VITE_APPS_SCRIPT_URL and VITE_APPS_SCRIPT_SECRET in your .env file.
+// See .env.example.
+const APPS_SCRIPT_URL =
+  (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ??
+  "https://script.google.com/macros/s/AKfycbxu9YILo5z5h45xZJ0ne7KW9M_xpzu_zfdHlcSnoe9y3Bj0PpdE65_cMcIGL0VLulfh/exec";
 
-const ENDPOINT = "https://api.web3forms.com/submit";
+const SECRET_TOKEN =
+  (import.meta.env.VITE_APPS_SCRIPT_SECRET as string | undefined) ??
+  "5e197f8f78d12cdd1e2bb77cc1dd44e9";
 
 export type Web3FormsResult = {
   success: boolean;
@@ -20,43 +27,37 @@ export type DiagnosticPayload = {
 export async function submitForm(
   data: DiagnosticPayload
 ): Promise<Web3FormsResult> {
-  if (!ACCESS_KEY || ACCESS_KEY === "PLACEHOLDER_REPLACE_ME") {
-    return {
-      success: false,
-      message:
-        "מפתח השליחה לא הוגדר. יש להחליף את ACCESS_KEY בקובץ src/lib/web3forms.ts.",
-    };
-  }
-
   const body = {
-    access_key: ACCESS_KEY,
-    redirect: false,
-    subject: data.subject || "אבחון התאמה חדש מהאתר",
-    from_name: "אתר COR-SYS",
-    שם_מלא: data.fullName,
-    מייל: data.email,
-    טלפון: data.phone,
-    שלב_מבוקש: data.stage,
-    אתגר_עכשווי: data.challenge,
-    חלונות_זמן: data.preferredTimes.join(", "),
+    secret: SECRET_TOKEN,
+    submittedAt: new Date().toISOString(),
+    fullName: data.fullName,
+    email: data.email,
+    phone: data.phone,
+    stage: data.stage,
+    challenge: data.challenge,
+    preferredTimes: data.preferredTimes,
   };
 
   try {
-    const res = await fetch(ENDPOINT, {
+    // Use text/plain to avoid a CORS preflight against script.google.com.
+    // Apps Script reads the JSON via e.postData.contents in doPost(e).
+    const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        "Content-Type": "text/plain;charset=utf-8",
       },
       body: JSON.stringify(body),
     });
-    const json = await res.json().catch(() => ({}));
-    if (res.ok && json.success) {
+
+    const json = await res.json().catch(() => ({} as { success?: boolean }));
+
+    if (res.ok && json.success === true) {
       return { success: true, message: "הטופס נשלח" };
     }
+
     return {
       success: false,
-      message: json.message || "השליחה נכשלה. נסו שוב בעוד רגע.",
+      message: "השליחה נכשלה. נסו שוב בעוד רגע.",
     };
   } catch (err) {
     return {
