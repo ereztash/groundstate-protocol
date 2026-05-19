@@ -29,6 +29,7 @@ import {
   submitForm,
   type DiagnosticPayload,
 } from "@/lib/web3forms";
+import { submitToSheet } from "@/lib/googleSheets";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 
 const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
@@ -136,7 +137,12 @@ const DiagnosticFormSection = () => {
     };
 
     try {
-      const result = await submitForm(payload);
+      // Email (web3forms) is the primary channel; Sheets is parallel record-keeping.
+      // A Sheets failure must not block the user — never await it for the success path.
+      const [result] = await Promise.all([
+        submitForm(payload),
+        submitToSheet(payload).catch(() => undefined),
+      ]);
       if (result.success) {
         trackFormSubmit();
         setSubmitted(true);
