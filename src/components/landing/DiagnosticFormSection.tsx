@@ -165,11 +165,12 @@ const DiagnosticFormSection = () => {
       className="relative py-20 md:py-28"
       aria-labelledby="diagnostic-form-title"
     >
-      <div className="mx-auto max-w-2xl px-6">
+      <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
+      <div className="relative mx-auto max-w-2xl px-6">
         {!submitted && (
-          <Reveal className="space-y-10">
+          <Reveal className="cor-card-form space-y-10 p-7 md:p-10">
             <div className="space-y-3">
-              <p className="cor-overline-he text-muted-foreground">
+              <p className="cor-overline-he">
                 שיחה ראשונה
               </p>
               <h2
@@ -382,8 +383,8 @@ const DiagnosticFormSection = () => {
         )}
 
         {submitted && (
-          <Reveal className="space-y-6 text-center">
-            <p className="cor-overline-he text-muted-foreground">
+          <Reveal className="cor-card-form space-y-6 p-7 text-center md:p-10">
+            <p className="cor-overline-he">
               קיבלתי
             </p>
             <h2 className="cor-title text-foreground">

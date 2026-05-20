@@ -74,7 +74,7 @@ const SequenceSection = () => {
     >
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-2xl">
-          <p className="cor-overline-he text-muted-foreground">
+          <p className="cor-overline-he">
             הרצף
           </p>
           <h2

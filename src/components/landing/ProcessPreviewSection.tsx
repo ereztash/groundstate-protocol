@@ -38,7 +38,7 @@ const ProcessPreviewSection = () => {
     >
       <div className="mx-auto max-w-4xl px-6">
         <Reveal className="mx-auto max-w-2xl">
-          <p className="cor-overline-he text-muted-foreground">
+          <p className="cor-overline-he">
             מה קורה בפגישה הראשונה
           </p>
           <h2

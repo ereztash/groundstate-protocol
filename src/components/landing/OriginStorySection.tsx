@@ -10,7 +10,7 @@ const OriginStorySection = () => {
       <div className="mx-auto max-w-3xl px-6">
         <Reveal className="space-y-8">
           <div>
-            <p className="cor-overline-he text-muted-foreground">
+            <p className="cor-overline-he">
               איך הגעתי לכאן
             </p>
             <h2

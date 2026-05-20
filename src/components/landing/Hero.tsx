@@ -19,8 +19,9 @@ const Hero = () => {
       <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-          <div className="order-2 md:order-1 space-y-7 animate-slow-fade-in">
+        <div className="grid items-center gap-10 md:grid-cols-[1.15fr_1fr] md:gap-16">
+          {/* Order 1 on every breakpoint — text leads on mobile, no founder-face wall */}
+          <div className="order-1 space-y-7 animate-slow-fade-in">
             <h1 id="hero-title" className="cor-display text-foreground">
               יש לך מקצוע. יש לך ידע. אבל כשבא הזמן להגיד את זה ללקוח, הראש מתפזר לעשרה כיוונים בו-זמנית.
             </h1>
@@ -35,7 +36,7 @@ const Hero = () => {
                 onClick={scrollToForm}
                 aria-describedby="hero-subtitle"
                 aria-label="20 דקות, בלי תשלום, נדבר"
-                className="cta-warm-lg inline-flex h-14 items-center justify-center rounded-md px-8 text-base font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
               >
                 20 דקות. בלי תשלום. נדבר.
               </button>
@@ -45,13 +46,14 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="order-1 md:order-2">
+          {/* Portrait: smaller on mobile, appears after the CTA. Full size on desktop. */}
+          <div className="order-2">
             <figure
-              className="relative mx-auto w-full max-w-[420px] aspect-square"
+              className="relative mx-auto aspect-square w-44 sm:w-56 md:w-full md:max-w-[380px]"
               aria-labelledby="hero-portrait-caption"
             >
               <div
-                className="pointer-events-none absolute -inset-6 rounded-full bg-accent/10 blur-3xl"
+                className="pointer-events-none absolute -inset-4 rounded-full bg-accent/10 blur-3xl md:-inset-6"
                 aria-hidden="true"
               />
               <div
@@ -71,7 +73,7 @@ const Hero = () => {
                 />
               </div>
               <figcaption id="hero-portrait-caption" className="sr-only">
-                פורטרט מקצועי של בעל האתר — מומחה במטא-תהליכים, עובד סוציאלי בעל רקע טכנולוגי-עסקי.
+                פורטרט מקצועי של ארז טל-שיר — אינטגרטור עסקי לעצמאים.
               </figcaption>
             </figure>
           </div>

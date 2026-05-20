@@ -42,7 +42,7 @@ const ClientProofSection = () => {
       <div className="mx-auto max-w-3xl px-6">
         <Reveal className="space-y-10">
           <div>
-            <p className="cor-overline-he text-muted-foreground">
+            <p className="cor-overline-he">
               עדות לקוחה
             </p>
             <h2
