@@ -1,13 +1,28 @@
+import { useEffect, useState } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 
-const scrollToForm = () => {
-  trackCtaClick("header_diagnostic");
+const scrollToForm = (source: string) => () => {
+  trackCtaClick(source);
   document
     .getElementById("diagnostic-form")
     ?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
 const Header = () => {
+  // After the user scrolls past the Hero (~half a viewport), promote the
+  // header CTA from the quiet outline style to the strong copper style so
+  // there's always a visible primary action on desktop.
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > window.innerHeight * 0.5);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
       <div
@@ -47,8 +62,10 @@ const Header = () => {
 
         <button
           type="button"
-          onClick={scrollToForm}
-          className="cta-line inline-flex h-9 items-center gap-2 rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
+          onClick={scrollToForm("header_diagnostic")}
+          className={`${
+            scrolled ? "cta-warm" : "cta-line"
+          } inline-flex h-9 items-center gap-2 rounded-md px-3.5 text-xs font-semibold transition-all duration-300 md:px-4 md:text-sm`}
         >
           בוא נדבר
         </button>

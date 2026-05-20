@@ -56,10 +56,10 @@ const Landing = () => {
           <WhatYouTriedSection />
           <ClientProofSection />
           <OriginStorySection />
+          <ProcessPreviewSection />
           <SequenceSection />
           <FullPackageSection />
           <MidPageCTA />
-          <ProcessPreviewSection />
           <CommitmentSection />
           <FAQSection />
           <DiagnosticFormSection />

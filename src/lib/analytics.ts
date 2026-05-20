@@ -1,8 +1,6 @@
-export const MEASUREMENT_ID = "G-PLACEHOLDER";
-
 type GtagFn = (
-  command: "event" | "config" | "set",
-  targetId: string,
+  command: "event" | "config" | "set" | "js",
+  targetIdOrDate: string | Date,
   params?: Record<string, unknown>
 ) => void;
 
@@ -13,8 +11,46 @@ declare global {
   }
 }
 
+const MEASUREMENT_ID =
+  (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined) ?? "";
+
 function hasGtag(): boolean {
   return typeof window !== "undefined" && typeof window.gtag === "function";
+}
+
+/**
+ * Loads gtag.js and configures GA4 if VITE_GA_MEASUREMENT_ID is set.
+ * Safe no-op when the env var is absent (e.g. local dev without GA).
+ */
+export function initAnalytics(): void {
+  if (typeof window === "undefined") return;
+  if (!MEASUREMENT_ID || MEASUREMENT_ID === "G-PLACEHOLDER") {
+    // eslint-disable-next-line no-console
+    console.info(
+      "[analytics] VITE_GA_MEASUREMENT_ID not set — events will be no-op."
+    );
+    return;
+  }
+  if (hasGtag()) return; // already initialized (HMR, double mount)
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(
+    MEASUREMENT_ID
+  )}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  const gtag: GtagFn = function (...args: unknown[]) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.dataLayer!.push(args as any);
+  } as unknown as GtagFn;
+  window.gtag = gtag;
+  gtag("js", new Date());
+  gtag("config", MEASUREMENT_ID, {
+    send_page_view: true,
+    anonymize_ip: true,
+  });
 }
 
 export function trackEvent(

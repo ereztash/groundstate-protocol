@@ -23,7 +23,7 @@ const FullPackageSection = () => {
             הבחירה הנפוצה
           </span>
 
-          <p className="cor-overline-he text-accent">
+          <p className="cor-overline-he">
             החבילה המלאה
           </p>
           <h2

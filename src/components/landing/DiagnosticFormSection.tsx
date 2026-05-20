@@ -165,11 +165,12 @@ const DiagnosticFormSection = () => {
       className="relative py-20 md:py-28"
       aria-labelledby="diagnostic-form-title"
     >
-      <div className="mx-auto max-w-2xl px-6">
+      <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
+      <div className="relative mx-auto max-w-2xl px-6">
         {!submitted && (
-          <Reveal className="space-y-10">
+          <Reveal className="cor-card-form space-y-10 p-7 md:p-10">
             <div className="space-y-3">
-              <p className="cor-overline-he text-muted-foreground">
+              <p className="cor-overline-he">
                 שיחה ראשונה
               </p>
               <h2
@@ -181,15 +182,34 @@ const DiagnosticFormSection = () => {
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
-              <div className="flex items-center gap-2 pt-2">
+
+              <ul
+                aria-label="מה תיקח מהשיחה"
+                className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
+              >
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תדע אם זה מתאים לך — ביושר, גם אם לא.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תדע מאיזה שלב להתחיל ולמה.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תקבל פרשנות אחת על התקיעה שלך — גם אם לא נמשיך ביחד.</span>
+                </li>
+              </ul>
+
+              <div className="flex items-center gap-2 pt-3">
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
-                    step === 1 ? "bg-accent" : "bg-foreground/40"
+                    step >= 1 ? "bg-primary" : "bg-border"
                   }`}
                 />
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
-                    step === 2 ? "bg-accent" : "bg-border"
+                    step >= 2 ? "bg-primary" : "bg-border"
                   }`}
                 />
               </div>
@@ -382,8 +402,8 @@ const DiagnosticFormSection = () => {
         )}
 
         {submitted && (
-          <Reveal className="space-y-6 text-center">
-            <p className="cor-overline-he text-muted-foreground">
+          <Reveal className="cor-card-form space-y-6 p-7 text-center md:p-10">
+            <p className="cor-overline-he">
               קיבלתי
             </p>
             <h2 className="cor-title text-foreground">

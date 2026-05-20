@@ -45,7 +45,7 @@ const FAQSection = () => {
     >
       <div className="mx-auto max-w-2xl px-6">
         <Reveal className="mb-10">
-          <p className="cor-overline-he text-muted-foreground">
+          <p className="cor-overline-he">
             התנגדויות
           </p>
           <h2 id="faq-title" className="cor-title mt-2 text-foreground">

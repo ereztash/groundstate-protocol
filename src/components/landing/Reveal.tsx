@@ -13,11 +13,11 @@ import type { ReactNode } from "react";
 const EASE_OUT = [0, 0, 0.2, 1] as const;
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 12 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: EASE_OUT },
+    transition: { duration: 0.4, ease: EASE_OUT },
   },
 };
 
@@ -25,8 +25,8 @@ const parentVariants: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.05,
+      staggerChildren: 0.05,
+      delayChildren: 0,
     },
   },
 };
@@ -50,13 +50,13 @@ export const Reveal = ({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       variants={{
-        hidden: { opacity: 0, y: 16 },
+        hidden: { opacity: 0, y: 12 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.7, ease: EASE_OUT, delay },
+          transition: { duration: 0.4, ease: EASE_OUT, delay },
         },
       }}
     >
@@ -80,7 +80,7 @@ export const RevealStagger = ({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       variants={parentVariants}
     >
       {children}

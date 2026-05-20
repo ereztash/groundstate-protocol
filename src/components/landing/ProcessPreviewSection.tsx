@@ -38,7 +38,7 @@ const ProcessPreviewSection = () => {
     >
       <div className="mx-auto max-w-4xl px-6">
         <Reveal className="mx-auto max-w-2xl">
-          <p className="cor-overline-he text-muted-foreground">
+          <p className="cor-overline-he">
             מה קורה בפגישה הראשונה
           </p>
           <h2
@@ -55,7 +55,7 @@ const ProcessPreviewSection = () => {
         >
           {beats.map((b) => (
             <RevealItem key={b.marker} as="li">
-              <p className="font-mono text-xs tracking-wide text-accent">
+              <p className="font-mono text-xs tracking-wide text-primary">
                 {b.marker}
               </p>
               <h3 className="cor-subheading mt-2 text-foreground">
