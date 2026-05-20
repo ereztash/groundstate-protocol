@@ -27,8 +27,34 @@ const Hero = () => {
             </h1>
 
             <p id="hero-subtitle" className="cor-body-lg max-w-xl text-foreground/85">
-              לא חסר לך ידע, חסר לך מבנה לתרגם אותו. 30 יום, 4 פגישות, בסופן: משפט שמסביר אותך, מחיר שיוצא בלי גמגום, ו-10 פניות לאנשים אמיתיים.
+              לא חסר לך ידע. חסר לך מבנה לתרגם אותו.
             </p>
+
+            {/* TL;DR — שורה אחת סקאן-בלית למי שאין לו זמן ל-10 סקציות */}
+            <dl
+              aria-label="בקצרה"
+              className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-y border-border/80 py-3 text-sm text-foreground/85"
+            >
+              <div className="flex items-baseline gap-1.5">
+                <dt className="text-muted-foreground">משך</dt>
+                <dd className="font-semibold">30 יום</dd>
+              </div>
+              <span aria-hidden="true" className="text-border">•</span>
+              <div className="flex items-baseline gap-1.5">
+                <dt className="text-muted-foreground">פגישות</dt>
+                <dd className="font-semibold">4</dd>
+              </div>
+              <span aria-hidden="true" className="text-border">•</span>
+              <div className="flex items-baseline gap-1.5">
+                <dt className="text-muted-foreground">החל מ-</dt>
+                <dd className="font-semibold">₪1,000</dd>
+              </div>
+              <span aria-hidden="true" className="text-border">•</span>
+              <div className="flex items-baseline gap-1.5">
+                <dt className="text-muted-foreground">תוצר</dt>
+                <dd className="font-semibold">10 פניות יוצאות</dd>
+              </div>
+            </dl>
 
             <div className="pt-2 space-y-3">
               <button
