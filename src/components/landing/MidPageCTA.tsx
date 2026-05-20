@@ -20,7 +20,7 @@ const MidPageCTA = () => {
             onClick={handleClick}
             className="cta-line inline-flex h-11 items-center justify-center rounded-md px-5 text-sm font-semibold"
           >
-            אבחון התאמה, 20 דקות
+            20 דקות. בלי תשלום. נדבר.
           </button>
         </div>
       </div>

@@ -50,7 +50,7 @@ const Header = () => {
           onClick={scrollToForm}
           className="cta-line inline-flex h-9 items-center gap-2 rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
         >
-          קביעת אבחון
+          בוא נדבר
         </button>
       </div>
     </header>

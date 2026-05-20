@@ -24,10 +24,10 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרן ולהוסיף ערך על מה שאני מביאה זה מה שנתן לי ביטחון.",
+      "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
     // TODO: replace with real name + business once client approves attribution
     attribution: "לקוחה ראשונה שהשלימה את הרצף",
-    outcome: "עסקה במספר ארבע ספרות נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו ביחד.",
+    outcome: "עסקה של ₪5,500 נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו בליווי.",
     initials: "ל",
   },
 ];
@@ -49,7 +49,7 @@ const ClientProofSection = () => {
               id="client-proof-title"
               className="cor-title mt-2 text-foreground"
             >
-              חודש אחד. ארבעה שלבים. עסקה במספר ארבע ספרות.
+              חודש אחד. ארבעה שלבים. עסקה של ₪5,500.
             </h2>
           </div>
 

@@ -14,13 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Reveal } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
@@ -33,14 +26,13 @@ import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 
 const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
 
-const stageOptions = [
-  { value: "stage-1", label: "שלב 1, נרטיב ייחודי" },
-  { value: "stage-2", label: "שלב 2, הצעת ערך ייחודית" },
-  { value: "stage-3", label: "שלב 3, מוצר ייחודי" },
-  { value: "stage-4", label: "שלב 4, רכישת לקוחות פרואקטיבית" },
-  { value: "full-package", label: "חבילה מלאה" },
-  { value: "unknown", label: "עוד לא יודע" },
-] as const;
+const stageLabels: Record<string, string> = {
+  "stage-1": "שלב 1, נרטיב ייחודי",
+  "stage-2": "שלב 2, הצעת ערך ייחודית",
+  "stage-3": "שלב 3, מוצר ייחודי",
+  "stage-4": "שלב 4, רכישת לקוחות פרואקטיבית",
+  "full-package": "חבילה מלאה",
+};
 
 const timeWindows = [
   { id: "morning", label: "בוקר, 08:00 עד 12:00" },
@@ -49,26 +41,34 @@ const timeWindows = [
 ] as const;
 
 /**
- * Two-step progressive form.
- * Step 1 (low friction): name, email, phone, stage. 4 fields. ~17-25% conversion.
- * Step 2 (after step 1 submit, before final send): challenge text + time windows.
- *   Optional but encouraged. The user is already invested by this point.
+ * Two-step progressive form, psychological order:
+ * Step 1 (low-stakes emotional entry): the pain in one sentence + name.
+ *   Lets the visitor "pay" with a small disclosure before identity.
+ * Step 2 (commitment): phone (required), email + time windows (optional).
+ *   They are already invested by this point.
+ * Stage selection (which package) is decided in the call, not on the form.
  */
 const stepOneSchema = z.object({
+  challenge: z
+    .string()
+    .min(3, { message: "כתוב/י משפט אחד" })
+    .max(800, { message: "תיאור ארוך מדי" }),
   fullName: z
     .string()
     .min(2, { message: "שם קצר מדי" })
     .max(80, { message: "שם ארוך מדי" }),
-  email: z.string().email({ message: "כתובת מייל לא תקינה" }),
+});
+
+const stepTwoSchema = z.object({
   phone: z
     .string()
     .min(9, { message: "מספר טלפון לא תקין" })
     .regex(ISRAELI_PHONE, { message: "מספר טלפון ישראלי לא תקין" }),
-  stage: z.string().min(1, { message: "יש לבחור שלב" }),
-});
-
-const stepTwoSchema = z.object({
-  challenge: z.string().max(800, { message: "תיאור ארוך מדי" }).optional(),
+  email: z
+    .string()
+    .email({ message: "כתובת מייל לא תקינה" })
+    .optional()
+    .or(z.literal("")),
   preferredTimes: z.array(z.string()).optional(),
 });
 
@@ -87,23 +87,23 @@ const DiagnosticFormSection = () => {
   const stepOne = useForm<StepOneValues>({
     resolver: zodResolver(stepOneSchema),
     mode: "onTouched",
-    defaultValues: { fullName: "", email: "", phone: "", stage: "" },
+    defaultValues: { challenge: "", fullName: "" },
   });
 
   const stepTwo = useForm<StepTwoValues>({
     resolver: zodResolver(stepTwoSchema),
     mode: "onTouched",
-    defaultValues: { challenge: "", preferredTimes: [] },
+    defaultValues: { phone: "", email: "", preferredTimes: [] },
   });
 
+  // When a stage button on the page is clicked, we still capture the intent
+  // for the payload — but we never ask the visitor to choose a stage in the form.
+  const [stageHint, setStageHint] = useState<string>("");
   useEffect(() => {
     if (selectedStage) {
-      stepOne.setValue("stage", selectedStage, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
+      setStageHint(stageLabels[selectedStage] || selectedStage);
     }
-  }, [selectedStage, stepOne]);
+  }, [selectedStage]);
 
   const handleFirstFocus = () => {
     if (!hasInteracted) {
@@ -119,8 +119,6 @@ const DiagnosticFormSection = () => {
     if (isSending) return;
     setIsSending(true);
     setServerError(null);
-    const stageLabel =
-      stageOptions.find((s) => s.value === one.stage)?.label || one.stage;
     const timeIds = two.preferredTimes || [];
     const timeLabels = timeIds
       .map((id) => timeWindows.find((t) => t.id === id)?.label)
@@ -128,10 +126,10 @@ const DiagnosticFormSection = () => {
 
     const payload: DiagnosticPayload = {
       fullName: one.fullName,
-      email: one.email,
-      phone: one.phone,
-      stage: stageLabel,
-      challenge: two.challenge || "(לא מולא)",
+      email: two.email && two.email.length > 0 ? two.email : "(לא מולא)",
+      phone: two.phone,
+      stage: stageHint || "(נקבע בשיחה)",
+      challenge: one.challenge,
       preferredTimes: timeLabels.length > 0 ? timeLabels : ["(לא מולא)"],
     };
 
@@ -160,12 +158,6 @@ const DiagnosticFormSection = () => {
     await submitFinal(stepOneData, values);
   };
 
-  const skipStepTwo = async () => {
-    if (!stepOneData) return;
-    trackEvent("form_step_skipped", { step: 2 });
-    await submitFinal(stepOneData, { challenge: "", preferredTimes: [] });
-  };
-
   return (
     <section
       id="diagnostic-form"
@@ -178,16 +170,16 @@ const DiagnosticFormSection = () => {
           <Reveal className="space-y-10">
             <div className="space-y-3">
               <p className="cor-overline-he text-muted-foreground">
-                אבחון התאמה
+                שיחה ראשונה
               </p>
               <h2
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                20 דקות. בלי תשלום. בלי התחייבות.
+                20 דקות. בלי תשלום. נדבר.
               </h2>
               <p className="cor-body-lg text-foreground/80">
-                בסוף השיחה אני אומר ישר אם זה מתאים. אם לא, גם זה תשובה.
+                אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
               <div className="flex items-center gap-2 pt-2">
                 <span
@@ -216,33 +208,17 @@ const DiagnosticFormSection = () => {
                 >
                   <FormField
                     control={stepOne.control}
-                    name="fullName"
+                    name="challenge"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>שם מלא
+                          <span className="field-num">01.</span>במשפט אחד, מה התקיעה
                         </FormLabel>
                         <FormControl>
-                          <Input type="text" autoComplete="name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={stepOne.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          <span className="field-num">02.</span>מייל
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            dir="ltr"
-                            autoComplete="email"
+                          <Textarea
+                            rows={3}
+                            maxLength={800}
+                            placeholder="לדוגמה: יש לי ניסיון של 15 שנה, אבל לא מצליח/ה לתרגם את זה לפניות..."
                             {...field}
                           />
                         </FormControl>
@@ -253,6 +229,49 @@ const DiagnosticFormSection = () => {
 
                   <FormField
                     control={stepOne.control}
+                    name="fullName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          <span className="field-num">02.</span>איך לקרוא לך
+                        </FormLabel>
+                        <FormControl>
+                          <Input type="text" autoComplete="name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="space-y-3 pt-2">
+                    <button
+                      type="submit"
+                      disabled={stepOne.formState.isSubmitting}
+                      className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
+                    >
+                      המשך
+                    </button>
+                    <p className="text-center text-xs leading-relaxed text-muted-foreground">
+                      עוד שלב אחד. המידע נשמר רק לצורך השיחה.
+                    </p>
+                  </div>
+                </form>
+              </Form>
+            )}
+
+            {step === 2 && (
+              <Form {...stepTwo}>
+                <form
+                  onSubmit={stepTwo.handleSubmit(onStepTwoSubmit)}
+                  className="space-y-7"
+                  noValidate
+                >
+                  <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground/85">
+                    תודה. עוד שדה אחד וסיימנו. הטלפון הוא בשביל שאחזור אליך — לא נעשה ניוזלטר ולא נשתף עם אף אחד.
+                  </p>
+
+                  <FormField
+                    control={stepTwo.control}
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
@@ -274,73 +293,20 @@ const DiagnosticFormSection = () => {
                   />
 
                   <FormField
-                    control={stepOne.control}
-                    name="stage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          <span className="field-num">04.</span>שלב או חבילה
-                        </FormLabel>
-                        <Select
-                          dir="rtl"
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="בחרו אפשרות" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {stageOptions.map((opt) => (
-                              <SelectItem key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="space-y-3 pt-2">
-                    <button
-                      type="submit"
-                      disabled={stepOne.formState.isSubmitting}
-                      className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
-                    >
-                      המשך
-                    </button>
-                    <p className="text-center text-xs leading-relaxed text-muted-foreground">
-                      תשובה תוך 24 שעות. המידע נשמר רק לצורך השיחה.
-                    </p>
-                  </div>
-                </form>
-              </Form>
-            )}
-
-            {step === 2 && (
-              <Form {...stepTwo}>
-                <form
-                  onSubmit={stepTwo.handleSubmit(onStepTwoSubmit)}
-                  className="space-y-7"
-                  noValidate
-                >
-                  <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground/85">
-                    תודה. עוד שני שדות אופציונליים שיעזרו לי להגיע מוכן לשיחה. אפשר גם לדלג ולשלוח עכשיו.
-                  </p>
-
-                  <FormField
                     control={stepTwo.control}
-                    name="challenge"
+                    name="email"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">05.</span>במשפט אחד, מה התהליך שאתם מנסים לזוז בו ולא מצליחים
+                          <span className="field-num">04.</span>מייל (אופציונלי)
                         </FormLabel>
                         <FormControl>
-                          <Textarea rows={4} maxLength={800} {...field} />
+                          <Input
+                            type="email"
+                            dir="ltr"
+                            autoComplete="email"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -362,7 +328,7 @@ const DiagnosticFormSection = () => {
                       return (
                         <FormItem>
                           <FormLabel>
-                            <span className="field-num">06.</span>חלונות זמן נוחים לשיחה
+                            <span className="field-num">05.</span>חלונות זמן נוחים (אופציונלי)
                           </FormLabel>
                           <div className="mt-2 space-y-2">
                             {timeWindows.map((tw) => {
@@ -406,15 +372,7 @@ const DiagnosticFormSection = () => {
                       disabled={isSending}
                       className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                     >
-                      {isSending ? "שולח" : "אני רוצה לקבוע 20 דקות"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={skipStepTwo}
-                      disabled={isSending}
-                      className="cta-text inline-flex w-full items-center justify-center text-sm disabled:opacity-50"
-                    >
-                      דלג ושלח עכשיו
+                      {isSending ? "שולח" : "שלח, אחזור אליך תוך 24 שעות"}
                     </button>
                   </div>
                 </form>

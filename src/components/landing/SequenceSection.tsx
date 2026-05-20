@@ -135,7 +135,7 @@ const SequenceSection = () => {
           delay={0.1}
           className="mx-auto mt-14 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground"
         >
-          סיום הרצף הראשון. לקוחה אחת השלימה את הרצף בחודש, ועסקה במספר ארבע ספרות נסגרה אחרי השלב הרביעי.
+          לא בטוח מאיפה להתחיל? בשיחה הראשונה נחליט ביחד. רוב הלקוחות מתחילים בשלב 1.
         </Reveal>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/landing/Hero";
+import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
@@ -8,7 +9,6 @@ import ClientProofSection from "@/components/landing/ClientProofSection";
 import MidPageCTA from "@/components/landing/MidPageCTA";
 import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
 import CommitmentSection from "@/components/landing/CommitmentSection";
-import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -53,14 +53,14 @@ const Landing = () => {
 
         <main className="divide-y divide-border">
           <Hero />
+          <WhatYouTriedSection />
+          <ClientProofSection />
           <OriginStorySection />
           <SequenceSection />
           <FullPackageSection />
-          <ClientProofSection />
           <MidPageCTA />
           <ProcessPreviewSection />
           <CommitmentSection />
-          <NotForEveryoneSection />
           <FAQSection />
           <DiagnosticFormSection />
         </main>

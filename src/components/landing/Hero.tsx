@@ -22,23 +22,26 @@ const Hero = () => {
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
           <div className="order-2 md:order-1 space-y-7 animate-slow-fade-in">
             <h1 id="hero-title" className="cor-display text-foreground">
-              מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי. מנרטיב לרכישת לקוחות בשלושים ימים.
+              יש לך מקצוע. יש לך ידע. אבל כשבא הזמן להגיד את זה ללקוח, הראש מתפזר לעשרה כיוונים בו-זמנית.
             </h1>
 
             <p id="hero-subtitle" className="cor-body-lg max-w-xl text-foreground/85">
-              אתם כבר חושבים על המוצר, על המכירה, על הלקוחות. אני חושב על הצורה שבה אתם חושבים על זה.
+              לא חסר לך ידע, חסר לך מבנה לתרגם אותו. 30 יום, 4 פגישות, בסופן: משפט שמסביר אותך, מחיר שיוצא בלי גמגום, ו-10 פניות לאנשים אמיתיים.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-2 space-y-3">
               <button
                 type="button"
                 onClick={scrollToForm}
                 aria-describedby="hero-subtitle"
-                aria-label="הזמנת אבחון: 20 דקות לזיהוי האירוע שאתה לא מסוגל להחמיא לעצמך עליו היום"
-                className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="20 דקות, בלי תשלום, נדבר"
+                className="cta-warm-lg inline-flex h-14 items-center justify-center rounded-md px-8 text-base font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                20 דקות לזיהוי האירוע שאתה לא מסוגל להחמיא לעצמך עליו היום
+                20 דקות. בלי תשלום. נדבר.
               </button>
+              <p className="text-xs text-muted-foreground">
+                לקוחה ראשונה — עסקה של ₪5,500 בחודש הראשון.
+              </p>
             </div>
           </div>
 

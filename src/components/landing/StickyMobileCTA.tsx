@@ -9,7 +9,7 @@ const StickyMobileCTA = () => {
       const y = window.scrollY;
       const pageBottom =
         document.documentElement.scrollHeight - window.innerHeight;
-      const showAfterHero = y > window.innerHeight * 0.85;
+      const showAfterHero = y > window.innerHeight * 0.3;
       const nearBottom = y > pageBottom - 400;
       setVisible(showAfterHero && !nearBottom);
     };
@@ -41,9 +41,9 @@ const StickyMobileCTA = () => {
           type="button"
           onClick={handleClick}
           className="cta-action inline-flex h-12 w-full items-center justify-center rounded-md text-sm font-semibold"
-          aria-label="גלילה לטופס אבחון התאמה"
+          aria-label="גלילה לטופס יצירת קשר"
         >
-          20 דקות לאבחון התאמה
+          20 דקות. בלי תשלום. נדבר.
         </button>
       </div>
     </div>
