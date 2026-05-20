@@ -55,7 +55,7 @@ const ProcessPreviewSection = () => {
         >
           {beats.map((b) => (
             <RevealItem key={b.marker} as="li">
-              <p className="font-mono text-xs tracking-wide text-accent">
+              <p className="font-mono text-xs tracking-wide text-primary">
                 {b.marker}
               </p>
               <h3 className="cor-subheading mt-2 text-foreground">

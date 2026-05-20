@@ -185,12 +185,12 @@ const DiagnosticFormSection = () => {
               <div className="flex items-center gap-2 pt-2">
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
-                    step === 1 ? "bg-accent" : "bg-foreground/40"
+                    step >= 1 ? "bg-primary" : "bg-border"
                   }`}
                 />
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
-                    step === 2 ? "bg-accent" : "bg-border"
+                    step >= 2 ? "bg-primary" : "bg-border"
                   }`}
                 />
               </div>
