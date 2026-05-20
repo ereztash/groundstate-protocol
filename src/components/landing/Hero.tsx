@@ -72,8 +72,10 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Portrait: smaller on mobile, appears after the CTA. Full size on desktop. */}
-          <div className="order-2">
+          {/* Portrait: hidden on the smallest phones (under 380px), small on
+              normal mobile, full size on desktop. Saves a viewport worth of
+              vertical space on tight screens where the CTA is what matters. */}
+          <div className="order-2 hidden min-[380px]:block">
             <figure
               className="relative mx-auto aspect-square w-44 sm:w-56 md:w-full md:max-w-[380px]"
               aria-labelledby="hero-portrait-caption"

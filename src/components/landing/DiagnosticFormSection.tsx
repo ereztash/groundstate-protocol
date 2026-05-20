@@ -182,7 +182,26 @@ const DiagnosticFormSection = () => {
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
-              <div className="flex items-center gap-2 pt-2">
+
+              <ul
+                aria-label="מה תיקח מהשיחה"
+                className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
+              >
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תדע אם זה מתאים לך — ביושר, גם אם לא.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תדע מאיזה שלב להתחיל ולמה.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                  <span>תקבל פרשנות אחת על התקיעה שלך — גם אם לא נמשיך ביחד.</span>
+                </li>
+              </ul>
+
+              <div className="flex items-center gap-2 pt-3">
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
                     step >= 1 ? "bg-primary" : "bg-border"
