@@ -12,7 +12,8 @@ declare global {
 }
 
 const MEASUREMENT_ID =
-  (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined) ?? "";
+  (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined) ||
+  "G-8E8CR8Q65V";
 
 function hasGtag(): boolean {
   return typeof window !== "undefined" && typeof window.gtag === "function";
