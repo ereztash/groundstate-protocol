@@ -14,7 +14,10 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* basename mirrors vite.config.ts `base`, so routes resolve correctly
+          when the app is served from a subpath like /groundstate-protocol/
+          on GitHub Pages while still working at "/" locally and on Lovable. */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/groundstate" element={<Index />} />
