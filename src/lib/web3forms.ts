@@ -1,12 +1,16 @@
 // Google Apps Script Web App endpoint.
 // Configure via VITE_APPS_SCRIPT_URL and VITE_APPS_SCRIPT_SECRET in your .env file.
 // See .env.example.
+// `||` (not `??`) so empty strings — what GitHub Actions injects when a
+// repo secret is unset — also fall through to the in-code default. Without
+// this, a missing secret produced APPS_SCRIPT_URL = "" and fetch("") was
+// resolved against the current page, returning 405 from GitHub Pages.
 const APPS_SCRIPT_URL =
-  (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ??
+  (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ||
   "https://script.google.com/macros/s/AKfycbxu9YILo5z5h45xZJ0ne7KW9M_xpzu_zfdHlcSnoe9y3Bj0PpdE65_cMcIGL0VLulfh/exec";
 
 const SECRET_TOKEN =
-  (import.meta.env.VITE_APPS_SCRIPT_SECRET as string | undefined) ??
+  (import.meta.env.VITE_APPS_SCRIPT_SECRET as string | undefined) ||
   "5e197f8f78d12cdd1e2bb77cc1dd44e9";
 
 export type Web3FormsResult = {
