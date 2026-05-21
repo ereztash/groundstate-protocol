@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -82,7 +82,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Heebo', 'Inter', sans-serif;
+    font-family: 'Assistant', 'Inter', sans-serif;
     font-feature-settings: 'kern';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -105,12 +105,14 @@
 
 @layer components {
   .cor-display {
+    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
     font-size: clamp(1.875rem, 4.5vw, 3rem);
     font-weight: 700;
     line-height: 1.18;
     letter-spacing: -0.02em;
   }
   .cor-title {
+    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
     font-size: clamp(1.5rem, 3vw, 2.125rem);
     font-weight: 700;
     line-height: 1.25;
@@ -155,7 +157,7 @@
   /* Form field numeric prefix (01., 02., ...). Structural label, not action. */
   .field-num {
     display: inline-block;
-    font-family: 'Inter', 'Heebo', monospace;
+    font-family: 'Inter', 'Assistant', monospace;
     font-size: 0.6875rem;
     font-weight: 500;
     letter-spacing: 0.06em;
@@ -169,7 +171,7 @@
      Teal carries "ordered structure", which is what these numbers mean. */
   .stage-numeral {
     display: inline-block;
-    font-family: 'Inter', 'Heebo', sans-serif;
+    font-family: 'Inter', 'Assistant', sans-serif;
     font-size: clamp(2.5rem, 4.5vw, 3.25rem);
     font-weight: 300;
     line-height: 1;
@@ -192,7 +194,7 @@
     position: absolute;
     right: -0.05em;
     top: -0.55em;
-    font-family: 'Inter', 'Heebo', serif;
+    font-family: 'Inter', 'Assistant', serif;
     font-size: 3.25rem;
     font-weight: 600;
     color: hsl(var(--primary) / 0.4);
@@ -416,7 +418,7 @@
   .animate-text-shrink { animation: text-shrink 2s ease-out forwards; }
 
   .font-display {
-    font-family: 'Inter', 'Heebo', sans-serif;
+    font-family: 'Inter', 'Assistant', sans-serif;
     font-weight: 200;
     letter-spacing: -0.03em;
   }
