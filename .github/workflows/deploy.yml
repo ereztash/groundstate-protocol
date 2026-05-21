@@ -42,6 +42,7 @@ jobs:
           VITE_APPS_SCRIPT_URL: ${{ secrets.VITE_APPS_SCRIPT_URL }}
           VITE_APPS_SCRIPT_SECRET: ${{ secrets.VITE_APPS_SCRIPT_SECRET }}
           VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+          VITE_CLARITY_PROJECT_ID: ${{ secrets.VITE_CLARITY_PROJECT_ID }}
 
       - name: SPA fallback (copy index.html → 404.html)
         # GitHub Pages returns 404 for any path not matching a static file.
