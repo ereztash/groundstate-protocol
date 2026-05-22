@@ -11,7 +11,7 @@ const LandingFooter = () => {
               ארז טל-שיר
             </p>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              מומחה במטא-תהליכים. עובד סוציאלי טכנולוגי-עסקי.
+              עובד סוציאלי בהכשרה. יועץ עסקי לעצמאים בפועל.
             </p>
           </div>
 
