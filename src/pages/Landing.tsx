@@ -4,6 +4,7 @@ import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
+import StageRecommenderSection from "@/components/landing/StageRecommenderSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
 import MidPageCTA from "@/components/landing/MidPageCTA";
@@ -58,6 +59,7 @@ const Landing = () => {
           <OriginStorySection />
           <ProcessPreviewSection />
           <SequenceSection />
+          <StageRecommenderSection />
           <FullPackageSection />
           <MidPageCTA />
           <CommitmentSection />
