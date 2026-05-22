@@ -17,7 +17,7 @@ const OriginStorySection = () => {
               id="origin-title"
               className="cor-title mt-2 text-foreground"
             >
-              אני אינטגרטור. כמוך.
+              גם לי היה ידע. ולא ידעתי איך להעביר אותו.
             </h2>
           </div>
 

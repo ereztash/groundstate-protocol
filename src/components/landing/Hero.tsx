@@ -101,7 +101,7 @@ const Hero = () => {
                 />
               </div>
               <figcaption id="hero-portrait-caption" className="sr-only">
-                פורטרט מקצועי של ארז טל-שיר — אינטגרטור עסקי לעצמאים.
+                פורטרט מקצועי של ארז טל-שיר — יועץ עסקי לעצמאים.
               </figcaption>
             </figure>
           </div>
