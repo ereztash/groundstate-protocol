@@ -22,6 +22,25 @@ const Hero = () => {
         <div className="grid items-center gap-10 md:grid-cols-[1.15fr_1fr] md:gap-16">
           {/* Order 1 on every breakpoint — text leads on mobile, no founder-face wall */}
           <div className="order-1 space-y-7 animate-slow-fade-in">
+            {/* Quantitative anchor — first thing the eye reaches above the
+                emotional hook. Mirrors the TL;DR pattern (dotted-divider
+                inline list) but in the brand-primary teal as a smaller
+                kicker, so it reads as "credentialed metric" not "feature". */}
+            <p
+              aria-label="תוצאה ראשונה: עסקה של חמש מאות וחמש מאות שקלים בחודש הראשון"
+              className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11.5px] font-semibold uppercase tracking-[0.18em] text-primary/85"
+            >
+              <span
+                aria-hidden="true"
+                className="inline-block h-1.5 w-1.5 rounded-full bg-primary/70"
+              />
+              <span>תוצאה ראשונה</span>
+              <span aria-hidden="true" className="text-primary/30">·</span>
+              <span>עסקה של ₪5,500</span>
+              <span aria-hidden="true" className="text-primary/30">·</span>
+              <span>חודש אחד</span>
+            </p>
+
             <h1 id="hero-title" className="cor-display text-foreground">
               יש לך מקצוע. יש לך ידע. אבל כשבא הזמן להגיד את זה ללקוח, הראש מתפזר לעשרה כיוונים בו-זמנית.
             </h1>
@@ -56,7 +75,7 @@ const Hero = () => {
               </div>
             </dl>
 
-            <div className="pt-2 space-y-3">
+            <div className="pt-2">
               <button
                 type="button"
                 onClick={scrollToForm}
@@ -66,9 +85,6 @@ const Hero = () => {
               >
                 20 דקות. בלי תשלום. נדבר.
               </button>
-              <p className="text-xs text-muted-foreground">
-                לקוחה ראשונה — עסקה של ₪5,500 בחודש הראשון.
-              </p>
             </div>
           </div>
 

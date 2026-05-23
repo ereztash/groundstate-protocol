@@ -25,4 +25,26 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Split node_modules into stable vendor chunks so cache hits survive
+    // app-code deploys. Without this, the bundle is one ~600KB chunk and
+    // every change reships React + framer-motion + Radix to all users.
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (!id.includes("node_modules")) return undefined;
+          if (id.includes("/react/") || id.includes("/react-dom/") || id.includes("/scheduler/")) {
+            return "react-vendor";
+          }
+          if (id.includes("/framer-motion/") || id.includes("/motion-utils/") || id.includes("/motion-dom/")) {
+            return "motion";
+          }
+          if (id.includes("/@radix-ui/")) {
+            return "radix";
+          }
+          return "vendor";
+        },
+      },
+    },
+  },
 }));
