@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Reveal } from "./Reveal";
+import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
 
@@ -12,6 +12,7 @@ type Option = {
 
 type Question = {
   key: "narrative" | "valueprop" | "product" | "outreach";
+  anticipation: string;
   text: string;
   options: [Option, Option, Option];
 };
@@ -19,6 +20,7 @@ type Question = {
 const QUESTIONS: Question[] = [
   {
     key: "narrative",
+    anticipation: "שתי השניות הראשונות של כל פגישה.",
     text: "כשאתה אומר במסיבה ״אני עוסק ב-X״ — מה קורה לרוב?",
     options: [
       { label: "האדם מבין מיד ושואל שאלה ספציפית.", value: 0 },
@@ -32,6 +34,7 @@ const QUESTIONS: Question[] = [
   },
   {
     key: "valueprop",
+    anticipation: "הרגע השני של אמת — אחרי המשפט.",
     text: "כשלקוח רואה את המחיר שלך — מה התגובה הראשונה?",
     options: [
       { label: "״מצוין, מתי מתחילים?״", value: 0 },
@@ -41,6 +44,7 @@ const QUESTIONS: Question[] = [
   },
   {
     key: "product",
+    anticipation: "מה אתה שולח, אחרי שהוא ביקש.",
     text: "לקוח שואל ״מה אני מקבל בדיוק?״ — מה אתה עושה?",
     options: [
       { label: "שולח קובץ מוכן שאני שולח לכל פנייה.", value: 0 },
@@ -50,6 +54,7 @@ const QUESTIONS: Question[] = [
   },
   {
     key: "outreach",
+    anticipation: "השאלה האחרונה — הקריטית מכולן.",
     text: "חודש הבא — מאיפה הלקוחות הבאים שלך יבואו?",
     options: [
       {
@@ -73,124 +78,162 @@ type Recommendation = {
   ctaPrimary: string;
 };
 
-function recommend(answers: Answer[]): Recommendation {
-  const [narrative, valueprop, product, outreach] = answers;
-
-  if (narrative >= 2) {
-    return {
-      stage: "stage-1",
-      number: "01",
-      name: "נרטיב ייחודי",
-      price: "1,000 ש״ח",
-      deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
-      reflection:
-        "אמרת שכשאתה אומר במסיבה מה אתה עושה — האדם מהנהן ומחליף נושא. זה האות שהנרטיב עוד לא יודע לתפוס את הקרקע. כל מה שבא אחריו — מחיר, מוצר, פניות — נשען עליו. אז שם מתחילים.",
-      reason:
-        "כל מה שבא אחר כך מבוסס על משפט הליבה שלך. בלעדיו, השלבים הבאים נשענים על קרקע רכה.",
-      ctaPrimary: "אני רוצה את שלב 1",
-    };
-  }
-
-  if (valueprop >= 2) {
-    return {
-      stage: "stage-2",
-      number: "02",
-      name: "הצעת ערך ייחודית",
-      price: "1,300 ש״ח",
-      deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
-      reflection:
-        "סיפרת שלקוח רואה את המחיר ואומר ״וואו, זה הרבה״, ואתה מנמק בכל פעם. זו לא בעיה של מחיר — זו בעיה של הצעה. אם הלקוח לא רואה למה זה שווה לפני שראה את הסכום, הסכום תמיד יהיה גדול.",
-      reason:
-        "יש לך נרטיב. החסר הוא ההצעה הברורה ללקוח — מה הוא מקבל, ולמה זה שווה את הסכום.",
-      ctaPrimary: "אני רוצה את שלב 2",
-    };
-  }
-
-  if (product >= 2) {
-    return {
-      stage: "stage-3",
-      number: "03",
-      name: "מוצר ייחודי",
-      price: "1,600 ש״ח",
-      deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
-      reflection:
-        "אמרת שכשלקוח שואל ״מה אני מקבל?״ אתה פותח Word ריק. זה אומר שאתה מתחיל מאפס לכל לקוח — וזה גוזל זמן ומשדר חוסר ביטחון. צריך מסמך אחד שעובד פעם אחר פעם.",
-      reason:
-        "יש לך הצעת ערך אבל אין תיעוד מוצרי. ניצור מסמך אחד שנשלח שוב ושוב, במקום לבנות מאפס בכל פעם.",
-      ctaPrimary: "אני רוצה את שלב 3",
-    };
-  }
-
-  if (outreach >= 2) {
-    return {
-      stage: "stage-4",
-      number: "04",
-      name: "רכישת לקוחות פרואקטיבית",
-      price: "1,900 ש״ח",
-      deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
-      reflection:
-        "אמרת שאתה לא יודע מאיפה יבואו הלקוחות הבאים. זו לא בעיה של איכות — זו בעיה של מערכת. כל החודש שלך נסמך על תקווה. צריך צינור פעיל, גם אם הוא קטן.",
-      reason:
-        "המוצר מוכן והנרטיב חד. חסר רק צינור פנייה שיביא את 10 השיחות הבאות.",
-      ctaPrimary: "אני רוצה את שלב 4",
-    };
-  }
-
-  const sum = answers.reduce((s, v) => s + v, 0);
-
-  if (sum === 0) {
-    return {
-      stage: "stage-4",
-      number: "04",
-      name: "רכישת לקוחות פרואקטיבית",
-      price: "1,900 ש״ח",
-      deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
-      reflection:
-        "מבחינת המבנה — אתה במצב טוב. נרטיב חד, הצעה ברורה, מוצר מוכן. רוב הלקוחות שלי מגיעים אחרי שמשהו נשבר פתאום: לקוח מרכזי עזב, השוק זז, החלטת להעלות מחיר. עד שזה קורה אצלך — תוסף של פניות יוצאות יכול להגדיל בלי להזיז דבר אחר.",
-      reason:
-        "אתה במצב טוב. פניות יוצאות הן תוסף — לא תיקון, אלא שכבה שתיתן לך שליטה על קצב הלקוחות.",
-      ctaPrimary: "אני רוצה את שלב 4",
-    };
-  }
-
-  if (sum <= 2) {
-    return {
-      stage: "stage-1",
-      number: "01",
-      name: "נרטיב ייחודי",
-      price: "1,000 ש״ח",
-      deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
-      reflection:
-        "יש לך כיוון בכל ארבעת הצמתים — אבל אף אחד לא ממש חד. ברוב המקרים, חידוד הנרטיב הוא הצמיד שכשפותחים אותו השאר נפתח אוטומטית. עדיף לחדד את הקרקע לפני שמוסיפים שכבות.",
-      reason:
-        "יש לך כיוון בכל הצמתים — אף אחד לא חד. חידוד הנרטיב מחדד את שאר השלבים כתוצאה.",
-      ctaPrimary: "אני רוצה את שלב 1",
-    };
-  }
-
-  return {
-    stage: "full-package",
-    number: null,
-    name: "החבילה המלאה",
-    price: "4,500 ש״ח",
-    deliverable: "כל ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
+// Single-problem recommendations (one "2" wins)
+const SINGLE_RECS: Record<number, Recommendation> = {
+  0: {
+    stage: "stage-1",
+    number: "01",
+    name: "נרטיב ייחודי",
+    price: "1,000 ש״ח",
+    deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
     reflection:
-      "כמה צמתים דורשים עבודה ביחד. במקום לקנות שלבים בנפרד, החבילה המלאה זולה ב-1,300 ש״ח ושומרת על המומנטום בין הפגישות.",
+      "אמרת שכשאתה אומר במסיבה מה אתה עושה — האדם מהנהן ומחליף נושא. זה האות שהנרטיב עוד לא יודע לתפוס את הקרקע. כל מה שבא אחריו — מחיר, מוצר, פניות — נשען עליו. אז שם מתחילים.",
     reason:
-      "כמה שלבים דורשים עבודה. החבילה המלאה זולה ב-1,300 ש״ח לעומת רכישה שלב-אחר-שלב, ושומרת על המומנטום.",
-    ctaPrimary: "אני רוצה את החבילה המלאה",
-  };
+      "כל מה שבא אחר כך מבוסס על משפט הליבה שלך. בלעדיו, השלבים הבאים נשענים על קרקע רכה.",
+    ctaPrimary: "אני רוצה את שלב 1 — 1,000 ש״ח",
+  },
+  1: {
+    stage: "stage-2",
+    number: "02",
+    name: "הצעת ערך ייחודית",
+    price: "1,300 ש״ח",
+    deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
+    reflection:
+      "סיפרת שלקוח רואה את המחיר ואומר ״וואו, זה הרבה״, ואתה מנמק בכל פעם. זו לא בעיה של מחיר — זו בעיה של הצעה. אם הלקוח לא רואה למה זה שווה לפני שראה את הסכום, הסכום תמיד יהיה גדול.",
+    reason:
+      "יש לך נרטיב. החסר הוא ההצעה הברורה ללקוח — מה הוא מקבל, ולמה זה שווה את הסכום.",
+    ctaPrimary: "אני רוצה את שלב 2 — 1,300 ש״ח",
+  },
+  2: {
+    stage: "stage-3",
+    number: "03",
+    name: "מוצר ייחודי",
+    price: "1,600 ש״ח",
+    deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
+    reflection:
+      "אמרת שכשלקוח שואל ״מה אני מקבל?״ אתה פותח Word ריק. זה אומר שאתה מתחיל מאפס לכל לקוח — וזה גוזל זמן ומשדר חוסר ביטחון. צריך מסמך אחד שעובד פעם אחר פעם.",
+    reason:
+      "יש לך הצעת ערך אבל אין תיעוד מוצרי. ניצור מסמך אחד שנשלח שוב ושוב, במקום לבנות מאפס בכל פעם.",
+    ctaPrimary: "אני רוצה את שלב 3 — 1,600 ש״ח",
+  },
+  3: {
+    stage: "stage-4",
+    number: "04",
+    name: "רכישת לקוחות פרואקטיבית",
+    price: "1,900 ש״ח",
+    deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
+    reflection:
+      "אמרת שאתה לא יודע מאיפה יבואו הלקוחות הבאים. זו לא בעיה של איכות — זו בעיה של מערכת. כל החודש שלך נסמך על תקווה. צריך צינור פעיל, גם אם הוא קטן.",
+    reason:
+      "המוצר מוכן והנרטיב חד. חסר רק צינור פנייה שיביא את 10 השיחות הבאות.",
+    ctaPrimary: "אני רוצה את שלב 4 — 1,900 ש״ח",
+  },
+};
+
+// Dual-problem reflections — when exactly two answers are "2"
+// Recommendation is always the lower-indexed stage (more foundational).
+const DUAL_REFLECTIONS: Record<string, string> = {
+  "0-1":
+    "אנשים מהנהנים ומחליפים נושא — וגם לקוחות בוואו על המחיר. שני אלה ביחד מצביעים על נושא אחד: המאזין לא מבין מה אתה מוכר עד שראה את הסכום. ובלי הבנה — סכום תמיד גדול. הנרטיב הוא הקרקע, אז משם מתחילים.",
+  "0-2":
+    "אנשים מהנהנים ומחליפים נושא — וגם אתה פותח Word ריק לכל לקוח. שני אלה ביחד אומרים שהמסר עוד לא מקודד. בלי משפט ליבה לא תוכל לתחזק מסמך אחד; בלי מסמך אחד, כל לקוח דורש מאמץ מאפס. נרטיב ראשון, מוצר אחריו.",
+  "0-3":
+    "אנשים מהנהנים ומחליפים נושא — וגם אתה לא יודע מאיפה יבוא חודש הבא. אם פניות יוצאות לא מצליחות, חלק גדול מהסיבה הוא שהמשפט הראשון לא תופס. נרטיב מתקן את שני הצמתים ביחד.",
+  "1-2":
+    "לקוחות בוואו על המחיר — וגם אתה פותח Word ריק לכל פנייה. כשאין הצעת ערך ברורה, אין מה לקבוע במסמך; וכשאין מסמך, הצעת הערך נשארת בעל-פה. שני אלה נפתרים בשלב 2 שמייצר את התיאור הראשון.",
+  "1-3":
+    "לקוחות בוואו על המחיר — וגם אין צינור פנייה ברור. שני אלה ביחד אומרים: הצעת הערך לא מספיק חדה כדי שמי שמקבל פנייה ידע מהר למה זה הוא. עובדים על שלב 2 קודם, אחר כך שלב 4 יהיה הרבה יותר קל.",
+  "2-3":
+    "אתה פותח Word ריק לכל לקוח — וגם אין צינור פנייה ברור. שני אלה ביחד אומרים שאין לך ׳נכס׳ להעביר הלאה. בלי מוצר מנוסח, הפנייה — גם אם תיכתב — לא תפעל. שלב 3 הוא הצמיד הראשון.",
+};
+
+const ALL_ZERO_REC: Recommendation = {
+  stage: "stage-4",
+  number: "04",
+  name: "רכישת לקוחות פרואקטיבית",
+  price: "1,900 ש״ח",
+  deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
+  reflection:
+    "מבחינת המבנה — אתה במצב טוב. נרטיב חד, הצעה ברורה, מוצר מוכן. רוב הלקוחות שלי מגיעים אחרי שמשהו נשבר פתאום: לקוח מרכזי עזב, השוק זז, החלטת להעלות מחיר. עד שזה קורה אצלך — תוסף של פניות יוצאות יכול להגדיל בלי להזיז דבר אחר.",
+  reason:
+    "אתה במצב טוב. פניות יוצאות הן תוסף — לא תיקון, אלא שכבה שתיתן לך שליטה על קצב הלקוחות.",
+  ctaPrimary: "אני רוצה את שלב 4 — 1,900 ש״ח",
+};
+
+const MILD_REC: Recommendation = {
+  stage: "stage-1",
+  number: "01",
+  name: "נרטיב ייחודי",
+  price: "1,000 ש״ח",
+  deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
+  reflection:
+    "יש לך כיוון בכל ארבעת הצמתים — אבל אף אחד לא ממש חד. ברוב המקרים, חידוד הנרטיב הוא הצמיד שכשפותחים אותו השאר נפתח אוטומטית. עדיף לחדד את הקרקע לפני שמוסיפים שכבות.",
+  reason:
+    "יש לך כיוון בכל הצמתים — אף אחד לא חד. חידוד הנרטיב מחדד את שאר השלבים כתוצאה.",
+  ctaPrimary: "אני רוצה את שלב 1 — 1,000 ש״ח",
+};
+
+const FULL_PACKAGE_REC: Recommendation = {
+  stage: "full-package",
+  number: null,
+  name: "החבילה המלאה",
+  price: "4,500 ש״ח",
+  deliverable: "כל ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
+  reflection:
+    "כמה צמתים דורשים עבודה ביחד. במקום לקנות שלבים בנפרד, החבילה המלאה זולה ב-1,300 ש״ח ושומרת על המומנטום בין הפגישות.",
+  reason:
+    "כמה שלבים דורשים עבודה. החבילה המלאה זולה ב-1,300 ש״ח לעומת רכישה שלב-אחר-שלב, ושומרת על המומנטום.",
+  ctaPrimary: "אני רוצה את החבילה המלאה — 4,500 ש״ח",
+};
+
+function findTwos(answers: Answer[]): number[] {
+  const twos: number[] = [];
+  answers.forEach((a, i) => {
+    if (a >= 2) twos.push(i);
+  });
+  return twos;
 }
 
-type Phase = "intro" | "question" | "result";
+function recommend(answers: Answer[], openText: string): Recommendation {
+  const twos = findTwos(answers);
+
+  let base: Recommendation;
+
+  if (twos.length >= 3) {
+    base = FULL_PACKAGE_REC;
+  } else if (twos.length === 2) {
+    const key = `${twos[0]}-${twos[1]}`;
+    const reflection = DUAL_REFLECTIONS[key];
+    const single = SINGLE_RECS[twos[0]];
+    base = { ...single, reflection };
+  } else if (twos.length === 1) {
+    base = SINGLE_RECS[twos[0]];
+  } else {
+    const sum = answers.reduce((s, v) => s + v, 0);
+    base = sum === 0 ? ALL_ZERO_REC : MILD_REC;
+  }
+
+  if (openText.trim()) {
+    const quote = openText.trim().slice(0, 200);
+    return {
+      ...base,
+      reflection: `כתבת: ״${quote}״.\n\n${base.reflection}`,
+    };
+  }
+
+  return base;
+}
+
+type Phase = "intro" | "open" | "question" | "result";
 
 type SavedState = {
   phase: Phase;
   stepIndex: number;
   answers: Answer[];
+  openText: string;
 };
 
-const STORAGE_KEY = "cor-sys-wizard-state-v2";
+const STORAGE_KEY = "cor-sys-wizard-state-v3";
 
 function loadState(): SavedState | null {
   if (typeof window === "undefined") return null;
@@ -200,15 +243,17 @@ function loadState(): SavedState | null {
     const parsed = JSON.parse(raw) as SavedState;
     if (
       (parsed.phase === "intro" ||
+        parsed.phase === "open" ||
         parsed.phase === "question" ||
         parsed.phase === "result") &&
       typeof parsed.stepIndex === "number" &&
-      Array.isArray(parsed.answers)
+      Array.isArray(parsed.answers) &&
+      typeof parsed.openText === "string"
     ) {
       return parsed;
     }
   } catch {
-    /* ignore malformed state */
+    /* ignore */
   }
   return null;
 }
@@ -218,7 +263,7 @@ function persistState(state: SavedState): void {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
-    /* ignore quota errors */
+    /* ignore */
   }
 }
 
@@ -231,11 +276,20 @@ function clearPersistedState(): void {
   }
 }
 
+const FADE_IN = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
+  transition: { duration: 0.25, ease: [0, 0, 0.2, 1] as const },
+};
+
 const StageRecommenderSection = () => {
   const { requestStage } = useDiagnosticForm();
   const [phase, setPhase] = useState<Phase>("intro");
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const [openText, setOpenText] = useState("");
+  const [pendingChoice, setPendingChoice] = useState<number | null>(null);
 
   useEffect(() => {
     const saved = loadState();
@@ -243,64 +297,87 @@ const StageRecommenderSection = () => {
       setPhase(saved.phase);
       setStepIndex(saved.stepIndex);
       setAnswers(saved.answers);
+      setOpenText(saved.openText);
     }
   }, []);
 
   useEffect(() => {
-    if (phase === "intro" && answers.length === 0) {
+    if (phase === "intro" && answers.length === 0 && !openText) {
       clearPersistedState();
     } else {
-      persistState({ phase, stepIndex, answers });
+      persistState({ phase, stepIndex, answers, openText });
     }
-  }, [phase, stepIndex, answers]);
+  }, [phase, stepIndex, answers, openText]);
 
   const submitAnswer = useCallback(
-    (value: Answer) => {
+    (optionIdx: number, value: Answer) => {
+      if (pendingChoice !== null) return;
+      setPendingChoice(optionIdx);
       const next = [...answers, value];
       trackEvent("wizard_question_answered", {
         wizard: "stage_recommender",
         question_key: QUESTIONS[stepIndex].key,
         answer_value: value,
       });
-      if (stepIndex < QUESTIONS.length - 1) {
-        setAnswers(next);
-        setStepIndex(stepIndex + 1);
-      } else {
-        const result = recommend(next);
-        trackEvent("wizard_complete", {
-          wizard: "stage_recommender",
-          recommended_stage: result.stage,
-        });
-        setAnswers(next);
-        setPhase("result");
-      }
+      window.setTimeout(() => {
+        if (stepIndex < QUESTIONS.length - 1) {
+          setAnswers(next);
+          setStepIndex(stepIndex + 1);
+        } else {
+          const result = recommend(next, openText);
+          trackEvent("wizard_complete", {
+            wizard: "stage_recommender",
+            recommended_stage: result.stage,
+          });
+          setAnswers(next);
+          setPhase("result");
+        }
+        setPendingChoice(null);
+      }, 280);
     },
-    [answers, stepIndex]
+    [answers, stepIndex, openText, pendingChoice]
   );
 
   useEffect(() => {
     if (phase !== "question") return;
     const handler = (e: KeyboardEvent) => {
+      if (pendingChoice !== null) return;
       if (e.key >= "1" && e.key <= "3") {
         const idx = parseInt(e.key, 10) - 1;
         const opt = QUESTIONS[stepIndex].options[idx];
-        if (opt) submitAnswer(opt.value);
+        if (opt) submitAnswer(idx, opt.value);
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [phase, stepIndex, submitAnswer]);
+  }, [phase, stepIndex, submitAnswer, pendingChoice]);
 
-  const start = () => {
+  const startWizard = () => {
     trackEvent("wizard_start", { wizard: "stage_recommender" });
     setStepIndex(0);
     setAnswers([]);
+    setOpenText("");
+    setPhase("open");
+  };
+
+  const submitOpen = () => {
+    trackEvent("wizard_open_submitted", {
+      wizard: "stage_recommender",
+      has_text: openText.trim().length > 0,
+      text_length: openText.trim().length,
+    });
     setPhase("question");
   };
 
-  const back = () => {
+  const backFromOpen = () => {
+    setPhase("intro");
+    setOpenText("");
+    setAnswers([]);
+  };
+
+  const backFromQuestion = () => {
     if (stepIndex === 0) {
-      setPhase("intro");
+      setPhase("open");
       setAnswers([]);
       return;
     }
@@ -312,6 +389,7 @@ const StageRecommenderSection = () => {
     clearPersistedState();
     setStepIndex(0);
     setAnswers([]);
+    setOpenText("");
     setPhase("intro");
   };
 
@@ -338,12 +416,20 @@ const StageRecommenderSection = () => {
     });
   };
 
-  const result = phase === "result" ? recommend(answers) : null;
+  const result = phase === "result" ? recommend(answers, openText) : null;
   const currentQuestion = phase === "question" ? QUESTIONS[stepIndex] : null;
   const progressPct =
     phase === "question"
       ? Math.round(((stepIndex + 1) / QUESTIONS.length) * 100)
       : 0;
+
+  // Mini-echo: the previous answer's label, shown above the current question
+  const previousAnswerLabel =
+    phase === "question" && stepIndex > 0
+      ? QUESTIONS[stepIndex - 1].options.find(
+          (o) => o.value === answers[stepIndex - 1]
+        )?.label ?? null
+      : null;
 
   return (
     <section
@@ -353,180 +439,323 @@ const StageRecommenderSection = () => {
       aria-labelledby="recommender-overline"
     >
       <div className="mx-auto max-w-2xl px-6">
-        {phase === "intro" && (
-          <Reveal className="space-y-6">
-            <p id="recommender-overline" className="cor-overline-he">
-              בדיקת התאמה
-            </p>
-            <h2 className="cor-title text-foreground">
-              איפה אתה בארבעת הצמתים?
-            </h2>
-            <p className="cor-body-lg text-foreground/80">
-              4 שאלות, דקה. בסוף — לא ״מה לקנות״; אקרא איפה אתה ואגיד מה הצמיד הראשון לפתוח.
-            </p>
-            <button
-              type="button"
-              onClick={start}
-              className="cta-line mt-2 inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
-            >
-              התחל את הבדיקה
-            </button>
-          </Reveal>
-        )}
-
-        {phase === "question" && currentQuestion && (
-          <div className="space-y-8">
-            <div className="space-y-3">
+        <AnimatePresence mode="wait">
+          {/* INTRO */}
+          {phase === "intro" && (
+            <motion.div key="intro" {...FADE_IN} className="space-y-6">
               <p id="recommender-overline" className="cor-overline-he">
                 בדיקת התאמה
               </p>
-              <div className="flex items-baseline justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <span>
-                  שאלה {stepIndex + 1} מתוך {QUESTIONS.length}
-                </span>
-                <span className="text-primary/80">{progressPct}%</span>
-              </div>
-              <div
-                className="h-[2px] w-full overflow-hidden rounded-full bg-border"
-                role="progressbar"
-                aria-valuenow={progressPct}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label={`התקדמות שאלון: ${progressPct} אחוז`}
+              <h2 className="cor-title text-foreground">
+                איפה אתה בארבעת הצמתים?
+              </h2>
+              <p className="cor-body-lg text-foreground/80">
+                5 שאלות, דקה. שאלה אחת פתוחה ו-4 בחירה. בסוף — לא ״מה לקנות״; אקרא איפה אתה ואגיד מה הצמיד הראשון לפתוח.
+              </p>
+              <button
+                type="button"
+                onClick={startWizard}
+                className="cta-line mt-2 inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
               >
-                <div
-                  className="h-full bg-primary transition-all duration-300"
-                  style={{ width: `${progressPct}%` }}
-                />
+                התחל את הבדיקה
+              </button>
+            </motion.div>
+          )}
+
+          {/* OPEN-TEXT Q0 */}
+          {phase === "open" && (
+            <motion.div key="open" {...FADE_IN} className="space-y-6">
+              <div className="space-y-3">
+                <p id="recommender-overline" className="cor-overline-he">
+                  בדיקת התאמה
+                </p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  שאלה פתוחה — לפני שמתחילים
+                </p>
               </div>
-            </div>
-
-            <Reveal key={stepIndex} className="space-y-6">
-              <h3 className="cor-title text-foreground">
-                {currentQuestion.text}
-              </h3>
-
-              <ul className="space-y-3">
-                {currentQuestion.options.map((opt, idx) => (
-                  <li key={opt.label}>
-                    <button
-                      type="button"
-                      onClick={() => submitAnswer(opt.value)}
-                      className="group flex w-full items-baseline justify-between gap-4 rounded-md border border-border bg-card px-5 py-4 text-right text-[15px] leading-snug text-foreground transition-all hover:border-primary hover:bg-primary/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                      aria-label={`אפשרות ${idx + 1}: ${opt.label}`}
-                    >
-                      <span className="flex items-baseline gap-3">
-                        <span
-                          aria-hidden="true"
-                          className="hidden font-mono text-[11px] text-muted-foreground sm:inline"
-                        >
-                          {idx + 1}
-                        </span>
-                        <span>{opt.label}</span>
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="text-primary/40 transition-colors group-hover:text-primary"
-                      >
-                        ←
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-
+              <h2 className="cor-title text-foreground">
+                במשפט אחד — מה התקיעה הכי בוערת אצלך כרגע?
+              </h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                לא חובה. אבל אם תכתוב, אצטט אותך בתשובה — הניתוח יוצא יותר מדויק.
+              </p>
+              <textarea
+                value={openText}
+                onChange={(e) => setOpenText(e.target.value.slice(0, 280))}
+                placeholder="לדוגמה: ״הסיפור שלי נשמע כמו של כל יועץ אחר, ואני לא יודע איך לחדד אותו…״"
+                className="block w-full rounded-md border border-border bg-card px-4 py-3 text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                rows={4}
+                maxLength={280}
+                dir="auto"
+                aria-label="תיאור התקיעה בקצרה"
+              />
               <div className="flex items-center justify-between text-xs">
+                <span className="text-muted-foreground">
+                  {openText.length}/280
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={back}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
+                  onClick={submitOpen}
+                  className="cta-line inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  {stepIndex === 0 ? "חזור להתחלה" : "שאלה קודמת"}
+                  {openText.trim()
+                    ? "המשך ל-4 השאלות"
+                    : "דלג — קח אותי ל-4 השאלות"}
                 </button>
-                <a
-                  href="#diagnostic-form"
-                  onClick={onSkipToForm}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
+                <button
+                  type="button"
+                  onClick={backFromOpen}
+                  className="text-xs text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  דלג ישר לשיחה ←
-                </a>
+                  חזור להתחלה
+                </button>
               </div>
-            </Reveal>
-          </div>
-        )}
+            </motion.div>
+          )}
 
-        {phase === "result" && result && (
-          <Reveal className="space-y-8">
-            <div className="space-y-3">
-              <p id="recommender-overline" className="cor-overline-he">
-                ההמלצה
-              </p>
-              <h2 className="cor-display text-foreground">
-                בסדר. אני מבין איפה אתה.
-              </h2>
-            </div>
-
-            <p className="cor-body-lg text-foreground/85">{result.reflection}</p>
-
-            <div className="cor-card p-6">
-              <div className="border-t border-foreground pb-2 pt-4">
-                {result.number ? (
-                  <span className="stage-numeral block">{result.number}</span>
-                ) : (
-                  <span className="stage-numeral block text-[2rem] leading-none tracking-tight">
-                    01 · 02 · 03 · 04
-                  </span>
-                )}
-              </div>
-
-              <h3 className="cor-subheading mt-4 text-foreground">
-                {result.name}
-              </h3>
-
-              <p className="mt-3 text-sm leading-relaxed text-foreground/80">
-                {result.reason}
-              </p>
-
-              <div className="mt-5 border-r-2 border-border pr-3">
-                <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
-                  תוצר ביד
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-foreground/85">
-                  {result.deliverable}
-                </p>
-              </div>
-
-              <p className="mt-5 text-base font-semibold text-foreground">
-                {result.price}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => onCtaPrimary(result)}
-                className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
-              >
-                {result.ctaPrimary}
-              </button>
-              <button
-                type="button"
-                onClick={() => onCtaSecondary(result)}
-                className="cta-line inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
-              >
-                קודם רוצה לדבר 20 דקות
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={restart}
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+          {/* QUESTION */}
+          {phase === "question" && currentQuestion && (
+            <motion.div
+              key="question-shell"
+              {...FADE_IN}
+              className="space-y-8"
             >
-              שנה תשובות
-            </button>
-          </Reveal>
-        )}
+              <div className="space-y-3">
+                <p id="recommender-overline" className="cor-overline-he">
+                  בדיקת התאמה
+                </p>
+                <div className="flex items-baseline justify-between text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <span>
+                    שאלה {stepIndex + 1} מתוך {QUESTIONS.length}
+                  </span>
+                  <span className="text-primary/80">{progressPct}%</span>
+                </div>
+                <div
+                  className="h-[2px] w-full overflow-hidden rounded-full bg-border"
+                  role="progressbar"
+                  aria-valuenow={progressPct}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`התקדמות שאלון: ${progressPct} אחוז`}
+                >
+                  <motion.div
+                    className="h-full bg-primary"
+                    animate={{ width: `${progressPct}%` }}
+                    transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
+                  />
+                </div>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={stepIndex}
+                  initial={{ opacity: 0, x: 24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -24 }}
+                  transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
+                  className="space-y-6"
+                >
+                  {previousAnswerLabel && (
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      <span className="text-primary/70">ענית: </span>
+                      <span className="text-foreground/70">
+                        ״{previousAnswerLabel}״
+                      </span>
+                    </p>
+                  )}
+
+                  <p className="text-[13px] leading-snug text-primary/85">
+                    {currentQuestion.anticipation}
+                  </p>
+
+                  <h3 className="cor-title text-foreground">
+                    {currentQuestion.text}
+                  </h3>
+
+                  <ul className="space-y-3">
+                    {currentQuestion.options.map((opt, idx) => {
+                      const isPending = pendingChoice === idx;
+                      const isDimmed =
+                        pendingChoice !== null && pendingChoice !== idx;
+                      return (
+                        <li key={opt.label}>
+                          <button
+                            type="button"
+                            onClick={() => submitAnswer(idx, opt.value)}
+                            disabled={pendingChoice !== null}
+                            className={`group flex w-full items-baseline justify-between gap-4 rounded-md border bg-card px-5 py-4 text-right text-[15px] leading-snug text-foreground transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                              isPending
+                                ? "border-primary bg-primary/10"
+                                : isDimmed
+                                ? "border-border opacity-40"
+                                : "border-border hover:border-primary hover:bg-primary/5 active:scale-[0.99]"
+                            }`}
+                            aria-label={`אפשרות ${idx + 1}: ${opt.label}`}
+                          >
+                            <span className="flex items-baseline gap-3">
+                              <span
+                                aria-hidden="true"
+                                className="hidden font-mono text-[11px] text-muted-foreground sm:inline"
+                              >
+                                {idx + 1}
+                              </span>
+                              <span>{opt.label}</span>
+                            </span>
+                            <span
+                              aria-hidden="true"
+                              className="text-primary/40 transition-colors group-hover:text-primary"
+                            >
+                              {isPending ? "✓" : "←"}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  <div className="flex items-center justify-between text-xs">
+                    <button
+                      type="button"
+                      onClick={backFromQuestion}
+                      disabled={pendingChoice !== null}
+                      className="text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
+                    >
+                      {stepIndex === 0 ? "חזור לשאלה הפתוחה" : "שאלה קודמת"}
+                    </button>
+                    <a
+                      href="#diagnostic-form"
+                      onClick={onSkipToForm}
+                      className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      דלג ישר לשיחה ←
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          )}
+
+          {/* RESULT — 3-act stagger */}
+          {phase === "result" && result && (
+            <motion.div
+              key="result"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="space-y-8"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0, 0, 0.2, 1], delay: 0 }}
+                className="space-y-3"
+              >
+                <p id="recommender-overline" className="cor-overline-he">
+                  ההמלצה
+                </p>
+                <h2 className="cor-display text-foreground">
+                  בסדר. אני מבין איפה אתה.
+                </h2>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0, 0, 0.2, 1],
+                  delay: 0.4,
+                }}
+                className="cor-body-lg whitespace-pre-line text-foreground/85"
+              >
+                {result.reflection}
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0, 0, 0.2, 1],
+                  delay: 0.9,
+                }}
+              >
+                <div className="cor-card p-6">
+                  <div className="border-t border-foreground pb-2 pt-4">
+                    {result.number ? (
+                      <span className="stage-numeral block">
+                        {result.number}
+                      </span>
+                    ) : (
+                      <span className="stage-numeral block text-[2rem] leading-none tracking-tight">
+                        01 · 02 · 03 · 04
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="cor-subheading mt-4 text-foreground">
+                    {result.name}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+                    {result.reason}
+                  </p>
+
+                  <div className="mt-5 border-r-2 border-border pr-3">
+                    <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
+                      תוצר ביד
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+                      {result.deliverable}
+                    </p>
+                  </div>
+
+                  <p className="mt-5 text-base font-semibold text-foreground">
+                    {result.price}
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.35,
+                  ease: [0, 0, 0.2, 1],
+                  delay: 1.4,
+                }}
+                className="space-y-4"
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onCtaPrimary(result)}
+                    className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
+                  >
+                    {result.ctaPrimary}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onCtaSecondary(result)}
+                    className="cta-line inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
+                  >
+                    תחילה שיחת 20 דקות בחינם
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={restart}
+                  className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  שנה תשובות
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

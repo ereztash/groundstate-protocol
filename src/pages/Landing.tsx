@@ -15,6 +15,7 @@ import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
+import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
 import { trackScrollDepth } from "@/lib/analytics";
 
@@ -46,6 +47,7 @@ const Landing = () => {
 
   return (
     <DiagnosticFormProvider>
+      <ScrollProgress />
       <a href="#hero" className="skip-to-content">
         דלג לתוכן
       </a>
