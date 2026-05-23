@@ -1,61 +1,7 @@
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
-import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
-
-type Stage = {
-  number: string;
-  name: string;
-  description: string;
-  deliverable: string;
-  price: string;
-  ctaLabel: string;
-  value: StageValue;
-};
-
-const stages: Stage[] = [
-  {
-    number: "01",
-    name: "נרטיב ייחודי",
-    description:
-      "פגישה אחת לחילוץ הבידול שלך מתוך החומר שכבר קיים אצלך.",
-    deliverable:
-      "מסמך נרטיב באורך עמוד עד שניים עם 3 עד 5 ניסוחים מילוליים מוכנים.",
-    price: "1,000 ש״ח",
-    ctaLabel: "אני רוצה את שלב 1",
-    value: "stage-1",
-  },
-  {
-    number: "02",
-    name: "הצעת ערך ייחודית",
-    description:
-      "פגישה אחת לבניית הצעת הערך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות.",
-    deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
-    price: "1,300 ש״ח",
-    ctaLabel: "אני רוצה את שלב 2",
-    value: "stage-2",
-  },
-  {
-    number: "03",
-    name: "מוצר ייחודי",
-    description:
-      "פגישה אחת להמרת הצעת הערך למוצר עם תמחור ורציונל.",
-    deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
-    price: "1,600 ש״ח",
-    ctaLabel: "אני רוצה את שלב 3",
-    value: "stage-3",
-  },
-  {
-    number: "04",
-    name: "רכישת לקוחות פרואקטיבית",
-    description:
-      "פגישה אחת לבניית רשימת מקבלי החלטות וטיוטות פנייה.",
-    deliverable:
-      "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה שזיהיתי בתגובות.",
-    price: "1,900 ש״ח",
-    ctaLabel: "אני רוצה את שלב 4",
-    value: "stage-4",
-  },
-];
+import { stages, type Stage } from "@/lib/stages";
 
 const SequenceSection = () => {
   const { requestStage } = useDiagnosticForm();
@@ -117,7 +63,7 @@ const SequenceSection = () => {
               </div>
 
               <p className="mt-5 text-base font-semibold text-foreground">
-                {s.price}
+                {s.priceLabel}
               </p>
 
               <button

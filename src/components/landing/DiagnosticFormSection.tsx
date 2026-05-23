@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Reveal } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
-import BookingSection from "./BookingSection";
+// Lazy: react-calendly is ~40KB and only needed AFTER the form is submitted.
+// Keeping it out of the main bundle drops first-paint JS by that much.
+const BookingSection = lazy(() => import("./BookingSection"));
 import {
   submitForm,
   type DiagnosticPayload,
@@ -409,7 +411,9 @@ const DiagnosticFormSection = () => {
             <h2 className="cor-title text-foreground">
               תודה. בוא נקבע את הפגישה.
             </h2>
-            <BookingSection visible />
+            <Suspense fallback={<div className="h-[720px]" aria-hidden="true" />}>
+              <BookingSection visible />
+            </Suspense>
           </Reveal>
         )}
       </div>
