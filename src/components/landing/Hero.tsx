@@ -1,7 +1,15 @@
 import { trackCtaClick } from "@/lib/analytics";
+import { useDwellState } from "@/lib/useDwellState";
+import { getCtaCopy } from "@/lib/dwellCopy";
+import { useMagnetic } from "@/lib/useMagnetic";
+import { Footnote } from "./Footnote";
 import portrait from "@/assets/portrait.png";
 
 const Hero = () => {
+  const phase = useDwellState();
+  const ctaCopy = getCtaCopy(phase);
+  const magneticRef = useMagnetic<HTMLDivElement>({ radius: 110, strength: 0.22 });
+
   const scrollToForm = () => {
     trackCtaClick("hero_diagnostic");
     document
@@ -71,20 +79,29 @@ const Hero = () => {
               <span aria-hidden="true" className="text-border">•</span>
               <div className="flex items-baseline gap-1.5">
                 <dt className="text-muted-foreground">תוצר</dt>
-                <dd className="font-semibold">10 פניות יוצאות</dd>
+                <dd className="font-semibold">
+                  <Footnote
+                    number={1}
+                    tip="ל-Decision Makers שתזהה איתי בשיחה הראשונה. לא רשימה גנרית — בחירה מבוססת ניתוח."
+                  >
+                    10 פניות יוצאות
+                  </Footnote>
+                </dd>
               </div>
             </dl>
 
             <div className="pt-2">
-              <button
-                type="button"
-                onClick={scrollToForm}
-                aria-describedby="hero-subtitle"
-                aria-label="20 דקות, בלי תשלום, נדבר"
-                className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
-              >
-                20 דקות. בלי תשלום. נדבר.
-              </button>
+              <div ref={magneticRef} className="inline-block w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={scrollToForm}
+                  aria-describedby="hero-subtitle"
+                  aria-label={ctaCopy}
+                  className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base transition-[background,transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
+                >
+                  {ctaCopy}
+                </button>
+              </div>
             </div>
           </div>
 

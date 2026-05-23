@@ -1,6 +1,11 @@
 import { trackCtaClick } from "@/lib/analytics";
+import { useDwellState } from "@/lib/useDwellState";
+import { getCtaCopy } from "@/lib/dwellCopy";
 
 const MidPageCTA = () => {
+  const phase = useDwellState();
+  const ctaCopy = getCtaCopy(phase);
+
   const handleClick = () => {
     trackCtaClick("mid_page");
     document
@@ -20,7 +25,7 @@ const MidPageCTA = () => {
             onClick={handleClick}
             className="cta-line inline-flex h-11 items-center justify-center rounded-md px-5 text-sm font-semibold"
           >
-            20 דקות. בלי תשלום. נדבר.
+            {ctaCopy}
           </button>
         </div>
       </div>

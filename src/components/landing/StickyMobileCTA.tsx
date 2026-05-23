@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { trackCtaClick } from "@/lib/analytics";
+import { useDwellState } from "@/lib/useDwellState";
+import { getCtaCopy } from "@/lib/dwellCopy";
 
 const StickyMobileCTA = () => {
   const [visible, setVisible] = useState(false);
+  const phase = useDwellState();
+  const ctaCopy = getCtaCopy(phase);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +45,9 @@ const StickyMobileCTA = () => {
           type="button"
           onClick={handleClick}
           className="cta-action inline-flex h-12 w-full items-center justify-center rounded-md text-sm font-semibold"
-          aria-label="גלילה לטופס יצירת קשר"
+          aria-label={ctaCopy}
         >
-          20 דקות. בלי תשלום. נדבר.
+          {ctaCopy}
         </button>
       </div>
     </div>
