@@ -2,25 +2,27 @@ import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import Hero from "./Hero";
+
+const renderHero = () =>
+  render(
+    <MemoryRouter>
+      <TooltipProvider>
+        <Hero />
+      </TooltipProvider>
+    </MemoryRouter>
+  );
 
 describe("Hero accessibility", () => {
   it("has no detectable a11y violations (axe)", async () => {
-    const { container } = render(
-      <MemoryRouter>
-        <Hero />
-      </MemoryRouter>
-    );
+    const { container } = renderHero();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("portrait image has a meaningful, non-empty alt", () => {
-    const { container } = render(
-      <MemoryRouter>
-        <Hero />
-      </MemoryRouter>
-    );
+    const { container } = renderHero();
     const img = container.querySelector("img");
     expect(img).not.toBeNull();
     const alt = img!.getAttribute("alt") ?? "";
@@ -30,11 +32,7 @@ describe("Hero accessibility", () => {
   });
 
   it("does not misuse aria-hidden on focusable or labeled elements", () => {
-    const { container } = render(
-      <MemoryRouter>
-        <Hero />
-      </MemoryRouter>
-    );
+    const { container } = renderHero();
     const hidden = container.querySelectorAll('[aria-hidden="true"]');
     hidden.forEach((el) => {
       // No interactive descendants inside aria-hidden subtrees

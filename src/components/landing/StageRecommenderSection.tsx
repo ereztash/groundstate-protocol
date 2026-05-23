@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
 
-type Answer = 0 | 1 | 2;
+export type Answer = 0 | 1 | 2;
 
 type Option = {
   label: string;
@@ -67,7 +67,7 @@ const QUESTIONS: Question[] = [
   },
 ];
 
-type Recommendation = {
+export type Recommendation = {
   stage: StageValue;
   number: "01" | "02" | "03" | "04" | null;
   name: string;
@@ -194,7 +194,7 @@ function findTwos(answers: Answer[]): number[] {
   return twos;
 }
 
-function recommend(answers: Answer[], openText: string): Recommendation {
+export function recommend(answers: Answer[], openText: string): Recommendation {
   const twos = findTwos(answers);
 
   let base: Recommendation;

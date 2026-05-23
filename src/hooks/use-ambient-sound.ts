@@ -55,7 +55,13 @@ export function useAmbientSound() {
     gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
 
     setTimeout(() => {
-      oscillators.forEach((o) => { try { o.stop(); } catch {} });
+      oscillators.forEach((o) => {
+        try {
+          o.stop();
+        } catch {
+          // oscillator may already be stopped — ignore
+        }
+      });
       ctx.close();
       ctxRef.current = null;
       nodesRef.current = null;

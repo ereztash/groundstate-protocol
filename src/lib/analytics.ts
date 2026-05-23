@@ -26,7 +26,6 @@ function hasGtag(): boolean {
 export function initAnalytics(): void {
   if (typeof window === "undefined") return;
   if (!MEASUREMENT_ID || MEASUREMENT_ID === "G-PLACEHOLDER") {
-    // eslint-disable-next-line no-console
     console.info(
       "[analytics] VITE_GA_MEASUREMENT_ID not set — events will be no-op."
     );
