@@ -1,9 +1,12 @@
 import { Reveal } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
+import { useMagnetic } from "@/lib/useMagnetic";
+import { Footnote } from "./Footnote";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
+  const magneticRef = useMagnetic<HTMLDivElement>({ radius: 100, strength: 0.2 });
 
   const handleClick = () => {
     trackCtaClick("full_package");
@@ -38,20 +41,27 @@ const FullPackageSection = () => {
 
           <div className="mt-8 flex items-baseline gap-3">
             <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-              4,500 ש״ח
+              <Footnote
+                number={2}
+                tip="₪5,800 הוא הסכום של 4 השלבים בנפרד (1,000 + 1,300 + 1,600 + 1,900). המחיר האגרגטיבי כולל גם ליווי בין הפגישות בלי תוספת תשלום."
+              >
+                4,500 ש״ח
+              </Footnote>
             </p>
             <p className="text-base text-muted-foreground">
               <span className="line-through">5,800 ש״ח</span>
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleClick}
-            className="cta-action mt-8 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-semibold md:text-base"
-          >
-            אני רוצה את החבילה המלאה
-          </button>
+          <div ref={magneticRef} className="mt-8 inline-block">
+            <button
+              type="button"
+              onClick={handleClick}
+              className="cta-action inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-semibold md:text-base"
+            >
+              אני רוצה את החבילה המלאה
+            </button>
+          </div>
         </Reveal>
       </div>
     </section>
