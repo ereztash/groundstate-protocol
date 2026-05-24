@@ -3,7 +3,12 @@ import { useDwellState } from "@/lib/useDwellState";
 import { getCtaCopy } from "@/lib/dwellCopy";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
-import portrait from "@/assets/portrait.webp";
+
+// Portrait lives under public/ so index.html can preload it before the JS
+// bundle even parses. Cuts ~500ms off mobile LCP. The literal path uses
+// BASE_URL at runtime so it works at both / (Lovable) and /groundstate-
+// protocol/ (GitHub Pages).
+const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 
 const Hero = () => {
   const phase = useDwellState();

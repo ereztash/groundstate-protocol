@@ -5,6 +5,7 @@ import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
 import StageRecommenderSection from "@/components/landing/StageRecommenderSection";
+import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
 import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
@@ -63,6 +64,7 @@ const Landing = () => {
           <ProcessPreviewSection />
           <StageRecommenderSection />
           <SequenceSection />
+          <DeliverablesPreview />
           <NotForEveryoneSection />
           <FullPackageSection />
           <MidPageCTA />

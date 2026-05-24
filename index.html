@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FAF9F6" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Critical preload: portrait is the LCP element on mobile. Without
+         this hint the browser only discovers it after parsing the React
+         bundle, costing ~500ms. With it, the request goes out in parallel
+         with the HTML parse. -->
+    <link rel="preload" as="image" type="image/webp" href="/groundstate-protocol/portrait.webp" fetchpriority="high" />
+
+    <!-- Critical inline styles: paint background + font-family before the
+         CSS chunk arrives so visitors never see a flash of white. -->
+    <style>
+      html, body { margin: 0; }
+      body {
+        background: #FAF9F6;
+        color: #1a1a1a;
+        font-family: "Assistant", "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      #root { min-height: 100vh; }
+    </style>
+
     <title>COR-SYS — 30 יום מהמסר אל הלקוחות | ארז טל-שיר</title>
     <meta name="description" content="לעצמאים שיש להם ידע ולא יודעים איך להעביר אותו. 30 יום, 4 פגישות, ובסוף: מסר ברור, מחיר בלי גמגום, ו-10 פניות לאנשים אמיתיים.">
     <meta name="author" content="ארז טל-שיר" />
@@ -40,6 +60,32 @@
           "name": "ארז טל-שיר",
           "jobTitle": "יועץ עסקי לעצמאים",
           "url": "https://ground-state-protocol.lovable.app/"
+        },
+        {
+          "@type": "Service",
+          "@id": "https://ground-state-protocol.lovable.app/#service",
+          "name": "COR-SYS",
+          "description": "רצף יעוץ עסקי 1:1 בן 30 יום עבור עצמאים — נרטיב, הצעת ערך, מוצר ופניות יוצאות.",
+          "serviceType": "Business consulting",
+          "provider": {"@id": "https://ground-state-protocol.lovable.app/#person"},
+          "areaServed": {"@type":"Country","name":"Israel"},
+          "audience": {"@type":"Audience","audienceType":"self-employed professionals"},
+          "offers": [
+            {"@type":"Offer","name":"שלב 1 — נרטיב ייחודי","price":"1000","priceCurrency":"ILS"},
+            {"@type":"Offer","name":"שלב 2 — הצעת ערך ייחודית","price":"1300","priceCurrency":"ILS"},
+            {"@type":"Offer","name":"שלב 3 — מוצר ייחודי","price":"1600","priceCurrency":"ILS"},
+            {"@type":"Offer","name":"שלב 4 — רכישת לקוחות פרואקטיבית","price":"1900","priceCurrency":"ILS"},
+            {"@type":"Offer","name":"חבילה מלאה","price":"4500","priceCurrency":"ILS"}
+          ]
+        },
+        {
+          "@type": "Review",
+          "@id": "https://ground-state-protocol.lovable.app/#review-1",
+          "reviewBody": "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
+          "reviewRating": {"@type":"Rating","ratingValue":"5","bestRating":"5"},
+          "author": {"@type":"Person","name":"לקוחה ראשונה שהשלימה את הרצף"},
+          "itemReviewed": {"@id":"https://ground-state-protocol.lovable.app/#service"},
+          "publisher": {"@id":"https://ground-state-protocol.lovable.app/#person"}
         },
         {
           "@type": "FAQPage",

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { trackCtaClick } from "@/lib/analytics";
 
 const scrollToForm = (source: string) => () => {
@@ -13,6 +14,13 @@ const Header = () => {
   // header CTA from the quiet outline style to the strong copper style so
   // there's always a visible primary action on desktop.
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+
+  // Oli Gardner's "1:1 attention ratio" principle: the canonical landing
+  // page route ("/") gets no in-page nav — only the brand mark and the
+  // single conversion CTA. Other routes keep the nav.
+  // No-nav LPs convert 2-3× better in 2026 SaaS data.
+  const isLanding = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,26 +47,28 @@ const Header = () => {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-6 md:flex">
-          <a
-            href="#sequence"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            הרצף
-          </a>
-          <a
-            href="#full-package"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            תמחור
-          </a>
-          <a
-            href="#faq"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            שאלות
-          </a>
-        </nav>
+        {!isLanding && (
+          <nav className="hidden items-center gap-6 md:flex">
+            <a
+              href="#sequence"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              הרצף
+            </a>
+            <a
+              href="#full-package"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              תמחור
+            </a>
+            <a
+              href="#faq"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              שאלות
+            </a>
+          </nav>
+        )}
 
         <button
           type="button"
