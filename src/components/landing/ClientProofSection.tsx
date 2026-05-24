@@ -1,4 +1,5 @@
 import { Reveal } from "./Reveal";
+import VideoTestimonial from "./VideoTestimonial";
 
 /**
  * Client testimonial section.
@@ -43,7 +44,7 @@ const ClientProofSection = () => {
         <Reveal className="space-y-10">
           <div>
             <p className="cor-overline-he">
-              עדות לקוחה
+              עדויות
             </p>
             <h2
               id="client-proof-title"
@@ -53,8 +54,10 @@ const ClientProofSection = () => {
             </h2>
           </div>
 
+          <VideoTestimonial />
+
           {testimonials.map((t, i) => (
-            <figure key={i} className="space-y-5">
+            <figure key={i} className="space-y-5 border-t border-border pt-10">
               <blockquote className="pull-quote pr-8 md:pr-10">
                 <p>{t.quote}</p>
               </blockquote>
