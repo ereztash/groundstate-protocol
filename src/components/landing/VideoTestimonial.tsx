@@ -89,7 +89,7 @@ const VideoTestimonial = () => {
           <div className="space-y-0.5">
             <p className="text-sm font-semibold text-foreground">גיא כהן</p>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              מוביל קהילה לעצמאים · המלצה בווידאו
+              יועץ AI לעצמאים · מוביל קהילה של 1,500+
             </p>
           </div>
         </div>
