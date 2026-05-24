@@ -2,6 +2,20 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
+import { fullPackage, getStage } from "@/lib/stages";
+
+function baseFor(value: StageValue): Pick<Recommendation, "stage" | "number" | "name" | "price" | "deliverable" | "ctaPrimary"> {
+  const s = getStage(value);
+  if (!s) throw new Error(`Unknown stage: ${value}`);
+  return {
+    stage: value,
+    number: s.number,
+    name: s.name,
+    price: s.priceLabel,
+    deliverable: s.deliverable,
+    ctaPrimary: `${s.ctaLabel} — ${s.priceLabel}`,
+  };
+}
 
 export type Answer = 0 | 1 | 2;
 
@@ -78,55 +92,38 @@ export type Recommendation = {
   ctaPrimary: string;
 };
 
-// Single-problem recommendations (one "2" wins)
+// Single-problem recommendations (one "2" wins). Stage facts (number, name,
+// price, deliverable) come from src/lib/stages.ts so SequenceSection and the
+// wizard can never drift on pricing or copy. Each rec owns only the wizard-
+// specific reflection + reason.
 const SINGLE_RECS: Record<number, Recommendation> = {
   0: {
-    stage: "stage-1",
-    number: "01",
-    name: "נרטיב ייחודי",
-    price: "1,000 ש״ח",
-    deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
+    ...baseFor("stage-1"),
     reflection:
       "אמרת שכשאתה אומר במסיבה מה אתה עושה — האדם מהנהן ומחליף נושא. זה האות שהנרטיב עוד לא יודע לתפוס את הקרקע. כל מה שבא אחריו — מחיר, מוצר, פניות — נשען עליו. אז שם מתחילים.",
     reason:
       "כל מה שבא אחר כך מבוסס על משפט הליבה שלך. בלעדיו, השלבים הבאים נשענים על קרקע רכה.",
-    ctaPrimary: "אני רוצה את שלב 1 — 1,000 ש״ח",
   },
   1: {
-    stage: "stage-2",
-    number: "02",
-    name: "הצעת ערך ייחודית",
-    price: "1,300 ש״ח",
-    deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
+    ...baseFor("stage-2"),
     reflection:
       "סיפרת שלקוח רואה את המחיר ואומר ״וואו, זה הרבה״, ואתה מנמק בכל פעם. זו לא בעיה של מחיר — זו בעיה של הצעה. אם הלקוח לא רואה למה זה שווה לפני שראה את הסכום, הסכום תמיד יהיה גדול.",
     reason:
       "יש לך נרטיב. החסר הוא ההצעה הברורה ללקוח — מה הוא מקבל, ולמה זה שווה את הסכום.",
-    ctaPrimary: "אני רוצה את שלב 2 — 1,300 ש״ח",
   },
   2: {
-    stage: "stage-3",
-    number: "03",
-    name: "מוצר ייחודי",
-    price: "1,600 ש״ח",
-    deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
+    ...baseFor("stage-3"),
     reflection:
       "אמרת שכשלקוח שואל ״מה אני מקבל?״ אתה פותח Word ריק. זה אומר שאתה מתחיל מאפס לכל לקוח — וזה גוזל זמן ומשדר חוסר ביטחון. צריך מסמך אחד שעובד פעם אחר פעם.",
     reason:
       "יש לך הצעת ערך אבל אין תיעוד מוצרי. ניצור מסמך אחד שנשלח שוב ושוב, במקום לבנות מאפס בכל פעם.",
-    ctaPrimary: "אני רוצה את שלב 3 — 1,600 ש״ח",
   },
   3: {
-    stage: "stage-4",
-    number: "04",
-    name: "רכישת לקוחות פרואקטיבית",
-    price: "1,900 ש״ח",
-    deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
+    ...baseFor("stage-4"),
     reflection:
       "אמרת שאתה לא יודע מאיפה יבואו הלקוחות הבאים. זו לא בעיה של איכות — זו בעיה של מערכת. כל החודש שלך נסמך על תקווה. צריך צינור פעיל, גם אם הוא קטן.",
     reason:
       "המוצר מוכן והנרטיב חד. חסר רק צינור פנייה שיביא את 10 השיחות הבאות.",
-    ctaPrimary: "אני רוצה את שלב 4 — 1,900 ש״ח",
   },
 };
 
@@ -148,42 +145,30 @@ const DUAL_REFLECTIONS: Record<string, string> = {
 };
 
 const ALL_ZERO_REC: Recommendation = {
-  stage: "stage-4",
-  number: "04",
-  name: "רכישת לקוחות פרואקטיבית",
-  price: "1,900 ש״ח",
-  deliverable: "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה.",
+  ...baseFor("stage-4"),
   reflection:
     "מבחינת המבנה — אתה במצב טוב. נרטיב חד, הצעה ברורה, מוצר מוכן. רוב הלקוחות שלי מגיעים אחרי שמשהו נשבר פתאום: לקוח מרכזי עזב, השוק זז, החלטת להעלות מחיר. עד שזה קורה אצלך — תוסף של פניות יוצאות יכול להגדיל בלי להזיז דבר אחר.",
   reason:
     "אתה במצב טוב. פניות יוצאות הן תוסף — לא תיקון, אלא שכבה שתיתן לך שליטה על קצב הלקוחות.",
-  ctaPrimary: "אני רוצה את שלב 4 — 1,900 ש״ח",
 };
 
 const MILD_REC: Recommendation = {
-  stage: "stage-1",
-  number: "01",
-  name: "נרטיב ייחודי",
-  price: "1,000 ש״ח",
-  deliverable: "מסמך נרטיב של עמוד-שניים עם 3-5 ניסוחים מוכנים.",
+  ...baseFor("stage-1"),
   reflection:
     "יש לך כיוון בכל ארבעת הצמתים — אבל אף אחד לא ממש חד. ברוב המקרים, חידוד הנרטיב הוא הצמיד שכשפותחים אותו השאר נפתח אוטומטית. עדיף לחדד את הקרקע לפני שמוסיפים שכבות.",
   reason:
     "יש לך כיוון בכל הצמתים — אף אחד לא חד. חידוד הנרטיב מחדד את שאר השלבים כתוצאה.",
-  ctaPrimary: "אני רוצה את שלב 1 — 1,000 ש״ח",
 };
 
 const FULL_PACKAGE_REC: Recommendation = {
   stage: "full-package",
   number: null,
-  name: "החבילה המלאה",
-  price: "4,500 ש״ח",
-  deliverable: "כל ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
-  reflection:
-    "כמה צמתים דורשים עבודה ביחד. במקום לקנות שלבים בנפרד, החבילה המלאה זולה ב-1,300 ש״ח ושומרת על המומנטום בין הפגישות.",
-  reason:
-    "כמה שלבים דורשים עבודה. החבילה המלאה זולה ב-1,300 ש״ח לעומת רכישה שלב-אחר-שלב, ושומרת על המומנטום.",
-  ctaPrimary: "אני רוצה את החבילה המלאה — 4,500 ש״ח",
+  name: fullPackage.name,
+  price: fullPackage.priceLabel,
+  deliverable: fullPackage.deliverable,
+  reflection: `כמה צמתים דורשים עבודה ביחד. במקום לקנות שלבים בנפרד, החבילה המלאה זולה ב-${fullPackage.savingsLabel} ושומרת על המומנטום בין הפגישות.`,
+  reason: `כמה שלבים דורשים עבודה. החבילה המלאה זולה ב-${fullPackage.savingsLabel} לעומת רכישה שלב-אחר-שלב, ושומרת על המומנטום.`,
+  ctaPrimary: `${fullPackage.ctaLabel} — ${fullPackage.priceLabel}`,
 };
 
 function findTwos(answers: Answer[]): number[] {

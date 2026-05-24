@@ -3,7 +3,7 @@ import { useDwellState } from "@/lib/useDwellState";
 import { getCtaCopy } from "@/lib/dwellCopy";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
-import portrait from "@/assets/portrait.png";
+import portrait from "@/assets/portrait.webp";
 
 const Hero = () => {
   const phase = useDwellState();

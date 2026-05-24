@@ -3,6 +3,7 @@ import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
+import { fullPackage } from "@/lib/stages";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
@@ -36,20 +37,20 @@ const FullPackageSection = () => {
             שלושים ימים. ארבע פגישות. הרצף מהקצה לקצה.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground/80">
-            כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך 1,300 ש״ח לעומת רכישה שלב אחר שלב.
+            כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
           </p>
 
           <div className="mt-8 flex items-baseline gap-3">
             <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               <Footnote
                 number={2}
-                tip="₪5,800 הוא הסכום של 4 השלבים בנפרד (1,000 + 1,300 + 1,600 + 1,900). המחיר האגרגטיבי כולל גם ליווי בין הפגישות בלי תוספת תשלום."
+                tip={`₪${fullPackage.fullPriceNis.toLocaleString("en-US")} הוא הסכום של 4 השלבים בנפרד (1,000 + 1,300 + 1,600 + 1,900). המחיר האגרגטיבי כולל גם ליווי בין הפגישות בלי תוספת תשלום.`}
               >
-                4,500 ש״ח
+                {fullPackage.priceLabel}
               </Footnote>
             </p>
             <p className="text-base text-muted-foreground">
-              <span className="line-through">5,800 ש״ח</span>
+              <span className="line-through">{fullPackage.fullPriceLabel}</span>
             </p>
           </div>
 
@@ -59,7 +60,7 @@ const FullPackageSection = () => {
               onClick={handleClick}
               className="cta-action inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-semibold md:text-base"
             >
-              אני רוצה את החבילה המלאה
+              {fullPackage.ctaLabel}
             </button>
           </div>
         </Reveal>
