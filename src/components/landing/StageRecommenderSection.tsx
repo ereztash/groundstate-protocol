@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
@@ -275,6 +275,8 @@ const StageRecommenderSection = () => {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [openText, setOpenText] = useState("");
   const [pendingChoice, setPendingChoice] = useState<number | null>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const shouldFocusResultRef = useRef(false);
 
   useEffect(() => {
     const saved = loadState();
@@ -315,6 +317,7 @@ const StageRecommenderSection = () => {
             recommended_stage: result.stage,
           });
           setAnswers(next);
+          shouldFocusResultRef.current = true;
           setPhase("result");
         }
         setPendingChoice(null);
@@ -336,6 +339,15 @@ const StageRecommenderSection = () => {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [phase, stepIndex, submitAnswer, pendingChoice]);
+
+  // On wizard completion (user-driven only — not on localStorage restore),
+  // move focus to the result heading so keyboard/SR users land on the payoff.
+  useEffect(() => {
+    if (phase === "result" && shouldFocusResultRef.current) {
+      shouldFocusResultRef.current = false;
+      resultHeadingRef.current?.focus();
+    }
+  }, [phase]);
 
   const startWizard = () => {
     trackEvent("wizard_start", { wizard: "stage_recommender" });
@@ -417,6 +429,15 @@ const StageRecommenderSection = () => {
       ? Math.round(((stepIndex + 1) / QUESTIONS.length) * 100)
       : 0;
 
+  // Announced to assistive tech on every phase/question change (WCAG 4.1.3),
+  // since the visual swap via framer-motion isn't a focus change.
+  const liveAnnouncement =
+    phase === "question" && currentQuestion
+      ? `שאלה ${stepIndex + 1} מתוך ${QUESTIONS.length}: ${currentQuestion.text}`
+      : phase === "result"
+        ? "ההמלצה מוכנה."
+        : "";
+
   // Mini-echo: the previous answer's label, shown above the current question
   const previousAnswerLabel =
     phase === "question" && stepIndex > 0
@@ -433,6 +454,9 @@ const StageRecommenderSection = () => {
       aria-labelledby="recommender-overline"
     >
       <div className="mx-auto max-w-2xl px-6">
+        <div role="status" aria-live="polite" className="sr-only">
+          {liveAnnouncement}
+        </div>
         <AnimatePresence mode="wait">
           {/* INTRO */}
           {phase === "intro" && (
@@ -649,7 +673,11 @@ const StageRecommenderSection = () => {
                 <p id="recommender-overline" className="cor-overline-he">
                   ההמלצה
                 </p>
-                <h2 className="cor-display text-foreground">
+                <h2
+                  ref={resultHeadingRef}
+                  tabIndex={-1}
+                  className="cor-display text-foreground outline-none"
+                >
                   בסדר. אני מבין איפה אתה.
                 </h2>
               </motion.div>
