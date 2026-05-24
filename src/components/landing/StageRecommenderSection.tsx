@@ -355,12 +355,21 @@ const StageRecommenderSection = () => {
   };
 
   const backFromOpen = () => {
+    trackEvent("wizard_back_clicked", {
+      wizard: "stage_recommender",
+      from_phase: "open",
+    });
     setPhase("intro");
     setOpenText("");
     setAnswers([]);
   };
 
   const backFromQuestion = () => {
+    trackEvent("wizard_back_clicked", {
+      wizard: "stage_recommender",
+      from_phase: "question",
+      from_step: stepIndex,
+    });
     if (stepIndex === 0) {
       setPhase("open");
       setAnswers([]);

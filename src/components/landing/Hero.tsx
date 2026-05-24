@@ -13,7 +13,11 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 const Hero = () => {
   const phase = useDwellState();
   const ctaCopy = getCtaCopy(phase);
-  const magneticRef = useMagnetic<HTMLDivElement>({ radius: 110, strength: 0.22 });
+  const magneticRef = useMagnetic<HTMLDivElement>({
+    radius: 110,
+    strength: 0.22,
+    name: "hero_diagnostic",
+  });
 
   const scrollToForm = () => {
     trackCtaClick("hero_diagnostic");
