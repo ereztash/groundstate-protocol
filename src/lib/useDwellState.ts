@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { trackEvent } from "./analytics";
 
 export type DwellPhase = "fresh" | "engaged" | "committed" | "returning";
 
@@ -18,6 +19,10 @@ const COMMITTED_AFTER_MS = 60_000;
  * CTAs and microcopy use this to "grow up" with the visitor's
  * commitment — fresh visitors see the canonical pitch, returning
  * visitors see warmer recognition copy.
+ *
+ * Emits `dwell_phase_changed` on every real transition (not on the
+ * initial state read), so analytics can answer "at what time-on-page
+ * do we lose attention?"
  */
 export function useDwellState(): DwellPhase {
   const [phase, setPhase] = useState<DwellPhase>("fresh");
@@ -34,6 +39,7 @@ export function useDwellState(): DwellPhase {
 
     if (isReturning) {
       setPhase("returning");
+      trackEvent("dwell_phase_changed", { phase: "returning" });
       return;
     }
 
@@ -44,13 +50,19 @@ export function useDwellState(): DwellPhase {
     }
 
     const engagedTimer = window.setTimeout(() => {
-      setPhase((cur) => (cur === "fresh" ? "engaged" : cur));
+      setPhase((cur) => {
+        if (cur !== "fresh") return cur;
+        trackEvent("dwell_phase_changed", { phase: "engaged" });
+        return "engaged";
+      });
     }, ENGAGED_AFTER_MS);
 
     const committedTimer = window.setTimeout(() => {
-      setPhase((cur) =>
-        cur === "fresh" || cur === "engaged" ? "committed" : cur
-      );
+      setPhase((cur) => {
+        if (cur !== "fresh" && cur !== "engaged") return cur;
+        trackEvent("dwell_phase_changed", { phase: "committed" });
+        return "committed";
+      });
     }, COMMITTED_AFTER_MS);
 
     return () => {

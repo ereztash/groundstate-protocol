@@ -1,11 +1,23 @@
+import { useEffect } from "react";
 import { InlineWidget } from "react-calendly";
 import { CALENDLY_URL, CALENDLY_PAGE_SETTINGS } from "@/lib/calendly";
+import { trackEvent } from "@/lib/analytics";
 
 type BookingSectionProps = {
   visible?: boolean;
 };
 
 const BookingSection = ({ visible = false }: BookingSectionProps) => {
+  // Fire when the booking widget first becomes visible to the user —
+  // typically right after a successful form submit. Gives analytics the
+  // "form_submit happened, AND the visitor actually saw the calendar"
+  // signal, which matters because Calendly is third-party and can fail.
+  useEffect(() => {
+    if (visible) {
+      trackEvent("booking_widget_visible", { surface: "post_form" });
+    }
+  }, [visible]);
+
   if (!visible) return null;
 
   return (

@@ -7,7 +7,11 @@ import { fullPackage } from "@/lib/stages";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
-  const magneticRef = useMagnetic<HTMLDivElement>({ radius: 100, strength: 0.2 });
+  const magneticRef = useMagnetic<HTMLDivElement>({
+    radius: 100,
+    strength: 0.2,
+    name: "full_package",
+  });
 
   const handleClick = () => {
     trackCtaClick("full_package");

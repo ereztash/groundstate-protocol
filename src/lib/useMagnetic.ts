@@ -1,11 +1,23 @@
 import { useEffect, useRef } from "react";
+import { trackEvent } from "./analytics";
 
 type MagneticOptions = {
   /** Pixel radius around the element where the cursor starts to pull it. */
   radius?: number;
   /** 0–1; how strongly the element follows the cursor inside the radius. */
   strength?: number;
+  /**
+   * Optional identifier (e.g. "hero_diagnostic", "full_package"). When set,
+   * the first time the cursor enters this CTA's radius in a session a
+   * `cta_proximity` event fires so analytics can measure "considered but
+   * didn't click" intent.
+   */
+  name?: string;
 };
+
+// Module-level set so the dedup survives component remounts (e.g. dwell phase
+// re-renders) — one proximity event per CTA per page-load is enough signal.
+const proximityFiredFor = new Set<string>();
 
 /**
  * Returns a ref that, when attached to any HTML element, makes that
@@ -23,7 +35,7 @@ type MagneticOptions = {
 export function useMagnetic<T extends HTMLElement>(
   options: MagneticOptions = {}
 ) {
-  const { radius = 80, strength = 0.3 } = options;
+  const { radius = 80, strength = 0.3, name } = options;
   const ref = useRef<T | null>(null);
 
   useEffect(() => {
@@ -34,6 +46,7 @@ export function useMagnetic<T extends HTMLElement>(
     if (mq.matches) return;
 
     let raf = 0;
+    let insideRadius = false;
 
     const onMove = (e: MouseEvent) => {
       cancelAnimationFrame(raf);
@@ -46,8 +59,18 @@ export function useMagnetic<T extends HTMLElement>(
         const dist = Math.hypot(dx, dy);
 
         if (dist > radius) {
+          if (insideRadius) insideRadius = false;
           el.style.transform = "";
           return;
+        }
+
+        // Cursor just entered the magnetic zone for this CTA.
+        if (!insideRadius) {
+          insideRadius = true;
+          if (name && !proximityFiredFor.has(name)) {
+            proximityFiredFor.add(name);
+            trackEvent("cta_proximity", { cta_name: name });
+          }
         }
 
         const force = (1 - dist / radius) * strength;
@@ -57,6 +80,7 @@ export function useMagnetic<T extends HTMLElement>(
 
     const reset = () => {
       cancelAnimationFrame(raf);
+      insideRadius = false;
       el.style.transform = "";
     };
 
@@ -69,7 +93,7 @@ export function useMagnetic<T extends HTMLElement>(
       window.removeEventListener("mouseleave", reset);
       el.style.transform = "";
     };
-  }, [radius, strength]);
+  }, [radius, strength, name]);
 
   return ref;
 }
