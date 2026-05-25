@@ -41,10 +41,13 @@ export function initAnalytics(): void {
   document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  const gtag: GtagFn = function (...args: unknown[]) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.dataLayer!.push(args as any);
-  } as unknown as GtagFn;
+  // gtag.js reads queued commands from dataLayer as `arguments` objects. The
+  // previous shim pushed a rest-array (`(...args) => push(args)`), which gtag
+  // silently ignores — so GA registered ZERO hits. Match the canonical snippet.
+  const gtag: GtagFn = function () {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments);
+  } as GtagFn;
   window.gtag = gtag;
   gtag("js", new Date());
   gtag("config", MEASUREMENT_ID, {
