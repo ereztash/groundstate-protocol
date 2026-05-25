@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ErrorBoundary from "./components/ErrorBoundary";
-import ConsentBanner from "./components/ConsentBanner";
 
 // Landing is the entry route on every visit, so it stays eager — lazy()
 // would add a Suspense flash on the first paint. Index (GroundState tool),
@@ -37,7 +36,6 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-          <ConsentBanner />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
