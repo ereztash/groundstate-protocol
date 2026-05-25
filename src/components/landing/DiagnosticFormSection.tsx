@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Reveal } from "./Reveal";
+import Guarantee from "./Guarantee";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 // Lazy: react-calendly is ~40KB and only needed AFTER the form is submitted.
 // Keeping it out of the main bundle drops first-paint JS by that much.
@@ -85,6 +86,7 @@ const DiagnosticFormSection = () => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const stepOne = useForm<StepOneValues>({
     resolver: zodResolver(stepOneSchema),
@@ -106,6 +108,12 @@ const DiagnosticFormSection = () => {
       setStageHint(stageLabels[selectedStage] || selectedStage);
     }
   }, [selectedStage]);
+
+  // Move focus to the confirmation heading on success so screen-reader and
+  // keyboard users aren't stranded on a submit button that no longer exists.
+  useEffect(() => {
+    if (submitted) successHeadingRef.current?.focus();
+  }, [submitted]);
 
   const handleFirstFocus = () => {
     if (!hasInteracted) {
@@ -184,6 +192,9 @@ const DiagnosticFormSection = () => {
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
+              <p className="text-sm text-muted-foreground">
+                אני לוקח עד 10 לקוחות בחודש.
+              </p>
 
               <ul
                 aria-label="מה תיקח מהשיחה"
@@ -203,6 +214,8 @@ const DiagnosticFormSection = () => {
                 </li>
               </ul>
 
+              <Guarantee className="mt-4" />
+
               <div className="flex items-center gap-2 pt-3">
                 <span
                   className={`h-1 flex-1 rounded-full transition-colors ${
@@ -215,7 +228,11 @@ const DiagnosticFormSection = () => {
                   }`}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p
+                role="status"
+                aria-live="polite"
+                className="text-xs text-muted-foreground"
+              >
                 שלב {step} מתוך 2
               </p>
             </div>
@@ -306,6 +323,7 @@ const DiagnosticFormSection = () => {
                             dir="ltr"
                             autoComplete="tel"
                             placeholder="05X-XXXXXXX"
+                            autoFocus
                             {...field}
                           />
                         </FormControl>
@@ -392,6 +410,7 @@ const DiagnosticFormSection = () => {
                     <button
                       type="submit"
                       disabled={isSending}
+                      aria-busy={isSending}
                       className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                     >
                       {isSending ? "שולח" : "שלח, אחזור אליך תוך 24 שעות"}
@@ -408,7 +427,11 @@ const DiagnosticFormSection = () => {
             <p className="cor-overline-he">
               קיבלתי
             </p>
-            <h2 className="cor-title text-foreground">
+            <h2
+              ref={successHeadingRef}
+              tabIndex={-1}
+              className="cor-title text-foreground outline-none"
+            >
               תודה. בוא נקבע את הפגישה.
             </h2>
             <Suspense fallback={<div className="h-[720px]" aria-hidden="true" />}>

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const LandingFooter = () => {
   return (
     <footer
@@ -40,6 +42,12 @@ const LandingFooter = () => {
             >
               אבחון
             </a>
+            <Link
+              to="/privacy"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              פרטיות
+            </Link>
           </nav>
         </div>
 

@@ -4,6 +4,7 @@ import { trackCtaClick } from "@/lib/analytics";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
 import { fullPackage } from "@/lib/stages";
+import Guarantee from "./Guarantee";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
@@ -67,6 +68,11 @@ const FullPackageSection = () => {
               {fullPackage.ctaLabel}
             </button>
           </div>
+
+          <Guarantee className="mt-6" />
+          <p className="mt-3 text-xs text-muted-foreground">
+            אני לוקח עד 10 לקוחות בחודש.
+          </p>
         </Reveal>
       </div>
     </section>

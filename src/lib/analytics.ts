@@ -76,3 +76,11 @@ export function trackCtaClick(ctaName: string): void {
 export function trackScrollDepth(percent: number): void {
   trackEvent("scroll_depth", { percent });
 }
+
+export function trackError(kind: string, message: string, stack?: string): void {
+  trackEvent("app_error", {
+    kind,
+    message: message?.slice(0, 300),
+    stack: stack?.slice(0, 500),
+  });
+}
