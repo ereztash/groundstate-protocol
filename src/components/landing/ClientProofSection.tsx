@@ -40,7 +40,7 @@ const testimonials: Testimonial[] = [
     attribution: "נועם אורן",
     outcome: "מנהלת הצלחת לקוחות ב-Movement Group",
     linkedin: "https://www.linkedin.com/in/noam-oren-836668395/",
-    initials: "נא",
+    photo: `${import.meta.env.BASE_URL}clients/noam-oren.webp`,
   },
 ];
 
