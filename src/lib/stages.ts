@@ -5,6 +5,8 @@ export type StageNumber = "01" | "02" | "03" | "04";
 export type Stage = {
   number: StageNumber;
   name: string;
+  /** The cognitive verb for this stage, displayed as a badge in SequenceSection. */
+  verb: string;
   description: string;
   deliverable: string;
   priceNis: number;
@@ -19,8 +21,9 @@ export const stages: readonly Stage[] = [
   {
     number: "01",
     name: "נרטיב ייחודי",
+    verb: "חילוץ",
     description:
-      "פגישה אחת לחילוץ הבידול שלך מתוך החומר שכבר קיים אצלך.",
+      "פגישה אחת לחילוץ הבידול שלך מתוך החומר שכבר קיים אצלך. לא מוסיפים. מוציאים החוצה.",
     deliverable:
       "מסמך נרטיב באורך עמוד עד שניים עם 3 עד 5 ניסוחים מילוליים מוכנים.",
     priceNis: 1000,
@@ -31,8 +34,9 @@ export const stages: readonly Stage[] = [
   {
     number: "02",
     name: "הצעת ערך ייחודית",
+    verb: "הבלטה",
     description:
-      "פגישה אחת לבניית הצעת הערך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות.",
+      "פגישה אחת להבלטת הערך הייחודי שלך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. לא מוותרים על חלקים. בוחרים על מה האור נופל.",
     deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
     priceNis: 1300,
     priceLabel: "1,300 ש״ח",
@@ -42,8 +46,9 @@ export const stages: readonly Stage[] = [
   {
     number: "03",
     name: "מוצר ייחודי",
+    verb: "תרגום",
     description:
-      "פגישה אחת להמרת הצעת הערך למוצר עם תמחור ורציונל.",
+      "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלך לשפה שהלקוח שלך משלם עליה.",
     deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
     priceNis: 1600,
     priceLabel: "1,600 ש״ח",
@@ -53,8 +58,9 @@ export const stages: readonly Stage[] = [
   {
     number: "04",
     name: "רכישת לקוחות פרואקטיבית",
+    verb: "הפעלה",
     description:
-      "פגישה אחת לבניית רשימת מקבלי החלטות וטיוטות פנייה.",
+      "פגישה אחת להפעלה: רשימת מקבלי החלטות וטיוטות פנייה. התוצר עובר משלב התכנון לשלב התנועה בשטח.",
     deliverable:
       "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה שזיהיתי בתגובות.",
     priceNis: 1900,

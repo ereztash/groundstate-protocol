@@ -29,6 +29,9 @@ const SequenceSection = () => {
           >
             ארבעה שלבים. סדר קבוע.
           </h2>
+          <p className="mt-4 text-sm font-semibold tracking-wide text-accent">
+            חילוץ. הבלטה. תרגום. הפעלה. ארבעה פעלים שלא ניתן לערבב בסדר שלהם.
+          </p>
         </Reveal>
 
         <RevealStagger
@@ -48,6 +51,12 @@ const SequenceSection = () => {
               <h3 className="cor-subheading mt-4 text-foreground">
                 {s.name}
               </h3>
+
+              <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-accent">
+                <span>הפעולה</span>
+                <span aria-hidden="true" className="text-accent/40">:</span>
+                <span>{s.verb}</span>
+              </p>
 
               <p className="mt-3 text-sm leading-relaxed text-foreground/80">
                 {s.description}
