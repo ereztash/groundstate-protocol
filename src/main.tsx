@@ -2,16 +2,14 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { initAnalytics, trackError } from "./lib/analytics";
 import { initClarity } from "./lib/clarity";
-import { getConsent } from "./lib/consent";
 import "./index.css";
 
-// Privacy-by-default: analytics + session recording load only if the
-// visitor already granted consent on a previous visit. First-time visitors
-// get the ConsentBanner, which inits them on accept (see ConsentBanner.tsx).
-if (getConsent() === "granted") {
-  initAnalytics();
-  initClarity();
-}
+// TEMPORARY launch override: load analytics + session recording for everyone
+// so the launch traffic is fully tracked. The consent gate (a getConsent()
+// check here + <ConsentBanner/> in App.tsx) is intentionally disabled for the
+// launch window — RE-ENABLE it once the push settles.
+initAnalytics();
+initClarity();
 
 // Global error capture — reports to analytics when it's available (post-
 // consent) so production crashes we'd otherwise never see become visible.
