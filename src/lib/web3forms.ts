@@ -5,7 +5,7 @@
 // repo secret is unset — also fall through to the in-code default. Without
 // this, a missing secret produced APPS_SCRIPT_URL = "" and fetch("") was
 // resolved against the current page, returning 405 from GitHub Pages.
-const APPS_SCRIPT_URL =
+export const APPS_SCRIPT_URL =
   (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ||
   "https://script.google.com/macros/s/AKfycbxu9YILo5z5h45xZJ0ne7KW9M_xpzu_zfdHlcSnoe9y3Bj0PpdE65_cMcIGL0VLulfh/exec";
 

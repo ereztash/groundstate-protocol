@@ -62,6 +62,9 @@ const DeliverablesPreview = () => {
           <p className="cor-body-lg mt-4 text-foreground/80">
             כל שלב מסתיים במסמך אחד שאפשר לפתוח שוב מחר, בעוד חודש, או להעביר ליועץ אחר כדי לבחון. ככה זה נראה.
           </p>
+          <p className="mt-3 text-sm font-medium text-muted-foreground">
+            הכרטיסים למטה הם דוגמאות להמחשה בלבד — לא תוצרים אמיתיים של לקוחות.
+          </p>
         </Reveal>
 
         <RevealStagger
@@ -80,8 +83,13 @@ const DeliverablesPreview = () => {
                 >
                   {/* Document header: label + stage numeral */}
                   <header className="flex items-baseline justify-between border-b border-border/70 pb-3">
-                    <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
-                      {sample.docLabel}
+                    <span className="flex items-center gap-2">
+                      <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                        {sample.docLabel}
+                      </span>
+                      <span className="rounded-full bg-foreground/[0.06] px-1.5 py-0.5 text-[9px] font-semibold tracking-wide text-muted-foreground">
+                        דוגמה
+                      </span>
                     </span>
                     <span
                       className="stage-numeral text-xl"

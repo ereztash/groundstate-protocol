@@ -26,14 +26,16 @@ type Testimonial = {
 };
 
 const testimonials: Testimonial[] = [
-  {
-    quote:
-      "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
-    // TODO: replace with real name + business once client approves attribution
-    attribution: "לקוחה ראשונה שהשלימה את הרצף",
-    outcome: "עסקה של ₪5,500 נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו בליווי.",
-    initials: "ל",
-  },
+  // NOTE: The first client's testimonial is held back until she approves
+  // publishing her name + business. Anonymous quotes hurt trust more than they
+  // help, so we keep it offline rather than show it unattributed. To restore,
+  // un-comment and fill in `attribution` / `outcome` / `linkedin` / `photo`.
+  // {
+  //   quote:
+  //     "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
+  //   attribution: "TODO: שם + עסק לאחר אישור",
+  //   outcome: "עסקה של ₪5,500 נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו בליווי.",
+  // },
   {
     quote:
       "ארז פשוט מקצוען! כבר בפגישה הראשונה הוא הצליח להעלות תובנות שלא הייתי מגיעה אליהן בלעדיו. ארז רגיש, חכם, מתוחכם ובעל ידע רב ונרחב. מרגישים כמה הוא מסור ומחויב, ובאמת בא להוביל לשינוי והתפתחות של הלקוח. אני ממליצה.",

@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Reveal } from "./Reveal";
 import Guarantee from "./Guarantee";
+import SpotsLeft from "./SpotsLeft";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 // Lazy: react-calendly is ~40KB and only needed AFTER the form is submitted.
 // Keeping it out of the main bundle drops first-paint JS by that much.
@@ -192,9 +193,7 @@ const DiagnosticFormSection = () => {
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
-              <p className="text-sm text-muted-foreground">
-                אני לוקח עד 10 לקוחות בחודש.
-              </p>
+              <SpotsLeft className="text-sm text-muted-foreground" />
 
               <ul
                 aria-label="מה תיקח מהשיחה"

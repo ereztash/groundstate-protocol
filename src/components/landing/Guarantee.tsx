@@ -8,8 +8,8 @@ const Guarantee = ({ className = "" }: GuaranteeProps) => (
   >
     <ShieldCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
     <span>
-      <span className="font-semibold text-foreground">אחריות החזר מלא</span> — אם
-      אחרי שלב 1 לא קיבלת נרטיב חד יותר, אתה לא משלם. בלי טפסים, בלי ויכוח.
+      <span className="font-semibold text-foreground">אחריות מלאה</span> — אחרי שלב 1
+      תצא עם נרטיב חד יותר. לא יצאת? אתה לא משלם. בלי טפסים, בלי ויכוח.
     </span>
   </p>
 );
