@@ -3,6 +3,7 @@ import { trackEvent } from "@/lib/analytics";
 
 const VIDEO_SRC = `${import.meta.env.BASE_URL}media/testimonial-guy.mp4`;
 const POSTER_SRC = `${import.meta.env.BASE_URL}media/testimonial-guy-poster.webp`;
+const CAPTIONS_SRC = `${import.meta.env.BASE_URL}media/testimonial-guy.he.vtt`;
 
 /**
  * Video testimonial with a "facade" load pattern: the poster image + a
@@ -27,9 +28,9 @@ const VideoTestimonial = () => {
     <figure className="grid gap-6 sm:grid-cols-[minmax(0,240px)_1fr] sm:items-center sm:gap-8">
       <div className="relative mx-auto w-full max-w-[240px] overflow-hidden rounded-xl border border-border bg-card shadow-[0_8px_24px_-12px_hsl(var(--foreground)/0.18)]">
         <div className="relative aspect-[474/850]">
-          {/* Captions: no VTT track yet — the transcribed pull-quote beside
-              the video carries the gist for muted / deaf users until a Hebrew
-              caption file is produced. */}
+          {/* Hebrew captions ship as a VTT track (default on). The pull-quote
+              beside the video still carries the gist for muted scanners,
+              crawlers, and AI engines that don't play video. */}
           {playing ? (
             <video
               src={VIDEO_SRC}
@@ -38,7 +39,15 @@ const VideoTestimonial = () => {
               autoPlay
               playsInline
               className="absolute inset-0 h-full w-full bg-black"
-            />
+            >
+              <track
+                kind="captions"
+                srcLang="he"
+                label="עברית"
+                src={CAPTIONS_SRC}
+                default
+              />
+            </video>
           ) : (
             <button
               type="button"
