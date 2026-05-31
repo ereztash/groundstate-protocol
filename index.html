@@ -10,7 +10,7 @@
          this hint the browser only discovers it after parsing the React
          bundle, costing ~500ms. With it, the request goes out in parallel
          with the HTML parse. -->
-    <link rel="preload" as="image" type="image/webp" href="/groundstate-protocol/portrait.webp" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href="/portrait.webp" fetchpriority="high" />
 
     <!-- Critical inline styles: paint background + font-family before the
          CSS chunk arrives so visitors never see a flash of white. -->
@@ -29,18 +29,18 @@
     <meta name="description" content="לעצמאים שיש להם ידע ולא יודעים איך להעביר אותו. 30 יום, 4 פגישות, ובסוף: מסר ברור, מחיר בלי גמגום, ו-10 פניות לאנשים אמיתיים.">
     <meta name="author" content="ארז טל-שיר" />
 
-    <link rel="canonical" href="https://ground-state-protocol.lovable.app/" />
+    <link rel="canonical" href="https://ereztalshir.co.il/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="he_IL" />
-    <meta property="og:url" content="https://ground-state-protocol.lovable.app/" />
+    <meta property="og:url" content="https://ereztalshir.co.il/" />
     <meta property="og:site_name" content="COR-SYS" />
-    <meta property="og:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
+    <meta property="og:image" content="https://ereztalshir.co.il/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="COR-SYS — 30 יום מהמסר אל הלקוחות · ארז טל-שיר" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
+    <meta name="twitter:image" content="https://ereztalshir.co.il/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -55,26 +55,26 @@
       "@graph": [
         {
           "@type": "WebSite",
-          "@id": "https://ground-state-protocol.lovable.app/#website",
-          "url": "https://ground-state-protocol.lovable.app/",
+          "@id": "https://ereztalshir.co.il/#website",
+          "url": "https://ereztalshir.co.il/",
           "name": "COR-SYS",
           "inLanguage": "he-IL"
         },
         {
           "@type": "Person",
-          "@id": "https://ground-state-protocol.lovable.app/#person",
+          "@id": "https://ereztalshir.co.il/#person",
           "name": "ארז טל-שיר",
           "jobTitle": "יועץ עסקי לעצמאים",
-          "url": "https://ground-state-protocol.lovable.app/",
+          "url": "https://ereztalshir.co.il/",
           "sameAs": ["https://www.linkedin.com/in/erez-tal-shir/"]
         },
         {
           "@type": "Service",
-          "@id": "https://ground-state-protocol.lovable.app/#service",
+          "@id": "https://ereztalshir.co.il/#service",
           "name": "COR-SYS",
           "description": "רצף יעוץ עסקי 1:1 בן 30 יום עבור עצמאים — נרטיב, הצעת ערך, מוצר ופניות יוצאות.",
           "serviceType": "Business consulting",
-          "provider": {"@id": "https://ground-state-protocol.lovable.app/#person"},
+          "provider": {"@id": "https://ereztalshir.co.il/#person"},
           "areaServed": {"@type":"Country","name":"Israel"},
           "audience": {"@type":"Audience","audienceType":"self-employed professionals"},
           "offers": [
@@ -87,29 +87,29 @@
         },
         {
           "@type": "Review",
-          "@id": "https://ground-state-protocol.lovable.app/#review-1",
+          "@id": "https://ereztalshir.co.il/#review-1",
           "reviewBody": "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
           "reviewRating": {"@type":"Rating","ratingValue":"5","bestRating":"5"},
           "author": {"@type":"Person","name":"לקוחה ראשונה שהשלימה את הרצף"},
-          "itemReviewed": {"@id":"https://ground-state-protocol.lovable.app/#service"},
-          "publisher": {"@id":"https://ground-state-protocol.lovable.app/#person"}
+          "itemReviewed": {"@id":"https://ereztalshir.co.il/#service"},
+          "publisher": {"@id":"https://ereztalshir.co.il/#person"}
         },
         {
           "@type": "Review",
-          "@id": "https://ground-state-protocol.lovable.app/#review-2",
+          "@id": "https://ereztalshir.co.il/#review-2",
           "reviewBody": "ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
           "reviewRating": {"@type":"Rating","ratingValue":"5","bestRating":"5"},
           "author": {"@type":"Person","name":"גיא כהן","jobTitle":"יועץ AI לעצמאים ולעסקים קטנים","description":"מוביל קהילת AI של 1,500+ עצמאים","sameAs":"https://www.linkedin.com/in/guycohen-ai/"},
-          "itemReviewed": {"@id":"https://ground-state-protocol.lovable.app/#service"},
-          "publisher": {"@id":"https://ground-state-protocol.lovable.app/#person"}
+          "itemReviewed": {"@id":"https://ereztalshir.co.il/#service"},
+          "publisher": {"@id":"https://ereztalshir.co.il/#person"}
         },
         {
           "@type": "VideoObject",
-          "@id": "https://ground-state-protocol.lovable.app/#video-testimonial-guy",
+          "@id": "https://ereztalshir.co.il/#video-testimonial-guy",
           "name": "גיא כהן ממליץ על COR-SYS",
           "description": "עדות וידאו של גיא כהן על העבודה עם ארז טל-שיר במיקוד הצעת הערך והשפעתה על אחוזי ההמרה.",
-          "thumbnailUrl": "https://ereztash.github.io/groundstate-protocol/media/testimonial-guy-poster.webp",
-          "contentUrl": "https://ereztash.github.io/groundstate-protocol/media/testimonial-guy.mp4",
+          "thumbnailUrl": "https://ereztalshir.co.il/media/testimonial-guy-poster.webp",
+          "contentUrl": "https://ereztalshir.co.il/media/testimonial-guy.mp4",
           "uploadDate": "2026-05-24",
           "duration": "PT37S"
         },

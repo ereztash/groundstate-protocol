@@ -4,28 +4,33 @@ type Beat = {
   marker: string;
   title: string;
   body: string;
+  cognitiveLabel: string;
 };
 
 const beats: Beat[] = [
   {
     marker: "00:00",
     title: "פתיחה. שתי שאלות.",
-    body: "מה התקיעה ומה ניסית עד עכשיו. אני מקשיב — לא קוטע, לא מתקן.",
+    body: "מה התקיעה ומה ניסית עד עכשיו. אני מקשיב -- לא קוטע, לא מתקן.",
+    cognitiveLabel: "איסוף",
   },
   {
     marker: "00:05",
     title: "חילוץ נקודה אחת.",
     body: "אני שואל על משהו ספציפי שעשית פעם שאתה גאה בו מקצועית. שם יושב הבידול שלך, רק שעוד לא ניסחת אותו.",
+    cognitiveLabel: "זיהוי משפט-תפיסה",
   },
   {
     marker: "00:12",
     title: "שיקוף.",
     body: "אני אומר בקול מה שאני שומע. אם זה מדויק, ממשיכים. אם לא, מתקנים ביחד.",
+    cognitiveLabel: "הוספת זווית",
   },
   {
     marker: "00:17",
     title: "החלטה.",
     body: "אומר ישר אם זה מתאים, ומאיזה שלב להתחיל. אם לא מתאים, גם זה תשובה ברורה.",
+    cognitiveLabel: "תיווך לפעולה",
   },
 ];
 
@@ -63,6 +68,9 @@ const ProcessPreviewSection = () => {
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-foreground/80">
                 {b.body}
+              </p>
+              <p className="mt-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                הפעולה הקוגניטיבית: {b.cognitiveLabel}
               </p>
             </RevealItem>
           ))}

@@ -15,6 +15,9 @@ import { stages } from "@/lib/stages";
 
 type DocSample = {
   docLabel: string;
+  /** The kept artifact the client also walks away with. Signals the
+      psycho-social depth behind the stage, not just a consulting note. */
+  secondaryDoc: string;
   highlight: string;
   lineCount: number;
 };
@@ -22,22 +25,26 @@ type DocSample = {
 const samples: Record<string, DocSample> = {
   "stage-1": {
     docLabel: "מסמך נרטיב",
+    secondaryDoc: "מפת אנרגיה",
     highlight: "אני עוזר ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
     lineCount: 8,
   },
   "stage-2": {
-    docLabel: "הצעת ערך + מילון כאב",
+    docLabel: "הצעת ערך",
+    secondaryDoc: "מילון כאב",
     highlight: "מה לקוח אומר: ״הניסוח שלי תקוע״. מה אני שומע: ״ההצעה לא חתוכה.״",
     lineCount: 7,
   },
   "stage-3": {
     docLabel: "תיאור מוצר",
-    highlight: "מסלול 4 פגישות / 30 יום / ₪4,500 — נכס שעובד גם בעוד שנה.",
+    secondaryDoc: "מפת הקיפול",
+    highlight: "מסלול 4 פגישות / 30 יום / ₪4,500. נכס שעובד גם בעוד שנה.",
     lineCount: 9,
   },
   "stage-4": {
     docLabel: "10 פניות מתועדות",
-    highlight: "Subject: ראיתי מה שכתבת על המשבר ב-Q2 — שאלה אחת.",
+    secondaryDoc: "יומן אותות קנייה",
+    highlight: "Subject: ראיתי מה שכתבת על המשבר ב-Q2. שאלה אחת.",
     lineCount: 10,
   },
 };
@@ -60,7 +67,7 @@ const DeliverablesPreview = () => {
             זה מה שמקבלים. לא הבטחה.
           </h2>
           <p className="cor-body-lg mt-4 text-foreground/80">
-            כל שלב מסתיים במסמך אחד שאפשר לפתוח שוב מחר, בעוד חודש, או להעביר ליועץ אחר כדי לבחון. ככה זה נראה.
+            כל שלב מסתיים במסמך, וגם בתוצר נלווה שאתה לוקח הביתה: מפה של מה שראינו יחד בתהליך. אפשר לפתוח את שניהם שוב מחר, בעוד חודש, או להעביר ליועץ אחר כדי לבחון. ככה זה נראה.
           </p>
         </Reveal>
 
@@ -99,6 +106,12 @@ const DeliverablesPreview = () => {
                     className="mt-4 text-[12px] font-semibold leading-snug text-primary/90"
                   >
                     ״{sample.highlight}״
+                  </p>
+
+                  {/* Kept artifact: the second deliverable that signals
+                      psycho-social depth, not just a consulting note. */}
+                  <p className="mt-3 inline-flex items-center gap-1 self-start rounded-full border border-accent/30 bg-accent/5 px-2.5 py-1 text-[10px] font-semibold text-accent">
+                    + {sample.secondaryDoc}
                   </p>
 
                   {/* Stylized body lines (visual placeholder for the

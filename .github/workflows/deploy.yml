@@ -34,9 +34,9 @@ jobs:
       - name: Build
         run: bun run build
         env:
-          # Project lives at https://<user>.github.io/groundstate-protocol/
-          # so all asset URLs must be prefixed with the repo name.
-          VITE_BASE_PATH: /groundstate-protocol/
+          # Served from the apex custom domain (ereztalshir.co.il) at the
+          # site root, so the base path is "/" with no repo-name prefix.
+          VITE_BASE_PATH: /
           # Optional secrets — if unset, the app uses the in-code fallbacks
           # for the form endpoint and silently disables GA tracking.
           VITE_APPS_SCRIPT_URL: ${{ secrets.VITE_APPS_SCRIPT_URL }}

@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ground-state-protocol.lovable.app/sitemap.xml
+Sitemap: https://ereztalshir.co.il/sitemap.xml

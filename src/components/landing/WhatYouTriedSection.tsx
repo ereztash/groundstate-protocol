@@ -17,18 +17,46 @@ const WhatYouTriedSection = () => {
               id="what-you-tried-title"
               className="cor-title mt-2 text-foreground"
             >
-              ניסית כבר את כל מה שמציעים. וזה לא הזיז.
+              ארבעה דברים שאתה מכיר מקרוב.
             </h2>
           </div>
 
-          <div className="space-y-5 text-foreground/85">
-            <p className="cor-body-lg">
-              ישבת שעות מול GPT והחזרת לעצמך את עצמך, רק עם יותר מילים. שילמת ל"מומחה לידים" שעזב אותך עם רשימה ובלי מערכת יחסים. כתבת פוסטים שאספו מאות חשיפות, ואפס פניות חזרו.
-            </p>
-            <p className="cor-body-lg">
-              זה לא קרה כי לא ניסית. זה קרה כי הכלים האלה לא יודעים מה אתה בעצם מציע. רק אתה יודע. הם לא יכולים להוציא את זה ממך, כי הם לא יושבים מולך בחדר.
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
+              <p className="cor-body-lg text-foreground/85">
+                יש לך תיקיה עם <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״. אף אחת לא החזיקה יותר משבועיים.
+              </p>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
+              <p className="cor-body-lg text-foreground/85">
+                רשמת מספר לפני השיחה. <strong className="font-semibold text-foreground">מספר נמוך יותר</strong> יצא לך מהפה, ולא ידעת למה.
+              </p>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
+              <p className="cor-body-lg text-foreground/85">
+                התחלת ב<strong className="font-semibold text-foreground">חמישה תחומים</strong> כי כדאי להיות גמיש. היום אף אחד מהם לא מובהק, ואתה עייף.
+              </p>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
+              <p className="cor-body-lg text-foreground/85">
+                נתת חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלך הוא הידע שלך, <strong className="font-semibold text-foreground">נתת אותו במתנה</strong>.
+              </p>
+            </li>
+          </ul>
+
+          <div className="border-r-2 border-accent pr-4">
+            <p className="cor-body-lg text-foreground">
+              ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם לא. הם ארבע פנים של דבר אחד: <strong className="font-semibold text-accent">עוד לא תרגמת את מה שאתה יודע לשפה שהלקוח שלך משלם עליה.</strong>
             </p>
           </div>
+
+          <p className="cor-body-lg text-foreground/85">
+            וזה גם לא נפתר לבד, ולא נקנה מכלי. GPT יחזיר לך את עצמך עם יותר מילים. יועץ ייתן עצה. מאמן ישאל שאלה. את המסגרת שאתה נמצא בתוכה אי אפשר לראות מבפנים. צריך מישהו מבחוץ שיציב מולה מסגרת אחרת, ויחלץ את מה שאתה כבר יודע אבל עוד לא ניסחת.
+          </p>
         </Reveal>
       </div>
     </section>
