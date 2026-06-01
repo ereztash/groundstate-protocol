@@ -3,15 +3,19 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// `base` is configurable so the same build works for:
-//   - root deployments (Lovable, Vercel, custom domain): VITE_BASE_PATH=/
-//   - project-subpath deployments (GitHub Pages): VITE_BASE_PATH=/groundstate-protocol/
-// Default "/" keeps `bun run dev` / local builds working unchanged.
-const BASE_PATH = process.env.VITE_BASE_PATH || "/";
+// `base` controls how built asset URLs are prefixed. We default production
+// builds to a RELATIVE base ("./") so the same artifact works whether it is
+// served from a domain root (Lovable, Vercel, custom domain) OR a project
+// sub-path (GitHub Pages at /groundstate-protocol/). Relative URLs resolve
+// against the HTML's own directory, so neither host 404s on the JS/CSS.
+//   - VITE_BASE_PATH, when set, still wins (e.g. an absolute "/groundstate-
+//     protocol/" from the Pages workflow) for callers that want it explicit.
+//   - dev keeps an absolute "/" so the Vite dev server serves modules correctly.
+const explicitBase = process.env.VITE_BASE_PATH;
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  base: BASE_PATH,
+export default defineConfig(({ command, mode }) => ({
+  base: explicitBase || (command === "build" ? "./" : "/"),
   server: {
     host: "::",
     port: 8080,

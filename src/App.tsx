@@ -17,16 +17,25 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
+// vite.config.ts builds with a RELATIVE base ("./") so one artifact works at a
+// domain root and at a project sub-path. That makes import.meta.env.BASE_URL
+// "./", which is not a valid router basename. Derive the real absolute mount
+// path from this bundled module's own URL instead: chunks live at
+// "<base>/assets/<chunk>.js", so "../" resolves to "<base>/" — yielding "/" at
+// a root deploy and "/groundstate-protocol/" on GitHub Pages, with nothing
+// hardcoded. In dev the module is "/src/App.tsx", so "../" → "/".
+const routerBasename = new URL("../", import.meta.url).pathname;
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {/* basename mirrors vite.config.ts `base`, so routes resolve correctly
-            when the app is served from a subpath like /groundstate-protocol/
-            on GitHub Pages while still working at "/" locally and on Lovable. */}
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
+        {/* basename is derived from the bundle URL (see routerBasename above),
+            so routes resolve correctly whether the app is served from "/" or a
+            subpath like /groundstate-protocol/ on GitHub Pages. */}
+        <BrowserRouter basename={routerBasename}>
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Landing />} />
