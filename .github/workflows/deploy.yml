@@ -34,9 +34,11 @@ jobs:
       - name: Build
         run: bun run build
         env:
-          # Served from the apex custom domain (ereztalshir.co.il) at the
-          # site root, so the base path is "/" with no repo-name prefix.
-          VITE_BASE_PATH: /
+          # No VITE_BASE_PATH: vite.config.ts defaults production builds to a
+          # relative base ("./"), so this single artifact works both at the
+          # project sub-path (https://<user>.github.io/groundstate-protocol/)
+          # and at the apex custom domain root (ereztalshir.co.il) once its DNS
+          # is connected — no rebuild needed when the domain flips on.
           # Optional secrets — if unset, the app uses the in-code fallbacks
           # for the form endpoint and silently disables GA tracking.
           VITE_APPS_SCRIPT_URL: ${{ secrets.VITE_APPS_SCRIPT_URL }}
