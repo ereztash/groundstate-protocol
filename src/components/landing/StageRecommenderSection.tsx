@@ -751,19 +751,25 @@ const StageRecommenderSection = () => {
                 className="space-y-4"
               >
                 <div className="flex flex-wrap items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => onCtaPrimary(result)}
-                    className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
-                  >
-                    {result.ctaPrimary}
-                  </button>
+                  {/* The free 20-min call is the primary CTA — the lowest-risk
+                      next step for a skeptical visitor. Buying a specific stage
+                      is the secondary action. The analytics event names below
+                      (primary=buy-stage, secondary=book-call) are kept as-is so
+                      existing GA4 funnels keep working, even though the visual
+                      hierarchy is intentionally flipped. */}
                   <button
                     type="button"
                     onClick={() => onCtaSecondary(result)}
+                    className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
+                  >
+                    קבע שיחת 20 דקות בחינם
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onCtaPrimary(result)}
                     className="cta-line inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
                   >
-                    תחילה שיחת 20 דקות בחינם
+                    {result.ctaPrimary}
                   </button>
                 </div>
 

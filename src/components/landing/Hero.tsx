@@ -104,13 +104,19 @@ const Hero = () => {
                 <button
                   type="button"
                   onClick={scrollToForm}
-                  aria-describedby="hero-subtitle"
+                  aria-describedby="hero-subtitle hero-cta-note"
                   aria-label={ctaCopy}
                   className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base transition-[background,transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
                 >
                   {ctaCopy}
                 </button>
               </div>
+              <p
+                id="hero-cta-note"
+                className="mt-3 max-w-md text-sm leading-relaxed text-foreground/70"
+              >
+                בסוף השיחה תצא עם הערכה: איפה התקיעה, מאיפה להתחיל, ואם בכלל יש התאמה. אם לא — אגיד לך בגלוי.
+              </p>
             </div>
           </div>
 

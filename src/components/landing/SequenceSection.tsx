@@ -2,6 +2,7 @@ import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
 import { stages, type Stage } from "@/lib/stages";
+import Guarantee from "./Guarantee";
 
 const SequenceSection = () => {
   const { requestStage } = useDiagnosticForm();
@@ -32,6 +33,7 @@ const SequenceSection = () => {
           <p className="mt-4 text-sm font-semibold tracking-wide text-accent">
             חילוץ. הבלטה. תרגום. הפעלה. ארבעה פעלים שלא ניתן לערבב בסדר שלהם.
           </p>
+          <Guarantee className="mt-6" />
         </Reveal>
 
         <RevealStagger

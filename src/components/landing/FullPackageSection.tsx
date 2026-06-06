@@ -46,6 +46,8 @@ const FullPackageSection = () => {
             כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
           </p>
 
+          <Guarantee className="mt-6" />
+
           <div className="mt-8 flex items-baseline gap-3">
             <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               <Footnote
@@ -70,8 +72,7 @@ const FullPackageSection = () => {
             </button>
           </div>
 
-          <Guarantee className="mt-6" />
-          <SpotsLeft className="mt-3 text-xs text-muted-foreground" />
+          <SpotsLeft className="mt-6 text-xs text-muted-foreground" />
         </Reveal>
       </div>
     </section>
