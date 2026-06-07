@@ -48,7 +48,8 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
         <TooltipContent
           side="top"
           sideOffset={6}
-          className="max-w-xs bg-foreground text-xs leading-relaxed text-background"
+          dir="rtl"
+          className="max-w-xs whitespace-normal break-words bg-foreground text-start text-xs leading-relaxed text-background"
         >
           {tip}
         </TooltipContent>
