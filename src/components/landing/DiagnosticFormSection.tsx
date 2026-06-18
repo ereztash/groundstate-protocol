@@ -88,6 +88,9 @@ const DiagnosticFormSection = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  // Honeypot: read at submit time (see payload below). Lives outside the
+  // step forms so its value survives the step 1 → step 2 transition.
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const stepOne = useForm<StepOneValues>({
     resolver: zodResolver(stepOneSchema),
@@ -142,6 +145,7 @@ const DiagnosticFormSection = () => {
       stage: stageHint || "(נקבע בשיחה)",
       challenge: one.challenge,
       preferredTimes: timeLabels.length > 0 ? timeLabels : ["(לא מולא)"],
+      company: honeypotRef.current?.value || undefined,
     };
 
     try {
@@ -175,6 +179,7 @@ const DiagnosticFormSection = () => {
       dir="rtl"
       className="relative py-20 md:py-28"
       aria-labelledby="diagnostic-form-title"
+      data-clarity-mask="true"
     >
       <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
       <div className="relative mx-auto max-w-2xl px-6">
@@ -234,6 +239,25 @@ const DiagnosticFormSection = () => {
               >
                 שלב {step} מתוך 2
               </p>
+            </div>
+
+            {/* Honeypot: hidden from people and assistive tech; bots fill it,
+                and the Apps Script then silently drops the submission. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden opacity-0"
+            >
+              <label>
+                אל תמלא/י שדה זה
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  ref={honeypotRef}
+                  defaultValue=""
+                />
+              </label>
             </div>
 
             {step === 1 && (

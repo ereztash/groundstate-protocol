@@ -80,19 +80,6 @@ test.describe("Landing page (production bundle)", () => {
 });
 
 test.describe("Lazy routes (production bundle)", () => {
-  test("/groundstate route lazy-loads without crashing", async ({ page }) => {
-    const errors: string[] = [];
-    page.on("pageerror", (err) => errors.push(err.message));
-
-    await page.goto("/groundstate");
-    await page.locator("body").waitFor({ state: "attached", timeout: 10_000 });
-    await page.waitForLoadState("networkidle", { timeout: 10_000 });
-    expect(
-      errors,
-      `Lazy-loaded /groundstate threw: ${errors.join("\n")}`
-    ).toEqual([]);
-  });
-
   test("unknown route renders the NotFound lazy chunk", async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (err) => errors.push(err.message));

@@ -38,7 +38,7 @@ const samples: Record<string, DocSample> = {
   "stage-3": {
     docLabel: "תיאור מוצר",
     secondaryDoc: "מפת הקיפול",
-    highlight: "מסלול 4 פגישות / 30 יום / ₪4,500. נכס שעובד גם בעוד שנה.",
+    highlight: "מסלול 4 פגישות / 30 יום. נכס שעובד גם בעוד שנה.",
     lineCount: 9,
   },
   "stage-4": {

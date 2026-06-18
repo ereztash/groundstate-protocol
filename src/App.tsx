@@ -9,10 +9,9 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ConsentBanner from "./components/ConsentBanner";
 
 // Landing is the entry route on every visit, so it stays eager — lazy()
-// would add a Suspense flash on the first paint. Index (GroundState tool),
-// Privacy, and NotFound are secondary routes loaded only when navigated to,
-// so they ship in separate chunks.
-const Index = lazy(() => import("./pages/Index"));
+// would add a Suspense flash on the first paint. Privacy and NotFound are
+// secondary routes loaded only when navigated to, so they ship in separate
+// chunks.
 const Privacy = lazy(() => import("./pages/Privacy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -40,7 +39,6 @@ const App = () => (
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route path="/groundstate" element={<Index />} />
               <Route path="/privacy" element={<Privacy />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
