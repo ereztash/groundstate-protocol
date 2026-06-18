@@ -33,6 +33,9 @@ const SequenceSection = () => {
           <p className="mt-4 text-sm font-semibold tracking-wide text-accent">
             חילוץ. הבלטה. תרגום. הפעלה. ארבעה פעלים שלא ניתן לערבב בסדר שלהם.
           </p>
+          <p className="mt-4 cor-body-lg text-foreground/80">
+            על כל שעת פגישה איתי, אתה חוסך לפחות שעת עבודה בשבוע — לכל שארית חיי התהליך.
+          </p>
           <Guarantee className="mt-6" />
         </Reveal>
 
