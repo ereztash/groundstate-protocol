@@ -8,8 +8,9 @@ const Guarantee = ({ className = "" }: GuaranteeProps) => (
   >
     <ShieldCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
     <span>
-      <span className="font-semibold text-foreground">אחריות מלאה</span> — אחרי שלב 1
-      תצא עם נרטיב חד יותר. לא יצאת? אתה לא משלם. בלי טפסים, בלי ויכוח.
+      <span className="font-semibold text-foreground">אחריות ללא פשרות</span> — שלב 1
+      עולה 1,000 ₪. אם בסוף הפגישה הנרטיב שלך לא חד יותר — אתה לא משלם. בלי טופס, בלי
+      ויכוח. אני מציע את זה כי אני בטוח במה שאני עושה.
     </span>
   </p>
 );

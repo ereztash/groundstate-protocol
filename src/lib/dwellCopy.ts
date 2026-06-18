@@ -11,7 +11,7 @@ import type { DwellPhase } from "./useDwellState";
 export function getCtaCopy(phase: DwellPhase): string {
   switch (phase) {
     case "fresh":
-      return "20 דקות. בלי תשלום. נדבר.";
+      return "בוא לדעת איפה אתה תקוע — 20 דקות, בחינם";
     case "engaged":
       return "20 דקות. בלי לחץ למכור.";
     case "committed":

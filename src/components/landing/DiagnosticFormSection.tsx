@@ -188,7 +188,7 @@ const DiagnosticFormSection = () => {
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                20 דקות. בלי תשלום. נדבר.
+                בוא לדעת איפה אתה תקוע — 20 דקות, בחינם
               </h2>
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
