@@ -43,7 +43,7 @@ const FullPackageSection = () => {
             שלושים ימים. ארבע פגישות. הרצף מהקצה לקצה.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground/80">
-            כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
+            כל ארבעת השלבים. ליווי בין הפגישות. תמחור חבילה שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
           </p>
 
           <Guarantee className="mt-6" />

@@ -39,6 +39,11 @@ const CONFIG_SHEET = "Config";
 // Email to notify on every new lead. Set to "" to disable notifications.
 const NOTIFY_EMAIL = "Erez2812345@gmail.com";
 
+// Cap on notification emails per day. The form endpoint is public, so a flood
+// of submissions must not exhaust the daily MailApp quota and silence real
+// alerts. Leads are still written to the sheet regardless of this cap.
+const MAX_NOTIFICATIONS_PER_DAY = 50;
+
 const HEADERS = [
   "submittedAt",
   "fullName",
@@ -119,6 +124,14 @@ function getLeadsSheet() {
 function notify(row) {
   if (!NOTIFY_EMAIL) return;
   try {
+    // Daily cap (runs inside doPost's lock, so the read-increment is safe).
+    var props = PropertiesService.getScriptProperties();
+    var dayKey = "mailCount_" + Utilities.formatDate(
+      new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd");
+    var sentToday = Number(props.getProperty(dayKey) || "0");
+    if (sentToday >= MAX_NOTIFICATIONS_PER_DAY) return;
+    props.setProperty(dayKey, String(sentToday + 1));
+
     var subject = "ליד חדש — COR-SYS: " + (row.fullName || "ללא שם");
     var body =
       "התקבלה פנייה חדשה מטופס האבחון:\n\n" +

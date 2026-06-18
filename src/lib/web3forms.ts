@@ -26,6 +26,9 @@ export type DiagnosticPayload = {
   challenge: string;
   preferredTimes: string[];
   subject?: string;
+  /** Honeypot: real users leave this empty; bots fill it. The Apps Script
+      drops any submission where it's non-empty. */
+  company?: string;
 };
 
 export async function submitForm(
@@ -40,6 +43,7 @@ export async function submitForm(
     stage: data.stage,
     challenge: data.challenge,
     preferredTimes: data.preferredTimes,
+    company: data.company || "",
   };
 
   try {

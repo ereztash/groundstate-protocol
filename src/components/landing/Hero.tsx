@@ -60,7 +60,7 @@ const Hero = () => {
             </p>
 
             <h1 id="hero-title" className="cor-display text-foreground">
-              יש לך מקצוע. יש לך ידע. אבל בין מה שאתה יודע לבין מה שהלקוח מבין -- יש שפה שלא תרגמת עדיין.
+              יש לך מקצוע. יש לך ידע. אבל בין מה שאתה יודע לבין מה שהלקוח מבין — יש שפה שלא תרגמת עדיין.
             </h1>
 
             <p id="hero-subtitle" className="cor-body-lg max-w-xl text-foreground/85">

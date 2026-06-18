@@ -7,5 +7,5 @@ export const CALENDLY_PAGE_SETTINGS = {
   primaryColor: "B87333",
   hideEventTypeDetails: false,
   hideLandingPageDetails: false,
-  hideGdprBanner: true,
+  hideGdprBanner: false,
 } as const;
