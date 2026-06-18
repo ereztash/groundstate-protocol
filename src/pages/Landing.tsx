@@ -63,12 +63,15 @@ const Landing = () => {
           <OriginStorySection />
           <ProcessPreviewSection />
           <StageRecommenderSection />
-          <SequenceSection />
+          {/* Value before price: the tangible deliverables and the lifetime-ROI
+              framing run BEFORE the price ladder, so the numbers in
+              SequenceSection land on top of value that's already been built. */}
           <DeliverablesPreview />
+          <CommitmentSection />
+          <SequenceSection />
           <NotForEveryoneSection />
           <FullPackageSection />
           <MidPageCTA />
-          <CommitmentSection />
           <FAQSection />
           <DiagnosticFormSection />
         </main>
