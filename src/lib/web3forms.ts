@@ -7,7 +7,7 @@
 // resolved against the current page, returning 405 from GitHub Pages.
 export const APPS_SCRIPT_URL =
   (import.meta.env.VITE_APPS_SCRIPT_URL as string | undefined) ||
-  "https://script.google.com/macros/s/AKfycbxu9YILo5z5h45xZJ0ne7KW9M_xpzu_zfdHlcSnoe9y3Bj0PpdE65_cMcIGL0VLulfh/exec";
+  "https://script.google.com/macros/s/AKfycbzzm6oH7_rc1VhJPj8o_lHz3fcho6IkFsqJ0wVOdlVZPOHCQ2F_MajUnBDoxHAdglii/exec";
 
 const SECRET_TOKEN =
   (import.meta.env.VITE_APPS_SCRIPT_SECRET as string | undefined) ||
