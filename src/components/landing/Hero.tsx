@@ -3,6 +3,7 @@ import { useDwellState } from "@/lib/useDwellState";
 import { getCtaCopy } from "@/lib/dwellCopy";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
+import SpotsLeft from "./SpotsLeft";
 
 // Portrait lives under public/ so index.html can preload it before the JS
 // bundle even parses. Cuts ~500ms off mobile LCP. The literal path uses
@@ -117,6 +118,7 @@ const Hero = () => {
               >
                 בסוף השיחה תצא עם הערכה: איפה התקיעה, מאיפה להתחיל, ואם בכלל יש התאמה. אם לא — אגיד לך בגלוי.
               </p>
+              <SpotsLeft className="mt-3 text-xs font-medium text-muted-foreground" />
             </div>
           </div>
 
