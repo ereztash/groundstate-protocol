@@ -70,7 +70,7 @@ const ClientProofSection = () => {
               id="client-proof-title"
               className="cor-title mt-2 text-foreground"
             >
-              חודש אחד. ארבעה שלבים. עסקה של ₪5,500.
+              חודש אחד. תהליך מובנה. עסקה של ₪5,500.
             </h2>
           </div>
 
