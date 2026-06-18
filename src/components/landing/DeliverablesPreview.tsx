@@ -139,13 +139,12 @@ const DeliverablesPreview = () => {
                     ))}
                   </div>
 
-                  {/* Document footer: stage name + price, very subtle */}
-                  <footer className="mt-4 flex items-center justify-between border-t border-border/70 pt-3">
+                  {/* Footer shows the stage name only — the prices are
+                      deliberately deferred to the SequenceSection ladder that
+                      now follows (value-before-price). */}
+                  <footer className="mt-4 border-t border-border/70 pt-3">
                     <span className="text-[11px] font-medium text-foreground/70">
                       {stage.name}
-                    </span>
-                    <span className="text-[11px] font-semibold text-foreground">
-                      {stage.priceLabel}
                     </span>
                   </footer>
                 </article>
