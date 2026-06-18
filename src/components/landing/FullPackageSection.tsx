@@ -4,7 +4,6 @@ import { trackCtaClick } from "@/lib/analytics";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
 import { fullPackage } from "@/lib/stages";
-import Guarantee from "./Guarantee";
 import SpotsLeft from "./SpotsLeft";
 
 const FullPackageSection = () => {
@@ -45,8 +44,6 @@ const FullPackageSection = () => {
           <p className="cor-body-lg mt-5 text-foreground/80">
             כל ארבעת השלבים. ליווי בין הפגישות. תמחור חבילה שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
           </p>
-
-          <Guarantee className="mt-6" />
 
           <div className="mt-8 flex items-baseline gap-3">
             <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">

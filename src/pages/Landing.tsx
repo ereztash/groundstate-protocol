@@ -9,9 +9,7 @@ import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
 import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
-import MidPageCTA from "@/components/landing/MidPageCTA";
 import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
-import CommitmentSection from "@/components/landing/CommitmentSection";
 import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -63,15 +61,15 @@ const Landing = () => {
           <OriginStorySection />
           <ProcessPreviewSection />
           <StageRecommenderSection />
-          {/* Value before price: the tangible deliverables and the lifetime-ROI
-              framing run BEFORE the price ladder, so the numbers in
-              SequenceSection land on top of value that's already been built. */}
+          {/* Value before price: the tangible deliverables run before the price
+              ladder (the lifetime-ROI line is folded into SequenceSection's
+              intro), so the numbers land on top of value already built. The two
+              priced offers (Sequence → FullPackage) stay contiguous, and the
+              "not for everyone" filter follows them as the final take-away. */}
           <DeliverablesPreview />
-          <CommitmentSection />
           <SequenceSection />
-          <NotForEveryoneSection />
           <FullPackageSection />
-          <MidPageCTA />
+          <NotForEveryoneSection />
           <FAQSection />
           <DiagnosticFormSection />
         </main>
