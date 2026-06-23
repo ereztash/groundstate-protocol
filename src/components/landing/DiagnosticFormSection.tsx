@@ -274,13 +274,13 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>במשפט אחד, מה התקיעה
+                          <span className="field-num">01.</span>במשפט אחד — מה אתה יודע לעשות, שאתה לא מצליח למכור?
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             rows={3}
                             maxLength={800}
-                            placeholder="לדוגמה: יש לי ניסיון של 15 שנה, אבל לא מצליח/ה לתרגם את זה לפניות..."
+                            placeholder="לדוגמה: יש לי 15 שנה ניסיון, אבל לשווק ולמכור את עצמי — שם אני פחות טוב..."
                             {...field}
                           />
                         </FormControl>

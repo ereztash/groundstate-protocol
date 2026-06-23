@@ -25,13 +25,13 @@ const WhatYouTriedSection = () => {
             <li className="flex gap-3">
               <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
               <p className="cor-body-lg text-foreground/85">
-                יש לך תיקיה עם <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״. אף אחת לא החזיקה יותר משבועיים.
+                כל כמה שבועות אתה נכנס ללינקדאין ומשנה את הכותרת. כבר הצטברו <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״ — וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
               </p>
             </li>
             <li className="flex gap-3">
               <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
               <p className="cor-body-lg text-foreground/85">
-                רשמת מספר לפני השיחה. <strong className="font-semibold text-foreground">מספר נמוך יותר</strong> יצא לך מהפה, ולא ידעת למה.
+                רשמת מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול — התחלת להסס, ו<strong className="font-semibold text-foreground">מספר נמוך יותר</strong> יצא לך מהפה.
               </p>
             </li>
             <li className="flex gap-3">
