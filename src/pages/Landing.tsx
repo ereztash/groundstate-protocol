@@ -10,6 +10,7 @@ import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
 import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
+import MidPageCTA from "@/components/landing/MidPageCTA";
 import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -60,6 +61,13 @@ const Landing = () => {
           <ClientProofSection />
           <OriginStorySection />
           <ProcessPreviewSection />
+          {/* Mid-page conversion point for "ready-now" visitors. NN/g
+              eye-tracking shows attention collapses after the fold (~57% of
+              viewing time above it), so a single bottom CTA leaks the visitors
+              who are already convinced; re-surfacing the same one goal partway
+              down (after they've seen pain → proof → what the call is) catches
+              them without competing with the page's single conversion goal. */}
+          <MidPageCTA />
           <StageRecommenderSection />
           {/* Value before price: the tangible deliverables run before the price
               ladder (the lifetime-ROI line is folded into SequenceSection's
