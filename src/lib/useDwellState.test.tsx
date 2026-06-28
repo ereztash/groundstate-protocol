@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useDwellState } from "./useDwellState";
+import { useDwellState, __resetDwellProbeForTests } from "./useDwellState";
 
 const VISIT_MARKER_KEY = "cor-sys-visit-marker-v1";
 
 describe("useDwellState()", () => {
   beforeEach(() => {
+    __resetDwellProbeForTests();
     window.localStorage.clear();
     vi.useFakeTimers();
   });
@@ -18,6 +19,13 @@ describe("useDwellState()", () => {
   it("starts in 'fresh' state for new visitors", () => {
     const { result } = renderHook(() => useDwellState());
     expect(result.current).toBe("fresh");
+  });
+
+  it("keeps a second same-page consumer 'fresh' (does not misread the marker the first one just wrote as a return visit)", () => {
+    const first = renderHook(() => useDwellState());
+    const second = renderHook(() => useDwellState());
+    expect(first.result.current).toBe("fresh");
+    expect(second.result.current).toBe("fresh");
   });
 
   it("escalates to 'engaged' after 15 seconds", () => {
