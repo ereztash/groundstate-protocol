@@ -4,6 +4,7 @@ import CoherenceVisual from "@/components/experiential/CoherenceVisual";
 import StageStepper from "@/components/StageStepper";
 import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
+import GuaranteeBand from "@/components/GuaranteeBand";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -202,6 +203,18 @@ const Methodology = () => {
               </h2>
               <QuantifiedProof />
               <ProofStrip className="mt-12" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Risk reversal — the guarantee, right before the decision. */}
+        <section dir="rtl" className="pb-4 md:pb-8" aria-labelledby="guarantee-title">
+          <div className="mx-auto max-w-3xl px-6">
+            <h2 id="guarantee-title" className="sr-only">
+              האחריות
+            </h2>
+            <Reveal>
+              <GuaranteeBand />
             </Reveal>
           </div>
         </section>
