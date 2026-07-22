@@ -43,7 +43,14 @@
     <meta name="twitter:image" content="https://ereztalshir.co.il/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
+    <!-- Fonts load async (media swap on load) so text paints immediately in the
+         fallback font instead of waiting on the Google Fonts stylesheet;
+         display=swap then swaps in the webfonts. noscript keeps the blocking
+         link for no-JS visitors. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
+    </noscript>
     <meta property="og:title" content="COR-SYS — 30 יום מהמסר אל הלקוחות">
     <meta name="twitter:title" content="COR-SYS — 30 יום מהמסר אל הלקוחות">
     <meta property="og:description" content="לעצמאים שיש להם ידע ולא יודעים איך להעביר אותו. 30 יום, 4 פגישות, מסר ברור, ו-10 פניות לאנשים אמיתיים.">
