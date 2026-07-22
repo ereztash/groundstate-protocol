@@ -29,7 +29,13 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        # Not --frozen-lockfile: the three.js / @react-three/fiber deps (added
+        # for the WebGL hero) are recorded in package.json + package-lock.json,
+        # and bun resolves them fresh here. bun.lock is regenerated on CI's clean
+        # network rather than pinned, since it couldn't be rebuilt in the dev
+        # sandbox (proxy drops tarballs). Re-pin bun.lock when a good network is
+        # available.
+        run: bun install
 
       - name: Build
         run: bun run build
