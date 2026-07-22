@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
 import CoherenceField from "@/components/experiential/CoherenceField";
+import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { stages } from "@/lib/stages";
 
@@ -204,6 +205,18 @@ const Methodology = () => {
                 </RevealItem>
               ))}
             </RevealStagger>
+          </div>
+        </section>
+
+        {/* Proof — the clients already public on the landing, reused here. */}
+        <section className="py-16 md:py-24" aria-labelledby="proof-title">
+          <div className="mx-auto max-w-4xl px-6">
+            <Reveal>
+              <h2 id="proof-title" className="sr-only">
+                עדויות לקוחות
+              </h2>
+              <ProofStrip />
+            </Reveal>
           </div>
         </section>
 
