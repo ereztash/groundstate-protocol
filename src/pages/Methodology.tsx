@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
 import CoherenceVisual from "@/components/experiential/CoherenceVisual";
 import StageStepper from "@/components/StageStepper";
+import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
@@ -197,9 +198,10 @@ const Methodology = () => {
           <div className="mx-auto max-w-4xl px-6">
             <Reveal>
               <h2 id="proof-title" className="sr-only">
-                עדויות לקוחות
+                הוכחה ועדויות לקוחות
               </h2>
-              <ProofStrip />
+              <QuantifiedProof />
+              <ProofStrip className="mt-12" />
             </Reveal>
           </div>
         </section>
