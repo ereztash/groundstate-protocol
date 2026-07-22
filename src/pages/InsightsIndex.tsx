@@ -27,7 +27,7 @@ const InsightsIndex = () => {
           <Link to="/" className="text-base font-semibold tracking-wide text-foreground outline-none" aria-label="COR-SYS — לעמוד הבית">
             COR-SYS
           </Link>
-          <Link to="/" className="cta-line inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm">
+          <Link to="/#diagnostic-form" className="cta-line inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm">
             בוא נדבר
           </Link>
         </div>

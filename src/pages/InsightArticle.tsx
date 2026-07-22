@@ -107,7 +107,7 @@ const InsightArticle = () => {
             וצעד תיקון אחד. במספר, לא בתחושה.
           </p>
           <Link
-            to="/"
+            to="/#diagnostic-form"
             className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
           >
             קבע שיחת התאמה — 20 דקות, בלי לחץ

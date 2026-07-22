@@ -69,7 +69,7 @@ const Methodology = () => {
             COR-SYS
           </Link>
           <Link
-            to="/"
+            to="/#diagnostic-form"
             className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
           >
             בוא נדבר
@@ -107,7 +107,7 @@ const Methodology = () => {
               </p>
               <div className="mt-8">
                 <Link
-                  to="/"
+                  to="/#diagnostic-form"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
                   קבע שיחת התאמה — 20 דקות, בלי לחץ
@@ -230,7 +230,7 @@ const Methodology = () => {
             </p>
             <div className="mt-8">
               <Link
-                to="/"
+                to="/#diagnostic-form"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
                 קבע שיחת התאמה — 20 דקות, בלי לחץ
