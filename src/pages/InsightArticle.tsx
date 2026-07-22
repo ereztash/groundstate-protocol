@@ -1,0 +1,132 @@
+import { Link, useParams } from "react-router-dom";
+import { marked } from "marked";
+import { Reveal } from "@/components/landing/Reveal";
+import ProofStrip from "@/components/ProofStrip";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { getInsight, formatDate } from "@/lib/insights";
+
+const SITE_ORIGIN = "https://ereztalshir.co.il";
+
+/**
+ * /insights/:slug — a single article. The markdown body is rendered to HTML
+ * (marked) inside a Tailwind `prose` container styled to the brand. Per-article
+ * <title>/description/canonical come from useDocumentMeta, and an Article
+ * JSON-LD block is rendered inline so the prerenderer bakes it into the static
+ * HTML for search + AI engines. Ends in the single site CTA.
+ */
+const InsightArticle = () => {
+  const { slug } = useParams();
+  const article = getInsight(slug);
+
+  useDocumentMeta({
+    title: article
+      ? `${article.title} | COR-SYS`
+      : "מאמר לא נמצא | COR-SYS",
+    description: article?.description,
+    path: article ? `/insights/${article.slug}` : "/insights",
+  });
+
+  if (!article) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center" dir="rtl">
+        <p className="cor-title text-foreground">המאמר לא נמצא</p>
+        <Link to="/insights" className="text-link">
+          חזרה לכל התובנות
+        </Link>
+      </div>
+    );
+  }
+
+  const html = marked.parse(article.body, { async: false }) as string;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    datePublished: article.date,
+    inLanguage: "he",
+    author: { "@type": "Person", name: "ארז טל-שיר" },
+    publisher: { "@type": "Person", name: "ארז טל-שיר" },
+    mainEntityOfPage: `${SITE_ORIGIN}/insights/${article.slug}`,
+  };
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <a href="#article-main" className="skip-to-content">
+        דלג לתוכן
+      </a>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
+        <div dir="rtl" className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3.5">
+          <Link to="/" className="text-base font-semibold tracking-wide text-foreground outline-none" aria-label="COR-SYS — לעמוד הבית">
+            COR-SYS
+          </Link>
+          <Link to="/insights" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            תובנות
+          </Link>
+        </div>
+      </header>
+
+      <main id="article-main" dir="rtl" className="mx-auto max-w-3xl px-6 pt-28 pb-16 md:pt-36">
+        <Reveal as="article">
+          <p className="cor-overline-he">תובנה</p>
+          <h1 className="cor-display mt-4 text-foreground">{article.title}</h1>
+          {article.subtitle && (
+            <p className="cor-body-lg mt-4 text-foreground/70">{article.subtitle}</p>
+          )}
+          <p className="mt-4 text-sm text-muted-foreground">
+            <span>ארז טל-שיר</span>
+            {article.date && (
+              <>
+                <span aria-hidden="true"> · </span>
+                <time dateTime={article.date}>{formatDate(article.date)}</time>
+              </>
+            )}
+          </p>
+
+          <div className="hairline my-8" />
+
+          <div
+            className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-headings:tracking-tight prose-p:text-foreground/85 prose-p:leading-relaxed prose-strong:text-foreground prose-a:text-primary"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        </Reveal>
+
+        {/* Single CTA — the whole site funnels to the fit call. */}
+        <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
+          <p className="cor-heading text-foreground">
+            רוצה לבדוק איפה הזרימה שלך נעצרת?
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+            מפת סנכרון של 20 דקות: נקודת חנק אחת שסומנה, אומדן למה שהיא עולה לך בשנה,
+            וצעד תיקון אחד. במספר, לא בתחושה.
+          </p>
+          <Link
+            to="/"
+            className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
+          >
+            קבע שיחת התאמה — 20 דקות, בלי לחץ
+          </Link>
+        </Reveal>
+
+        <ProofStrip className="mt-14" />
+      </main>
+
+      <footer className="border-t border-border py-10">
+        <div dir="rtl" className="mx-auto flex max-w-3xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground">
+          <Link to="/insights" className="text-link">
+            כל התובנות
+          </Link>
+          <p>© ארז טל-שיר — COR-SYS</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default InsightArticle;

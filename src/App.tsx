@@ -14,6 +14,8 @@ import ConsentBanner from "./components/ConsentBanner";
 // chunks.
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Methodology = lazy(() => import("./pages/Methodology"));
+const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
+const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -51,6 +53,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/protocol" element={<Methodology />} />
+              <Route path="/insights" element={<InsightsIndex />} />
+              <Route path="/insights/:slug" element={<InsightArticle />} />
               <Route path="/privacy" element={<Privacy />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
