@@ -3,7 +3,7 @@ import { marked } from "marked";
 import { Reveal } from "@/components/landing/Reveal";
 import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { getInsight, formatDate } from "@/lib/insights";
+import { getInsight, insights, formatDate } from "@/lib/insights";
 
 const SITE_ORIGIN = "https://ereztalshir.co.il";
 
@@ -96,6 +96,35 @@ const InsightArticle = () => {
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </Reveal>
+
+        {/* Keep readers who aren't conversion-ready inside the library: up to
+            two other articles (newest first) before the CTA dead-ends them. */}
+        {insights.filter((i) => i.slug !== article.slug).length > 0 && (
+          <Reveal className="mt-14">
+            <p className="cor-overline-he">עוד תובנות</p>
+            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+              {insights
+                .filter((i) => i.slug !== article.slug)
+                .slice(0, 2)
+                .map((i) => (
+                  <li key={i.slug}>
+                    <Link
+                      to={`/insights/${i.slug}`}
+                      className="cor-card group flex h-full flex-col p-5"
+                    >
+                      <span className="cor-subheading text-foreground group-hover:text-primary">
+                        {i.title}
+                      </span>
+                      <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                        לקריאה
+                        <span aria-hidden="true">←</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </Reveal>
+        )}
 
         {/* Single CTA — the whole site funnels to the fit call. */}
         <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
