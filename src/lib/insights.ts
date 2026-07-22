@@ -32,7 +32,19 @@ function parseFrontmatter(raw: string): {
   const data: Record<string, string> = {};
   for (const line of m[1].split(/\r?\n/)) {
     const idx = line.indexOf(":");
-    if (idx > 0) data[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
+    if (idx > 0) {
+      const key = line.slice(0, idx).trim();
+      let value = line.slice(idx + 1).trim();
+      // Strip a single pair of wrapping quotes (used when a value contains ":").
+      if (
+        value.length >= 2 &&
+        ((value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'")))
+      ) {
+        value = value.slice(1, -1);
+      }
+      data[key] = value;
+    }
   }
   return { data, body: m[2].trim() };
 }
