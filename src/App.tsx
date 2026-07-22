@@ -24,7 +24,17 @@ const queryClient = new QueryClient();
 // "<base>/assets/<chunk>.js", so "../" resolves to "<base>/" — yielding "/" at
 // a root deploy and "/groundstate-protocol/" on GitHub Pages, with nothing
 // hardcoded. In dev the module is "/src/App.tsx", so "../" → "/".
-const routerBasename = new URL("../", import.meta.url).pathname;
+//
+// The "../" is held in a variable on purpose. Vite's dev server special-cases
+// the *literal* form `new URL("<literal>", import.meta.url)` as an asset
+// reference and rewrites it to the on-disk path "/@fs/<abs project dir>". That
+// made the router basename "/@fs/home/.../groundstate-protocol", which no URL
+// starts with, so <BrowserRouter> matched nothing and `npm run dev` rendered a
+// blank page. A non-literal first argument sidesteps that transform; the
+// production build already leaves the expression untouched (it can't be
+// resolved at build time), so runtime behaviour there is unchanged.
+const moduleParentPath = "../";
+const routerBasename = new URL(moduleParentPath, import.meta.url).pathname;
 
 const App = () => (
   <ErrorBoundary>
