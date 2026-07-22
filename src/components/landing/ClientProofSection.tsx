@@ -1,57 +1,15 @@
 import { Reveal } from "./Reveal";
 import VideoTestimonial from "./VideoTestimonial";
+import { testimonials } from "@/lib/clients";
 
 /**
- * Client testimonial section.
+ * Client testimonial section. Testimonial data lives in the shared source of
+ * truth at @/lib/clients (approved for site-wide use), so the landing and the
+ * rest of the site stay in sync from one consented list.
  *
- * To upgrade with real attribution (recommended for trust):
- *   1. Get explicit permission from the client to publish her name + business.
- *   2. Optionally get a small portrait (square, 200x200+) and drop it
- *      at /public/clients/<name>.jpg.
- *   3. Replace the placeholder fields below.
- *
- * Research basis: testimonials with name + title + specific outcome
- * convert significantly better than anonymous quotes.
+ * Research basis: testimonials with name + title + specific outcome convert
+ * significantly better than anonymous quotes.
  */
-type Testimonial = {
-  quote: string;
-  attribution: string;
-  /** Optional secondary credential / outcome line under the name. */
-  outcome?: string;
-  /** Optional LinkedIn URL; renders the name as a verification link. */
-  linkedin?: string;
-  /** Optional photo path; falls back to initials if absent. */
-  photo?: string;
-  initials?: string;
-};
-
-const testimonials: Testimonial[] = [
-  // NOTE: The first client's testimonial is held back until she approves
-  // publishing her name + business. Anonymous quotes hurt trust more than they
-  // help, so we keep it offline rather than show it unattributed. To restore,
-  // un-comment and fill in `attribution` / `outcome` / `linkedin` / `photo`.
-  // {
-  //   quote:
-  //     "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
-  //   attribution: "TODO: שם + עסק לאחר אישור",
-  //   outcome: "עסקה של ₪5,500 נסגרה אחרי השלב הרביעי, מתוך 10 הפניות שיצאו בליווי.",
-  // },
-  {
-    quote:
-      "ארז פשוט מקצוען! כבר בפגישה הראשונה הוא הצליח להעלות תובנות שלא הייתי מגיעה אליהן בלעדיו. ארז רגיש, חכם, מתוחכם ובעל ידע רב ונרחב. מרגישים כמה הוא מסור ומחויב, ובאמת בא להוביל לשינוי והתפתחות של הלקוח. אני ממליצה.",
-    attribution: "נועם אורן",
-    outcome: "מנהלת הצלחת לקוחות ב-Movement Group",
-    linkedin: "https://www.linkedin.com/in/noam-oren-836668395/",
-    photo: `${import.meta.env.BASE_URL}clients/noam-oren.webp`,
-  },
-  {
-    quote:
-      "הגעתי לארז אחרי תקופה ארוכה של חיפושים מתישים במיוחד, והוא פשוט שינה לי את הפרספקטיבה. במקום להמשיך ״לירות לכל הכיוונים״ עם מאות קורות חיים, הוא עזר לי להתמקד במה שאני באמת חזק בו ולהפוך את זה לכלי עבודה בשטח. ארז יורד לפרטים הכי קטנים, והמתודולוגיה שלו מבוססת על הניסיון המעשי והאקדמי המרשים מאוד שלו. הוא ידע לזהות בדיוק איפה החוזקות שלי ואיפה אני צריך להשתפר, ונתן לי ביטחון בדרך שבה אני מציג את עצמי. הוא עזר לי ״לטרגט״ את משרות היעד שלי, ובפרט את בעלי התפקידים שאיתם אני צריך ליצור חיבור כדי להגיע אליהן. אבל מה שבאמת הכי חימם לי את הלב, מעבר למקצועיות: הוא קודם כל בן אדם שמדבר בגובה העיניים, איש נחמד שמנסה לעזור בכל דרך אפשרית, הוא מחזק מילואימניקים ומקדם אותנו בדרך המאוד מסובכת שלנו בחזרה הביתה, והוא לעולם לא מסתכל על השעון כשהוא מדבר איתך. ממליץ בחום לכל מי שרוצה תוצאות ולא רק הבטחות — ובעיקר למי שרוצה לדבר עם בן אדם ולא עם ארנק שממתין לכסף שלך.",
-    attribution: "סמואל די פורטו",
-    linkedin: "https://www.linkedin.com/in/samuel-di-porto-83151a369/",
-    photo: `${import.meta.env.BASE_URL}clients/samuel-di-porto.webp`,
-  },
-];
 
 const ClientProofSection = () => {
   return (

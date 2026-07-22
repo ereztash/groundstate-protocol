@@ -13,6 +13,7 @@ import ConsentBanner from "./components/ConsentBanner";
 // secondary routes loaded only when navigated to, so they ship in separate
 // chunks.
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Methodology = lazy(() => import("./pages/Methodology"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Landing />} />
+              <Route path="/protocol" element={<Methodology />} />
               <Route path="/privacy" element={<Privacy />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

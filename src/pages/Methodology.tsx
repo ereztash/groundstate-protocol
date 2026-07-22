@@ -1,0 +1,245 @@
+import { Link } from "react-router-dom";
+import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
+import CoherenceVisual from "@/components/experiential/CoherenceVisual";
+import StageStepper from "@/components/StageStepper";
+import QuantifiedProof from "@/components/QuantifiedProof";
+import ProofStrip from "@/components/ProofStrip";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+
+/**
+ * /protocol — the methodology page. Rhythm: a dark charcoal hero and a dark
+ * closing CTA bookend a light body, with a dark "why" section mid-page — so the
+ * page reads with weight and contrast instead of one long light scroll. The four
+ * stages live in an interactive stepper (StageStepper) to cut reading fatigue.
+ *
+ * Content from the knowledge-graph brief (section D). Reader-facing and
+ * evidence-grounded: no client names, no unverified metrics.
+ */
+
+const EXIT_CRITERIA: Record<string, string> = {
+  "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך — לא חזרה על ניסוח שלי.",
+  "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
+  "03": "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית בת-הצלבה, ואתה מחשב.",
+  "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה — תלוי בכך שיצאה מהיד.",
+};
+
+const PRINCIPLES = [
+  {
+    title: "בעלות מרוויחים, לא מקבלים",
+    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ ממך את הניסוח, לא נותן לך אותו.",
+  },
+  {
+    title: "סדר קבוע. כל שלב בונה את הבא",
+    body: "אי-אפשר לתרגם ערך שעוד לא הובלט, ואי-אפשר להבליט נרטיב שעוד לא חולץ.",
+  },
+  {
+    title: "מבנה קודם לתוכן",
+    body: "לא עצה. בסוף כל שלב יש תוצר בכתב שאפשר להשתמש בו מחר בבוקר.",
+  },
+];
+
+const DARK = "bg-[#15191c] text-[hsl(var(--background))]";
+
+const Methodology = () => {
+  useDocumentMeta({
+    title: "המתודולוגיה — הפרוטוקול של COR-SYS | ארז טל-שיר",
+    description:
+      "איך עובד הרצף: שלב סינון ואז ארבעה שלבים בסדר קבוע — חילוץ, הבלטה, תרגום, הפעלה. למה מבנה מנצח אינטואיציה, ומה יוצא ביד בסוף כל שלב.",
+    path: "/protocol",
+  });
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <a href="#protocol-main" className="skip-to-content">
+        דלג לתוכן
+      </a>
+
+      {/* Top bar — transparent over the dark hero, so it reads as one surface. */}
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#15191c]/85 backdrop-blur-md">
+        <div
+          dir="rtl"
+          className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3.5"
+        >
+          <Link
+            to="/"
+            className="text-base font-semibold tracking-wide text-[hsl(var(--background))] outline-none"
+            aria-label="COR-SYS — לעמוד הבית"
+          >
+            COR-SYS
+          </Link>
+          <Link
+            to="/"
+            className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
+          >
+            בוא נדבר
+          </Link>
+        </div>
+      </header>
+
+      <main id="protocol-main">
+        {/* Hero — dark. The rods glow; copper CTA pops. */}
+        <section
+          dir="rtl"
+          className={`relative overflow-hidden ${DARK} pt-28 pb-20 md:pt-36 md:pb-28`}
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(55% 45% at 30% 15%, hsl(var(--accent) / 0.16) 0%, transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
+            <Reveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                המתודולוגיה
+              </p>
+              <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
+                וקטורים מפוזרים,
+                <br />
+                מתלכדים לכיוון אחד
+              </h1>
+              <p className="cor-body-lg mt-5 max-w-md text-[hsl(var(--background))]/75">
+                זהות, ערך, מוצר ומכירה מיושרים לכיוון אחד. כשהם מיושרים, האנרגיה
+                הנדרשת לתנועה קטנה. זה ה־SYS ב־COR-SYS: לא עצה, מבנה.
+              </p>
+              <div className="mt-8">
+                <Link
+                  to="/"
+                  className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
+                >
+                  קבע שיחת התאמה — 20 דקות, בלי לחץ
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <CoherenceVisual
+                variant="dark"
+                className="mx-auto aspect-[420/290] w-full max-w-md"
+              />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Stage 0 — light, short. */}
+        <section dir="rtl" className="py-16 md:py-20" aria-labelledby="gate-title">
+          <div className="mx-auto max-w-3xl px-6">
+            <Reveal>
+              <p className="cor-overline-he">לפני שמתחילים</p>
+              <h2 id="gate-title" className="cor-title mt-2 text-foreground">
+                שלב 0 — שיחת התאמה
+              </h2>
+              <p className="cor-body-lg mt-4 text-foreground/80">
+                עשרים דקות, ללא תשלום. שתי שאלות: יש לך פרקטיקה פעילה עם לקוחות?
+                ויש בידול שכבר קיים אצלך? בלי השניים האלה, אין ממה לחלץ — ואני אגיד
+                לך את זה ביושר.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* The four stages — interactive stepper (light). */}
+        <section dir="rtl" className="py-16 md:py-20" aria-labelledby="stages-title">
+          <div className="mx-auto max-w-4xl px-6">
+            <Reveal className="mb-8 max-w-2xl">
+              <p className="cor-overline-he">הרצף</p>
+              <h2 id="stages-title" className="cor-title mt-2 text-foreground">
+                ארבעה שלבים. סדר קבוע.
+              </h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                לחצו בין השלבים — כל אחד בונה את הבא.
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <StageStepper exitCriteria={EXIT_CRITERIA} />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Why a protocol — dark, mid-page anchor. */}
+        <section
+          dir="rtl"
+          className={`${DARK} py-16 md:py-24`}
+          aria-labelledby="why-title"
+        >
+          <div className="mx-auto max-w-4xl px-6">
+            <Reveal className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                למה פרוטוקול
+              </p>
+              <h2
+                id="why-title"
+                className="cor-title mt-2 text-[hsl(var(--background))]"
+              >
+                למה מבנה, ולא אינטואיציה
+              </h2>
+            </Reveal>
+
+            <RevealStagger className="mt-10 grid gap-8 md:grid-cols-3" as="ul">
+              {PRINCIPLES.map((p) => (
+                <RevealItem key={p.title} as="li" className="flex flex-col">
+                  <div className="mb-4 h-px w-10 bg-accent" />
+                  <h3 className="cor-subheading text-[hsl(var(--background))]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--background))]/70">
+                    {p.body}
+                  </p>
+                </RevealItem>
+              ))}
+            </RevealStagger>
+          </div>
+        </section>
+
+        {/* Proof — light. */}
+        <section dir="rtl" className="py-16 md:py-20" aria-labelledby="proof-title">
+          <div className="mx-auto max-w-4xl px-6">
+            <Reveal>
+              <h2 id="proof-title" className="sr-only">
+                הוכחה ועדויות לקוחות
+              </h2>
+              <QuantifiedProof />
+              <ProofStrip className="mt-12" />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Closing CTA — dark bookend. */}
+        <section dir="rtl" className={`${DARK} py-20 md:py-28`}>
+          <Reveal className="mx-auto max-w-2xl px-6 text-center">
+            <h2 className="cor-title text-[hsl(var(--background))]">
+              לא בטוח מאיפה להתחיל?
+            </h2>
+            <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
+              בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים. רוב הלקוחות מתחילים בשלב 1.
+            </p>
+            <div className="mt-8">
+              <Link
+                to="/"
+                className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
+              >
+                קבע שיחת התאמה — 20 דקות, בלי לחץ
+              </Link>
+            </div>
+          </Reveal>
+        </section>
+      </main>
+
+      <footer className="border-t border-border py-10">
+        <div
+          dir="rtl"
+          className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground"
+        >
+          <Link to="/" className="text-link">
+            חזרה לעמוד הבית
+          </Link>
+          <p>© ארז טל-שיר — COR-SYS</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Methodology;
