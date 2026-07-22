@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
-import CoherenceField from "@/components/experiential/CoherenceField";
+import CoherenceVisual from "@/components/experiential/CoherenceVisual";
 import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { stages } from "@/lib/stages";
@@ -98,7 +98,7 @@ const Methodology = () => {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <CoherenceField className="mx-auto aspect-[420/290] w-full max-w-md" />
+              <CoherenceVisual className="mx-auto aspect-[420/290] w-full max-w-md" />
             </Reveal>
           </div>
         </section>
