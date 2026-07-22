@@ -6,12 +6,12 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
  *
  * Five vectors start scattered (many forces, different directions — the client's
  * pain) and resolve into a single parallel spine (coherence — "the SYS in
- * COR-SYS"). One vector is copper: the aligned direction / action. This is a
- * demonstration of the product, not decoration.
+ * COR-SYS"). One vector is copper: the aligned direction / action.
  *
- * Tier-1: SVG + framer-motion only (no WebGL). Fully responsive (viewBox scales),
- * decorative (`aria-hidden` — meaning also lives in the page heading), and under
- * `prefers-reduced-motion` it renders the final aligned state with no animation.
+ * Tier-1: SVG + framer-motion only (no WebGL). Responsive, decorative
+ * (`aria-hidden`), and under `prefers-reduced-motion` it renders the final
+ * aligned state with no animation. `variant="dark"` brightens the vectors so
+ * they read on a charcoal hero.
  */
 
 const TAIL_X = 360; // shared origin column (right side — RTL start)
@@ -29,8 +29,19 @@ const VECTORS: Vec[] = [
 
 const EASE_OUT = [0, 0, 0.2, 1] as const;
 
-const CoherenceField = ({ className }: { className?: string }) => {
+const CoherenceField = ({
+  className,
+  variant = "light",
+}: {
+  className?: string;
+  variant?: "light" | "dark";
+}) => {
   const reduced = useReducedMotion();
+  // Copper is the aligned direction in both variants. The other vectors are
+  // teal on light, cream on dark (so they read against charcoal).
+  const baseColor = variant === "dark" ? "hsl(var(--background))" : "hsl(var(--primary))";
+  const accentColor = "hsl(var(--accent))";
+  const baseOpacity = variant === "dark" ? 0.7 : 0.55;
 
   return (
     <div className={className} aria-hidden="true">
@@ -40,22 +51,21 @@ const CoherenceField = ({ className }: { className?: string }) => {
         role="presentation"
         focusable="false"
       >
-        {/* The spine the vectors align to — copper (the single direction). */}
         <motion.line
           x1={HEAD_X}
           y1={24}
           x2={HEAD_X}
           y2={266}
-          stroke="hsl(var(--accent))"
+          stroke={accentColor}
           strokeWidth={2}
           strokeLinecap="round"
-          initial={{ opacity: reduced ? 0.4 : 0 }}
-          animate={{ opacity: 0.4 }}
+          initial={{ opacity: reduced ? 0.45 : 0 }}
+          animate={{ opacity: 0.45 }}
           transition={reduced ? { duration: 0 } : { duration: 0.8, delay: 1.05 }}
         />
 
         {VECTORS.map((v, i) => {
-          const color = v.lead ? "hsl(var(--accent))" : "hsl(var(--primary))";
+          const color = v.lead ? accentColor : baseColor;
           const aligned = { x2: HEAD_X, y2: v.y };
           const scattered = { x2: v.sx, y2: v.sy };
           const dotAligned = { cx: HEAD_X, cy: v.y };
@@ -65,7 +75,7 @@ const CoherenceField = ({ className }: { className?: string }) => {
             : { duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE_OUT };
 
           return (
-            <g key={v.y} style={{ opacity: v.lead ? 0.95 : 0.55 }}>
+            <g key={v.y} style={{ opacity: v.lead ? 0.95 : baseOpacity }}>
               <motion.line
                 x1={TAIL_X}
                 y1={v.y}
@@ -83,8 +93,7 @@ const CoherenceField = ({ className }: { className?: string }) => {
                 animate={dotAligned}
                 transition={transition}
               />
-              {/* Shared-origin node */}
-              <circle cx={TAIL_X} cy={v.y} r={2} fill="hsl(var(--primary))" opacity={0.35} />
+              <circle cx={TAIL_X} cy={v.y} r={2} fill={baseColor} opacity={0.35} />
             </g>
           );
         })}

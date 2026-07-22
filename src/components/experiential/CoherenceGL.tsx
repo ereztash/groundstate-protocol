@@ -14,12 +14,14 @@ import * as THREE from "three";
 
 const COUNT = 7;
 const TEAL = "#2C5F70";
+const CREAM = "#E8E4DA";
 const COPPER = "#B87333";
 const LEAD = Math.floor(COUNT / 2);
 
 type RodSpec = { y: number; lead: boolean; from: THREE.Euler };
 
-const Rods = () => {
+const Rods = ({ variant }: { variant: "light" | "dark" }) => {
+  const baseColor = variant === "dark" ? CREAM : TEAL;
   const group = useRef<THREE.Group>(null);
   const meshes = useRef<(THREE.Mesh | null)[]>([]);
   const t = useRef(0);
@@ -72,7 +74,7 @@ const Rods = () => {
         >
           <boxGeometry args={[1.9, 0.055, 0.055]} />
           <meshStandardMaterial
-            color={r.lead ? COPPER : TEAL}
+            color={r.lead ? COPPER : baseColor}
             roughness={0.45}
             metalness={0.15}
             emissive={r.lead ? COPPER : "#000000"}
@@ -84,7 +86,13 @@ const Rods = () => {
   );
 };
 
-const CoherenceGL = ({ className }: { className?: string }) => {
+const CoherenceGL = ({
+  className,
+  variant = "light",
+}: {
+  className?: string;
+  variant?: "light" | "dark";
+}) => {
   return (
     <div className={className} aria-hidden="true">
       <Canvas
@@ -94,7 +102,7 @@ const CoherenceGL = ({ className }: { className?: string }) => {
       >
         <ambientLight intensity={0.85} />
         <directionalLight position={[2, 3, 4]} intensity={0.55} />
-        <Rods />
+        <Rods variant={variant} />
       </Canvas>
     </div>
   );

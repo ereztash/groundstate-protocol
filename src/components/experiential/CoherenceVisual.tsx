@@ -39,7 +39,13 @@ function webglAvailable(): boolean {
   }
 }
 
-const CoherenceVisual = ({ className }: { className?: string }) => {
+const CoherenceVisual = ({
+  className,
+  variant = "light",
+}: {
+  className?: string;
+  variant?: "light" | "dark";
+}) => {
   const reduced = useReducedMotion();
   const [enable, setEnable] = useState(false);
 
@@ -72,12 +78,12 @@ const CoherenceVisual = ({ className }: { className?: string }) => {
         className="absolute inset-0 transition-opacity duration-700"
         style={{ opacity: enable ? 0 : 1 }}
       >
-        <CoherenceField className="h-full w-full" />
+        <CoherenceField className="h-full w-full" variant={variant} />
       </div>
       {enable && (
         <GLBoundary>
           <Suspense fallback={null}>
-            <CoherenceGL className="absolute inset-0" />
+            <CoherenceGL className="absolute inset-0" variant={variant} />
           </Suspense>
         </GLBoundary>
       )}
