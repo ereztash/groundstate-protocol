@@ -43,6 +43,12 @@ const LandingFooter = () => {
               אבחון
             </a>
             <Link
+              to="/insights"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              תובנות
+            </Link>
+            <Link
               to="/privacy"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
