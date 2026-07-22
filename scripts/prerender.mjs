@@ -18,14 +18,23 @@
  * default Playwright download isn't present, e.g. in this sandbox).
  */
 import { createServer } from "node:http";
-import { readFileSync, existsSync, statSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, statSync, mkdirSync, writeFileSync, readdirSync } from "node:fs";
 import { join, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
-const ROUTES = ["/", "/protocol", "/privacy"];
+
+// Insight articles are markdown files in content/insights — one static page each.
+const INSIGHTS_DIR = join(ROOT, "content", "insights");
+const insightRoutes = existsSync(INSIGHTS_DIR)
+  ? readdirSync(INSIGHTS_DIR)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => `/insights/${f.replace(/\.md$/, "")}`)
+  : [];
+
+const ROUTES = ["/", "/protocol", "/insights", ...insightRoutes, "/privacy"];
 
 // The deploy base (must match the base vite built with). "/" (root) → no prefix;
 // "/groundstate-protocol/" (Pages project site) → "/groundstate-protocol".
