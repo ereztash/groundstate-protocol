@@ -435,3 +435,29 @@
     );
   }
 }
+
+/* About page — noise → coherence scroll motif. Each shard interpolates from a
+   scattered, tilted "noise" position (--p:0) to an aligned parallel row (--p:1).
+   The About page's scroll handler writes --p on the pinned container each frame
+   (GPU transforms only, no per-frame React). The default lives on .about-scene
+   so the reduced-motion query can pin the coherent end-state even without JS;
+   the prerenderer captures the static noise (top-of-page) state. */
+.about-scene {
+  --p: 0;
+}
+.about-shard {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform:
+    translate(
+      calc((var(--cx) + var(--nx) * (1 - var(--p, 0))) * 1px),
+      calc((var(--cy) + var(--ny) * (1 - var(--p, 0))) * 1px)
+    )
+    rotate(calc(var(--na) * (1 - var(--p, 0)) * 1deg));
+  opacity: calc(0.2 + 0.8 * var(--p, 0));
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-scene {
+    --p: 1;
+  }
+}
