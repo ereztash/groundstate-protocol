@@ -461,3 +461,14 @@
     --p: 1;
   }
 }
+
+/* Inactive story steps de-emphasize BODY text only — never the whole panel.
+   Panel-level opacity would dilute the teal overline/link below WCAG AA
+   (measured 2.72:1 at 60%); foreground at 65% alpha on the cream background
+   still clears 4.5:1, and brand-teal accents stay full strength. */
+.about-step p {
+  transition: color 0.5s ease;
+}
+.about-step[data-dim] p:not(.cor-overline-he) {
+  color: hsl(var(--foreground) / 0.65);
+}

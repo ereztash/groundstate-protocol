@@ -106,7 +106,14 @@ for (const route of ROUTES) {
     return root && root.children.length > 0;
   }, { timeout: 15000 });
   await page.waitForTimeout(300);
-  const html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));
+  let html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));
+  // The async-fonts pattern (media="print" onload="this.media='all'") has
+  // already fired by capture time, so the snapshot carries media="all" — which
+  // would ship a render-BLOCKING stylesheet. Restore the deferred form.
+  html = html.replace(
+    /(<link[^>]*fonts\.googleapis\.com[^>]*)media="all"/g,
+    '$1media="print"'
+  );
   pages[route] = html;
   await page.close();
   console.log(`prerender: captured ${route} (${(html.length / 1024).toFixed(1)} kB)`);

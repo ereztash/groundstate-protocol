@@ -186,10 +186,9 @@ const About = () => {
                 style={{ minHeight: "100vh" }}
               >
                 <div
-                  className={`max-w-xl rounded-2xl border border-border/60 bg-background/70 p-7 text-center shadow-sm backdrop-blur-md transition-all duration-500 md:p-9 ${
-                    reduced || active === i
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-45 translate-y-1"
+                  data-dim={reduced || active === i ? undefined : ""}
+                  className={`about-step max-w-xl rounded-2xl border border-border/60 bg-background/70 p-7 text-center shadow-sm backdrop-blur-md transition-all duration-500 md:p-9 ${
+                    reduced || active === i ? "translate-y-0" : "translate-y-1"
                   }`}
                 >
                   {step.overline && <p className="cor-overline-he">{step.overline}</p>}
