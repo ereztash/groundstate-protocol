@@ -19,6 +19,14 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    # Deploy target is the GitHub Pages project site (ereztash.github.io/
+    # groundstate-protocol/). Assets must be base-prefixed so they resolve at
+    # every route depth (the SSG emits nested pages like /protocol/index.html);
+    # a relative or root-absolute base 404s the CSS/JS on a subpath. Both the
+    # vite build and the prerender read this. When the ereztalshir.co.il apex
+    # domain is connected (served at root), change this to "/".
+    env:
+      VITE_BASE_PATH: /groundstate-protocol/
     steps:
       - name: Checkout
         uses: actions/checkout@v6

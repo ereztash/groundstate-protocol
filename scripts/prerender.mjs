@@ -7,8 +7,12 @@
  * safety concerns), lets React + useDocumentMeta render each route, and writes
  * the fully-rendered HTML — content + baked meta — to dist/<route>/index.html.
  *
- * Assumes ROOT deployment (the apex domain in public/CNAME): asset URLs are
- * served/emitted as absolute "/assets/..." so they resolve from any route depth.
+ * Base-aware: it reads VITE_BASE_PATH (the same base vite built with) so asset
+ * URLs resolve at ANY route depth on the actual deploy target — critical for a
+ * GitHub Pages project subpath (/groundstate-protocol/), where root-absolute
+ * "/assets/..." would 404. Vite already emits base-prefixed absolute asset URLs
+ * (e.g. "/groundstate-protocol/assets/..."), so nothing is rewritten here; the
+ * local capture server just strips the base prefix when resolving files.
  *
  * Run: node scripts/prerender.mjs   (set PW_CHROMIUM to a browser path if the
  * default Playwright download isn't present, e.g. in this sandbox).
@@ -22,6 +26,11 @@ import { chromium } from "@playwright/test";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
 const ROUTES = ["/", "/protocol", "/privacy"];
+
+// The deploy base (must match the base vite built with). "/" (root) → no prefix;
+// "/groundstate-protocol/" (Pages project site) → "/groundstate-protocol".
+const RAW_BASE = process.env.VITE_BASE_PATH || "/";
+const BASE = RAW_BASE === "/" ? "" : "/" + RAW_BASE.replace(/^\/+|\/+$/g, "");
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -47,14 +56,16 @@ if (!existsSync(join(DIST, "index.html"))) {
   process.exit(1);
 }
 
-// Serve the SPA with asset refs made absolute so any route depth boots the app.
-const fallbackHtml = readFileSync(join(DIST, "index.html"), "utf8").replaceAll(
-  "./assets/",
-  "/assets/"
-);
+// index.html already carries correct (base-prefixed) asset URLs from vite — no
+// rewriting. Served as the SPA fallback for every non-file route.
+const fallbackHtml = readFileSync(join(DIST, "index.html"), "utf8");
 
 const server = createServer((req, res) => {
-  const urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
+  let urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
+  // Strip the deploy base prefix so "/groundstate-protocol/assets/x" → dist/assets/x.
+  if (BASE && (urlPath === BASE || urlPath.startsWith(BASE + "/"))) {
+    urlPath = urlPath.slice(BASE.length) || "/";
+  }
   const filePath = join(DIST, urlPath);
   if (urlPath !== "/" && existsSync(filePath) && statSync(filePath).isFile()) {
     res.setHeader("Content-Type", MIME[extname(filePath)] || "application/octet-stream");
@@ -79,7 +90,8 @@ for (const route of ROUTES) {
   await page.addInitScript(() => {
     window.__PRERENDER__ = true;
   });
-  await page.goto(`http://127.0.0.1:${port}${route}`, { waitUntil: "networkidle" });
+  const navPath = route === "/" ? BASE + "/" : BASE + route;
+  await page.goto(`http://127.0.0.1:${port}${navPath}`, { waitUntil: "networkidle" });
   await page.waitForFunction(() => {
     const root = document.getElementById("root");
     return root && root.children.length > 0;
@@ -102,4 +114,4 @@ for (const [route, html] of Object.entries(pages)) {
   console.log(`prerender: wrote ${outPath.replace(DIST, "dist")}`);
 }
 
-console.log(`prerender: done (${ROUTES.length} routes).`);
+console.log(`prerender: done (${ROUTES.length} routes, base "${BASE || "/"}").`);
