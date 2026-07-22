@@ -22,6 +22,22 @@ import { trackScrollDepth } from "@/lib/analytics";
 const Landing = () => {
   const reachedRef = useRef<Set<number>>(new Set());
 
+  // Deep-link support: content pages (articles, about, protocol) send their
+  // CTA to "/#diagnostic-form" so a warm reader lands ON the form, not at the
+  // top of the funnel. React Router doesn't scroll to hashes on navigation, so
+  // do it here once the sections have mounted.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    // Two frames: let lazy sections lay out before measuring.
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ block: "start" });
+      })
+    );
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   useEffect(() => {
     const milestones = [25, 50, 75, 100];
     const handleScroll = () => {
