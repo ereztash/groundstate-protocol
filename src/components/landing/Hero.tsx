@@ -45,7 +45,7 @@ const Hero = () => {
                 inline list) but in the brand-primary teal as a smaller
                 kicker, so it reads as "credentialed metric" not "feature". */}
             <p
-              aria-label="תוצאה ראשונה: עסקה של חמש מאות וחמש מאות שקלים בחודש הראשון"
+              aria-label="תוצאה ראשונה: עסקה של חמשת אלפים וחמש מאות שקלים בחודש הראשון"
               className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11.5px] font-semibold uppercase tracking-[0.18em] text-primary/85"
             >
               <span

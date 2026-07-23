@@ -1,15 +1,15 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 const Privacy = () => {
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "מדיניות פרטיות | COR-SYS";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
+  useDocumentMeta({
+    title: "מדיניות פרטיות | COR-SYS",
+    description:
+      "איך נאסף ומשמש מידע באתר COR-SYS: פרטים שאתה מוסר בטופס, נתוני שימוש (רק לאחר אישורך), וזכויותיך.",
+    path: "/privacy",
+  });
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
@@ -100,6 +100,7 @@ const Privacy = () => {
           </section>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 };

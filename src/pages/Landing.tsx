@@ -13,7 +13,7 @@ import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
 import MidPageCTA from "@/components/landing/MidPageCTA";
 import FAQSection from "@/components/landing/FAQSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
-import LandingFooter from "@/components/landing/LandingFooter";
+import SiteFooter from "@/components/SiteFooter";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
@@ -109,9 +109,7 @@ const Landing = () => {
           <DiagnosticFormSection />
         </main>
 
-        <div className="dark bg-background text-foreground">
-          <LandingFooter />
-        </div>
+        <SiteFooter />
         <StickyMobileCTA />
       </div>
     </DiagnosticFormProvider>

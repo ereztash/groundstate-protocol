@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { insights, formatDate } from "@/lib/insights";
 
@@ -68,14 +69,7 @@ const InsightsIndex = () => {
         </RevealStagger>
       </main>
 
-      <footer className="border-t border-border py-10">
-        <div dir="rtl" className="mx-auto flex max-w-4xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground">
-          <Link to="/" className="text-link">
-            חזרה לעמוד הבית
-          </Link>
-          <p>© ארז טל-שיר — COR-SYS</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

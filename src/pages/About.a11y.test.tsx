@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, within } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
 import About from "./About";
@@ -31,10 +31,12 @@ describe("About accessibility", () => {
   });
 
   it("renders the full story text in the DOM (scroll emphasis is visual only)", () => {
-    const { getByText } = renderAbout();
+    const { getByRole } = renderAbout();
+    // Scope to <main> — the footer tagline repeats some of this copy.
+    const main = within(getByRole("main"));
     // First and last steps — dimmed steps must still be real, readable text.
-    expect(getByText(/עובד סוציאלי בהכשרה/)).toBeInTheDocument();
-    expect(getByText(/מסעותיו של ארז/)).toBeInTheDocument();
+    expect(main.getByText(/עובד סוציאלי בהכשרה/)).toBeInTheDocument();
+    expect(main.getByText(/מסעותיו של ארז/)).toBeInTheDocument();
   });
 
   it("exposes exactly one h1", () => {

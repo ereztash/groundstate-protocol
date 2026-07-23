@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { marked } from "marked";
 import { Reveal } from "@/components/landing/Reveal";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { getInsight, insights, formatDate } from "@/lib/insights";
@@ -138,14 +139,7 @@ const InsightArticle = () => {
         <ProofStrip className="mt-14" />
       </main>
 
-      <footer className="border-t border-border py-10">
-        <div dir="rtl" className="mx-auto flex max-w-3xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground">
-          <Link to="/insights" className="text-link">
-            כל התובנות
-          </Link>
-          <p>© ארז טל-שיר — COR-SYS</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
