@@ -124,6 +124,22 @@ subtitle: מדוע מנהלים שורפים תקציבי AI ומקבלים פל
 
 סיפור פועל כמו כוח כבידה שמושך תשומת לב. הוא ישפר ביצועים אם ורק אם הוא מצביע לאותו כיוון כמו המטרה. אם הסיפור מצביע לכיוון אחר, הוא לא יעזור. הוא ירעיל.
 
+<figure dir="rtl" style="margin:2.25rem 0;">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;">
+<div style="border:1px solid hsl(var(--border));border-radius:14px;padding:1rem 1.1rem;border-inline-start:4px solid hsl(var(--primary));">
+<div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:hsl(var(--primary));">מיושר</div>
+<div aria-hidden="true" style="margin:0.55rem 0;font-size:1.5rem;font-weight:700;letter-spacing:0.1em;color:hsl(var(--foreground));">← ←</div>
+<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור והמשימה מצביעים לאותו כיוון — הכבידה <strong>מחדדת וממקדת</strong>.</div>
+</div>
+<div style="border:1px solid hsl(var(--border));border-radius:14px;padding:1rem 1.1rem;border-inline-start:4px solid hsl(var(--destructive));">
+<div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:hsl(var(--destructive));">לא מיושר</div>
+<div aria-hidden="true" style="margin:0.55rem 0;font-size:1.5rem;font-weight:700;letter-spacing:0.1em;color:hsl(var(--foreground));">← →</div>
+<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור מושך לכיוון אחר מהמשימה — הכבידה <strong>מסיחה ומרעילה</strong>.</div>
+</div>
+</div>
+<figcaption style="margin-top:0.7rem;font-size:0.78rem;color:hsl(var(--muted-foreground));text-align:center;">כבידה סיפורית עוזרת רק כשהיא מצביעה לאותו כיוון כמו המטרה.</figcaption>
+</figure>
+
 בעברית עוד יותר פשוטה: אם אתם מספרים סיפור כדי לפתור בעיה, תוודאו שהמתח בסיפור הוא על הבעיה. לא על משהו אחר. לא על הרקע. לא על הפוליטיקה. על הבעיה עצמה.
 
 ואותו דבר בדיוק עם ניהול אנשים. כשאתם מספרים לצוות סיפור דרמטי על הלחץ הפוליטי מלמעלה, אבל המשימה בפועל היא לפתור בעיה של תיעוד, הסיפור לא מגייס. הוא מסיח דעת. הוא יוצר רעש רגשי שלא מוביל לשום פעולה.
