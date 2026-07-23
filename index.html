@@ -35,12 +35,18 @@
     <meta property="og:locale" content="he_IL" />
     <meta property="og:url" content="https://ereztalshir.co.il/" />
     <meta property="og:site_name" content="COR-SYS" />
-    <meta property="og:image" content="https://ereztalshir.co.il/og-image.png" />
+    <!-- og:image points at the live GitHub Pages origin (not the canonical
+         ereztalshir.co.il, which does not resolve yet) so social previews
+         render TODAY. Scrapers fetch this URL directly and don't require it to
+         match the canonical host. github.io keeps serving after the domain
+         launches too. AT DOMAIN LAUNCH: switch these two URLs (and canonicals)
+         to https://ereztalshir.co.il/og-image.png. -->
+    <meta property="og:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="COR-SYS — 30 יום מהמסר אל הלקוחות · ארז טל-שיר" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://ereztalshir.co.il/og-image.png" />
+    <meta name="twitter:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Fonts load async (media swap on load) so text paints immediately in the
