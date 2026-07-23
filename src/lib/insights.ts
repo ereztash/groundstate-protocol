@@ -62,8 +62,14 @@ export const insights: Insight[] = Object.entries(raws)
       body,
     };
   })
-  // Newest first.
-  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  // Newest first. An article with no date is treated as most-recent (it was
+  // just added) rather than oldest, so a freshly-published piece isn't buried
+  // at the bottom while awaiting its real date — and no false date is shown.
+  .sort((a, b) => {
+    const da = a.date || "9999-12-31";
+    const db = b.date || "9999-12-31";
+    return da < db ? 1 : da > db ? -1 : 0;
+  });
 
 export function getInsight(slug: string | undefined): Insight | undefined {
   return insights.find((i) => i.slug === slug);
