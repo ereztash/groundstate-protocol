@@ -1,9 +1,9 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ConsentBanner from "./components/ConsentBanner";
@@ -20,6 +20,21 @@ const About = lazy(() => import("./pages/About"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
+
+/**
+ * Reset scroll to the top on client-side navigation. Without this, following a
+ * cross-page link from a page bottom (e.g. the footer nav) lands the reader at
+ * the previous scroll offset on the new page. Hash targets (e.g.
+ * /#diagnostic-form) are left alone so they scroll to their anchor instead.
+ */
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) return;
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+};
 
 // vite.config.ts builds with a RELATIVE base ("./") so one artifact works at a
 // domain root and at a project sub-path. That makes import.meta.env.BASE_URL
@@ -50,6 +65,7 @@ const App = () => (
             so routes resolve correctly whether the app is served from "/" or a
             subpath like /groundstate-protocol/ on GitHub Pages. */}
         <BrowserRouter basename={routerBasename}>
+          <ScrollToTop />
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Landing />} />

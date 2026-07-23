@@ -24,6 +24,8 @@ const ConsentBanner = () => {
       initClarity();
     }
     setShow(false);
+    // Let the sticky mobile CTA (which shares bottom-0) know it can appear now.
+    window.dispatchEvent(new Event("cor:consent-decided"));
   };
 
   if (!show) return null;

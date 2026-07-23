@@ -31,7 +31,7 @@ const OriginStorySection = () => {
           </div>
 
           <p className="border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
-            תיעדתי בעבר גידול של מיליון שקל בהכנסות בהקשר קמעונאי דרך התערבות התנהגותית. את הרצף הזה לעצמאיים בניתי השנה.
+            תיעדתי בעבר גידול של מיליון שקל בהכנסות בהקשר קמעונאי דרך התערבות התנהגותית. את הרצף הזה לעצמאים בניתי השנה.
           </p>
         </Reveal>
       </div>
