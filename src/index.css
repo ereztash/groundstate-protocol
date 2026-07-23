@@ -72,6 +72,44 @@
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  /* Charcoal band palette. Applied by wrapping a section in `.dark` — every
+     token-based utility (bg-background, text-foreground, border-border, …)
+     inside then resolves to these values, so the same components render on a
+     dark surface with no per-component changes. Teal (--primary) is brightened
+     for legibility on charcoal; copper (--accent) stays at the light-theme
+     lightness so white-on-copper CTAs keep their ~4.8:1 AA contrast and look
+     identical in both bands. This is art direction (fixed per-section), not a
+     user-facing theme toggle. */
+  .dark {
+    --background: 200 14% 10%;
+    --foreground: 40 30% 96%;
+
+    --card: 200 12% 15%;
+    --card-foreground: 40 30% 96%;
+
+    --popover: 200 12% 15%;
+    --popover-foreground: 40 30% 96%;
+
+    --primary: 190 52% 62%;
+    --primary-foreground: 200 14% 10%;
+
+    --secondary: 200 10% 20%;
+    --secondary-foreground: 40 30% 96%;
+
+    --muted: 200 10% 20%;
+    --muted-foreground: 40 14% 76%;
+
+    --accent: 29 58% 44%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 200 10% 28%;
+    --input: 200 10% 26%;
+    --ring: 29 60% 55%;
+  }
 }
 
 @layer base {

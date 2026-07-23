@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import Header from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
@@ -69,13 +69,20 @@ const Landing = () => {
       </a>
 
       <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-        <Header />
+        <SiteHeader />
 
+        {/* Dark/light band rhythm: story, mid-CTA and the "not for everyone"
+            filter run on charcoal for depth and emphasis; the hero, proof,
+            pricing and the form stay light for scannability and conversion
+            clarity. Each dark wrapper scopes the .dark token palette (see
+            index.css) so the section components render unchanged on charcoal. */}
         <main className="divide-y divide-border">
           <Hero />
           <WhatYouTriedSection />
           <ClientProofSection />
-          <OriginStorySection />
+          <div className="dark bg-background text-foreground">
+            <OriginStorySection />
+          </div>
           <ProcessPreviewSection />
           {/* Mid-page conversion point for "ready-now" visitors. NN/g
               eye-tracking shows attention collapses after the fold (~57% of
@@ -83,7 +90,9 @@ const Landing = () => {
               who are already convinced; re-surfacing the same one goal partway
               down (after they've seen pain → proof → what the call is) catches
               them without competing with the page's single conversion goal. */}
-          <MidPageCTA />
+          <div className="dark bg-background text-foreground">
+            <MidPageCTA />
+          </div>
           <StageRecommenderSection />
           {/* Value before price: the tangible deliverables run before the price
               ladder (the lifetime-ROI line is folded into SequenceSection's
@@ -93,12 +102,16 @@ const Landing = () => {
           <DeliverablesPreview />
           <SequenceSection />
           <FullPackageSection />
-          <NotForEveryoneSection />
+          <div className="dark bg-background text-foreground">
+            <NotForEveryoneSection />
+          </div>
           <FAQSection />
           <DiagnosticFormSection />
         </main>
 
-        <LandingFooter />
+        <div className="dark bg-background text-foreground">
+          <LandingFooter />
+        </div>
         <StickyMobileCTA />
       </div>
     </DiagnosticFormProvider>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
+import SiteHeader from "@/components/SiteHeader";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { insights, formatDate } from "@/lib/insights";
 
@@ -22,16 +23,7 @@ const InsightsIndex = () => {
         דלג לתוכן
       </a>
 
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
-        <div dir="rtl" className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3.5">
-          <Link to="/" className="text-base font-semibold tracking-wide text-foreground outline-none" aria-label="COR-SYS — לעמוד הבית">
-            COR-SYS
-          </Link>
-          <Link to="/#diagnostic-form" className="cta-line inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm">
-            בוא נדבר
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="insights-main" dir="rtl" className="mx-auto max-w-4xl px-6 pt-28 pb-16 md:pt-36">
         <Reveal className="max-w-2xl">

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import NoiseToCoherence from "@/components/about/NoiseToCoherence";
+import SiteHeader from "@/components/SiteHeader";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
@@ -144,23 +145,7 @@ const About = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
-        <div dir="rtl" className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3.5">
-          <Link
-            to="/"
-            className="text-base font-semibold tracking-wide text-foreground outline-none"
-            aria-label="COR-SYS — לעמוד הבית"
-          >
-            COR-SYS
-          </Link>
-          <Link
-            to="/insights"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            תובנות
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="about-main" dir="rtl">
         {/* Scrollytelling scene: pinned visual + stepped copy scrolling over it. */}

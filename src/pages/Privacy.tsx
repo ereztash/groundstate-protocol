@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import SiteHeader from "@/components/SiteHeader";
 
 const Privacy = () => {
   useEffect(() => {
@@ -12,7 +13,8 @@ const Privacy = () => {
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-2xl px-6 py-16 md:py-24">
+      <SiteHeader />
+      <div className="mx-auto max-w-2xl px-6 pt-28 pb-16 md:pt-32 md:pb-24">
         <Link
           to="/"
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
