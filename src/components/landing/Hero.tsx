@@ -131,11 +131,16 @@ const Hero = () => {
               aria-labelledby="hero-portrait-caption"
             >
               <div
-                className="pointer-events-none absolute -inset-4 rounded-full bg-accent/10 blur-3xl md:-inset-6"
+                className="pointer-events-none absolute -inset-4 rounded-full bg-accent/10 blur-3xl animate-breathe md:-inset-6"
                 aria-hidden="true"
               />
               <div
-                className="pointer-events-none absolute inset-[18%] rounded-full bg-primary/10 blur-2xl"
+                className="pointer-events-none absolute inset-[18%] rounded-full bg-primary/10 blur-2xl animate-pulse-glow"
+                aria-hidden="true"
+              />
+              {/* Slow copper→teal "coherence halo" — the site's motif on the face. */}
+              <div
+                className="hero-halo pointer-events-none absolute -inset-2 rounded-full"
                 aria-hidden="true"
               />
               <div className="relative h-full w-full rounded-full overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-30px_hsl(var(--accent)/0.45)]">

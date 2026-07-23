@@ -510,3 +510,26 @@
 .about-step[data-dim] p:not(.cor-overline-he) {
   color: hsl(var(--foreground) / 0.65);
 }
+
+/* Hero portrait — a slow "coherence halo" (a copper→teal conic ring) plus a
+   breathing aura, so the founder photo feels alive without gimmick. It's the
+   coherence motif, applied to the face. Freezes to a static ring under
+   prefers-reduced-motion via the global rule above. */
+@keyframes cor-halo-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+.hero-halo {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    hsl(var(--accent) / 0.55) 55deg,
+    transparent 130deg,
+    hsl(var(--primary) / 0.5) 230deg,
+    transparent 310deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px));
+  animation: cor-halo-spin 22s linear infinite;
+}
