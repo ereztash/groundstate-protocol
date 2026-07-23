@@ -5,6 +5,7 @@ import StageStepper from "@/components/StageStepper";
 import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
+import SiteHeader from "@/components/SiteHeader";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -55,27 +56,7 @@ const Methodology = () => {
         דלג לתוכן
       </a>
 
-      {/* Top bar — transparent over the dark hero, so it reads as one surface. */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#15191c]/85 backdrop-blur-md">
-        <div
-          dir="rtl"
-          className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3.5"
-        >
-          <Link
-            to="/"
-            className="text-base font-semibold tracking-wide text-[hsl(var(--background))] outline-none"
-            aria-label="COR-SYS — לעמוד הבית"
-          >
-            COR-SYS
-          </Link>
-          <Link
-            to="/#diagnostic-form"
-            className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
-          >
-            בוא נדבר
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="protocol-main">
         {/* Hero — dark. The rods glow; copper CTA pops. */}
