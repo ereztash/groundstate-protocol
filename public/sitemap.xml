@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ereztalshir.co.il/</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/protocol</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/protocol/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/insights</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/insights/why-you-charge-less-than-your-value</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/why-prompt-engineering-fails/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/insights/one-source-of-meaning</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/anatomy-of-a-mistake/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/insights/anatomy-of-a-mistake</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/one-source-of-meaning/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/insights/why-prompt-engineering-fails</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/why-you-charge-less-than-your-value/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/about</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ereztalshir.co.il/privacy</loc>
+    <loc>https://ereztash.github.io/groundstate-protocol/privacy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

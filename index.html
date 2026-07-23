@@ -29,18 +29,21 @@
     <meta name="description" content="לעצמאים שיש להם ידע ולא יודעים איך להעביר אותו. 30 יום, 4 פגישות, ובסוף: מסר ברור, מחיר בלי גמגום, ו-10 פניות לאנשים אמיתיים.">
     <meta name="author" content="ארז טל-שיר" />
 
-    <link rel="canonical" href="https://ereztalshir.co.il/" />
+    <link rel="canonical" href="https://ereztash.github.io/groundstate-protocol/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="he_IL" />
-    <meta property="og:url" content="https://ereztalshir.co.il/" />
+    <meta property="og:url" content="https://ereztash.github.io/groundstate-protocol/" />
     <meta property="og:site_name" content="COR-SYS" />
-    <!-- og:image points at the live GitHub Pages origin (not the canonical
-         ereztalshir.co.il, which does not resolve yet) so social previews
-         render TODAY. Scrapers fetch this URL directly and don't require it to
-         match the canonical host. github.io keeps serving after the domain
-         launches too. AT DOMAIN LAUNCH: switch these two URLs (and canonicals)
-         to https://ereztalshir.co.il/og-image.png. -->
+    <!-- All canonical / og / structured-data URLs point at the live GitHub Pages
+         origin so the site is INDEXABLE TODAY (the ereztalshir.co.il apex is not
+         connected — its DNS does not resolve). AT DOMAIN LAUNCH, reverse this:
+         (1) re-add public/CNAME containing the domain; (2) set VITE_BASE_PATH="/"
+         in .github/workflows/deploy.yml; (3) search-replace
+         ereztash.github.io/groundstate-protocol -> ereztalshir.co.il across
+         index.html, src/hooks/useDocumentMeta.ts, src/pages/InsightArticle.tsx,
+         src/pages/About.tsx, public/sitemap.xml, public/robots.txt,
+         public/llms.txt. -->
     <meta property="og:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -68,26 +71,26 @@
       "@graph": [
         {
           "@type": "WebSite",
-          "@id": "https://ereztalshir.co.il/#website",
-          "url": "https://ereztalshir.co.il/",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#website",
+          "url": "https://ereztash.github.io/groundstate-protocol/",
           "name": "COR-SYS",
           "inLanguage": "he-IL"
         },
         {
           "@type": "Person",
-          "@id": "https://ereztalshir.co.il/#person",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#person",
           "name": "ארז טל-שיר",
           "jobTitle": "יועץ עסקי לעצמאים",
-          "url": "https://ereztalshir.co.il/",
+          "url": "https://ereztash.github.io/groundstate-protocol/",
           "sameAs": ["https://www.linkedin.com/in/erez-tal-shir/"]
         },
         {
           "@type": "Service",
-          "@id": "https://ereztalshir.co.il/#service",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#service",
           "name": "COR-SYS",
           "description": "רצף יעוץ עסקי 1:1 בן 30 יום עבור עצמאים — נרטיב, הצעת ערך, מוצר ופניות יוצאות.",
           "serviceType": "Business consulting",
-          "provider": {"@id": "https://ereztalshir.co.il/#person"},
+          "provider": {"@id": "https://ereztash.github.io/groundstate-protocol/#person"},
           "areaServed": {"@type":"Country","name":"Israel"},
           "audience": {"@type":"Audience","audienceType":"self-employed professionals"},
           "offers": [
@@ -100,29 +103,29 @@
         },
         {
           "@type": "Review",
-          "@id": "https://ereztalshir.co.il/#review-1",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#review-1",
           "reviewBody": "המבניות והחיבור מצד אחד ל-AI ומצד שני לסקרנות, היכולת להיות סקרנית ולהוסיף ערך על מה שאני מביאה — זה מה שנתן לי ביטחון.",
           "reviewRating": {"@type":"Rating","ratingValue":"5","bestRating":"5"},
           "author": {"@type":"Person","name":"לקוחה ראשונה שהשלימה את הרצף"},
-          "itemReviewed": {"@id":"https://ereztalshir.co.il/#service"},
-          "publisher": {"@id":"https://ereztalshir.co.il/#person"}
+          "itemReviewed": {"@id":"https://ereztash.github.io/groundstate-protocol/#service"},
+          "publisher": {"@id":"https://ereztash.github.io/groundstate-protocol/#person"}
         },
         {
           "@type": "Review",
-          "@id": "https://ereztalshir.co.il/#review-2",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#review-2",
           "reviewBody": "ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
           "reviewRating": {"@type":"Rating","ratingValue":"5","bestRating":"5"},
           "author": {"@type":"Person","name":"גיא כהן","jobTitle":"יועץ AI לעצמאים ולעסקים קטנים","description":"מוביל קהילת AI של 1,500+ עצמאים","sameAs":"https://www.linkedin.com/in/guycohen-ai/"},
-          "itemReviewed": {"@id":"https://ereztalshir.co.il/#service"},
-          "publisher": {"@id":"https://ereztalshir.co.il/#person"}
+          "itemReviewed": {"@id":"https://ereztash.github.io/groundstate-protocol/#service"},
+          "publisher": {"@id":"https://ereztash.github.io/groundstate-protocol/#person"}
         },
         {
           "@type": "VideoObject",
-          "@id": "https://ereztalshir.co.il/#video-testimonial-guy",
+          "@id": "https://ereztash.github.io/groundstate-protocol/#video-testimonial-guy",
           "name": "גיא כהן ממליץ על COR-SYS",
           "description": "עדות וידאו של גיא כהן על העבודה עם ארז טל-שיר במיקוד הצעת הערך והשפעתה על אחוזי ההמרה.",
-          "thumbnailUrl": "https://ereztalshir.co.il/media/testimonial-guy-poster.webp",
-          "contentUrl": "https://ereztalshir.co.il/media/testimonial-guy.mp4",
+          "thumbnailUrl": "https://ereztash.github.io/groundstate-protocol/media/testimonial-guy-poster.webp",
+          "contentUrl": "https://ereztash.github.io/groundstate-protocol/media/testimonial-guy.mp4",
           "uploadDate": "2026-05-24",
           "duration": "PT37S"
         },

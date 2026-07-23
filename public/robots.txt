@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ereztalshir.co.il/sitemap.xml
+Sitemap: https://ereztash.github.io/groundstate-protocol/sitemap.xml
