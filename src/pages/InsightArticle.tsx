@@ -46,7 +46,9 @@ const InsightArticle = () => {
     "@type": "Article",
     headline: article.title,
     description: article.description,
-    datePublished: article.date,
+    // Only emit datePublished when we actually have one — an empty string is
+    // invalid structured data. (Undated articles simply omit it.)
+    ...(article.date ? { datePublished: article.date } : {}),
     inLanguage: "he",
     author: { "@type": "Person", name: "ארז טל-שיר" },
     publisher: { "@type": "Person", name: "ארז טל-שיר" },
