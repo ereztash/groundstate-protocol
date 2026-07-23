@@ -14,7 +14,11 @@ import { useEffect } from "react";
  * bakes these values into each route's static HTML at build time.
  */
 
-const SITE_ORIGIN = "https://ereztalshir.co.il";
+// Live GitHub Pages origin (project sub-path). Everything canonical points here
+// so the site is indexable today; the ereztalshir.co.il apex isn't connected.
+// AT DOMAIN LAUNCH: swap this to "https://ereztalshir.co.il" (and see the note
+// in index.html for the full switch checklist).
+const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
 
 export type DocumentMeta = {
   title: string;
@@ -95,7 +99,11 @@ export function useDocumentMeta({
     }
 
     if (path) {
-      const url = `${SITE_ORIGIN}${path}`;
+      // Trailing slash: pages are served as directory indexes (/about/) and the
+      // host 301-redirects the slashless form — so the canonical must be the
+      // final slashed URL, not one that redirects.
+      const raw = `${SITE_ORIGIN}${path}`;
+      const url = raw.endsWith("/") ? raw : `${raw}/`;
       restores.push(upsertMeta("property", "og:url", url));
       restores.push(upsertLink("canonical", url));
     }

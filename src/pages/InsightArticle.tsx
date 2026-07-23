@@ -7,7 +7,7 @@ import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { getInsight, insights, formatDate } from "@/lib/insights";
 
-const SITE_ORIGIN = "https://ereztalshir.co.il";
+const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
 
 /**
  * /insights/:slug — a single article. The markdown body is rendered to HTML
@@ -52,7 +52,7 @@ const InsightArticle = () => {
     inLanguage: "he",
     author: { "@type": "Person", name: "ארז טל-שיר" },
     publisher: { "@type": "Person", name: "ארז טל-שיר" },
-    mainEntityOfPage: `${SITE_ORIGIN}/insights/${article.slug}`,
+    mainEntityOfPage: `${SITE_ORIGIN}/insights/${article.slug}/`,
   };
 
   // Breadcrumb trail (בית › תובנות › <article>) so Google can render a
@@ -62,12 +62,12 @@ const InsightArticle = () => {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "בית", item: `${SITE_ORIGIN}/` },
-      { "@type": "ListItem", position: 2, name: "תובנות", item: `${SITE_ORIGIN}/insights` },
+      { "@type": "ListItem", position: 2, name: "תובנות", item: `${SITE_ORIGIN}/insights/` },
       {
         "@type": "ListItem",
         position: 3,
         name: article.title,
-        item: `${SITE_ORIGIN}/insights/${article.slug}`,
+        item: `${SITE_ORIGIN}/insights/${article.slug}/`,
       },
     ],
   };

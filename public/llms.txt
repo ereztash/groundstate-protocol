@@ -56,7 +56,7 @@
 
 ## Contact
 
-- אתר: https://ereztalshir.co.il/
+- אתר: https://ereztash.github.io/groundstate-protocol/
 - אופן ההזמנה: טופס דו-שלבי באתר (משפט תקיעה + שם → טלפון + מייל) — אחזור תוך 24 שעות
 - Calendly לאחר הגשת הטופס
 

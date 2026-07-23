@@ -6,7 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
-const SITE_ORIGIN = "https://ereztalshir.co.il";
+const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
 
 /**
  * /about — an experiential, scroll-driven telling of who Erez is. A single
@@ -126,7 +126,7 @@ const About = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "ארז טל-שיר",
-    url: `${SITE_ORIGIN}/about`,
+    url: `${SITE_ORIGIN}/about/`,
     jobTitle: "יועץ עסקי לעצמאים",
     description:
       "עובד סוציאלי בהכשרה, יועץ עסקי לעצמאים. משלב נרטיב אנושי עם מבנה עסקי — המתודולוגיה של COR-SYS.",
