@@ -152,7 +152,7 @@ const About = () => {
         {/* Scrollytelling scene: pinned visual + stepped copy scrolling over it. */}
         <section
           ref={sceneRef}
-          className="about-scene relative"
+          className="about-scene dark relative bg-background text-foreground"
           aria-label="הסיפור מאחורי COR-SYS"
         >
           <div
