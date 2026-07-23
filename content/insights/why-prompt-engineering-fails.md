@@ -34,6 +34,34 @@ subtitle: מדוע מנהלים שורפים תקציבי AI ומקבלים פל
 
 הנה מה שרוב אנשי הטכנולוגיה לא מבינים, ומה שרוב המנהלים לא יודעים: כלי בינה מלאכותית מגיבים למבנה סיפורי בצורה שניתנת למיפוי ישיר מול התגובה הכימית במוח. לא במשל. במנגנון.
 
+<figure dir="rtl" style="margin:2.25rem 0;">
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+<div style="min-width:340px;border:1px solid hsl(var(--border));border-radius:14px;overflow:hidden;">
+<div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-size:0.75rem;font-weight:700;letter-spacing:0.02em;">
+<div style="padding:0.6rem 0.8rem;">המוח</div>
+<div style="padding:0.6rem 0.8rem;">הסיפור</div>
+<div style="padding:0.6rem 0.8rem;">הבינה המלאכותית</div>
+</div>
+<div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;border-top:1px solid hsl(var(--border));font-size:0.9rem;line-height:1.35;">
+<div style="padding:0.75rem 0.8rem;font-weight:700;color:hsl(var(--foreground));border-inline-start:3px solid hsl(var(--accent));">קורטיזול · מתח</div>
+<div style="padding:0.75rem 0.8rem;">מיקוד על האיום</div>
+<div style="padding:0.75rem 0.8rem;">סינון רעש</div>
+</div>
+<div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;border-top:1px solid hsl(var(--border));background:hsl(var(--muted)/0.4);font-size:0.9rem;line-height:1.35;">
+<div style="padding:0.75rem 0.8rem;font-weight:700;color:hsl(var(--foreground));border-inline-start:3px solid hsl(var(--accent));">אוקסיטוצין · חיבור</div>
+<div style="padding:0.75rem 0.8rem;">הזדהות עם דמות</div>
+<div style="padding:0.75rem 0.8rem;">הקשר ממוקד</div>
+</div>
+<div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;border-top:1px solid hsl(var(--border));font-size:0.9rem;line-height:1.35;">
+<div style="padding:0.75rem 0.8rem;font-weight:700;color:hsl(var(--foreground));border-inline-start:3px solid hsl(var(--accent));">דופמין · ציפייה</div>
+<div style="padding:0.75rem 0.8rem;">התקדמות לפתרון</div>
+<div style="padding:0.75rem 0.8rem;">שרשרת חשיבה</div>
+</div>
+</div>
+</div>
+<figcaption style="margin-top:0.7rem;font-size:0.78rem;color:hsl(var(--muted-foreground));text-align:center;">שלושה חומרים במוח, שלושה מנגנונים מקבילים בבינה המלאכותית — אותו עיקרון, שתי מערכות.</figcaption>
+</figure>
+
 **ריכוז מול רעש.** כמו שקורטיזול מצמצם את תשומת הלב שלנו רק לאיום, מתח סיפורי בפרומפט גורם למנגנון הקשב של ה-AI לגזום את כל המידע הלא-רלוונטי ולהתמקד רק בנקודה הקריטית. במקום לחפש תשובה באוקיינוס של כל מה שהוא אי פעם למד, הוא מצמצם את השטח ומתרכז (Li et al., 2023).
 
 **הקשר משותף.** כמו שאוקסיטוצין בונה חיבור בין מספר למאזין, מבנה סיפורי בפרומפט מאלץ את ה-AI לארגן את המידע בצורה שיוצרת קשרים הגיוניים בין מושגים שונים. כשאתם קובעים דמות מקצועית ברורה, אתם בעצם מכוונים את המכונה לפינה מאוד ספציפית של כל מה שהיא יודעת, ושם התשובות הרבה יותר מדויקות (Kim et al., 2024).
