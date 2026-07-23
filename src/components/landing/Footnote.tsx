@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { trackEvent } from "@/lib/analytics";
 
 type FootnoteProps = {
@@ -13,17 +13,18 @@ type FootnoteProps = {
 };
 
 /**
- * Renders inline text followed by a small superscript reference
- * marker. The marker reveals a tooltip with elaborating context on
- * hover / focus. Borrows the visual language of editorial footnotes
- * (Tufte, Gwern) without forcing a full sidenote layout — for a
- * landing page, the goal is to *signal* depth, not deliver an essay.
+ * Renders inline text followed by a small superscript reference marker. The
+ * marker reveals elaborating context. Borrows the visual language of editorial
+ * footnotes (Tufte, Gwern) without a full sidenote layout — for a landing page
+ * the goal is to *signal* depth, not deliver an essay.
  *
- * Numbering is manual: pass `number` per call. Three or four total
- * across the whole page is the right ceiling; more turns into noise.
+ * Uses a Popover (click/tap) rather than a Tooltip so it opens on touch too — a
+ * hover-only tooltip left the qualifier unreachable on mobile. Closes on
+ * outside-click / Escape; keyboard- and screen-reader-accessible via Radix.
  *
- * Emits `footnote_open` whenever the tooltip transitions to the open
- * state, so analytics can answer "is anyone actually reading these?"
+ * Numbering is manual: pass `number` per call. Three or four total across the
+ * whole page is the right ceiling; more turns into noise. Emits `footnote_open`
+ * when opened, so analytics can answer "is anyone actually reading these?"
  */
 export const Footnote = ({ number, tip, children }: FootnoteProps) => {
   const handleOpenChange = (open: boolean) => {
@@ -35,8 +36,8 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
   return (
     <>
       {children}
-      <Tooltip onOpenChange={handleOpenChange}>
-        <TooltipTrigger asChild>
+      <Popover onOpenChange={handleOpenChange}>
+        <PopoverTrigger asChild>
           <button
             type="button"
             aria-label={`הערה ${number} — פתח להסבר`}
@@ -44,16 +45,16 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
           >
             {number}
           </button>
-        </TooltipTrigger>
-        <TooltipContent
+        </PopoverTrigger>
+        <PopoverContent
           side="top"
           sideOffset={6}
           dir="rtl"
-          className="max-w-xs whitespace-normal break-words bg-foreground text-start text-xs leading-relaxed text-background"
+          className="w-auto max-w-xs whitespace-normal break-words border-0 bg-foreground p-3 text-start text-xs leading-relaxed text-background shadow-md"
         >
           {tip}
-        </TooltipContent>
-      </Tooltip>
+        </PopoverContent>
+      </Popover>
     </>
   );
 };

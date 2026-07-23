@@ -35,7 +35,7 @@ const ConsentBanner = () => {
       dir="rtl"
       role="region"
       aria-label="הסכמה לשימוש בכלי ניתוח"
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-background/95 p-4 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-relaxed text-foreground/80">
