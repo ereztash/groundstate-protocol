@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 const Privacy = () => {
   useEffect(() => {
@@ -100,6 +101,7 @@ const Privacy = () => {
           </section>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 };

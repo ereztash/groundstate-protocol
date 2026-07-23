@@ -6,6 +6,7 @@ import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -221,17 +222,7 @@ const Methodology = () => {
         </section>
       </main>
 
-      <footer className="border-t border-border py-10">
-        <div
-          dir="rtl"
-          className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground"
-        >
-          <Link to="/" className="text-link">
-            חזרה לעמוד הבית
-          </Link>
-          <p>© ארז טל-שיר — COR-SYS</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

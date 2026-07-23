@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import NoiseToCoherence from "@/components/about/NoiseToCoherence";
 import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
@@ -225,19 +226,7 @@ const About = () => {
         </section>
       </main>
 
-      <footer className="border-t border-border py-10">
-        <div dir="rtl" className="mx-auto flex max-w-4xl flex-col items-center gap-3 px-6 text-center text-xs text-muted-foreground">
-          <div className="flex items-center gap-5">
-            <Link to="/" className="text-link">
-              עמוד הבית
-            </Link>
-            <Link to="/insights" className="text-link">
-              תובנות
-            </Link>
-          </div>
-          <p>© ארז טל-שיר — COR-SYS</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
