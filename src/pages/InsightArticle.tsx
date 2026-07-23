@@ -53,6 +53,23 @@ const InsightArticle = () => {
     mainEntityOfPage: `${SITE_ORIGIN}/insights/${article.slug}`,
   };
 
+  // Breadcrumb trail (בית › תובנות › <article>) so Google can render a
+  // breadcrumb in the result instead of a bare URL — better SERP presence.
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "בית", item: `${SITE_ORIGIN}/` },
+      { "@type": "ListItem", position: 2, name: "תובנות", item: `${SITE_ORIGIN}/insights` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.title,
+        item: `${SITE_ORIGIN}/insights/${article.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <a href="#article-main" className="skip-to-content">
@@ -61,6 +78,10 @@ const InsightArticle = () => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <SiteHeader />
