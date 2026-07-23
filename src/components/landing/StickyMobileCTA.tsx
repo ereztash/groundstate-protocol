@@ -47,7 +47,7 @@ const StickyMobileCTA = () => {
     <div
       dir="rtl"
       aria-hidden={!visible}
-      className={`fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 p-3 backdrop-blur-md transition-all duration-300 md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md transition-all duration-300 md:hidden ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-full opacity-0"
