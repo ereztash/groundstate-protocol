@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 import { Footnote } from "./Footnote";
 
@@ -7,13 +8,43 @@ import { Footnote } from "./Footnote";
 // protocol/ (GitHub Pages).
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 
-/** The programme's hard numbers, promoted out of the old 11.5px kicker line. */
+/**
+ * The programme's hard numbers, promoted out of the old 11.5px kicker line.
+ *
+ * `scatter` is each cell's starting offset for the entrance: a small
+ * displacement and a degree of tilt that resolves to zero. The values are
+ * hand-set rather than random so the sequence is identical on every load and
+ * matches the prerendered markup. Only the dt/dd resolve — the grid frame
+ * itself never moves, so the read is "data settling into a structure" rather
+ * than the structure wobbling.
+ */
 const SPEC = [
-  { value: "30", unit: "יום", label: "משך התוכנית" },
-  { value: "4", unit: "מפגשים", label: "בני 60 דקות" },
-  { value: "10", unit: "פניות", label: "יוצאות, בסיום" },
-  { value: "₪1,000", unit: "", label: "החל מ־" },
+  { value: "30", unit: "יום", label: "משך התוכנית", scatter: { x: "-9px", r: "-1.1deg" } },
+  { value: "4", unit: "מפגשים", label: "בני 60 דקות", scatter: { x: "7px", r: "0.9deg" } },
+  { value: "10", unit: "פניות", label: "יוצאות, בסיום", scatter: { x: "-6px", r: "1.2deg" } },
+  { value: "₪1,000", unit: "", label: "החל מ־", scatter: { x: "8px", r: "-0.8deg" } },
 ];
+
+/** Entrance offsets, in ms. The last cell resolves at 580 + 560 = 1140ms. */
+const SETTLE = {
+  eyebrow: 0,
+  subtitle: 140,
+  portrait: 220,
+  specFirst: 340,
+  specStep: 80,
+  cta: 660,
+} as const;
+
+/** Feeds `.cor-settle` (index.css) its per-element delay and starting offset. */
+function settleStyle(
+  delayMs: number,
+  scatter?: { x: string; r: string },
+): CSSProperties {
+  return {
+    "--settle-delay": `${delayMs}ms`,
+    ...(scatter && { "--settle-x": scatter.x, "--settle-r": scatter.r }),
+  } as CSSProperties;
+}
 
 const Hero = () => {
   const scrollToForm = () => {
@@ -33,20 +64,27 @@ const Hero = () => {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid items-start gap-10 md:grid-cols-[1.25fr_1fr] md:gap-16">
           {/* Order 1 on every breakpoint — text leads on mobile, no founder-face wall */}
-          <div className="order-1 animate-slow-fade-in">
+          <div className="order-1">
             {/* Programme label. Institutional register: names the offering
                 rather than addressing the reader. */}
-            <p className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-primary/85">
+            <p
+              className="cor-settle text-[11.5px] font-semibold uppercase tracking-[0.18em] text-primary/85"
+              style={settleStyle(SETTLE.eyebrow)}
+            >
               COR-SYS · תוכנית ליווי לעצמאים
             </p>
 
-            <h1 id="hero-title" className="cor-display mt-5 text-foreground">
+            <h1
+              id="hero-title"
+              className="cor-settle-lcp cor-display mt-5 text-foreground"
+            >
               תרגום מומחיות מקצועית להצעה שהשוק קונה.
             </h1>
 
             <p
               id="hero-subtitle"
-              className="cor-body-lg mt-5 max-w-xl text-foreground/85"
+              className="cor-settle cor-body-lg mt-5 max-w-xl text-foreground/85"
+              style={settleStyle(SETTLE.subtitle)}
             >
               תוכנית מובנית בת 30 יום לעצמאים שהידע המקצועי שלהם מבוסס, וההצעה
               העסקית שנגזרת ממנו — פחות.
@@ -56,26 +94,38 @@ const Hero = () => {
                 over a border-coloured backdrop, which stays correct in RTL
                 without any directional border utilities. */}
             <dl className="mt-7 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-4">
-              {SPEC.map((item) => (
-                <div key={item.label} className="bg-background px-3 py-3 sm:px-4 sm:py-4">
-                  <dt className="text-[11px] font-medium tracking-[0.08em] text-muted-foreground">
-                    {item.label}
-                  </dt>
-                  <dd className="mt-1 flex items-baseline gap-1.5">
-                    <span className="text-xl font-bold leading-none tracking-tight text-foreground sm:text-2xl">
-                      {item.value}
-                    </span>
-                    {item.unit && (
-                      <span className="text-sm text-foreground/70">
-                        {item.unit}
+              {SPEC.map((item, i) => {
+                const style = settleStyle(
+                  SETTLE.specFirst + i * SETTLE.specStep,
+                  item.scatter,
+                );
+                return (
+                  <div key={item.label} className="bg-background px-3 py-3 sm:px-4 sm:py-4">
+                    <dt
+                      className="cor-settle text-[11px] font-medium tracking-[0.08em] text-muted-foreground"
+                      style={style}
+                    >
+                      {item.label}
+                    </dt>
+                    <dd
+                      className="cor-settle mt-1 flex items-baseline gap-1.5"
+                      style={style}
+                    >
+                      <span className="text-xl font-bold leading-none tracking-tight text-foreground sm:text-2xl">
+                        {item.value}
                       </span>
-                    )}
-                  </dd>
-                </div>
-              ))}
+                      {item.unit && (
+                        <span className="text-sm text-foreground/70">
+                          {item.unit}
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
 
-            <div className="mt-7">
+            <div className="cor-settle mt-7" style={settleStyle(SETTLE.cta)}>
               <button
                 type="button"
                 onClick={scrollToForm}
@@ -115,7 +165,10 @@ const Hero = () => {
           {/* Portrait: hidden on the smallest phones (under 380px), small on
               normal mobile, full size on desktop. Saves a viewport worth of
               vertical space on tight screens where the CTA is what matters. */}
-          <div className="order-2 hidden min-[380px]:block">
+          <div
+            className="cor-settle order-2 hidden min-[380px]:block"
+            style={settleStyle(SETTLE.portrait)}
+          >
             {/* The asset itself carries a baked-in circular crop on charcoal,
                 so a square frame exposes the dark corners and reads as a
                 mistake. Kept round — but as a plain ring, with the halo,
