@@ -14,7 +14,32 @@ const ConsentBanner = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setShow(getConsent() === null);
+    if (getConsent() !== null) return;
+
+    const hero = document.getElementById("hero");
+    // Routes without a hero (about, insights, privacy) have nothing above the
+    // fold for the banner to bury — ask straight away.
+    if (!hero) {
+      setShow(true);
+      return;
+    }
+
+    // The hero's primary CTA sits ~570px down the page. A bottom-anchored
+    // banner is ~150px tall, so on a 667px viewport (iPhone SE/8, and laptops
+    // once browser chrome is subtracted) it covers that button outright on the
+    // very first visit. Hold the banner back until the hero has scrolled out of
+    // view: nothing tracks before consent either way, so deferring the ask
+    // costs no privacy and keeps the one conversion element unobstructed.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) return;
+        setShow(true);
+        observer.disconnect();
+      },
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   const decide = (granted: boolean) => {
