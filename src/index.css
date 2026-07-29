@@ -511,6 +511,79 @@
   color: hsl(var(--foreground) / 0.65);
 }
 
+/* Scroll-entry reveal, driven by Reveal.tsx toggling `.is-shown` from an
+   IntersectionObserver. Replaces framer-motion's `whileInView` — the same
+   12px rise and fade, without an animation runtime in the landing bundle.
+
+   Transitions rather than keyframes, so the global reduced-motion rule (which
+   clamps transition-duration) collapses this to an instant appearance on its
+   own, with no special-casing needed here.
+
+   `.cor-reveal-item` staggers off nth-child so call sites pass nothing extra.
+   Ten steps covers the largest group on the page (DeliverablesPreview); past
+   that, items share the final delay rather than trailing indefinitely. */
+.cor-reveal,
+.cor-reveal-item {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s cubic-bezier(0, 0, 0.2, 1) var(--reveal-delay, 0s),
+    transform 0.4s cubic-bezier(0, 0, 0.2, 1) var(--reveal-delay, 0s);
+}
+.cor-reveal.is-shown,
+.cor-reveal-group.is-shown .cor-reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(1) { --reveal-delay: 0s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(2) { --reveal-delay: 0.05s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(3) { --reveal-delay: 0.1s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(4) { --reveal-delay: 0.15s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(5) { --reveal-delay: 0.2s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(6) { --reveal-delay: 0.25s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(7) { --reveal-delay: 0.3s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(8) { --reveal-delay: 0.35s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(9) { --reveal-delay: 0.4s; }
+.cor-reveal-group.is-shown .cor-reveal-item:nth-child(n + 10) { --reveal-delay: 0.45s; }
+
+/* Scroll progress bar. `scaleX` rather than `width`: width forces layout on
+   every frame, a transform is compositor-only. `transform-origin: right` makes
+   it grow from the right, matching the document's RTL direction.
+
+   Where the browser supports scroll-driven animations — all three engines as
+   of 2026, ~84% of users — the bar is driven straight off the scroll timeline
+   with no JS at all, and ScrollProgress's effect bails out. Everyone else gets
+   the rAF fallback in that component. */
+@keyframes cor-scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.cor-scroll-progress {
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+@supports (animation-timeline: scroll()) {
+  .cor-scroll-progress {
+    animation: cor-scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* The global reduced-motion rule clamps animation-duration to 0.01ms.
+       On a scroll timeline that is not a shortened animation, it pegs the bar
+       at 100% and the indicator silently lies. This bar tracks scroll position
+       rather than moving of its own accord, so there is nothing to suppress —
+       hand it back its auto duration. */
+    .cor-scroll-progress {
+      animation-duration: auto !important;
+    }
+  }
+}
+
 /* Hero entrance — the About page's noise → coherence motif (.about-shard),
    played once instead of scrubbed by scroll. Each element arrives fractionally
    out of true (offset, a degree of tilt, transparent) and resolves into the
