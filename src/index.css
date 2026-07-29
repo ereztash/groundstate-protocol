@@ -511,6 +511,74 @@
   color: hsl(var(--foreground) / 0.65);
 }
 
+/* Four-vector coherence figure (CoherenceVectors.tsx). Scattered → parallel,
+   once, on entry. Transitions rather than keyframes so the global
+   reduced-motion rule collapses the whole figure to its resolved state without
+   any special-casing here — which is exactly what the brief asks for
+   ("prefers-reduced-motion → render the final aligned state statically").
+
+   Rotation happens about each vector's own left end (transform-box: fill-box
+   would centre it), so they swing into line rather than sliding sideways. */
+.cor-vectors__v {
+  transform-box: view-box;
+  transform-origin: 360px calc(var(--v-y) * 1px);
+  transform: translateY(calc(var(--v-dy) * 1px)) rotate(calc(var(--v-rot) * 1deg));
+  opacity: 0.28;
+  transition:
+    transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--v-delay, 0ms),
+    opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--v-delay, 0ms);
+}
+.cor-vectors.is-aligned .cor-vectors__v {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+
+.cor-vectors__v line {
+  stroke: hsl(var(--primary));
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.cor-vectors__v path {
+  fill: hsl(var(--primary));
+}
+.cor-vectors__num {
+  font-family: 'Inter', 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  fill: hsl(var(--primary) / 0.55);
+  font-feature-settings: 'tnum' on;
+  transition: fill 0.25s ease;
+}
+.cor-vectors__v.is-active .cor-vectors__num {
+  fill: hsl(var(--accent));
+  font-weight: 500;
+}
+
+/* Copper marks the chosen direction and nothing else — the brief's palette
+   rule. Lit from the parent's hover/focus state, never on its own. */
+.cor-vectors__v line,
+.cor-vectors__v path {
+  transition: stroke 0.25s ease, fill 0.25s ease;
+}
+.cor-vectors__v.is-active line {
+  stroke: hsl(var(--accent));
+  stroke-width: 3.5;
+}
+.cor-vectors__v.is-active path {
+  fill: hsl(var(--accent));
+}
+
+.cor-vectors__spine {
+  stroke: hsl(var(--foreground) / 0.16);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.5s;
+}
+.cor-vectors.is-aligned .cor-vectors__spine {
+  opacity: 1;
+}
+
 /* Scroll-entry reveal, driven by Reveal.tsx toggling `.is-shown` from an
    IntersectionObserver. Replaces framer-motion's `whileInView` — the same
    12px rise and fade, without an animation runtime in the landing bundle.
