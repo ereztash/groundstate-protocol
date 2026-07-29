@@ -511,25 +511,56 @@
   color: hsl(var(--foreground) / 0.65);
 }
 
-/* Hero portrait — a slow "coherence halo" (a copper→teal conic ring) plus a
-   breathing aura, so the founder photo feels alive without gimmick. It's the
-   coherence motif, applied to the face. Freezes to a static ring under
-   prefers-reduced-motion via the global rule above. */
-@keyframes cor-halo-spin {
+/* Hero entrance — the About page's noise → coherence motif (.about-shard),
+   played once instead of scrubbed by scroll. Each element arrives fractionally
+   out of true (offset, a degree of tilt, transparent) and resolves into the
+   grid. The whole sequence finishes inside ~1.26s and stops; nothing loops.
+
+   `both` fill is load-bearing: `backwards` holds the from-state through the
+   stagger delay so nothing flashes into place early, and `forwards` pins the
+   resolved state afterwards. That also makes the reduced-motion override safe
+   — collapsing the duration to 0.01ms lands on the resolved state rather than
+   stranding an element at opacity 0.
+
+   Displacements stay small on purpose: at an institutional register the read
+   should be "settling into alignment", not "flying in". */
+@keyframes cor-settle {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--settle-x, 0), var(--settle-y, 10px), 0)
+      rotate(var(--settle-r, 0deg));
+  }
   to {
-    transform: rotate(1turn);
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }
-.hero-halo {
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    hsl(var(--accent) / 0.55) 55deg,
-    transparent 130deg,
-    hsl(var(--primary) / 0.5) 230deg,
-    transparent 310deg
-  );
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px));
-  animation: cor-halo-spin 22s linear infinite;
+
+.cor-settle {
+  animation: cor-settle 0.56s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: var(--settle-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+/* The headline is the hero's LCP candidate, so it resolves on its own short
+   curve with no delay — a stagger here would postpone the largest paint by the
+   full offset, which is not a trade worth making on a page being indexed. */
+.cor-settle-lcp {
+  animation: cor-settle 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  --settle-y: 6px;
+}
+
+/* The global reduced-motion rule collapses animation-duration but says nothing
+   about animation-delay, so without this the stagger survives and holds the
+   later elements at opacity 0 for up to 660ms — a staggered reveal being
+   exactly what someone with a vestibular sensitivity opted out of. Drop the
+   offsets too, so the section simply renders resolved. */
+@media (prefers-reduced-motion: reduce) {
+  .cor-settle,
+  .cor-settle-lcp {
+    animation-delay: 0ms !important;
+    --settle-x: 0;
+    --settle-y: 0;
+    --settle-r: 0deg;
+  }
 }
