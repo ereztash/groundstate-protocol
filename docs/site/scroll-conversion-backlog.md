@@ -9,7 +9,7 @@ not provable. What this file does claim: every layer below was checked against
 this codebase, and each carries a status backed by a measurement or a citation.
 New layers get appended as they are found; that is the loop's job.
 
-Last full sweep: 2026-07-29.
+Last full sweep: 2026-07-29. Open table worked down from six rows to one.
 
 ---
 
@@ -21,9 +21,9 @@ Last full sweep: 2026-07-29.
 | Staggered child reveal (60ms) | `Reveal.tsx` → `RevealStagger` | Parent/child variants. |
 | Scroll progress bar | `landing/ScrollProgress.tsx` | Goal-gradient: visible advancement raises task persistence. |
 | Scroll-depth analytics | `pages/Landing.tsx` | Fires at 25/50/75/100%. The measurement substrate everything else is judged on. |
-| Scroll-triggered sticky CTA | `landing/StickyMobileCTA.tsx` | Appears past 0.3vh, hides near page bottom. **Mobile only** — see Open. |
+| Scroll-triggered sticky CTA | `landing/StickyMobileCTA.tsx` | Appears past 0.3vh, hides near page bottom. Mobile only by design — desktop's persistent CTA is the fixed header (see Settled). |
 | Mid-page CTA re-surfacing | `landing/MidPageCTA.tsx` | Catches the already-convinced before the page bottom. |
-| Pinned scrub scrollytelling | `pages/About.tsx` + `about/NoiseToCoherence.tsx` | `position: sticky` container, `--p` written per frame via rAF, GPU transforms only. **Not on the landing page.** |
+| Pinned scrub scrollytelling | `pages/About.tsx` + `about/NoiseToCoherence.tsx` | `position: sticky` container, `--p` written per frame via rAF, GPU transforms only. Kept off the landing page on purpose (see Settled). |
 | Dwell-phase copy escalation | `lib/useDwellState.ts`, `lib/dwellCopy.ts` | Time-on-page, not scroll. Deliberately removed from the hero. |
 | Dark/light band rhythm | `pages/Landing.tsx` | Section alternation as scroll structure. |
 | One-shot entrance sequence | `landing/Hero.tsx` + `.cor-settle` | Noise → coherence, 1.22s, terminates. |
@@ -46,11 +46,7 @@ Ranked by expected conversion effect over implementation cost.
 
 | # | Layer | Status | Evidence / next step |
 |---|---|---|---|
-| 1 | Scroll-direction awareness | Not implemented | Re-surface the CTA on upward scroll (the mobile analogue of exit intent, where no cursor exists to track). Needs a velocity/direction hook; risk of feeling twitchy — prototype before committing. |
-| 2 | Native CSS scroll-driven animation (`animation-timeline: view()`) | Not implemented | Technique, not narrative: would move `Reveal` and `ScrollProgress` off JS scroll listeners onto the compositor. Check Safari support and the framer-motion interaction before touching. |
-| 3 | Count-up on the spec numbers entering view | Not implemented | Cheap, but reads as marketing animation and the hero was just moved to an institutional register. Likely **reject** — record the reasoning rather than leaving it unexamined. |
-| 4 | Section read-progress / time remaining | Not implemented | Weak fit: the page is a pitch, not an article. Probably reject. |
-| 5 | Pinned scrub on the landing page | Not implemented | The mechanism exists on `/about`. Would suit `ProcessPreviewSection` (the 4-session arc). Weigh against LCP and scroll cost on a conversion page. |
+| 1 | `animation-timeline: view()` for `Reveal` | Deferred, not rejected | `ScrollProgress` is done (see Settled). `Reveal` is the other candidate — 12 sections, framer-motion `whileInView`. Unlike the progress bar it needs a real fallback path for the ~16% without support, and framer-motion owns the element's `transform`, so the two would fight. Wants a spike, not a patch. |
 
 ---
 
@@ -58,6 +54,11 @@ Ranked by expected conversion effect over implementation cost.
 
 | Layer | Decision | Evidence |
 |---|---|---|
+| Native scroll-driven `ScrollProgress` | **Implemented** | The bar set React state on every scroll event and animated `width`. Measured over one scripted 6000px scroll: **141 scroll events → 141 renders → 141 inline `width` writes**, each forcing layout. Rewritten to `transform: scaleX()` (compositor-only, `transform-origin: right` for RTL) driven by `animation-timeline: scroll(root block)` under `@supports`, with a rAF-coalesced ref write as fallback — neither path touches React state. Re-measured: **0 style writes**, and `scaleX` equals `scrollY / max` exactly at top, middle and bottom. Caught in testing: the global reduced-motion rule clamps `animation-duration` to 0.01ms, which on a scroll timeline pegs the bar at 100% so the indicator silently lies; restoring `animation-duration: auto` under that query fixes it, verified separately with `reducedMotion: 'reduce'`. |
+| Scroll-direction awareness | **Rejected — no gap to close** | The proposal was to re-surface the CTA on upward scroll. There is no scroll position on either breakpoint where a CTA is absent (0/15 desktop, 0/22 mobile samples), so there is nothing to re-surface. The other form of the pattern — hiding the header on scroll-down, revealing on scroll-up — would remove the only persistent desktop CTA to solve a problem the site does not have, and NN/g's finding on scroll-coupled movement argues against making chrome move in response to scroll direction. |
+| Count-up on the spec numbers | **Rejected — contradicts the register just chosen** | A number that animates on entry reads as marketing, and the hero was deliberately moved to an institutional register two commits earlier (third person, no urgency, no self-rewriting copy). The numbers are already the loudest element in the section at 20–24px inside a bordered grid; counting them up would argue for attention they have already won. The spec grid also *already* has an entrance (staggered `cor-settle`, 340–580ms) — a count-up would be a second animation on the same element. |
+| Section read-progress / time remaining | **Rejected — wrong genre** | Read-progress affordances pay off on long-form articles, where the reader is deciding whether to invest in finishing. This is a pitch page terminating in a form: the useful signal is proximity to the CTA, which the global progress bar already carries. A per-section indicator would add furniture on a page already 11.9 viewports deep on desktop and 17.4 on mobile. |
+| Pinned scrub on the landing page | **Rejected for this page — kept on `/about`** | The mechanism exists and works (`about-scene`), and `ProcessPreviewSection`'s four-session arc is the natural candidate. But pinning converts a section a visitor can skim in one screen into several screens of forced scrolling, on a page that is already 11.9 viewports on desktop and 17.4 on mobile. On an editorial page that trade buys comprehension; on a conversion page it buys distance between the visitor and the form. `/about` is where the technique earns its cost. Revisit only if scroll-depth analytics show visitors stalling at that section rather than passing through it. |
 | Persistent CTA on desktop | **Rejected — the premise was false** | First pass claimed desktop had a 4,155px (4.6-viewport) stretch with no CTA, between the hero at y=499 and the mid-page CTA at y=4,654. That measurement queried `main` only, and so missed `SiteHeader` — which is `fixed inset-x-0 top-0 z-40` and carries a "בוא נדבר" `Link` to `/#diagnostic-form` (`trackCtaClick("header_diagnostic")`), on screen at every scroll position. Re-measured by sampling every 0.75 viewport with the consent banner dismissed and counting *any* visible form-routing control: **0 of 15 desktop samples and 0 of 22 mobile samples had no CTA in view.** Desktop already has a persistent CTA; `md:hidden` on `StickyMobileCTA` is deliberate, not an omission. Residual question below. |
 
 ---

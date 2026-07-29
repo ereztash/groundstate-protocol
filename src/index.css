@@ -511,6 +511,44 @@
   color: hsl(var(--foreground) / 0.65);
 }
 
+/* Scroll progress bar. `scaleX` rather than `width`: width forces layout on
+   every frame, a transform is compositor-only. `transform-origin: right` makes
+   it grow from the right, matching the document's RTL direction.
+
+   Where the browser supports scroll-driven animations — all three engines as
+   of 2026, ~84% of users — the bar is driven straight off the scroll timeline
+   with no JS at all, and ScrollProgress's effect bails out. Everyone else gets
+   the rAF fallback in that component. */
+@keyframes cor-scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.cor-scroll-progress {
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+@supports (animation-timeline: scroll()) {
+  .cor-scroll-progress {
+    animation: cor-scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* The global reduced-motion rule clamps animation-duration to 0.01ms.
+       On a scroll timeline that is not a shortened animation, it pegs the bar
+       at 100% and the indicator silently lies. This bar tracks scroll position
+       rather than moving of its own accord, so there is nothing to suppress —
+       hand it back its auto duration. */
+    .cor-scroll-progress {
+      animation-duration: auto !important;
+    }
+  }
+}
+
 /* Hero entrance — the About page's noise → coherence motif (.about-shard),
    played once instead of scrubbed by scroll. Each element arrives fractionally
    out of true (offset, a degree of tilt, transparent) and resolves into the
