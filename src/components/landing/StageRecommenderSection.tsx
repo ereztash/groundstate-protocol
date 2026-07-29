@@ -464,11 +464,17 @@ const StageRecommenderSection = () => {
               <p id="recommender-overline" className="cor-overline-he">
                 בדיקת התאמה
               </p>
+              {/* "צומת" runs through all seven result texts below as a
+                  consistent metaphor, so it stays — but it used to appear
+                  first in the heading, asking the visitor to already know what
+                  a junction is. The heading now uses the vocabulary the page
+                  defines (שלבים), and the intro introduces the metaphor once,
+                  with its meaning attached. */}
               <h2 className="cor-title text-foreground">
-                איפה אתה בארבעת הצמתים?
+                איפה אתה בארבעת השלבים?
               </h2>
               <p className="cor-body-lg text-foreground/80">
-                5 שאלות, דקה. שאלה אחת פתוחה ו-4 בחירה. בסוף — לא ״מה לקנות״; אקרא איפה אתה ואגיד מה הצומת הראשון לפתוח.
+                5 שאלות, דקה. שאלה אחת פתוחה ו-4 בחירה. בסוף — לא ״מה לקנות״; אקרא איפה אתה ואגיד מאיזה שלב להתחיל: הצומת שפתיחתו משחררת את השאר.
               </p>
               <button
                 type="button"
@@ -501,7 +507,7 @@ const StageRecommenderSection = () => {
                 value={openText}
                 onChange={(e) => setOpenText(e.target.value.slice(0, 280))}
                 placeholder="לדוגמה: ״הסיפור שלי נשמע כמו של כל יועץ אחר, ואני לא יודע איך לחדד אותו…״"
-                className="block w-full rounded-md border border-border bg-card px-4 py-3 text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                className="block w-full rounded-md border border-border bg-card px-4 py-3 text-base leading-relaxed md:text-[15px] text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 rows={4}
                 maxLength={280}
                 dir="auto"
@@ -584,7 +590,7 @@ const StageRecommenderSection = () => {
                     </p>
                   )}
 
-                  <p className="text-[13px] leading-snug text-primary/85">
+                  <p className="text-sm leading-snug text-primary/85">
                     {currentQuestion.anticipation}
                   </p>
 

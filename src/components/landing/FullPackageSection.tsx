@@ -1,19 +1,11 @@
 import { Reveal } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
-import { useMagnetic } from "@/lib/useMagnetic";
 import { Footnote } from "./Footnote";
 import { fullPackage } from "@/lib/stages";
-import SpotsLeft from "./SpotsLeft";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
-  const magneticRef = useMagnetic<HTMLDivElement>({
-    radius: 100,
-    strength: 0.2,
-    name: "full_package",
-  });
-
   const handleClick = () => {
     trackCtaClick("full_package");
     requestStage("full-package");
@@ -59,7 +51,10 @@ const FullPackageSection = () => {
             </p>
           </div>
 
-          <div ref={magneticRef} className="mt-8 inline-block">
+          {/* The cursor-chasing wrapper came out of the hero when the page
+              moved to an institutional register; leaving it on the most
+              expensive CTA on the page was the inconsistency, not the fix. */}
+          <div className="mt-8 inline-block">
             <button
               type="button"
               onClick={handleClick}
@@ -68,8 +63,6 @@ const FullPackageSection = () => {
               {fullPackage.ctaLabel}
             </button>
           </div>
-
-          <SpotsLeft className="mt-6 text-xs text-muted-foreground" />
         </Reveal>
       </div>
     </section>

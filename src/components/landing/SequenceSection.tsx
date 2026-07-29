@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
+import CoherenceVectors from "./CoherenceVectors";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
 import { stages, type Stage } from "@/lib/stages";
@@ -6,6 +8,10 @@ import Guarantee from "./Guarantee";
 
 const SequenceSection = () => {
   const { requestStage } = useDiagnosticForm();
+  // Which stage the reader is pointing at, so the matching vector in the
+  // diagram lights up. Set on hover and on keyboard focus, so it works without
+  // a pointer — the cards already take focus for their CTA.
+  const [activeStage, setActiveStage] = useState<string | null>(null);
 
   const handleClick = (stage: Stage) => {
     trackCtaClick(`sequence_${stage.value}`);
@@ -39,6 +45,13 @@ const SequenceSection = () => {
           <Guarantee className="mt-6" />
         </Reveal>
 
+        {/* The four vectors the brief names — identity, value, product, sale —
+            resolving into one direction. Decorative: every stage's meaning is
+            in the cards below. */}
+        <Reveal className="mx-auto mt-10 max-w-lg">
+          <CoherenceVectors activeStage={activeStage} className="w-full" />
+        </Reveal>
+
         <RevealStagger
           className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
           as="ol"
@@ -49,6 +62,13 @@ const SequenceSection = () => {
               as="li"
               className="group flex flex-col"
             >
+              <div
+                className="flex flex-1 flex-col"
+                onMouseEnter={() => setActiveStage(s.value)}
+                onMouseLeave={() => setActiveStage(null)}
+                onFocusCapture={() => setActiveStage(s.value)}
+                onBlurCapture={() => setActiveStage(null)}
+              >
               <div className="border-t border-foreground pb-2 pt-4">
                 <span className="stage-numeral block">{s.number}</span>
               </div>
@@ -87,6 +107,7 @@ const SequenceSection = () => {
               >
                 {s.ctaLabel}
               </button>
+              </div>
             </RevealItem>
           ))}
         </RevealStagger>

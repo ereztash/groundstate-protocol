@@ -64,13 +64,12 @@ test.describe("Landing page (production bundle)", () => {
     ).toEqual([]);
   });
 
-  test("hero CTA renders with one of the dwell-phase copies", async ({
+  test("hero CTA renders", async ({
     page,
   }) => {
     await page.goto("/");
-    // Use a flexible matcher — the copy varies by dwell state
-    const cta = page.locator("#hero button", { hasText: /20 דקות|בוא נדבר|שמחתי/ });
-    await expect(cta.first()).toBeVisible({ timeout: 10_000 });
+    const cta = page.locator("#hero button").first();
+    await expect(cta).toContainText("לתיאום שיחת אבחון");
   });
 
   test("page title is the Hebrew brand title", async ({ page }) => {

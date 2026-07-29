@@ -15,9 +15,14 @@ import { stages } from "@/lib/stages";
 
 type DocSample = {
   docLabel: string;
-  /** The kept artifact the client also walks away with. Signals the
-      psycho-social depth behind the stage, not just a consulting note. */
-  secondaryDoc: string;
+  /**
+   * The companion artefact the client also walks away with. Optional on
+   * purpose: only the two that stages.ts actually defines are named here.
+   * Stages 1 and 3 previously advertised "מפת אנרגיה" and "מפת הקיפול",
+   * which appear nowhere else on the site and in no brief — a coined term
+   * with nothing behind it costs more trust than the extra deliverable buys.
+   */
+  secondaryDoc?: string;
   highlight: string;
   lineCount: number;
 };
@@ -25,7 +30,6 @@ type DocSample = {
 const samples: Record<string, DocSample> = {
   "stage-1": {
     docLabel: "מסמך נרטיב",
-    secondaryDoc: "מפת אנרגיה",
     highlight: "אני עוזר ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
     lineCount: 8,
   },
@@ -37,7 +41,6 @@ const samples: Record<string, DocSample> = {
   },
   "stage-3": {
     docLabel: "תיאור מוצר",
-    secondaryDoc: "מפת הקיפול",
     highlight: "מסלול 4 פגישות / 30 יום. נכס שעובד גם בעוד שנה.",
     lineCount: 9,
   },
@@ -60,14 +63,18 @@ const DeliverablesPreview = () => {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-2xl">
           <p className="cor-overline-he">תוצר ביד — דוגמה</p>
+          {/* Was "זה מה שמקבלים. לא הבטחה." — directly contradicted by the two
+              disclaimers below it, which state that nothing shown is a real
+              client artefact. The claim and the caveat cancelled each other.
+              This says what the section actually does: shows the shape. */}
           <h2
             id="deliverables-title"
             className="cor-title mt-2 text-foreground"
           >
-            זה מה שמקבלים. לא הבטחה.
+            ככה נראה התוצר שנשאר אצלך.
           </h2>
           <p className="cor-body-lg mt-4 text-foreground/80">
-            כל שלב מסתיים במסמך, וגם בתוצר נלווה שאתה לוקח הביתה: מפה של מה שראינו יחד בתהליך. אפשר לפתוח את שניהם שוב מחר, בעוד חודש, או להעביר ליועץ אחר כדי לבחון. ככה זה נראה.
+            כל שלב מסתיים במסמך שאתה לוקח הביתה. אפשר לפתוח אותו שוב מחר, בעוד חודש, או להעביר ליועץ אחר כדי לבחון.
           </p>
           <p className="mt-3 text-sm font-medium text-muted-foreground">
             הכרטיסים למטה הם דוגמאות להמחשה בלבד — לא תוצרים אמיתיים של לקוחות.
@@ -91,10 +98,10 @@ const DeliverablesPreview = () => {
                   {/* Document header: label + stage numeral */}
                   <header className="flex items-baseline justify-between border-b border-border/70 pb-3">
                     <span className="flex items-center gap-2">
-                      <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                      <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
                         {sample.docLabel}
                       </span>
-                      <span className="rounded-full bg-foreground/[0.06] px-1.5 py-0.5 text-[9px] font-semibold tracking-wide text-muted-foreground">
+                      <span className="rounded-full bg-foreground/[0.06] px-1.5 py-0.5 text-[11px] font-semibold tracking-wide text-muted-foreground">
                         דוגמה
                       </span>
                     </span>
@@ -111,16 +118,18 @@ const DeliverablesPreview = () => {
                       illustrative. */}
                   <p
                     dir="rtl"
-                    className="mt-4 text-[12px] font-semibold leading-snug text-primary/90"
+                    className="mt-4 text-xs font-semibold leading-snug text-primary/90"
                   >
                     ״{sample.highlight}״
                   </p>
 
                   {/* Kept artifact: the second deliverable that signals
                       psycho-social depth, not just a consulting note. */}
-                  <p className="mt-3 inline-flex items-center gap-1 self-start rounded-full border border-accent/30 bg-accent/5 px-2.5 py-1 text-[10px] font-semibold text-accent">
-                    + {sample.secondaryDoc}
-                  </p>
+                  {sample.secondaryDoc && (
+                    <p className="mt-3 inline-flex items-center gap-1 self-start rounded-full border border-accent/30 bg-accent/5 px-2.5 py-1 text-[11px] font-semibold text-accent">
+                      + {sample.secondaryDoc}
+                    </p>
+                  )}
 
                   {/* Stylized body lines (visual placeholder for the
                       rest of the document body — not real content). */}

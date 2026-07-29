@@ -16,7 +16,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Reveal } from "./Reveal";
-import Guarantee from "./Guarantee";
 import SpotsLeft from "./SpotsLeft";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 // Lazy: react-calendly is ~40KB and only needed AFTER the form is submitted.
@@ -206,7 +205,7 @@ const DiagnosticFormSection = () => {
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                בוא לדעת איפה אתה תקוע — 20 דקות, בחינם
+                שיחת אבחון — 20 דקות, ללא עלות
               </h2>
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
@@ -230,8 +229,6 @@ const DiagnosticFormSection = () => {
                   <span>תקבל פרשנות אחת על התקיעה שלך — גם אם לא נמשיך ביחד.</span>
                 </li>
               </ul>
-
-              <Guarantee className="mt-4" />
 
               <div className="flex items-center gap-2 pt-3">
                 <span
