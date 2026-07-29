@@ -30,8 +30,14 @@ const OriginStorySection = () => {
             </p>
           </div>
 
+          {/* The previous version opened with an unattributed million-shekel
+              revenue claim. ClientProofSection tells the visitor every piece of
+              proof here is "ניתנות לאימות", and that figure carried no company,
+              year or link — the largest number on the page was the one nobody
+              could check. Removed rather than dressed up: there is no evidence
+              available for it. */}
           <p className="border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
-            תיעדתי בעבר גידול של מיליון שקל בהכנסות בהקשר קמעונאי דרך התערבות התנהגותית. את הרצף הזה לעצמאים בניתי השנה.
+            את הרצף הזה לעצמאים בניתי השנה.
           </p>
         </Reveal>
       </div>

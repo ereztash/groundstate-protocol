@@ -68,7 +68,7 @@ const Hero = () => {
             {/* Programme label. Institutional register: names the offering
                 rather than addressing the reader. */}
             <p
-              className="cor-settle text-[11.5px] font-semibold uppercase tracking-[0.18em] text-primary/85"
+              className="cor-settle text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85"
               style={settleStyle(SETTLE.eyebrow)}
             >
               COR-SYS · תוכנית ליווי לעצמאים
@@ -188,7 +188,7 @@ const Hero = () => {
               </div>
               <figcaption className="mt-5 border-t border-border pt-3 text-center text-sm text-foreground/75 md:text-start">
                 <span className="font-semibold text-foreground">ארז טל-שיר</span>
-                <span className="block text-[13px] text-muted-foreground">
+                <span className="block text-sm text-muted-foreground">
                   מייסד COR-SYS
                 </span>
               </figcaption>
