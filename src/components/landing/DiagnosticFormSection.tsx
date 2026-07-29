@@ -88,6 +88,7 @@ const DiagnosticFormSection = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  const attemptRef = useRef(0);
   // Honeypot: read at submit time (see payload below). Lives outside the
   // step forms so its value survives the step 1 → step 2 transition.
   const honeypotRef = useRef<HTMLInputElement>(null);
@@ -133,6 +134,10 @@ const DiagnosticFormSection = () => {
     if (isSending) return;
     setIsSending(true);
     setServerError(null);
+    // Retries are the signal that separates a transient blip from an endpoint
+    // that is simply down: one failure is noise, the same visitor failing
+    // three times is not.
+    attemptRef.current += 1;
     const timeIds = two.preferredTimes || [];
     const timeLabels = timeIds
       .map((id) => timeWindows.find((t) => t.id === id)?.label)
@@ -155,6 +160,14 @@ const DiagnosticFormSection = () => {
         setSubmitted(true);
         return;
       }
+      // A failed submission is the one event nobody is present to notice. The
+      // visitor sees the message and leaves; without this the funnel just
+      // shows step 2 completing and no submit, with no way to tell a drop-off
+      // from an endpoint that has stopped accepting posts.
+      trackEvent("form_submit_failed", {
+        reason: result.reason ?? "unknown",
+        attempt: attemptRef.current,
+      });
       setServerError(result.message);
     } finally {
       setIsSending(false);
