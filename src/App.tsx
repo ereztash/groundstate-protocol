@@ -1,8 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -18,8 +15,6 @@ const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const About = lazy(() => import("./pages/About"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-const queryClient = new QueryClient();
 
 /**
  * Reset scroll to the top on client-side navigation. Without this, following a
@@ -57,34 +52,30 @@ const routerBasename = new URL(moduleParentPath, import.meta.url).pathname;
 
 const App = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        {/* basename is derived from the bundle URL (see routerBasename above),
-            so routes resolve correctly whether the app is served from "/" or a
-            subpath like /groundstate-protocol/ on GitHub Pages. */}
-        <BrowserRouter basename={routerBasename}>
-          <ScrollToTop />
-          <Suspense fallback={null}>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/protocol" element={<Methodology />} />
-              <Route path="/insights" element={<InsightsIndex />} />
-              <Route path="/insights/:slug" element={<InsightArticle />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/privacy" element={<Privacy />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          {/* Privacy-by-default consent gate. Lives inside BrowserRouter
-              because it links to /privacy. Shows once (until a choice is
-              stored), then inits analytics + Clarity only on accept. */}
-          <ConsentBanner />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <TooltipProvider>
+      {/* basename is derived from the bundle URL (see routerBasename above),
+          so routes resolve correctly whether the app is served from "/" or a
+          subpath like /groundstate-protocol/ on GitHub Pages. */}
+      <BrowserRouter basename={routerBasename}>
+        <ScrollToTop />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/protocol" element={<Methodology />} />
+            <Route path="/insights" element={<InsightsIndex />} />
+            <Route path="/insights/:slug" element={<InsightArticle />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/privacy" element={<Privacy />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        {/* Privacy-by-default consent gate. Lives inside BrowserRouter
+            because it links to /privacy. Shows once (until a choice is
+            stored), then inits analytics + Clarity only on accept. */}
+        <ConsentBanner />
+      </BrowserRouter>
+    </TooltipProvider>
   </ErrorBoundary>
 );
 

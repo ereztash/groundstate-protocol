@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
-import StageRecommenderSection from "@/components/landing/StageRecommenderSection";
 import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
 import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
@@ -18,6 +17,14 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
 import { trackScrollDepth } from "@/lib/analytics";
+
+// The stage recommender is the only thing on this page still using
+// framer-motion (AnimatePresence over a multi-step quiz). Splitting it out
+// keeps that runtime out of the first paint — it sits roughly six viewports
+// down, so it loads long before a visitor reaches it.
+const StageRecommenderSection = lazy(
+  () => import("@/components/landing/StageRecommenderSection"),
+);
 
 const Landing = () => {
   const reachedRef = useRef<Set<number>>(new Set());
@@ -93,7 +100,11 @@ const Landing = () => {
           <div className="dark bg-background text-foreground">
             <MidPageCTA />
           </div>
-          <StageRecommenderSection />
+          {/* min-height reserves the section's box so the lazy chunk arriving
+              cannot shift the sections below it. */}
+          <Suspense fallback={<div className="min-h-[468px]" />}>
+            <StageRecommenderSection />
+          </Suspense>
           {/* Value before price: the tangible deliverables run before the price
               ladder (the lifetime-ROI line is folded into SequenceSection's
               intro), so the numbers land on top of value already built. The two
