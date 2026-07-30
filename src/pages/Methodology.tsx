@@ -26,6 +26,24 @@ const EXIT_CRITERIA: Record<string, string> = {
   "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה — תלוי בכך שיצאה מהיד.",
 };
 
+// What goes into each stage — always the previous stage's output, which is
+// the "כל שלב בונה את הבא" principle below made concrete and checkable.
+const INPUTS: Record<string, string> = {
+  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלך — לא צריך לייצר חומר חדש.",
+  "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעת עד היום.",
+  "03": "הצעת הערך ומילון הכאב משלב 2.",
+  "04": "תיאור המוצר עם התמחור משלב 3.",
+};
+
+// Compact per-stage transformation, rendered right-to-left with left-pointing
+// arrows — forward is leftward in RTL, same convention CoherenceVisual uses.
+const TRANSFORMATIONS: Record<string, string> = {
+  "01": "חמישה סיפורים מקצועיים ← תבנית חוזרת ← משפט ייעוד",
+  "02": "תגובות לקוחות ← מילון כאב ← הצעת ערך",
+  "03": "הצעת ערך ← מבנה מוצר ← תיאור עם תמחור",
+  "04": "תיאור מוצר ← מיפוי מקבלי החלטות ← 10 פניות מתועדות",
+};
+
 const PRINCIPLES = [
   {
     title: "בעלות מרוויחים, לא מקבלים",
@@ -136,7 +154,11 @@ const Methodology = () => {
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <StageStepper exitCriteria={EXIT_CRITERIA} />
+              <StageStepper
+                exitCriteria={EXIT_CRITERIA}
+                inputs={INPUTS}
+                transformations={TRANSFORMATIONS}
+              />
             </Reveal>
           </div>
         </section>
