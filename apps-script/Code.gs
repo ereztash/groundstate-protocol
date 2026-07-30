@@ -20,6 +20,14 @@
  *     number of remaining spots. The site reads B1 live via ?action=spots.
  *   - If the Config tab or B1 is missing/blank, the site falls back to its
  *     static "up to 10 clients a month" line, so nothing breaks.
+ *   - Cell B2 holds a freshness stamp, written automatically when B1 changes.
+ *     The site shows a number only while that stamp is recent; past the window
+ *     it shows the static line instead, so an unmaintained cell can never turn
+ *     into a false scarcity claim.
+ *   - When the count has NOT changed but is still accurate, refresh the stamp
+ *     from the "COR-SYS → אישור מספר המקומות" menu. Re-typing the same value
+ *     into B1 does nothing: Sheets fires no edit event when the committed value
+ *     is unchanged.
  *
  * To redeploy after editing: Deploy → Manage deployments → edit the existing
  * deployment and pick "New version" (otherwise the old code keeps serving).
@@ -121,11 +129,26 @@ function getSpotsUpdatedAt() {
   return null;
 }
 
+/** Writes the freshness stamp. Shared by the edit trigger and the menu. */
+function stampSpotsCount() {
+  var config = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG_SHEET);
+  if (!config) return null;
+  var now = new Date();
+  config.getRange(SPOTS_STAMP_CELL).setValue(now);
+  return now;
+}
+
 /**
  * Simple trigger: stamps SPOTS_STAMP_CELL whenever the spots count (B1) is
  * edited by hand, so freshness is tracked without the operator having to
- * remember a second cell. Simple triggers need no installation — but they only
- * fire on manual edits, which is exactly the case that matters here.
+ * remember a second cell. Simple triggers need no installation.
+ *
+ * Covers the common case — the number actually changing as spots fill. It does
+ * NOT cover re-entering the same value: Sheets fires no edit event when the
+ * committed value is identical to what was already there. That is what the
+ * custom menu below is for; without it the only way to refresh the stamp on an
+ * unchanged count was to change B1 and change it back, which briefly published
+ * a wrong number to the live site.
  */
 function onEdit(e) {
   try {
@@ -133,10 +156,43 @@ function onEdit(e) {
     var sheet = e.range.getSheet();
     if (sheet.getName() !== CONFIG_SHEET) return;
     if (e.range.getA1Notation() !== "B1") return;
-    sheet.getRange(SPOTS_STAMP_CELL).setValue(new Date());
+    stampSpotsCount();
   } catch (err) {
     console.error("onEdit stamp failed: " + err);
   }
+}
+
+/**
+ * Adds a COR-SYS menu on open. Simple trigger, no installation needed.
+ */
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("COR-SYS")
+    .addItem("אישור מספר המקומות (רענון חותמת)", "confirmSpotsCount")
+    .addToUi();
+}
+
+/**
+ * Menu action: confirms the current spots count is still accurate today,
+ * without touching the number itself. Use this when the count has not changed
+ * but is still correct — otherwise it goes stale after
+ * SPOTS_STALE_AFTER_DAYS (see src/lib/spots.ts) and the site falls back to the
+ * static availability line.
+ */
+function confirmSpotsCount() {
+  var ui = SpreadsheetApp.getUi();
+  var stamped = stampSpotsCount();
+  if (!stamped) {
+    ui.alert('לא נמצאה לשונית "' + CONFIG_SHEET + '" — החותמת לא עודכנה.');
+    return;
+  }
+  ui.alert(
+    "מספר המקומות אושר.\n\n" +
+      "נותרו: " + getSpotsLeft() + "\n" +
+      "אושר ב: " + Utilities.formatDate(
+        stamped, Session.getScriptTimeZone(), "dd/MM/yyyy HH:mm") + "\n\n" +
+      "האתר יציג את המספר כל עוד האישור טרי."
+  );
 }
 
 /**
