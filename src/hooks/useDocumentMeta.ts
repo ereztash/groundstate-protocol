@@ -27,6 +27,13 @@ export type DocumentMeta = {
   path?: string;
   ogTitle?: string;
   ogDescription?: string;
+  /**
+   * Robots directive, e.g. "noindex,nofollow". Set on internal tools that are
+   * reachable by URL but are not part of the public site. Note this is the
+   * runtime layer only: a route that must stay out of the index also has to be
+   * left out of the prerender route list, since that is what a crawler reads.
+   */
+  robots?: string;
 };
 
 type Restore = () => void;
@@ -79,6 +86,7 @@ export function useDocumentMeta({
   path,
   ogTitle,
   ogDescription,
+  robots,
 }: DocumentMeta): void {
   useEffect(() => {
     const restores: Restore[] = [];
@@ -90,6 +98,10 @@ export function useDocumentMeta({
     });
 
     restores.push(upsertMeta("property", "og:title", ogTitle ?? title));
+
+    if (robots) {
+      restores.push(upsertMeta("name", "robots", robots));
+    }
 
     if (description) {
       restores.push(upsertMeta("name", "description", description));
@@ -112,5 +124,5 @@ export function useDocumentMeta({
       // Restore in reverse so nested edits unwind cleanly.
       for (const restore of restores.reverse()) restore();
     };
-  }, [title, description, path, ogTitle, ogDescription]);
+  }, [title, description, path, ogTitle, ogDescription, robots]);
 }

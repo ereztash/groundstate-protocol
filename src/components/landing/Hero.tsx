@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { Footnote } from "./Footnote";
+import EvidenceTag from "@/components/EvidenceTag";
 
 // Portrait lives under public/ so index.html can preload it before the JS
 // bundle even parses. Cuts ~500ms off mobile LCP. The literal path uses
@@ -144,22 +145,29 @@ const Hero = () => {
                 במפורש.
               </p>
 
-              {/* Recorded outcome, cited rather than announced. Sits below the
-                  CTA: it is corroboration, not a precondition for acting, and
-                  above it the button drops off a 667px viewport. */}
-              <p className="mt-6 border-s-2 border-primary/40 ps-4 text-sm leading-relaxed text-foreground/80">
-                תוצאה מתועדת ראשונה:{" "}
-                <span className="font-semibold text-foreground">
-                  עסקה של ₪5,500
-                </span>{" "}
-                נסגרה בתוך החודש הראשון לתוכנית.{" "}
-                <Footnote
-                  number={1}
-                  tip="רשימת הפנייה נבנית מול Decision Makers שמזוהים בשיחת ההתאמה הראשונה — לא רשימה גנרית, אלא בחירה מבוססת ניתוח."
-                >
-                  כיצד נבנית רשימת הפנייה
-                </Footnote>
-              </p>
+              {/* Corroboration, not a precondition for acting, so it sits below
+                  the CTA. "תוצאה מתועדת" used to open this line, which claimed
+                  ledger-level backing for a figure that is operator-reported and
+                  not cross-checked. The tag now states the level instead of the
+                  copy implying a stronger one. */}
+              <div className="mt-6 border-s-2 border-primary/40 ps-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-sm font-semibold text-foreground">
+                    ₪5,500
+                  </span>
+                  <EvidenceTag level="operator" />
+                  <span className="text-sm text-foreground/70">n=1</span>
+                </div>
+                <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">
+                  הכנסה שנרשמה אצל לקוח אחד, בתוך החודש הראשון לתוכנית.{" "}
+                  <Footnote
+                    number={1}
+                    tip="רשימת הפנייה נבנית מול Decision Makers שמזוהים בשיחת ההתאמה הראשונה, ולא רשימה גנרית."
+                  >
+                    כיצד נבנית רשימת הפנייה
+                  </Footnote>
+                </p>
+              </div>
             </div>
           </div>
 

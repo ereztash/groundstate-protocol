@@ -1,27 +1,39 @@
+import EvidenceTag from "@/components/EvidenceTag";
+import type { EvidenceLevel } from "@/lib/evidence";
+
 /**
- * Quantified proof band. High-ticket, trust-based purchases convert on
- * undeniable numbers (Spiegel: aggregate proof lift grows with price/risk).
+ * Quantified proof band.
  *
- * Every figure here is graph-verified and marketing-safe:
- * - the value:fee ratio is the ×5–7.5 across the four clients with a closed,
- *   measured value_realized (framed honestly as "clients who completed the
- *   sprint");
- * - the ₪5,500 deal is already public on the landing.
- * Deliberately excluded: the "~10% of 86 meetings" figure the graph forbids in
- * marketing until there's a conversion log, and any client name.
+ * Each figure carries its own evidence level, because the two here are not the
+ * same kind of number: the ratio is measured across a handful of completed
+ * sprints, the revenue figure is a single case reported by the operator and not
+ * cross-checked. Presenting them at equal strength was the defect.
+ *
+ * Both labels state their n. A figure whose n lives in a code comment is a
+ * figure the reader cannot weigh, and the closing line of this component commits
+ * the site to the opposite of that.
+ *
+ * Deliberately excluded: the "~10% of 86 meetings" figure, which stays out of
+ * marketing until a conversion log exists, and any client name.
  */
 
-const STATS: { value: string; label: string }[] = [
+type Stat = {
+  value: string;
+  label: string;
+  level: EvidenceLevel;
+};
+
+const STATS: Stat[] = [
   {
     value: "×5–7.5",
-    // n stated explicitly. This file's own closing line commits to "מעט
-    // ומאומת", and a range with no n doesn't meet that standard — while
-    // ClientProofSection already discloses its n ("22 פגישות בוצעו עד כה").
-    label: "הערך שנפתח ביחס למחיר — אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד",
+    label: "הערך שנפתח ביחס למחיר, אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד. n=4",
+    level: "operator",
   },
   {
     value: "₪5,500",
-    label: "עסקה ראשונה שנסגרה אחרי שלב 4, מתוך 10 הפניות שיצאו בליווי",
+    label:
+      "הכנסה שנרשמה אצל לקוח אחד, אחרי שלב 4, מתוך 10 הפניות שיצאו בליווי. n=1",
+    level: "operator",
   },
 ];
 
@@ -35,8 +47,11 @@ const QuantifiedProof = ({ className }: { className?: string }) => {
             key={s.value}
             className="rounded-xl border border-border bg-card p-6"
           >
-            <dt className="text-3xl font-bold tracking-tight text-accent md:text-4xl">
-              {s.value}
+            <dt className="flex items-baseline justify-between gap-3">
+              <span className="text-3xl font-bold tracking-tight text-accent md:text-4xl">
+                {s.value}
+              </span>
+              <EvidenceTag level={s.level} />
             </dt>
             <dd className="mt-2 text-sm leading-relaxed text-foreground/80">
               {s.label}
@@ -45,8 +60,8 @@ const QuantifiedProof = ({ className }: { className?: string }) => {
         ))}
       </dl>
       <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-        מבוסס על הלקוחות שהשלימו את הרצף עם ערך מדיד. אני מעדיף לספר מעט ומאומת,
-        מאשר הרבה ולא בדוק.
+        שני המספרים הם דיווח שלי, ולא הוצלבו מול מקור שני. אני מעדיף לספר מעט
+        ומסויג, מאשר הרבה ולא בדוק.
       </p>
     </div>
   );

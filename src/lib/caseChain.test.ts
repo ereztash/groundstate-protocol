@@ -67,6 +67,27 @@ describe("parseCaseRecord", () => {
   });
 });
 
+describe("counter-case support", () => {
+  it("accepts a case that did not convert, carrying its pre-registered rule", () => {
+    // Publishing a case that did not convert, next to the rule written before
+    // the outcome was known, is the capability this shape exists for.
+    const counter = parseCaseRecord({
+      ...valid,
+      id: "COUNTER",
+      outcome: "not_converted",
+      pre_registered_rule: "אם אין פרקטיקה פעילה, לא מתחילים.",
+    });
+    expect(counter?.outcome).toBe("not_converted");
+    expect(counter?.pre_registered_rule).toBe(
+      "אם אין פרקטיקה פעילה, לא מתחילים."
+    );
+  });
+
+  it("rejects a non-string pre-registered rule", () => {
+    expect(parseCaseRecord({ ...valid, pre_registered_rule: 7 })).toBeNull();
+  });
+});
+
 describe("isPublishable", () => {
   it("requires both gates", () => {
     const rec = parseCaseRecord(valid)!;

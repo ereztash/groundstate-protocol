@@ -24,11 +24,16 @@ const ClientProofSection = () => {
             <p className="cor-overline-he">
               עדויות
             </p>
+            {/* Was "חודש אחד. תהליך מובנה. עסקה של ₪5,500." A headline that put
+                the process next to a revenue figure, with no n and no source, so
+                it read as a causal claim the evidence does not carry. The figure
+                still appears, framed, in the hero and on /protocol. This heading
+                now says what the section actually holds. */}
             <h2
               id="client-proof-title"
               className="cor-title mt-2 text-foreground"
             >
-              חודש אחד. תהליך מובנה. עסקה של ₪5,500.
+              מה אמרו שלושה אנשים שעבדו איתי.
             </h2>
           </div>
 
