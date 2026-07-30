@@ -34,6 +34,10 @@ const CASE_INTAKE_ENABLED =
 const CaseIntake = CASE_INTAKE_ENABLED
   ? lazy(() => import("./pages/CaseIntake"))
   : null;
+/** Same gate: an internal review surface, not part of the public site. */
+const GuaranteeReview = CASE_INTAKE_ENABLED
+  ? lazy(() => import("./pages/GuaranteeReview"))
+  : null;
 
 /**
  * Reset scroll to the top on client-side navigation. Without this, following a
@@ -87,6 +91,9 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             {CASE_INTAKE_ENABLED && CaseIntake && (
               <Route path="/case-intake" element={<CaseIntake />} />
+            )}
+            {CASE_INTAKE_ENABLED && GuaranteeReview && (
+              <Route path="/guarantee-review" element={<GuaranteeReview />} />
             )}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

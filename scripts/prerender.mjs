@@ -75,19 +75,27 @@ const server = createServer((req, res) => {
   if (BASE && (urlPath === BASE || urlPath.startsWith(BASE + "/"))) {
     urlPath = urlPath.slice(BASE.length) || "/";
   }
-  let filePath = join(DIST, urlPath);
+  const filePath = join(DIST, urlPath);
   // A relative-base build (`base: "./"`, the local default) emits asset URLs
   // like "./assets/index.js". A browser on a nested route such as
   // /insights/<slug> resolves those against the route, asking for
-  // "/insights/<slug>/assets/index.js". Without this, that misses, the SPA
+  // "/insights/<slug>/assets/index.js". Left alone, that misses, the SPA
   // fallback answers with HTML, the module script is rejected on its MIME type,
-  // React never mounts, and the capture below waits for a #root that will never
-  // fill. Retry any unmatched asset-looking path from the dist root.
+  // React never mounts, and the capture waits out a #root that never fills.
+  //
+  // Redirect rather than serve the file from the nested path. App.tsx derives
+  // the router basename from `import.meta.url`, so a bundle served at
+  // /insights/<slug>/assets/index.js yields the basename
+  // "/insights/<slug>/" and the router matches nothing, rendering NotFound into
+  // an otherwise healthy-looking page. Bouncing to the canonical URL keeps
+  // import.meta.url correct and the basename "/".
   if (!existsSync(filePath)) {
     const assetIdx = urlPath.lastIndexOf("/assets/");
-    if (assetIdx > 0) {
-      const retry = join(DIST, urlPath.slice(assetIdx));
-      if (existsSync(retry)) filePath = retry;
+    if (assetIdx > 0 && existsSync(join(DIST, urlPath.slice(assetIdx)))) {
+      res.statusCode = 302;
+      res.setHeader("Location", BASE + urlPath.slice(assetIdx));
+      res.end();
+      return;
     }
   }
   if (urlPath !== "/" && existsSync(filePath) && statSync(filePath).isFile()) {

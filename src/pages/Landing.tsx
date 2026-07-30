@@ -6,6 +6,8 @@ import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
 import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
 import EvidenceChain from "@/components/landing/EvidenceChain";
+import ClaimsShelf from "@/components/landing/ClaimsShelf";
+import PreRegistration from "@/components/landing/PreRegistration";
 import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
@@ -124,6 +126,13 @@ const Landing = () => {
           <DeliverablesPreview />
           {/* Renders nothing until a case passes both publication gates. */}
           <EvidenceChain />
+          {/* The two claims at their two levels, then the commitment to measure
+              the one that is not earned yet. Neither needs a gate: neither is a claim
+              about a client. */}
+          <ClaimsShelf />
+          <div className="dark bg-background text-foreground">
+            <PreRegistration />
+          </div>
           <SequenceSection />
           <FullPackageSection />
           <div className="dark bg-background text-foreground">
