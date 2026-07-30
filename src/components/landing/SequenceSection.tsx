@@ -3,7 +3,8 @@ import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 import CoherenceVectors from "./CoherenceVectors";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
-import { stages, type Stage } from "@/lib/stages";
+import { captureJourney } from "@/lib/journeyCapture";
+import { stages, type Stage } from "@/data/sprint-stages";
 import Guarantee from "./Guarantee";
 
 const SequenceSection = () => {
@@ -30,6 +31,13 @@ const SequenceSection = () => {
       ([entry]) => {
         if (!entry.isIntersecting) return;
         trackEvent("pricing_reached", { source: "sequence_section" });
+        captureJourney({
+          stage: "interest",
+          event: "reached",
+          evidence_type: "observed",
+          outcome_type: "unknown",
+          summary_code: "pricing_seen",
+        });
         observer.disconnect();
       },
       { rootMargin: "0px 0px -40px 0px" },

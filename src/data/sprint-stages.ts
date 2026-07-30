@@ -1,11 +1,44 @@
 import type { StageValue } from "@/components/landing/DiagnosticFormProvider";
+import type { SampleSource } from "@/lib/evidence";
+
+/**
+ * The four sprint stages, once.
+ *
+ * Moved here from src/lib/stages.ts and widened to carry the artefact spec that
+ * DeliverablesPreview used to keep in a parallel record of its own. Two
+ * surfaces were rendering the same four stages from two different sources; the
+ * stage names were additionally re-typed as literals in
+ * DiagnosticFormSection's payload labels, so a rename had three places to go
+ * wrong.
+ *
+ * Anything that needs a stage name, price, deliverable or artefact sample reads
+ * it from here. Nothing re-types them.
+ */
 
 export type StageNumber = "01" | "02" | "03" | "04";
+
+/**
+ * The visible deliverable each stage produces. This is a specification of what
+ * the client walks away holding, not a claim about an outcome. See
+ * src/lib/evidence.ts for why the two are kept apart.
+ */
+export type StageArtifact = {
+  /** Document label on the artefact card. */
+  docLabel: string;
+  /** Companion artefact, only where the stage actually defines one. */
+  secondaryDoc?: string;
+  /** One representative line from the artefact. */
+  sample: string;
+  /** Redacted-real or method-reconstruction. Drives the visible label. */
+  sampleSource: SampleSource;
+  /** Body lines drawn in the mock, purely visual. */
+  lineCount: number;
+};
 
 export type Stage = {
   number: StageNumber;
   name: string;
-  /** The cognitive verb for this stage, displayed as a badge in SequenceSection. */
+  /** The cognitive verb for this stage. */
   verb: string;
   description: string;
   deliverable: string;
@@ -15,6 +48,9 @@ export type Stage = {
   value: StageValue;
   /** CTA copy used in SequenceSection cards. */
   ctaLabel: string;
+  /** Label used on the lead payload and in the operator's sheet. */
+  payloadLabel: string;
+  artifact: StageArtifact;
 };
 
 export const stages: readonly Stage[] = [
@@ -30,6 +66,14 @@ export const stages: readonly Stage[] = [
     priceLabel: "₪1,000",
     value: "stage-1",
     ctaLabel: "אני רוצה את שלב 1",
+    payloadLabel: "שלב 1, נרטיב ייחודי",
+    artifact: {
+      docLabel: "מסמך נרטיב",
+      sample:
+        "אני עוזר ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
+      sampleSource: "method-reconstruction",
+      lineCount: 8,
+    },
   },
   {
     number: "02",
@@ -42,6 +86,15 @@ export const stages: readonly Stage[] = [
     priceLabel: "₪1,300",
     value: "stage-2",
     ctaLabel: "אני רוצה את שלב 2",
+    payloadLabel: "שלב 2, הצעת ערך ייחודית",
+    artifact: {
+      docLabel: "הצעת ערך",
+      secondaryDoc: "מילון כאב",
+      sample:
+        "מה לקוח אומר: ״הניסוח שלי תקוע״. מה אני שומע: ״ההצעה לא חתוכה.״",
+      sampleSource: "method-reconstruction",
+      lineCount: 7,
+    },
   },
   {
     number: "03",
@@ -54,6 +107,13 @@ export const stages: readonly Stage[] = [
     priceLabel: "₪1,600",
     value: "stage-3",
     ctaLabel: "אני רוצה את שלב 3",
+    payloadLabel: "שלב 3, מוצר ייחודי",
+    artifact: {
+      docLabel: "תיאור מוצר",
+      sample: "מסלול 4 פגישות / 30 יום. נכס שעובד גם בעוד שנה.",
+      sampleSource: "method-reconstruction",
+      lineCount: 9,
+    },
   },
   {
     number: "04",
@@ -67,6 +127,14 @@ export const stages: readonly Stage[] = [
     priceLabel: "₪1,900",
     value: "stage-4",
     ctaLabel: "אני רוצה את שלב 4",
+    payloadLabel: "שלב 4, רכישת לקוחות פרואקטיבית",
+    artifact: {
+      docLabel: "10 פניות מתועדות",
+      secondaryDoc: "יומן אותות קנייה",
+      sample: "Subject: ראיתי מה שכתבת על המשבר ב-Q2. שאלה אחת.",
+      sampleSource: "method-reconstruction",
+      lineCount: 10,
+    },
   },
 ];
 
@@ -74,9 +142,15 @@ export function getStage(value: StageValue): Stage | undefined {
   return stages.find((s) => s.value === value);
 }
 
+/** Payload labels, derived rather than re-typed. */
+export const stagePayloadLabels: Record<string, string> = {
+  ...Object.fromEntries(stages.map((s) => [s.value, s.payloadLabel])),
+  "full-package": "חבילה מלאה",
+};
+
 /**
- * Full-package pricing. The discount math (full − bundled = savings)
- * lives here so the kicker, the savings copy, and the wizard all agree.
+ * Full-package pricing. The discount math (full − bundled = savings) lives here
+ * so the kicker, the savings copy, and the wizard all agree.
  */
 export const fullPackage = {
   priceNis: 4500,

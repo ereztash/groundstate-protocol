@@ -5,6 +5,7 @@ import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OriginStorySection from "@/components/landing/OriginStorySection";
 import SequenceSection from "@/components/landing/SequenceSection";
 import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
+import EvidenceChain from "@/components/landing/EvidenceChain";
 import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
@@ -121,6 +122,8 @@ const Landing = () => {
               priced offers (Sequence → FullPackage) stay contiguous, and the
               "not for everyone" filter follows them as the final take-away. */}
           <DeliverablesPreview />
+          {/* Renders nothing until a case passes both publication gates. */}
+          <EvidenceChain />
           <SequenceSection />
           <FullPackageSection />
           <div className="dark bg-background text-foreground">

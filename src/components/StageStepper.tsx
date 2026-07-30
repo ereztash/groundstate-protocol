@@ -1,5 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from "react";
-import { stages } from "@/lib/stages";
+import { stages } from "@/data/sprint-stages";
 
 /**
  * Interactive stepper for the four stages. Instead of stacking four long cards

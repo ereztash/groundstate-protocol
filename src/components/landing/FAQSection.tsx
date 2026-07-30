@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Reveal } from "./Reveal";
+import { guarantee } from "@/data/guarantee";
 
 type QA = { q: string; a: string };
 
@@ -19,7 +20,7 @@ const items: QA[] = [
   },
   {
     q: "מה ההבדל בינך לבין יועץ עסקי או מאמן עסקי?",
-    a: "אולי כבר עבדת עם מישהו ש״פחות הבין את התחום שלך, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ושולח פניות. התוצר הוא לא תובנה — הוא נכס שאפשר להשתמש בו מחר בבוקר.",
+    a: "אולי כבר עבדת עם מישהו ש״פחות הבין את התחום שלך, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ושולח פניות. בסוף כל שלב יש מסמך שאפשר להשתמש בו מחר בבוקר.",
   },
   {
     q: "אי אפשר פשוט להשתמש ב-GPT?",
@@ -30,16 +31,26 @@ const items: QA[] = [
     a: "אם הנרטיב לא ברור או לא מדויק, אנחנו לא ממשיכים. אני לא מוכר רצף שמתחיל בכשל.",
   },
   {
+    // Was a stage-1 guarantee ("נרטיב חד יותר או שאתה לא משלם") phrased "בלי
+    // טפסים ובלי ויכוח". Two problems: it is a different guarantee from the one
+    // with a stated source, and the "no forms, no argument" phrasing is exactly
+    // what the guarantee may not claim. Now quotes the single source in
+    // src/data/guarantee.ts, including what does and does not count as a signal.
     q: "יש אחריות?",
-    a: "כן — אחריות החזר מלא. אם אחרי שלב 1 לא קיבלת נרטיב חד יותר, אתה לא משלם. בלי טפסים ובלי ויכוח.",
+    a: `${guarantee.headline} ${guarantee.countsLabel}: ${guarantee.counts.join(", ")}. ${guarantee.countsNote} ${guarantee.excludedLabel}: ${guarantee.excluded.join(" ")}`,
   },
   {
     q: "שלושים ימים זה מציאותי לעצמאי שעובד במקביל?",
     a: "ארבע פגישות בארבעה שבועות. בין הפגישות יש משימות קצרות. אם השבוע הזה עמוס מדי, נדחה את הפגישה לשבוע הבא — לוח הזמנים גמיש, רק הסדר חשוב.",
   },
   {
-    q: "איך אתה מתמחר 1,900 לפנייה ל-10 מקבלי החלטות, כשעצמאי אחר גובה 5,000 על אותה כמות?",
-    a: "אני לא מוכר 10 פניות. אני מוכר את הניתוח של מי הם 10 הנכונים, את הניסוח שמדבר לכל אחד מהם בנפרד, ואת התיעוד של אותות הקנייה שחזרו. השווי הוא לא בכמות. הוא במה שלמדנו עליהן.",
+    // Was a price justification that derived ₪1,900 from the value delivered.
+    // Per operator guidance 2026-07-30 the number was set operationally with no
+    // derivation, so presenting it as value-derived is a claim the pricing does
+    // not carry. The answer is descriptive now: what the stage includes, full
+    // stop. The old phrasing also used the "not X, it's Y" construction twice.
+    q: "מה כולל שלב 4 בפועל?",
+    a: "מיפוי של עשרה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, שליחה של הפנייה הראשונה בתוך הפגישה, ותיעוד של אותות הקנייה שחזרו בתגובות. המחיר הוא ₪1,900.",
   },
 ];
 

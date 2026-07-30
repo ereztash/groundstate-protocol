@@ -15,6 +15,10 @@ const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const About = lazy(() => import("./pages/About"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+// Internal capture tool. Not linked from the site, carries a noindex directive,
+// and is deliberately absent from scripts/prerender.mjs so no static HTML exists
+// for a crawler to reach.
+const CaseIntake = lazy(() => import("./pages/CaseIntake"));
 
 /**
  * Reset scroll to the top on client-side navigation. Without this, following a
@@ -66,6 +70,7 @@ const App = () => (
             <Route path="/insights/:slug" element={<InsightArticle />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/case-intake" element={<CaseIntake />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

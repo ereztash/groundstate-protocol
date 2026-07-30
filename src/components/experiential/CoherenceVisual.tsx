@@ -27,6 +27,24 @@ class GLBoundary extends Component<{ children: ReactNode }, { failed: boolean }>
   }
 }
 
+/**
+ * Below this width the WebGL layer does not load at all. A phone is where a
+ * multi-hundred-kilobyte decorative chunk costs the most and shows the least,
+ * and the SVG tier renders the same figure at any size.
+ */
+const GL_MIN_VIEWPORT = 768;
+
+/**
+ * True when the visitor has asked the browser to conserve data. Honouring this
+ * is not an optimisation, it is doing what was requested.
+ */
+function saveDataRequested(): boolean {
+  const conn = (
+    navigator as unknown as { connection?: { saveData?: boolean } }
+  ).connection;
+  return conn?.saveData === true;
+}
+
 function webglAvailable(): boolean {
   try {
     const canvas = document.createElement("canvas");
@@ -53,6 +71,11 @@ const CoherenceVisual = ({
     if (reduced) return;
     if (typeof window === "undefined") return;
     if ((window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__) return;
+    // Four gates, all of which mean "the SVG tier is the whole experience".
+    // Checked before the dynamic import, so a gated visitor never pays for the
+    // chunk at all rather than downloading it and not using it.
+    if (saveDataRequested()) return;
+    if (window.innerWidth < GL_MIN_VIEWPORT) return;
     if (!webglAvailable()) return;
 
     let idleId: number;

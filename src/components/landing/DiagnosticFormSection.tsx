@@ -27,16 +27,14 @@ import {
 } from "@/lib/web3forms";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 import { formatWizardAnswers, loadWizardState } from "@/lib/wizardState";
+import { stagePayloadLabels } from "@/data/sprint-stages";
+import { captureJourney } from "@/lib/journeyCapture";
 
 const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
 
-const stageLabels: Record<string, string> = {
-  "stage-1": "שלב 1, נרטיב ייחודי",
-  "stage-2": "שלב 2, הצעת ערך ייחודית",
-  "stage-3": "שלב 3, מוצר ייחודי",
-  "stage-4": "שלב 4, רכישת לקוחות פרואקטיבית",
-  "full-package": "חבילה מלאה",
-};
+// Derived, not re-typed. These labels used to repeat all four stage names as
+// literals, so renaming a stage had three places to go wrong.
+const stageLabels = stagePayloadLabels;
 
 const timeWindows = [
   { id: "morning", label: "בוקר, 08:00 עד 12:00" },
@@ -136,6 +134,13 @@ const DiagnosticFormSection = () => {
   const handleFirstFocus = () => {
     if (!hasInteracted) {
       trackFormStart();
+      captureJourney({
+        stage: "lead_capture",
+        event: "started",
+        evidence_type: "observed",
+        outcome_type: "unknown",
+        summary_code: "form_reached",
+      });
       setHasInteracted(true);
     }
   };
@@ -183,6 +188,13 @@ const DiagnosticFormSection = () => {
       const result = await submitForm(payload);
       if (result.success) {
         trackFormSubmit();
+        captureJourney({
+          stage: "lead_capture",
+          event: "completed",
+          evidence_type: "observed",
+          outcome_type: "unknown",
+          summary_code: "form_submitted",
+        });
         setSubmitted(true);
         return;
       }
@@ -206,6 +218,18 @@ const DiagnosticFormSection = () => {
     trackEvent("form_step_complete", {
       step: 1,
       active_practice: values.activePractice,
+    });
+    // Journey capture: the screening answer rides as an enum code, never as the
+    // visitor's own words.
+    captureJourney({
+      stage: "fit",
+      event: "completed",
+      evidence_type: "self_report",
+      outcome_type: values.activePractice === "yes" ? "qualified" : "unqualified",
+      summary_code:
+        values.activePractice === "yes"
+          ? "screen_active_practice_yes"
+          : "screen_active_practice_no",
     });
     setStepOneData(values);
     setStep(2);

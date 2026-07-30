@@ -208,6 +208,19 @@
     unicode-bidi: isolate;
   }
 
+  /* Money, isolated from the surrounding paragraph direction.
+     "₪1,900" is a shekel sign followed by digits in logical order. Dropped into
+     an RTL sentence, the bidi algorithm resolves the neutral currency sign
+     against the paragraph and the sign lands on the far side of the number, so
+     the same string renders one way in a standalone cell and another way inside
+     a Hebrew sentence. Isolating the run pins it to the prefix form everywhere.
+     Same technique as .field-num above. */
+  .cor-price {
+    display: inline-block;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
   /* Large stage numeral on the Sequence cards (01-04).
      Teal carries "ordered structure", which is what these numbers mean. */
   .stage-numeral {

@@ -1,30 +1,25 @@
-import { useSpotsLeft } from "@/lib/spots";
-
+/**
+ * Availability line.
+ *
+ * This used to read a remaining-spots number from a spreadsheet cell and render
+ * "נותרו N מקומות החודש". A mechanism that needs a human to update it weekly
+ * fails eventually, and when it fails it states a false number, so last
+ * session's fix made it fail safely instead. That was solving the wrong problem:
+ * the manual field itself was the defect.
+ *
+ * What is left is a standing capacity statement, which needs no maintenance and
+ * cannot go stale. There is no countdown and no number that shrinks as the month
+ * goes on: an availability figure the visitor cannot check, driven by a cell
+ * nobody watches, is manufactured pressure.
+ *
+ * Replacing this with a real availability signal needs a source the site does
+ * not have today, either the booking calendar or a stated cohort cadence. Until
+ * one exists, a sentence that is simply true is the honest maximum.
+ */
 type SpotsLeftProps = { className?: string };
 
-/**
- * Live scarcity line. Reads the remaining monthly spots from the Sheet
- * (via Apps Script) so the number is updated by editing one cell — no
- * deploy. Until the count loads, or if the fetch fails, it shows the
- * static policy line, so the visitor always sees something coherent.
- */
-const SpotsLeft = ({ className = "" }: SpotsLeftProps) => {
-  const spots = useSpotsLeft();
-
-  let text: string;
-  if (spots === null) {
-    text = "אני לוקח עד 10 לקוחות בחודש.";
-  } else if (spots <= 0) {
-    text = "המקומות החודש נתפסו — השאירו פרטים ואשבץ אתכם למועד הפנוי הקרוב.";
-  } else {
-    text = `נותרו ${spots} מקומות החודש.`;
-  }
-
-  return (
-    <p className={className} aria-live="polite">
-      {text}
-    </p>
-  );
-};
+const SpotsLeft = ({ className = "" }: SpotsLeftProps) => (
+  <p className={className}>אני לוקח עד 10 לקוחות בחודש.</p>
+);
 
 export default SpotsLeft;
