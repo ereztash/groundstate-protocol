@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { guarantee } from "@/data/guarantee";
+import Price from "@/components/Price";
 
 /**
  * Compact guarantee line, used inside SequenceSection.
@@ -15,6 +16,22 @@ import { guarantee } from "@/data/guarantee";
  */
 type GuaranteeProps = { className?: string };
 
+/**
+ * Splits the headline on its money amount so the price can be isolated from the
+ * surrounding RTL text. Splitting here rather than storing markup keeps
+ * src/data/guarantee.ts a plain string that other surfaces can reuse.
+ */
+const GuaranteeHeadline = () => {
+  const [before, after] = guarantee.headline.split(guarantee.amount);
+  return (
+    <>
+      {before}
+      <Price>{guarantee.amount}</Price>
+      {after}
+    </>
+  );
+};
+
 const Guarantee = ({ className = "" }: GuaranteeProps) => (
   <div className={`text-sm leading-relaxed text-foreground/80 ${className}`}>
     <p className="flex items-start gap-2.5">
@@ -24,7 +41,7 @@ const Guarantee = ({ className = "" }: GuaranteeProps) => (
       />
       <span>
         <span className="font-semibold text-foreground">האחריות</span>{" "}
-        {guarantee.headline}
+        <GuaranteeHeadline />
       </span>
     </p>
     <p className="mt-2 ps-7 text-xs leading-relaxed text-muted-foreground">

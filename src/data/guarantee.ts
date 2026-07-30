@@ -15,6 +15,8 @@
  * beyond the ones stated here.
  */
 export const guarantee = {
+  /** Split out so surfaces can isolate it from RTL text. See Price.tsx. */
+  amount: "₪1,900",
   headline:
     "בסוף שלב 4 יש בידך אות התעניינות מתועד מלקוח קצה אחד לפחות, או החזר מלא של ₪1,900.",
   countsLabel: "מה נחשב אות",

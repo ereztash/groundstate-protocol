@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { guarantee } from "@/data/guarantee";
+import Price from "@/components/Price";
 
 /**
  * Risk-reversal band on /protocol.
@@ -25,7 +26,11 @@ const GuaranteeBand = ({ className }: { className?: string }) => (
       />
       <div>
         <p className="cor-overline-he">האחריות</p>
-        <p className="cor-heading mt-2 text-foreground">{guarantee.headline}</p>
+        <p className="cor-heading mt-2 text-foreground">
+          {guarantee.headline.split(guarantee.amount)[0]}
+          <Price>{guarantee.amount}</Price>
+          {guarantee.headline.split(guarantee.amount)[1]}
+        </p>
 
         <div className="mt-5 grid gap-5 sm:grid-cols-2">
           <div className="border-s-2 border-primary/40 ps-4">

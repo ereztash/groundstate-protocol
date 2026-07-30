@@ -19,7 +19,7 @@ export type StageNumber = "01" | "02" | "03" | "04";
 
 /**
  * The visible deliverable each stage produces. This is a specification of what
- * the client walks away holding, not a claim about an outcome — see
+ * the client walks away holding, not a claim about an outcome. See
  * src/lib/evidence.ts for why the two are kept apart.
  */
 export type StageArtifact = {
