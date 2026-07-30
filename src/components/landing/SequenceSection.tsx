@@ -16,7 +16,7 @@ const SequenceSection = () => {
 
   const handleClick = (stage: Stage) => {
     trackCtaClick(`sequence_${stage.value}`);
-    requestStage(stage.value);
+    requestStage(stage.value, "sequence");
   };
 
   // First point on the page a visitor sees a concrete price (each card's
@@ -60,9 +60,12 @@ const SequenceSection = () => {
           <p className="mt-4 text-sm font-semibold tracking-wide text-accent">
             חילוץ. הבלטה. תרגום. הפעלה. ארבעה פעלים שלא ניתן לערבב בסדר שלהם.
           </p>
-          <p className="mt-4 cor-body-lg text-foreground/80">
-            על כל שעת פגישה איתי, אתה חוסך לפחות שעת עבודה בשבוע — לכל שארית חיי התהליך.
-          </p>
+          {/* Removed: "על כל שעת פגישה איתי, אתה חוסך לפחות שעת עבודה בשבוע —
+              לכל שארית חיי התהליך." A fixed ratio over an unbounded horizon,
+              stated as fact with no n and no source, directly above the price
+              ladder. QuantifiedProof.tsx commits the site to "מעט ומאומת" and
+              deliberately withholds figures the evidence doesn't carry; this
+              line failed that standard. Deleted rather than hedged. */}
           <Guarantee className="mt-6" />
         </Reveal>
 

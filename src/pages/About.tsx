@@ -47,8 +47,13 @@ const STEPS: Step[] = [
     body: "ואז זה התחבר: המבנה הוא החצי השני של אותה צורה. מי שמשלב שני עולמות לא צריך לבחור אחד מהם — הוא צריך משפט אחד שמסביר למה דווקא הצירוף הזה הוא היתרון.",
   },
   {
-    lead: "וזה לא תיאוריה",
-    body: "תיעדתי גידול של מיליון ₪ בהכנסות בהקשר קמעונאי דרך התערבות התנהגותית. את הרצף הזה לעצמאים בניתי השנה.",
+    // The million-shekel retail claim was removed from OriginStorySection
+    // because no evidence exists for it, and the landing tells the visitor
+    // every figure is "ניתנות לאימות". The same sentence was still live here.
+    // Removed for the same reason, not rephrased — the lead is also dropped,
+    // since "וזה לא תיאוריה" was introducing the number.
+    lead: "מה שיש",
+    body: "את הרצף הזה לעצמאים בניתי השנה.",
   },
   {
     lead: "יש גם סיפור מתחת לסיפור",

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { trackCtaClick } from "@/lib/analytics";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { Footnote } from "./Footnote";
 
 // Portrait lives under public/ so index.html can preload it before the JS
@@ -47,11 +48,11 @@ function settleStyle(
 }
 
 const Hero = () => {
+  const { requestForm } = useDiagnosticForm();
+
   const scrollToForm = () => {
     trackCtaClick("hero_diagnostic");
-    document
-      .getElementById("diagnostic-form")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    requestForm("hero");
   };
 
   return (
@@ -132,7 +133,7 @@ const Hero = () => {
                 aria-describedby="hero-subtitle hero-cta-note"
                 className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base transition-[background,transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
               >
-                לתיאום שיחת אבחון
+                לתיאום שיחת התאמה
               </button>
               <p
                 id="hero-cta-note"
@@ -154,7 +155,7 @@ const Hero = () => {
                 נסגרה בתוך החודש הראשון לתוכנית.{" "}
                 <Footnote
                   number={1}
-                  tip="רשימת הפנייה נבנית מול Decision Makers שמזוהים בשיחת האבחון הראשונה — לא רשימה גנרית, אלא בחירה מבוססת ניתוח."
+                  tip="רשימת הפנייה נבנית מול Decision Makers שמזוהים בשיחת ההתאמה הראשונה — לא רשימה גנרית, אלא בחירה מבוססת ניתוח."
                 >
                   כיצד נבנית רשימת הפנייה
                 </Footnote>

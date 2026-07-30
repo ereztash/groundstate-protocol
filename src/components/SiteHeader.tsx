@@ -2,6 +2,7 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavLink } from "@/components/NavLink";
 import { trackCtaClick } from "@/lib/analytics";
+import { useOptionalDiagnosticForm } from "@/components/landing/DiagnosticFormProvider";
 
 /**
  * The one site-wide top bar, used by every page (replacing the per-page
@@ -26,6 +27,9 @@ const SiteHeader = () => {
   const { pathname } = useLocation();
   const isLanding = pathname === "/";
   const [open, setOpen] = useState(false);
+  // Null on every route except the landing page — this header ships site-wide,
+  // but only the landing page mounts the form provider.
+  const form = useOptionalDiagnosticForm();
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -35,11 +39,11 @@ const SiteHeader = () => {
   const onCta = (e: MouseEvent) => {
     trackCtaClick("header_diagnostic");
     setOpen(false);
-    if (isLanding) {
+    if (isLanding && form) {
       e.preventDefault();
-      document
-        .getElementById("diagnostic-form")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Routed through the provider so the lead records that the header CTA
+      // brought it in, rather than arriving as an anonymous direct hit.
+      form.requestForm("header");
     }
   };
 
@@ -71,8 +75,10 @@ const SiteHeader = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* Off-landing this is a real navigation, so the source rides the
+              query string — Landing reads it into the provider on mount. */}
           <Link
-            to="/#diagnostic-form"
+            to="/?src=header#diagnostic-form"
             onClick={onCta}
             className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
           >

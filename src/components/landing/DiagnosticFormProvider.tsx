@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { LeadSource } from "@/lib/web3forms";
 
 export type StageValue =
   | "stage-1"
@@ -19,27 +20,62 @@ export type StageValue =
 type Ctx = {
   selectedStage: StageValue;
   setSelectedStage: (s: StageValue) => void;
-  requestStage: (s: StageValue) => void;
+  /** Scroll to the form, recording both the chosen stage and the CTA used. */
+  requestStage: (s: StageValue, source: LeadSource) => void;
+  /**
+   * Scroll to the form from a CTA that doesn't pick a stage (hero, mid-page,
+   * sticky). Previously these called scrollIntoView directly, which meant the
+   * lead arrived with no record of where it came from.
+   */
+  requestForm: (source: LeadSource) => void;
+  source: LeadSource | null;
 };
 
 const DiagnosticFormContext = createContext<Ctx | null>(null);
 
-export const DiagnosticFormProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedStage, setSelectedStage] = useState<StageValue>("");
+function scrollToForm(): void {
+  if (typeof window === "undefined") return;
+  document
+    .getElementById("diagnostic-form")
+    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-  const requestStage = useCallback((s: StageValue) => {
+export const DiagnosticFormProvider = ({
+  children,
+  initialSource = null,
+}: {
+  children: ReactNode;
+  /**
+   * Seeds the source for visitors who arrived from another page's CTA (the
+   * site header deep-links to /?src=header#diagnostic-form). A same-page CTA
+   * overwrites it, which is correct: the last thing they clicked is what
+   * actually carried them to the form.
+   */
+  initialSource?: LeadSource | null;
+}) => {
+  const [selectedStage, setSelectedStage] = useState<StageValue>("");
+  const [source, setSource] = useState<LeadSource | null>(initialSource);
+
+  const requestStage = useCallback((s: StageValue, src: LeadSource) => {
     setSelectedStage(s);
-    if (typeof window !== "undefined") {
-      const el = document.getElementById("diagnostic-form");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
+    setSource(src);
+    scrollToForm();
+  }, []);
+
+  const requestForm = useCallback((src: LeadSource) => {
+    setSource(src);
+    scrollToForm();
   }, []);
 
   const value = useMemo<Ctx>(
-    () => ({ selectedStage, setSelectedStage, requestStage }),
-    [selectedStage, requestStage]
+    () => ({
+      selectedStage,
+      setSelectedStage,
+      requestStage,
+      requestForm,
+      source,
+    }),
+    [selectedStage, requestStage, requestForm, source]
   );
 
   return (
@@ -58,3 +94,11 @@ export const useDiagnosticForm = (): Ctx => {
   }
   return ctx;
 };
+
+/**
+ * Null-safe variant for components rendered both inside and outside the
+ * provider. SiteHeader is the case: it ships on every route, but only the
+ * landing page has a form to scroll to.
+ */
+export const useOptionalDiagnosticForm = (): Ctx | null =>
+  useContext(DiagnosticFormContext);

@@ -65,13 +65,16 @@ function renderForm() {
   );
 }
 
-async function completeStepOne() {
+async function completeStepOne({ activePractice = "כן" } = {}) {
   fireEvent.change(screen.getByPlaceholderText(/לדוגמה/), {
     target: { value: "יש לי 15 שנות ניסיון אבל אין פניות" },
   });
   fireEvent.change(screen.getByLabelText(/איך לקרוא לך/), {
     target: { value: "ישראל ישראלי" },
   });
+  // The anti-ICP screening radio. Required — step 1 will not advance without
+  // it, which is the point: every CTA on the site lands on this field.
+  fireEvent.click(screen.getByRole("radio", { name: activePractice }));
   fireEvent.click(screen.getByRole("button", { name: "המשך" }));
   // Step 2 is reached only once step 1 validates and submits.
   return screen.findByPlaceholderText("05X-XXXXXXX");
@@ -103,8 +106,79 @@ describe("DiagnosticFormSection", () => {
         stage: "(נקבע בשיחה)",
         email: "(לא מולא)",
         preferredTimes: ["(לא מולא)"],
+        // No CTA was clicked in this test, so the visitor counts as direct.
+        source: "(ישיר)",
+        // Wizard untouched — the fallbacks keep the sheet columns aligned.
+        wizardAnswers: "(לא מולא)",
+        wizardOpenText: "(לא מולא)",
       })
     );
+    // A "yes" answer must not tag the lead.
+    expect(vi.mocked(submitForm).mock.calls[0][0].screeningFlag).toBeUndefined();
+  });
+
+  it("tags the lead when the screening answer is negative, without blocking it", async () => {
+    vi.mocked(submitForm).mockResolvedValue({ success: true, message: "ok" });
+
+    renderForm();
+    const phone = await completeStepOne({ activePractice: "עדיין לא" });
+
+    fireEvent.change(phone, { target: { value: "0501234567" } });
+    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+
+    // Still a lead — the screening flag prioritises follow-up, it never gates.
+    expect(
+      await screen.findByText("תודה. בוא נקבע את הפגישה.")
+    ).toBeInTheDocument();
+    expect(submitForm).toHaveBeenCalledWith(
+      expect.objectContaining({ screeningFlag: "no_active_practice" })
+    );
+  });
+
+  it("attaches the wizard answers when the visitor completed the quiz", async () => {
+    vi.mocked(submitForm).mockResolvedValue({ success: true, message: "ok" });
+    window.localStorage.setItem(
+      "cor-sys-wizard-state-v3",
+      JSON.stringify({
+        phase: "result",
+        stepIndex: 3,
+        answers: [2, 1, 0, 2],
+        openText: "הסיפור שלי נשמע כמו כולם",
+      })
+    );
+
+    renderForm();
+    const phone = await completeStepOne();
+
+    fireEvent.change(phone, { target: { value: "0501234567" } });
+    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+
+    await screen.findByText("תודה. בוא נקבע את הפגישה.");
+    // The five signals the wizard collects used to be discarded at submit.
+    expect(submitForm).toHaveBeenCalledWith(
+      expect.objectContaining({
+        wizardAnswers: "נרטיב: תקוע · הצעת ערך: חלקי · מוצר: חד · פניות: תקוע",
+        wizardOpenText: "הסיפור שלי נשמע כמו כולם",
+      })
+    );
+    window.localStorage.clear();
+  });
+
+  it("blocks step 1 until the screening question is answered", async () => {
+    renderForm();
+
+    fireEvent.change(screen.getByPlaceholderText(/לדוגמה/), {
+      target: { value: "יש לי 15 שנות ניסיון אבל אין פניות" },
+    });
+    fireEvent.change(screen.getByLabelText(/איך לקרוא לך/), {
+      target: { value: "ישראל ישראלי" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "המשך" }));
+
+    expect(
+      await screen.findByText("בחר/י אחת מהאפשרויות")
+    ).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
 
   it("rejects an invalid Israeli phone and does not submit", async () => {

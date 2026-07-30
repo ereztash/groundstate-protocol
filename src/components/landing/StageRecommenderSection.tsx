@@ -3,6 +3,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
 import { fullPackage, getStage } from "@/lib/stages";
+// Storage lives in a shared module so the diagnostic form can read the same
+// answers at submit time — see src/lib/wizardState.ts.
+import {
+  clearWizardState,
+  loadWizardState,
+  persistWizardState,
+  type Answer,
+  type WizardPhase,
+} from "@/lib/wizardState";
 
 function baseFor(value: StageValue): Pick<Recommendation, "stage" | "number" | "name" | "price" | "deliverable" | "ctaPrimary"> {
   const s = getStage(value);
@@ -17,7 +26,7 @@ function baseFor(value: StageValue): Pick<Recommendation, "stage" | "number" | "
   };
 }
 
-export type Answer = 0 | 1 | 2;
+export type { Answer };
 
 type Option = {
   label: string;
@@ -209,57 +218,7 @@ export function recommend(answers: Answer[], openText: string): Recommendation {
   return base;
 }
 
-type Phase = "intro" | "open" | "question" | "result";
-
-type SavedState = {
-  phase: Phase;
-  stepIndex: number;
-  answers: Answer[];
-  openText: string;
-};
-
-const STORAGE_KEY = "cor-sys-wizard-state-v3";
-
-function loadState(): SavedState | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as SavedState;
-    if (
-      (parsed.phase === "intro" ||
-        parsed.phase === "open" ||
-        parsed.phase === "question" ||
-        parsed.phase === "result") &&
-      typeof parsed.stepIndex === "number" &&
-      Array.isArray(parsed.answers) &&
-      typeof parsed.openText === "string"
-    ) {
-      return parsed;
-    }
-  } catch {
-    /* ignore */
-  }
-  return null;
-}
-
-function persistState(state: SavedState): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* ignore */
-  }
-}
-
-function clearPersistedState(): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.removeItem(STORAGE_KEY);
-  } catch {
-    /* ignore */
-  }
-}
+type Phase = WizardPhase;
 
 const FADE_IN = {
   initial: { opacity: 0, y: 12 },
@@ -279,7 +238,7 @@ const StageRecommenderSection = () => {
   const shouldFocusResultRef = useRef(false);
 
   useEffect(() => {
-    const saved = loadState();
+    const saved = loadWizardState();
     if (saved && saved.phase !== "intro") {
       setPhase(saved.phase);
       setStepIndex(saved.stepIndex);
@@ -290,9 +249,9 @@ const StageRecommenderSection = () => {
 
   useEffect(() => {
     if (phase === "intro" && answers.length === 0 && !openText) {
-      clearPersistedState();
+      clearWizardState();
     } else {
-      persistState({ phase, stepIndex, answers, openText });
+      persistWizardState({ phase, stepIndex, answers, openText });
     }
   }, [phase, stepIndex, answers, openText]);
 
@@ -392,7 +351,7 @@ const StageRecommenderSection = () => {
   };
 
   const restart = () => {
-    clearPersistedState();
+    clearWizardState();
     setStepIndex(0);
     setAnswers([]);
     setOpenText("");
@@ -404,7 +363,7 @@ const StageRecommenderSection = () => {
       wizard: "stage_recommender",
       stage: rec.stage,
     });
-    requestStage(rec.stage);
+    requestStage(rec.stage, "wizard");
   };
 
   const onCtaSecondary = (rec: Recommendation) => {
@@ -412,7 +371,7 @@ const StageRecommenderSection = () => {
       wizard: "stage_recommender",
       stage: rec.stage,
     });
-    requestStage("unknown");
+    requestStage("unknown", "wizard");
   };
 
   const onSkipToForm = () => {
@@ -768,7 +727,7 @@ const StageRecommenderSection = () => {
                     onClick={() => onCtaSecondary(result)}
                     className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
                   >
-                    קבע שיחת 20 דקות בחינם
+                    קבע שיחת התאמה — 20 דקות, בחינם
                   </button>
                   <button
                     type="button"

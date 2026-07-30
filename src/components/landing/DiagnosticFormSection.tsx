@@ -26,6 +26,7 @@ import {
   type DiagnosticPayload,
 } from "@/lib/web3forms";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
+import { formatWizardAnswers, loadWizardState } from "@/lib/wizardState";
 
 const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
 
@@ -45,11 +46,19 @@ const timeWindows = [
 
 /**
  * Two-step progressive form, psychological order:
- * Step 1 (low-stakes emotional entry): the pain in one sentence + name.
+ * Step 1 (low-stakes emotional entry): the pain in one sentence + name, then
+ *   the one screening question.
  *   Lets the visitor "pay" with a small disclosure before identity.
  * Step 2 (commitment): phone (required), email + time windows (optional).
  *   They are already invested by this point.
  * Stage selection (which package) is decided in the call, not on the form.
+ *
+ * The screening question is the objective half of NotForEveryoneSection's
+ * filter, and matches the "שלב 0" gate already written on /protocol. It sits in
+ * step 1 specifically because every CTA on the site lands here — the prose
+ * filter further up the page can be scrolled past by any of the six entry
+ * points, this cannot. A "no" never blocks the submit (it is still a lead); it
+ * tags the row so follow-up can be prioritised and worded differently.
  */
 const stepOneSchema = z.object({
   challenge: z
@@ -60,6 +69,9 @@ const stepOneSchema = z.object({
     .string()
     .min(2, { message: "שם קצר מדי" })
     .max(80, { message: "שם ארוך מדי" }),
+  activePractice: z.enum(["yes", "no"], {
+    errorMap: () => ({ message: "בחר/י אחת מהאפשרויות" }),
+  }),
 });
 
 const stepTwoSchema = z.object({
@@ -79,7 +91,7 @@ type StepOneValues = z.infer<typeof stepOneSchema>;
 type StepTwoValues = z.infer<typeof stepTwoSchema>;
 
 const DiagnosticFormSection = () => {
-  const { selectedStage } = useDiagnosticForm();
+  const { selectedStage, source } = useDiagnosticForm();
   const [step, setStep] = useState<1 | 2>(1);
   const [stepOneData, setStepOneData] = useState<StepOneValues | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -95,6 +107,8 @@ const DiagnosticFormSection = () => {
   const stepOne = useForm<StepOneValues>({
     resolver: zodResolver(stepOneSchema),
     mode: "onTouched",
+    // activePractice is deliberately left undefined so neither answer is
+    // pre-selected — a default would make the screening answer meaningless.
     defaultValues: { challenge: "", fullName: "" },
   });
 
@@ -142,6 +156,13 @@ const DiagnosticFormSection = () => {
       .map((id) => timeWindows.find((t) => t.id === id)?.label)
       .filter(Boolean) as string[];
 
+    // Read at submit time rather than through the provider, so a visitor who
+    // completed the wizard and then converted through any other CTA still has
+    // their five qualifying answers attached to the lead.
+    const wizard = loadWizardState();
+    const wizardAnswers = wizard ? formatWizardAnswers(wizard.answers) : "";
+    const wizardOpenText = wizard?.openText?.trim() || "";
+
     const payload: DiagnosticPayload = {
       fullName: one.fullName,
       email: two.email && two.email.length > 0 ? two.email : "(לא מולא)",
@@ -149,6 +170,12 @@ const DiagnosticFormSection = () => {
       stage: stageHint || "(נקבע בשיחה)",
       challenge: one.challenge,
       preferredTimes: timeLabels.length > 0 ? timeLabels : ["(לא מולא)"],
+      source: source || "(ישיר)",
+      wizardAnswers: wizardAnswers || "(לא מולא)",
+      wizardOpenText: wizardOpenText || "(לא מולא)",
+      ...(one.activePractice === "no" && {
+        screeningFlag: "no_active_practice" as const,
+      }),
       company: honeypotRef.current?.value || undefined,
     };
 
@@ -174,7 +201,12 @@ const DiagnosticFormSection = () => {
   };
 
   const onStepOneSubmit = async (values: StepOneValues) => {
-    trackEvent("form_step_complete", { step: 1 });
+    // Screening outcome rides the existing step event rather than a new one, so
+    // the funnel gains a qualified/unqualified split without a second hit.
+    trackEvent("form_step_complete", {
+      step: 1,
+      active_practice: values.activePractice,
+    });
     setStepOneData(values);
     setStep(2);
   };
@@ -205,7 +237,7 @@ const DiagnosticFormSection = () => {
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                שיחת אבחון — 20 דקות, ללא עלות
+                שיחת התאמה — 20 דקות, ללא עלות
               </h2>
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
@@ -315,6 +347,55 @@ const DiagnosticFormSection = () => {
                     )}
                   />
 
+                  {/* The one screening question. Native radios inside a
+                      fieldset: the group gets a <legend> rather than a label,
+                      and arrow-key navigation within the group comes free. */}
+                  <FormField
+                    control={stepOne.control}
+                    name="activePractice"
+                    render={({ field }) => (
+                      <FormItem>
+                        <fieldset>
+                          <legend className="text-sm font-medium leading-none text-foreground">
+                            <span className="field-num">03.</span>יש לך פרקטיקה
+                            פעילה עם לקוחות?
+                          </legend>
+                          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                            הרצף מחלץ בידול מתוך עבודה שכבר קרתה. בלי לקוחות
+                            פעילים אין ממה לחלץ — ועדיף שנדע את זה מראש, שנינו.
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-3">
+                            {[
+                              { value: "yes", label: "כן" },
+                              { value: "no", label: "עדיין לא" },
+                            ].map((opt) => (
+                              <label
+                                key={opt.value}
+                                className={`flex cursor-pointer items-center gap-2.5 rounded-md border bg-card px-4 py-3 text-sm transition-colors ${
+                                  field.value === opt.value
+                                    ? "border-primary bg-primary/5 text-foreground"
+                                    : "border-border text-foreground/85 hover:border-foreground/40"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name={field.name}
+                                  value={opt.value}
+                                  checked={field.value === opt.value}
+                                  onChange={() => field.onChange(opt.value)}
+                                  onBlur={field.onBlur}
+                                  className="h-4 w-4 accent-[hsl(var(--primary))]"
+                                />
+                                <span>{opt.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </fieldset>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <div className="space-y-3 pt-2">
                     <button
                       type="submit"
@@ -348,7 +429,7 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">03.</span>טלפון
+                          <span className="field-num">04.</span>טלפון
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -371,7 +452,7 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">04.</span>מייל (אופציונלי)
+                          <span className="field-num">05.</span>מייל (אופציונלי)
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -401,7 +482,7 @@ const DiagnosticFormSection = () => {
                       return (
                         <FormItem>
                           <FormLabel>
-                            <span className="field-num">05.</span>חלונות זמן נוחים (אופציונלי)
+                            <span className="field-num">06.</span>חלונות זמן נוחים (אופציונלי)
                           </FormLabel>
                           <div className="mt-2 space-y-2">
                             {timeWindows.map((tw) => {

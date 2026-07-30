@@ -22,7 +22,13 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 const EXIT_CRITERIA: Record<string, string> = {
   "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך — לא חזרה על ניסוח שלי.",
   "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
-  "03": "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית בת-הצלבה, ואתה מחשב.",
+  // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
+  // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
+  // client computing the number from an external benchmark — as a certain
+  // outcome of the stage. Per operator guidance 2026-07-30 that mechanism is
+  // not currently anchored enough to promise. This states what the stage
+  // produces instead of who arrives at the number.
+  "03": "התמחור מנוסח בכתב, עם הרציונל לצידו — כך שאפשר להגיד אותו בקול בלי להסס, ולהסביר על מה הוא נשען.",
   "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה — תלוי בכך שיצאה מהיד.",
 };
 

@@ -167,7 +167,9 @@ describe("recommend()", () => {
       ];
       for (const ans of cases) {
         const r = recommend(ans, "");
-        expect(r.ctaPrimary).toMatch(/ש["״]ח/);
+        // Currency is the ₪-prefix form site-wide (see stages.ts) — the page
+        // previously mixed "1,000 ש״ח", "1,000 ₪" and "₪1,000".
+        expect(r.ctaPrimary).toMatch(/₪[\d,]+/);
       }
     });
   });

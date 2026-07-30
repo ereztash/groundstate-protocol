@@ -36,6 +36,40 @@ export type Web3FormsResult = {
   reason?: SubmitFailureReason;
 };
 
+/**
+ * Which CTA carried the visitor to the form. Recorded separately from `stage`
+ * because the three main CTAs (hero, mid-page, sticky) don't select a stage at
+ * all — so `stage` alone left most leads reading "(נקבע בשיחה)" with no way to
+ * tell where they came from.
+ */
+export type LeadSource =
+  | "hero"
+  | "mid_cta"
+  | "sticky"
+  | "sequence"
+  | "full_package"
+  | "wizard"
+  // The site-wide header CTA. Present on every route, so it also covers
+  // visitors who convert from /protocol, /about or an article.
+  | "header";
+
+/** Runtime guard for the `?src=` deep-link parameter. */
+export function parseLeadSource(value: string | null): LeadSource | null {
+  const allowed: LeadSource[] = [
+    "hero",
+    "mid_cta",
+    "sticky",
+    "sequence",
+    "full_package",
+    "wizard",
+    "header",
+  ];
+  return allowed.includes(value as LeadSource) ? (value as LeadSource) : null;
+}
+
+/** Anti-ICP screening outcome. Never blocks a submit — it prioritises. */
+export type ScreeningFlag = "no_active_practice";
+
 export type DiagnosticPayload = {
   fullName: string;
   email: string;
@@ -44,6 +78,14 @@ export type DiagnosticPayload = {
   challenge: string;
   preferredTimes: string[];
   subject?: string;
+  /** Which CTA the visitor arrived through, or "(לא ידוע)" for a direct hit. */
+  source: string;
+  /** Wizard answers, pre-formatted for one cell. Empty when unanswered. */
+  wizardAnswers: string;
+  /** The wizard's free-text "what's most stuck" answer. Empty when skipped. */
+  wizardOpenText: string;
+  /** Set when the screening question came back negative. */
+  screeningFlag?: ScreeningFlag;
   /** Honeypot: real users leave this empty; bots fill it. The Apps Script
       drops any submission where it's non-empty. */
   company?: string;
@@ -61,6 +103,10 @@ export async function submitForm(
     stage: data.stage,
     challenge: data.challenge,
     preferredTimes: data.preferredTimes,
+    source: data.source,
+    wizardAnswers: data.wizardAnswers,
+    wizardOpenText: data.wizardOpenText,
+    screeningFlag: data.screeningFlag || "",
     company: data.company || "",
   };
 
