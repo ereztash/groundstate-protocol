@@ -21,10 +21,14 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: {
-        ...devices["Desktop Chrome"],
-        executablePath: "/opt/pw-browsers/chromium",
-      },
+      // A bare `executablePath` was pinned here to a sandbox path. It never did
+      // anything: `executablePath` belongs under `launchOptions`, so Playwright
+      // silently ignored the key and resolved its own installed browser. CI
+      // proves it — that path does not exist on the runner and the suite still
+      // passed. Removed rather than moved into `launchOptions`: letting
+      // Playwright resolve the browser it installed is what we actually want on
+      // every machine.
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {
