@@ -40,7 +40,7 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
         <PopoverTrigger asChild>
           <button
             type="button"
-            aria-label={`הערה ${number} — פתח להסבר`}
+            aria-label={`הערה ${number}, פתח להסבר`}
             className="ms-0.5 inline-block align-super rounded text-[0.65em] font-bold text-primary/85 transition-colors hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {number}

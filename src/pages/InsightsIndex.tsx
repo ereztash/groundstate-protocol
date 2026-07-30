@@ -12,7 +12,7 @@ import { insights, formatDate } from "@/lib/insights";
  */
 const InsightsIndex = () => {
   useDocumentMeta({
-    title: "תובנות — COR-SYS | ארז טל-שיר",
+    title: "תובנות, COR-SYS | ארז טל-שיר",
     description:
       "מאמרים על בידול, תמחור, וסנכרון בין מה שאתה יודע לבין מה שהלקוח משלם עליו. המתודולוגיה של COR-SYS, בכתב.",
     path: "/insights",
@@ -33,7 +33,7 @@ const InsightsIndex = () => {
             מה שאתה יודע, בשפה שהלקוח משלם עליה
           </h1>
           <p className="cor-body-lg mt-4 text-foreground/80">
-            מאמרים על בידול, תמחור, וסנכרון בין המשאב לתכלית — המתודולוגיה של
+            מאמרים על בידול, תמחור, וסנכרון בין המשאב לתכלית, המתודולוגיה של
             COR-SYS, בכתב.
           </p>
         </Reveal>

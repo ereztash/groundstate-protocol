@@ -1,7 +1,7 @@
 ---
 title: "למה הנדסת פרומפטים נכשלת, ואיך סיפור טוב משנה את הפלט גם מאנשים וגם מבינה מלאכותית"
-description: מחקר מראה שמבנה סיפורי משפר ביצועי AI בעד 115% במשימות מורכבות — כי מודלים ובני אדם מגיבים לאותם מנגנונים. המנגנון, הפרדוקס של הכבידה הסיפורית, ושלושה מודלים ליישום.
-subtitle: מדוע מנהלים שורפים תקציבי AI ומקבלים פלסטיק — ואיך כבידה סיפורית מיושרת משנה את הפלט.
+description: מחקר מראה שמבנה סיפורי משפר ביצועי AI בעד 115% במשימות מורכבות, כי מודלים ובני אדם מגיבים לאותם מנגנונים. המנגנון, הפרדוקס של הכבידה הסיפורית, ושלושה מודלים ליישום.
+subtitle: מדוע מנהלים שורפים תקציבי AI ומקבלים פלסטיק, ואיך כבידה סיפורית מיושרת משנה את הפלט.
 date: 2026-07-20
 ---
 
@@ -60,7 +60,7 @@ date: 2026-07-20
 </div>
 </div>
 </div>
-<figcaption style="margin-top:0.7rem;font-size:0.78rem;color:hsl(var(--muted-foreground));text-align:center;">שלושה חומרים במוח, שלושה מנגנונים מקבילים בבינה המלאכותית — אותו עיקרון, שתי מערכות.</figcaption>
+<figcaption style="margin-top:0.7rem;font-size:0.78rem;color:hsl(var(--muted-foreground));text-align:center;">שלושה חומרים במוח, שלושה מנגנונים מקבילים בבינה המלאכותית, אותו עיקרון, שתי מערכות.</figcaption>
 </figure>
 
 **ריכוז מול רעש.** כמו שקורטיזול מצמצם את תשומת הלב שלנו רק לאיום, מתח סיפורי בפרומפט גורם למנגנון הקשב של ה-AI לגזום את כל המידע הלא-רלוונטי ולהתמקד רק בנקודה הקריטית. במקום לחפש תשובה באוקיינוס של כל מה שהוא אי פעם למד, הוא מצמצם את השטח ומתרכז (Li et al., 2023).
@@ -130,12 +130,12 @@ date: 2026-07-20
 <div style="border:1px solid hsl(var(--border));border-radius:14px;padding:1rem 1.1rem;border-inline-start:4px solid hsl(var(--primary));">
 <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:hsl(var(--primary));">מיושר</div>
 <div aria-hidden="true" style="margin:0.55rem 0;font-size:1.5rem;font-weight:700;letter-spacing:0.1em;color:hsl(var(--foreground));">← ←</div>
-<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור והמשימה מצביעים לאותו כיוון — הכבידה <strong>מחדדת וממקדת</strong>.</div>
+<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור והמשימה מצביעים לאותו כיוון, הכבידה <strong>מחדדת וממקדת</strong>.</div>
 </div>
 <div style="border:1px solid hsl(var(--border));border-radius:14px;padding:1rem 1.1rem;border-inline-start:4px solid hsl(var(--destructive));">
 <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:hsl(var(--destructive));">לא מיושר</div>
 <div aria-hidden="true" style="margin:0.55rem 0;font-size:1.5rem;font-weight:700;letter-spacing:0.1em;color:hsl(var(--foreground));">← →</div>
-<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור מושך לכיוון אחר מהמשימה — הכבידה <strong>מסיחה ומרעילה</strong>.</div>
+<div style="font-size:0.85rem;line-height:1.45;color:hsl(var(--foreground));">הסיפור מושך לכיוון אחר מהמשימה, הכבידה <strong>מסיחה ומרעילה</strong>.</div>
 </div>
 </div>
 <figcaption style="margin-top:0.7rem;font-size:0.78rem;color:hsl(var(--muted-foreground));text-align:center;">כבידה סיפורית עוזרת רק כשהיא מצביעה לאותו כיוון כמו המטרה.</figcaption>
@@ -151,7 +151,7 @@ date: 2026-07-20
 
 אחרי הבסיס, אני רוצה לתת לכם משהו שאפשר לקחת ולעבוד איתו מחר. שלושה מודלים מעשיים שאני משתמש בהם בשטח, שעובדים גם ככלי סיפור ניהולי וגם ככלי הנדסת פרומפטים. כל מודל מפעיל את שלושת המרכיבים (מיקוד, הקשר, מסלול פתרון) ומקפיד שהכבידה הסיפורית תצביע לאותו כיוון כמו המטרה.
 
-### מודל 1: מסגרת ABT — And, But, Therefore (וגם, אבל, ולכן)
+### מודל 1: מסגרת ABT, And, But, Therefore (וגם, אבל, ולכן)
 
 מקור: ד"ר רנדי אולסון, ביולוג ימי שהפך לקולנוען מדעי, פיתח את המסגרת הזו על בסיס מבנה הסיפור האוניברסלי.
 
@@ -175,7 +175,7 @@ date: 2026-07-20
 
 למה זה עובד: המבנה הסיפורי נותן לבינה מלאכותית מפת דרכים מלאה. היא לא צריכה להמציא הקשר כי ההקשר כבר שם. במקום לנחש מה חשוב, היא מתמקדת באילוצים הספציפיים שהגדרתם. קים ואחרים (2024) הראו שדמות מוגדרת עם אג'נדה ברורה מפחיתה משמעותית את הנטייה של הבינה המלאכותית להמציא עובדות, ומבנה כזה הוא הדרך הטובה ביותר להגדיר דמות כזו.
 
-### מודל 3: מסגרת מטא-סטוריטלינג — סיפור על הסיפור
+### מודל 3: מסגרת מטא-סטוריטלינג, סיפור על הסיפור
 
 מקור: זה מודל שפיתחתי מניסיון שטח, כשהבנתי שלפעמים הבעיה היא לא הסיפור עצמו אלא הסיפור שהארגון מספר לעצמו על הבעיה. הוא מבוסס על עקרונות שבעולם הטיפולי אנחנו מכירים כעבודה על הנרטיב-על, הסיפור שמעל הסיפור.
 
@@ -210,6 +210,6 @@ date: 2026-07-20
 - Fazzi, G. F., Hinge, J. S., Heinrich, S., & Burelli, P. (2025). *Don't get too excited: Eliciting emotions in LLMs.* arXiv.
 - Kim, J., Yang, N., & Jung, K. (2024). *Persona is a double-edged sword: Mitigating the negative impact of role-playing prompts in zero-shot reasoning tasks.* arXiv.
 - Li, C., Wang, J., Zhang, Y., Zhu, K., Hou, W., Lian, J., Luo, F., Yang, Q., & Xie, X. (2023). *Large language models understand and can be enhanced by emotional stimuli.* arXiv.
-- Shen, L., Seung, S., Andersen, K. K., & McNeal, D. (2017). The psychological mechanisms of persuasive impact from narrative communication. *Studies in Communication Sciences, 17*(2), 165–181.
+- Shen, L., Seung, S., Andersen, K. K., & McNeal, D. (2017). The psychological mechanisms of persuasive impact from narrative communication. *Studies in Communication Sciences, 17*(2), 165 עד 181.
 - Wang, X., Li, C., Chang, Y., Wang, J., & Wu, Y. (2024). *NegativePrompt: Leveraging psychology for large language models enhancement via negative emotional stimuli.* arXiv.
 - Zak, P. J. (2015). Why inspiring stories make us react: The neuroscience of narrative. *Cerebrum, 2015,* 2.

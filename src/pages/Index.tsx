@@ -54,7 +54,7 @@ const SafetyScreen = () => (
         </a>
       </div>
       <p className="text-[11px] text-muted-foreground/70 text-center leading-relaxed">
-        אם יש סכנת חיים מיידית — חייגו 101.
+        אם יש סכנת חיים מיידית, חייגו 101.
       </p>
     </div>
   </div>

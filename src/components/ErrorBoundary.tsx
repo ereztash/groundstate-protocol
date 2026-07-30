@@ -34,7 +34,7 @@ class ErrorBoundary extends Component<Props, State> {
           <p className="cor-overline-he">רגע</p>
           <h1 className="cor-title text-foreground">משהו נתקע כאן לרגע.</h1>
           <p className="cor-body-lg max-w-md text-foreground/80">
-            אפשר לרענן את העמוד — או פשוט לקבוע איתי שיחה ישירות, וגם זה ייפתר.
+            אפשר לרענן את העמוד, או פשוט לקבוע איתי שיחה ישירות, וגם זה ייפתר.
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3">

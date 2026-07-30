@@ -57,7 +57,7 @@ describe("useDwellState()", () => {
     expect(result.current).toBe("returning");
   });
 
-  it("returning phase is sticky — does not escalate over time", () => {
+  it("returning phase is sticky, does not escalate over time", () => {
     window.localStorage.setItem(VISIT_MARKER_KEY, "1");
     const { result } = renderHook(() => useDwellState());
     expect(result.current).toBe("returning");
