@@ -12,8 +12,12 @@ import { stages } from "@/lib/stages";
  */
 const StageStepper = ({
   exitCriteria,
+  inputs,
+  transformations,
 }: {
   exitCriteria: Record<string, string>;
+  inputs: Record<string, string>;
+  transformations: Record<string, string>;
 }) => {
   const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -107,7 +111,15 @@ const StageStepper = ({
 
           <p className="mt-5 cor-body-lg text-foreground/85">{s.description}</p>
 
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            <div className="border-r-2 border-border pr-3">
+              <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
+                קלט
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+                {inputs[s.number]}
+              </p>
+            </div>
             <div className="border-r-2 border-border pr-3">
               <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
                 תוצר ביד
@@ -125,6 +137,12 @@ const StageStepper = ({
               </p>
             </div>
           </div>
+
+          {/* Compact input → mechanism → output chain, so the transformation
+              is scannable without reading all three fields above. */}
+          <p className="mt-6 border-t border-border pt-4 text-center font-mono text-xs leading-relaxed text-primary/75 sm:text-sm">
+            {transformations[s.number]}
+          </p>
         </div>
       ))}
     </div>

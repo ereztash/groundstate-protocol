@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 import CoherenceVectors from "./CoherenceVectors";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
-import { trackCtaClick } from "@/lib/analytics";
+import { trackCtaClick, trackEvent } from "@/lib/analytics";
 import { stages, type Stage } from "@/lib/stages";
 import Guarantee from "./Guarantee";
 
@@ -12,14 +12,35 @@ const SequenceSection = () => {
   // diagram lights up. Set on hover and on keyboard focus, so it works without
   // a pointer — the cards already take focus for their CTA.
   const [activeStage, setActiveStage] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const handleClick = (stage: Stage) => {
     trackCtaClick(`sequence_${stage.value}`);
     requestStage(stage.value);
   };
 
+  // First point on the page a visitor sees a concrete price (each card's
+  // priceLabel) — fires once, matching the pattern CoherenceVectors already
+  // uses for its own entry animation.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        trackEvent("pricing_reached", { source: "sequence_section" });
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -40px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="sequence"
       dir="rtl"
       className="relative py-20 md:py-28"
