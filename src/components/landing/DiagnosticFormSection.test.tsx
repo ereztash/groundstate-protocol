@@ -15,10 +15,8 @@ vi.mock("@/lib/web3forms", () => ({
   submitForm: vi.fn(),
 }));
 
-// SpotsLeft fires a live fetch on mount; null = render the static line, no net.
-vi.mock("@/lib/spots", () => ({
-  useSpotsLeft: () => null,
-}));
+// SpotsLeft used to fire a live fetch on mount and needed stubbing. It is a
+// static line now, with no data source to mock.
 
 // BookingSection is a lazy Calendly embed shown after success — stub it so the
 // test doesn't pull external scripts.
