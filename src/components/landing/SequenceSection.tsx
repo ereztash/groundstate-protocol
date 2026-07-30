@@ -68,6 +68,7 @@ const SequenceSection = () => {
                 onMouseLeave={() => setActiveStage(null)}
                 onFocusCapture={() => setActiveStage(s.value)}
                 onBlurCapture={() => setActiveStage(null)}
+                onClick={() => setActiveStage(s.value)}
               >
               <div className="border-t border-foreground pb-2 pt-4">
                 <span className="stage-numeral block">{s.number}</span>
