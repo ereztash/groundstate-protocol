@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
 import CoherenceVisual from "@/components/experiential/CoherenceVisual";
 import StageStepper from "@/components/StageStepper";
+import StageFieldTrace from "@/components/experiential/StageFieldTrace";
 import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
@@ -75,8 +76,13 @@ const Methodology = () => {
     path: "/protocol",
   });
 
+  // `overflow-x-clip` below, not `-hidden`: `hidden` on one axis makes the
+  // other compute to `auto`, which turns the root into a scroll container and
+  // silently breaks `position: sticky` inside it — which is what StageFieldTrace's
+  // figure relies on. `clip` gives the same horizontal guard without creating
+  // a scrollport.
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a href="#protocol-main" className="skip-to-content">
         דלג לתוכן
       </a>
@@ -156,10 +162,21 @@ const Methodology = () => {
                 ארבעה שלבים. סדר קבוע.
               </h2>
               <p className="mt-3 text-sm text-muted-foreground">
-                לחצו בין השלבים — כל אחד בונה את הבא.
+                כל אחד בונה את הבא. גללו כדי לראות את הרצף נבנה.
               </p>
             </Reveal>
+
+            {/* The shape first, scroll-linked; the detail second, in the
+                stepper. Both read the same four stages from stages.ts. */}
+            <StageFieldTrace
+              transformations={TRANSFORMATIONS}
+              className="mb-16"
+            />
+
             <Reveal delay={0.05}>
+              <p className="mb-6 text-sm text-muted-foreground">
+                לחצו בין השלבים לפירוט המלא — קלט, תוצר, וסימן הסיום.
+              </p>
               <StageStepper
                 exitCriteria={EXIT_CRITERIA}
                 inputs={INPUTS}

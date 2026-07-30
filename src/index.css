@@ -585,6 +585,75 @@
   opacity: 1;
 }
 
+/* Scroll-linked stage trace (StageFieldTrace.tsx). The component writes
+   --trace-p (0→1 across the section) and --n0..--n3 (per-node ignition) as
+   custom properties, so scrolling repaints without a React render and without
+   touching layout — only opacity, stroke-dashoffset and fill change.
+
+   No transitions or keyframes here on purpose: the values are driven straight
+   off scroll position, so there is nothing for the global reduced-motion rule
+   to clamp. The component instead writes every node lit when reduced motion is
+   requested, which is why the figure stays complete rather than empty. */
+.cor-trace__rail {
+  stroke: hsl(var(--foreground) / 0.14);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+.cor-trace__spine {
+  stroke: hsl(var(--primary));
+  stroke-width: 2;
+  stroke-linecap: round;
+  /* pathLength="1" normalises the dash units, so the offset is just 1 − p. */
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--trace-p, 0));
+}
+.cor-trace__tick {
+  stroke: hsl(var(--primary));
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: calc(var(--n, 0) * 0.45);
+}
+/* Copper marks the energised node and nothing else — the palette rule. */
+.cor-trace__halo {
+  fill: hsl(var(--accent));
+  opacity: calc(var(--n, 0) * 0.12);
+}
+.cor-trace__ring {
+  fill: none;
+  stroke: hsl(var(--primary));
+  stroke-width: 1.5;
+  opacity: calc(0.3 + var(--n, 0) * 0.7);
+}
+.cor-trace__core {
+  fill: hsl(var(--accent));
+  opacity: var(--n, 0);
+}
+.cor-trace__num {
+  font-family: 'Inter', 'Assistant', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-feature-settings: 'tnum' on;
+  fill: hsl(var(--primary) / 0.5);
+}
+.cor-trace__verb {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: hsl(var(--primary));
+  opacity: calc(0.35 + var(--n, 0) * 0.65);
+}
+
+/* Inactive panels de-emphasise their body copy only. Panel-level opacity would
+   drag the teal kicker under WCAG AA — the same reason `.about-step` dims only
+   its paragraphs. */
+.cor-trace-step {
+  transition: color 0.4s ease;
+}
+.cor-trace-step[data-dim] h3,
+.cor-trace-step[data-dim] p:not(:first-child) {
+  color: hsl(var(--foreground) / 0.5);
+}
+
 /* Scroll-entry reveal, driven by Reveal.tsx toggling `.is-shown` from an
    IntersectionObserver. Replaces framer-motion's `whileInView` — the same
    12px rise and fade, without an animation runtime in the landing bundle.
