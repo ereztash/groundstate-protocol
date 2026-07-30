@@ -97,7 +97,7 @@ const CoherenceVectors = ({ activeStage = null, className }: Props) => {
       viewBox="0 0 400 154"
       className={`cor-vectors${aligned ? " is-aligned" : ""}${className ? ` ${className}` : ""}`}
       aria-hidden="true"
-      focusable="false"
+      tabIndex={-1}
     >
       {/* The spine the four resolve onto. Fades in with the alignment. */}
       <line

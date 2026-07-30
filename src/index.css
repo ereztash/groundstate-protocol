@@ -547,7 +547,7 @@
   font-weight: 300;
   fill: hsl(var(--primary) / 0.55);
   font-feature-settings: 'tnum' on;
-  transition: fill 0.25s ease;
+  transition: fill 0.15s ease;
 }
 .cor-vectors__v.is-active .cor-vectors__num {
   fill: hsl(var(--accent));
@@ -568,8 +568,14 @@
   fill: hsl(var(--accent));
 }
 
+/* Focus ring for keyboard navigation */
+.cor-vectors__v:focus-visible line,
+.cor-vectors__v:focus-visible path {
+  filter: drop-shadow(0 0 0 2px hsl(var(--ring)));
+}
+
 .cor-vectors__spine {
-  stroke: hsl(var(--foreground) / 0.16);
+  stroke: hsl(var(--foreground) / 0.25);
   stroke-width: 1;
   stroke-dasharray: 3 5;
   opacity: 0;
