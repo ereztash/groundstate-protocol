@@ -8,7 +8,7 @@ const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();
   const handleClick = () => {
     trackCtaClick("full_package");
-    requestStage("full-package");
+    requestStage("full-package", "full_package");
   };
 
   return (

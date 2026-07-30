@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
@@ -17,6 +17,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
 import { trackScrollDepth } from "@/lib/analytics";
+import { parseLeadSource } from "@/lib/web3forms";
 
 // The stage recommender is the only thing on this page still using
 // framer-motion (AnimatePresence over a multi-step quiz). Splitting it out
@@ -28,6 +29,16 @@ const StageRecommenderSection = lazy(
 
 const Landing = () => {
   const reachedRef = useRef<Set<number>>(new Set());
+
+  // Visitors arriving from another page's CTA carry ?src=. Read once, on the
+  // first render, so the value is already in the provider if they submit
+  // without touching any in-page CTA.
+  const initialSource = useMemo(() => {
+    if (typeof window === "undefined") return null;
+    return parseLeadSource(
+      new URLSearchParams(window.location.search).get("src"),
+    );
+  }, []);
 
   // Deep-link support: content pages (articles, about, protocol) send their
   // CTA to "/#diagnostic-form" so a warm reader lands ON the form, not at the
@@ -69,7 +80,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <DiagnosticFormProvider>
+    <DiagnosticFormProvider initialSource={initialSource}>
       <ScrollProgress />
       <a href="#hero" className="skip-to-content">
         דלג לתוכן
@@ -106,8 +117,7 @@ const Landing = () => {
             <StageRecommenderSection />
           </Suspense>
           {/* Value before price: the tangible deliverables run before the price
-              ladder (the lifetime-ROI line is folded into SequenceSection's
-              intro), so the numbers land on top of value already built. The two
+              ladder, so the numbers land on top of value already built. The two
               priced offers (Sequence → FullPackage) stay contiguous, and the
               "not for everyone" filter follows them as the final take-away. */}
           <DeliverablesPreview />

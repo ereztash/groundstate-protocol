@@ -4,12 +4,17 @@ import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Hero from "./Hero";
+import { DiagnosticFormProvider } from "./DiagnosticFormProvider";
 
+// Hero's CTA now routes through the provider so the lead records which entry
+// point it came from, rather than scrolling to the form anonymously.
 const renderHero = () =>
   render(
     <MemoryRouter>
       <TooltipProvider>
-        <Hero />
+        <DiagnosticFormProvider>
+          <Hero />
+        </DiagnosticFormProvider>
       </TooltipProvider>
     </MemoryRouter>
   );

@@ -1,4 +1,5 @@
 import { trackCtaClick } from "@/lib/analytics";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
 
 /**
  * Mid-page conversion point. The label is fixed rather than escalating with
@@ -7,11 +8,11 @@ import { trackCtaClick } from "@/lib/analytics";
  * worth having in StickyMobileCTA, which is out of the reading path.
  */
 const MidPageCTA = () => {
+  const { requestForm } = useDiagnosticForm();
+
   const handleClick = () => {
     trackCtaClick("mid_page");
-    document
-      .getElementById("diagnostic-form")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    requestForm("mid_cta");
   };
 
   return (
@@ -26,7 +27,7 @@ const MidPageCTA = () => {
             onClick={handleClick}
             className="cta-line inline-flex h-11 items-center justify-center rounded-md px-5 text-sm font-semibold"
           >
-            לתיאום שיחת אבחון
+            לתיאום שיחת התאמה
           </button>
         </div>
       </div>

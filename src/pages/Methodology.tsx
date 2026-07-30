@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Reveal, RevealItem, RevealStagger } from "@/components/landing/Reveal";
 import CoherenceVisual from "@/components/experiential/CoherenceVisual";
 import StageStepper from "@/components/StageStepper";
+import StageFieldTrace from "@/components/experiential/StageFieldTrace";
 import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
@@ -22,7 +23,13 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 const EXIT_CRITERIA: Record<string, string> = {
   "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך — לא חזרה על ניסוח שלי.",
   "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
-  "03": "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית בת-הצלבה, ואתה מחשב.",
+  // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
+  // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
+  // client computing the number from an external benchmark — as a certain
+  // outcome of the stage. Per operator guidance 2026-07-30 that mechanism is
+  // not currently anchored enough to promise. This states what the stage
+  // produces instead of who arrives at the number.
+  "03": "התמחור מנוסח בכתב, עם הרציונל לצידו — כך שאפשר להגיד אותו בקול בלי להסס, ולהסביר על מה הוא נשען.",
   "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה — תלוי בכך שיצאה מהיד.",
 };
 
@@ -69,8 +76,13 @@ const Methodology = () => {
     path: "/protocol",
   });
 
+  // `overflow-x-clip` below, not `-hidden`: `hidden` on one axis makes the
+  // other compute to `auto`, which turns the root into a scroll container and
+  // silently breaks `position: sticky` inside it — which is what StageFieldTrace's
+  // figure relies on. `clip` gives the same horizontal guard without creating
+  // a scrollport.
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a href="#protocol-main" className="skip-to-content">
         דלג לתוכן
       </a>
@@ -150,10 +162,21 @@ const Methodology = () => {
                 ארבעה שלבים. סדר קבוע.
               </h2>
               <p className="mt-3 text-sm text-muted-foreground">
-                לחצו בין השלבים — כל אחד בונה את הבא.
+                כל אחד בונה את הבא. גללו כדי לראות את הרצף נבנה.
               </p>
             </Reveal>
+
+            {/* The shape first, scroll-linked; the detail second, in the
+                stepper. Both read the same four stages from stages.ts. */}
+            <StageFieldTrace
+              transformations={TRANSFORMATIONS}
+              className="mb-16"
+            />
+
             <Reveal delay={0.05}>
+              <p className="mb-6 text-sm text-muted-foreground">
+                לחצו בין השלבים לפירוט המלא — קלט, תוצר, וסימן הסיום.
+              </p>
               <StageStepper
                 exitCriteria={EXIT_CRITERIA}
                 inputs={INPUTS}

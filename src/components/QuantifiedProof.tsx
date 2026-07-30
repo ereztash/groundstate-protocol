@@ -14,10 +14,13 @@
 const STATS: { value: string; label: string }[] = [
   {
     value: "×5–7.5",
-    label: "הערך שנפתח ביחס למחיר — אצל הלקוחות שהשלימו את הרצף עם ערך מדיד",
+    // n stated explicitly. This file's own closing line commits to "מעט
+    // ומאומת", and a range with no n doesn't meet that standard — while
+    // ClientProofSection already discloses its n ("22 פגישות בוצעו עד כה").
+    label: "הערך שנפתח ביחס למחיר — אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד",
   },
   {
-    value: "5,500 ₪",
+    value: "₪5,500",
     label: "עסקה ראשונה שנסגרה אחרי שלב 4, מתוך 10 הפניות שיצאו בליווי",
   },
 ];

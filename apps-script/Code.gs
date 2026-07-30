@@ -20,6 +20,14 @@
  *     number of remaining spots. The site reads B1 live via ?action=spots.
  *   - If the Config tab or B1 is missing/blank, the site falls back to its
  *     static "up to 10 clients a month" line, so nothing breaks.
+ *   - Cell B2 holds a freshness stamp, written automatically when B1 changes.
+ *     The site shows a number only while that stamp is recent; past the window
+ *     it shows the static line instead, so an unmaintained cell can never turn
+ *     into a false scarcity claim.
+ *   - When the count has NOT changed but is still accurate, refresh the stamp
+ *     from the "COR-SYS → אישור מספר המקומות" menu. Re-typing the same value
+ *     into B1 does nothing: Sheets fires no edit event when the committed value
+ *     is unchanged.
  *
  * To redeploy after editing: Deploy → Manage deployments → edit the existing
  * deployment and pick "New version" (otherwise the old code keeps serving).
@@ -44,6 +52,9 @@ const NOTIFY_EMAIL = "Erez2812345@gmail.com";
 // alerts. Leads are still written to the sheet regardless of this cap.
 const MAX_NOTIFICATIONS_PER_DAY = 50;
 
+// Appending to this list is safe: existing sheets keep their columns and the
+// new ones fill from the next submission onward. Do NOT reorder — rows are
+// written by mapping this array, so a reorder shifts historical columns.
 const HEADERS = [
   "submittedAt",
   "fullName",
@@ -52,7 +63,25 @@ const HEADERS = [
   "stage",
   "challenge",
   "preferredTimes",
+  // Which CTA the visitor came through (hero / mid_cta / sticky / sequence /
+  // full_package / wizard). Previously unrecoverable: most leads read
+  // "(נקבע בשיחה)" for stage with no way to tell where they entered.
+  "source",
+  // The stage-recommender answers, which the site collected and then dropped.
+  "wizardAnswers",
+  "wizardOpenText",
+  // "no_active_practice" when the screening question came back negative.
+  // Never blocks a submit — it prioritises follow-up.
+  "screeningFlag",
 ];
+
+/**
+ * Cell holding the timestamp of the last spots-count edit. Written
+ * automatically by onEdit() below; the site stops showing a live count once it
+ * goes stale, so an unmaintained number can't turn into a false scarcity
+ * claim.
+ */
+const SPOTS_STAMP_CELL = "B2";
 
 function jsonOut(obj) {
   return ContentService
@@ -82,13 +111,103 @@ function getSpotsLeft() {
 }
 
 /**
- * GET endpoint. `?action=spots` returns { success, spotsLeft } for the
- * scarcity counter on the landing page.
+ * When the spots count was last edited, as an ISO string, or null if never
+ * stamped. The site treats a missing or old stamp as "don't show a number".
+ *
+ * Note the spreadsheet's own last-modified time is useless here: doPost appends
+ * a row on every lead, so it refreshes constantly while B1 goes stale.
+ */
+function getSpotsUpdatedAt() {
+  var config = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG_SHEET);
+  if (!config) return null;
+  var v = config.getRange(SPOTS_STAMP_CELL).getValue();
+  if (v instanceof Date && !isNaN(v.getTime())) return v.toISOString();
+  if (typeof v === "string" && v) {
+    var parsed = new Date(v);
+    if (!isNaN(parsed.getTime())) return parsed.toISOString();
+  }
+  return null;
+}
+
+/** Writes the freshness stamp. Shared by the edit trigger and the menu. */
+function stampSpotsCount() {
+  var config = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG_SHEET);
+  if (!config) return null;
+  var now = new Date();
+  config.getRange(SPOTS_STAMP_CELL).setValue(now);
+  return now;
+}
+
+/**
+ * Simple trigger: stamps SPOTS_STAMP_CELL whenever the spots count (B1) is
+ * edited by hand, so freshness is tracked without the operator having to
+ * remember a second cell. Simple triggers need no installation.
+ *
+ * Covers the common case — the number actually changing as spots fill. It does
+ * NOT cover re-entering the same value: Sheets fires no edit event when the
+ * committed value is identical to what was already there. That is what the
+ * custom menu below is for; without it the only way to refresh the stamp on an
+ * unchanged count was to change B1 and change it back, which briefly published
+ * a wrong number to the live site.
+ */
+function onEdit(e) {
+  try {
+    if (!e || !e.range) return;
+    var sheet = e.range.getSheet();
+    if (sheet.getName() !== CONFIG_SHEET) return;
+    if (e.range.getA1Notation() !== "B1") return;
+    stampSpotsCount();
+  } catch (err) {
+    console.error("onEdit stamp failed: " + err);
+  }
+}
+
+/**
+ * Adds a COR-SYS menu on open. Simple trigger, no installation needed.
+ */
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("COR-SYS")
+    .addItem("אישור מספר המקומות (רענון חותמת)", "confirmSpotsCount")
+    .addToUi();
+}
+
+/**
+ * Menu action: confirms the current spots count is still accurate today,
+ * without touching the number itself. Use this when the count has not changed
+ * but is still correct — otherwise it goes stale after
+ * SPOTS_STALE_AFTER_DAYS (see src/lib/spots.ts) and the site falls back to the
+ * static availability line.
+ */
+function confirmSpotsCount() {
+  var ui = SpreadsheetApp.getUi();
+  var stamped = stampSpotsCount();
+  if (!stamped) {
+    ui.alert('לא נמצאה לשונית "' + CONFIG_SHEET + '" — החותמת לא עודכנה.');
+    return;
+  }
+  ui.alert(
+    "מספר המקומות אושר.\n\n" +
+      "נותרו: " + getSpotsLeft() + "\n" +
+      "אושר ב: " + Utilities.formatDate(
+        stamped, Session.getScriptTimeZone(), "dd/MM/yyyy HH:mm") + "\n\n" +
+      "האתר יציג את המספר כל עוד האישור טרי."
+  );
+}
+
+/**
+ * GET endpoint. `?action=spots` returns { success, spotsLeft, spotsUpdatedAt }
+ * for the scarcity counter on the landing page. The site decides whether the
+ * stamp is fresh enough to show a number — see src/lib/spots.ts.
  */
 function doGet(e) {
   var action = e && e.parameter ? e.parameter.action : "";
   if (action === "spots") {
-    return jsonOut({ success: true, spotsLeft: getSpotsLeft() });
+    return jsonOut({
+      success: true,
+      spotsLeft: getSpotsLeft(),
+      spotsUpdatedAt: getSpotsUpdatedAt(),
+    });
   }
   return jsonOut({ success: true });
 }
@@ -132,15 +251,26 @@ function notify(row) {
     if (sentToday >= MAX_NOTIFICATIONS_PER_DAY) return;
     props.setProperty(dayKey, String(sentToday + 1));
 
-    var subject = "ליד חדש — COR-SYS: " + (row.fullName || "ללא שם");
+    // Flag the unscreened case in the subject so it's triageable from the
+    // inbox list without opening the mail.
+    var flagged = row.screeningFlag === "no_active_practice";
+    var subject =
+      "ליד חדש — COR-SYS: " +
+      (row.fullName || "ללא שם") +
+      (flagged ? " [אין פרקטיקה פעילה]" : "");
     var body =
-      "התקבלה פנייה חדשה מטופס האבחון:\n\n" +
+      "התקבלה פנייה חדשה מטופס ההתאמה:\n\n" +
       "שם: " + cell(row.fullName) + "\n" +
       "טלפון: " + cell(row.phone) + "\n" +
       "מייל: " + cell(row.email) + "\n" +
       "שלב: " + cell(row.stage) + "\n" +
-      "חלונות זמן: " + cell(row.preferredTimes) + "\n\n" +
+      "הגיע מ: " + cell(row.source) + "\n" +
+      "חלונות זמן: " + cell(row.preferredTimes) + "\n" +
+      "פרקטיקה פעילה: " + (flagged ? "לא" : "כן") + "\n\n" +
       "התקיעה (במילותיו):\n" + cell(row.challenge) + "\n\n" +
+      "שאלון ההתאמה:\n" +
+      "  תשובות: " + cell(row.wizardAnswers) + "\n" +
+      "  במילותיו: " + cell(row.wizardOpenText) + "\n\n" +
       "נשלח: " + cell(row.submittedAt);
     MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
   } catch (err) {
@@ -187,6 +317,10 @@ function doPost(e) {
       stage: data.stage,
       challenge: data.challenge,
       preferredTimes: data.preferredTimes,
+      source: data.source,
+      wizardAnswers: data.wizardAnswers,
+      wizardOpenText: data.wizardOpenText,
+      screeningFlag: data.screeningFlag,
     };
 
     var sheet = getLeadsSheet();

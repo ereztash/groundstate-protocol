@@ -69,7 +69,7 @@ test.describe("Landing page (production bundle)", () => {
   }) => {
     await page.goto("/");
     const cta = page.locator("#hero button").first();
-    await expect(cta).toContainText("לתיאום שיחת אבחון");
+    await expect(cta).toContainText("לתיאום שיחת התאמה");
   });
 
   test("page title is the Hebrew brand title", async ({ page }) => {

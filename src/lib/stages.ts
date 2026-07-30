@@ -10,7 +10,7 @@ export type Stage = {
   description: string;
   deliverable: string;
   priceNis: number;
-  /** Canonical Hebrew formatting (e.g. "1,000 ש״ח"). One source of truth. */
+  /** Canonical formatting: ₪ prefix, e.g. "₪1,000". One source of truth. */
   priceLabel: string;
   value: StageValue;
   /** CTA copy used in SequenceSection cards. */
@@ -27,7 +27,7 @@ export const stages: readonly Stage[] = [
     deliverable:
       "מסמך נרטיב באורך עמוד עד שניים עם 3 עד 5 ניסוחים מילוליים מוכנים.",
     priceNis: 1000,
-    priceLabel: "1,000 ש״ח",
+    priceLabel: "₪1,000",
     value: "stage-1",
     ctaLabel: "אני רוצה את שלב 1",
   },
@@ -39,7 +39,7 @@ export const stages: readonly Stage[] = [
       "פגישה אחת להבלטת הערך הייחודי שלך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. לא מוותרים על חלקים. בוחרים על מה האור נופל.",
     deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
     priceNis: 1300,
-    priceLabel: "1,300 ש״ח",
+    priceLabel: "₪1,300",
     value: "stage-2",
     ctaLabel: "אני רוצה את שלב 2",
   },
@@ -51,7 +51,7 @@ export const stages: readonly Stage[] = [
       "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלך לשפה שהלקוח שלך משלם עליה.",
     deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
     priceNis: 1600,
-    priceLabel: "1,600 ש״ח",
+    priceLabel: "₪1,600",
     value: "stage-3",
     ctaLabel: "אני רוצה את שלב 3",
   },
@@ -64,7 +64,7 @@ export const stages: readonly Stage[] = [
     deliverable:
       "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה שזיהיתי בתגובות.",
     priceNis: 1900,
-    priceLabel: "1,900 ש״ח",
+    priceLabel: "₪1,900",
     value: "stage-4",
     ctaLabel: "אני רוצה את שלב 4",
   },
@@ -80,14 +80,14 @@ export function getStage(value: StageValue): Stage | undefined {
  */
 export const fullPackage = {
   priceNis: 4500,
-  priceLabel: "4,500 ש״ח",
+  priceLabel: "₪4,500",
   fullPriceNis: 5800,
-  fullPriceLabel: "5,800 ש״ח",
+  fullPriceLabel: "₪5,800",
   savingsNis: 1300,
-  savingsLabel: "1,300 ש״ח",
+  savingsLabel: "₪1,300",
   name: "החבילה המלאה",
   deliverable: "כל ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
   description:
-    "כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך 1,300 ש״ח לעומת רכישה שלב אחר שלב.",
+    "כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך ₪1,300 לעומת רכישה שלב אחר שלב.",
   ctaLabel: "אני רוצה את החבילה המלאה",
 } as const;

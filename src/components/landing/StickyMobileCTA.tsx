@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { trackCtaClick } from "@/lib/analytics";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { getConsent } from "@/lib/consent";
 import { useDwellState } from "@/lib/useDwellState";
 import { getCtaCopy } from "@/lib/dwellCopy";
 
 const StickyMobileCTA = () => {
+  const { requestForm } = useDiagnosticForm();
   const [visible, setVisible] = useState(false);
   const phase = useDwellState();
   const ctaCopy = getCtaCopy(phase);
@@ -38,9 +40,7 @@ const StickyMobileCTA = () => {
 
   const handleClick = () => {
     trackCtaClick("sticky_mobile");
-    document
-      .getElementById("diagnostic-form")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    requestForm("sticky");
   };
 
   return (
