@@ -3,7 +3,7 @@ import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 import CoherenceVectors from "./CoherenceVectors";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
-import { stages, type Stage } from "@/lib/stages";
+import { stages, type Stage } from "@/data/sprint-stages";
 import Guarantee from "./Guarantee";
 
 const SequenceSection = () => {

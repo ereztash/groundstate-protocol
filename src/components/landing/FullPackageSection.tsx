@@ -2,7 +2,7 @@ import { Reveal } from "./Reveal";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick } from "@/lib/analytics";
 import { Footnote } from "./Footnote";
-import { fullPackage } from "@/lib/stages";
+import { fullPackage } from "@/data/sprint-stages";
 
 const FullPackageSection = () => {
   const { requestStage } = useDiagnosticForm();

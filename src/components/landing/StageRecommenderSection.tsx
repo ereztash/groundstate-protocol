@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDiagnosticForm, type StageValue } from "./DiagnosticFormProvider";
 import { trackEvent } from "@/lib/analytics";
-import { fullPackage, getStage } from "@/lib/stages";
+import { fullPackage, getStage } from "@/data/sprint-stages";
 // Storage lives in a shared module so the diagnostic form can read the same
 // answers at submit time — see src/lib/wizardState.ts.
 import {
@@ -102,7 +102,7 @@ export type Recommendation = {
 };
 
 // Single-problem recommendations (one "2" wins). Stage facts (number, name,
-// price, deliverable) come from src/lib/stages.ts so SequenceSection and the
+// price, deliverable) come from src/data/sprint-stages.ts so SequenceSection and the
 // wizard can never drift on pricing or copy. Each rec owns only the wizard-
 // specific reflection + reason.
 const SINGLE_RECS: Record<number, Recommendation> = {

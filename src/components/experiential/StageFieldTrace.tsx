@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
-import { stages } from "@/lib/stages";
+import { stages } from "@/data/sprint-stages";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 /**

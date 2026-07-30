@@ -27,16 +27,13 @@ import {
 } from "@/lib/web3forms";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 import { formatWizardAnswers, loadWizardState } from "@/lib/wizardState";
+import { stagePayloadLabels } from "@/data/sprint-stages";
 
 const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
 
-const stageLabels: Record<string, string> = {
-  "stage-1": "שלב 1, נרטיב ייחודי",
-  "stage-2": "שלב 2, הצעת ערך ייחודית",
-  "stage-3": "שלב 3, מוצר ייחודי",
-  "stage-4": "שלב 4, רכישת לקוחות פרואקטיבית",
-  "full-package": "חבילה מלאה",
-};
+// Derived, not re-typed. These labels used to repeat all four stage names as
+// literals, so renaming a stage had three places to go wrong.
+const stageLabels = stagePayloadLabels;
 
 const timeWindows = [
   { id: "morning", label: "בוקר, 08:00 עד 12:00" },

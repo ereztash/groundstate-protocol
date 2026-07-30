@@ -1,0 +1,41 @@
+{
+  "id": "C1",
+  "consent_state": "pending",
+  "source_integrity_confirmed": false,
+  "outcome": "converted",
+  "subject_label": "מומחה תחום נישתי",
+  "niche_generalized": true,
+  "pre_registered_rule": null,
+  "chain": [
+    {
+      "column": "said",
+      "text": "מזהה דליפות אצל אחרים, ולא אצל עצמו בתמחור.",
+      "evidence_level": "operator"
+    },
+    {
+      "column": "identified",
+      "text": "ריבוי ערוצים, אין משפט ליבה, והמחיר נשען על שכר מקביל בלי בעלות עצמית.",
+      "evidence_level": "operator"
+    },
+    {
+      "column": "created",
+      "text": "משפט בידול, ותמחור מדורג.",
+      "evidence_level": "operator"
+    },
+    {
+      "column": "done",
+      "text": "פנייה ללקוחות קצה, שלושה לקוחות בטסט.",
+      "evidence_level": "operator"
+    },
+    {
+      "column": "happened",
+      "text": "הכנסה של ₪5,500 מלקוח שלו, בין מפגש 3 למפגש 4.",
+      "evidence_level": "operator"
+    }
+  ],
+  "caveats": [
+    "n=1. מקרה אחד אינו שיטה מוכחת.",
+    "המנגנון סביר ותועד פעם אחת. אין כאן הסבר סיבתי ואין כאן מנבא סגירה.",
+    "התחום הוסתר בכוונה לרמת תיאור כללית, כדי שלא יזוהה בשוק קטן."
+  ]
+}
