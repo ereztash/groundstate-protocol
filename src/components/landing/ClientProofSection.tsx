@@ -64,7 +64,7 @@ const ClientProofSection = () => {
             <div className="flex items-baseline gap-2">
               <dt className="sr-only">אמינות העדויות</dt>
               <dd className="text-sm text-muted-foreground">
-                כל העדויות בשם מלא ובקישור ללינקדאין — ניתנות לאימות.
+                כל העדויות בשם מלא ובקישור ללינקדאין, ניתנות לאימות.
               </dd>
             </div>
           </dl>

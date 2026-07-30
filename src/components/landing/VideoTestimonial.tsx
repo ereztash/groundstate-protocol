@@ -1,3 +1,4 @@
+import { videoTestimonial } from "@/lib/clients";
 import { useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 
@@ -84,7 +85,7 @@ const VideoTestimonial = () => {
       <figcaption className="space-y-4">
         <blockquote className="pull-quote pr-8 md:pr-10">
           <p>
-            ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.
+            {videoTestimonial.quote}
           </p>
         </blockquote>
 

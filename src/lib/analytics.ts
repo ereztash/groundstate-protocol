@@ -27,7 +27,7 @@ export function initAnalytics(): void {
   if (typeof window === "undefined") return;
   if (!MEASUREMENT_ID || MEASUREMENT_ID === "G-PLACEHOLDER") {
     console.info(
-      "[analytics] VITE_GA_MEASUREMENT_ID not set — events will be no-op."
+      "[analytics] VITE_GA_MEASUREMENT_ID not set, events will be no-op."
     );
     return;
   }

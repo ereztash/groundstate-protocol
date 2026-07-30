@@ -89,7 +89,7 @@ const Hero = () => {
               style={settleStyle(SETTLE.subtitle)}
             >
               תוכנית מובנית בת 30 יום לעצמאים שהידע המקצועי שלהם מבוסס, וההצעה
-              העסקית שנגזרת ממנו — פחות.
+              העסקית שנגזרת ממנו, פחות.
             </p>
 
             {/* Specification grid. The hairline separators come from a 1px gap
@@ -141,7 +141,7 @@ const Hero = () => {
                 className="mt-4 max-w-md text-sm leading-relaxed text-foreground/70"
               >
                 שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
-                הפתיחה המומלצת, והאם קיימת התאמה לתוכנית. במקרה שאין — הדבר ייאמר
+                הפתיחה המומלצת, והאם קיימת התאמה לתוכנית. במקרה שאין, הדבר ייאמר
                 במפורש.
               </p>
 

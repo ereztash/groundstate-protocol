@@ -49,7 +49,7 @@ const SiteFooter = () => (
       </div>
 
       <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/45">
-        © ארז טל-שיר — COR-SYS 2026
+        © ארז טל-שיר, COR-SYS 2026
       </div>
     </div>
   </footer>

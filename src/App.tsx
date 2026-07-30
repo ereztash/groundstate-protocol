@@ -15,10 +15,29 @@ const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const About = lazy(() => import("./pages/About"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-// Internal capture tool. Not linked from the site, carries a noindex directive,
-// and is deliberately absent from scripts/prerender.mjs so no static HTML exists
-// for a crawler to reach.
-const CaseIntake = lazy(() => import("./pages/CaseIntake"));
+/**
+ * Internal capture tool, holding client case detail.
+ *
+ * GitHub Pages is a static host with no request layer, so there is nowhere to
+ * check a credential and nothing that can answer 401. Hiding the route in the UI
+ * would leave the code — and the form — one URL guess away. The only protection
+ * a static host can actually enforce is absence: the route is compiled out, so
+ * in a normal production build the chunk does not exist and /case-intake falls
+ * through to the 404 page.
+ *
+ * It stays available in dev. Setting VITE_ENABLE_CASE_INTAKE=1 at build time
+ * includes it, which is for a host that can put a real credential in front of
+ * it. Do not set it for the Pages deploy.
+ */
+const CASE_INTAKE_ENABLED =
+  import.meta.env.DEV || import.meta.env.VITE_ENABLE_CASE_INTAKE === "1";
+const CaseIntake = CASE_INTAKE_ENABLED
+  ? lazy(() => import("./pages/CaseIntake"))
+  : null;
+/** Same gate: an internal review surface, not part of the public site. */
+const GuaranteeReview = CASE_INTAKE_ENABLED
+  ? lazy(() => import("./pages/GuaranteeReview"))
+  : null;
 
 /**
  * Reset scroll to the top on client-side navigation. Without this, following a
@@ -70,7 +89,12 @@ const App = () => (
             <Route path="/insights/:slug" element={<InsightArticle />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/case-intake" element={<CaseIntake />} />
+            {CASE_INTAKE_ENABLED && CaseIntake && (
+              <Route path="/case-intake" element={<CaseIntake />} />
+            )}
+            {CASE_INTAKE_ENABLED && GuaranteeReview && (
+              <Route path="/guarantee-review" element={<GuaranteeReview />} />
+            )}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -261,7 +261,7 @@ const DiagnosticFormSection = () => {
                 id="diagnostic-form-title"
                 className="cor-title text-foreground"
               >
-                שיחת התאמה — 20 דקות, ללא עלות
+                שיחת התאמה: 20 דקות, ללא עלות
               </h2>
               <p className="cor-body-lg text-foreground/80">
                 אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
@@ -274,7 +274,7 @@ const DiagnosticFormSection = () => {
               >
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדע אם זה מתאים לך — ביושר, גם אם לא.</span>
+                  <span>תדע אם זה מתאים לך. ביושר, גם אם לא.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
@@ -282,7 +282,7 @@ const DiagnosticFormSection = () => {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תקבל פרשנות אחת על התקיעה שלך — גם אם לא נמשיך ביחד.</span>
+                  <span>תקבל פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
                 </li>
               </ul>
 
@@ -340,13 +340,13 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>במשפט אחד — מה אתה יודע לעשות, שאתה לא מצליח למכור?
+                          <span className="field-num">01.</span>במשפט אחד: מה אתה יודע לעשות, שאתה לא מצליח למכור?
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             rows={3}
                             maxLength={800}
-                            placeholder="לדוגמה: יש לי 15 שנה ניסיון, אבל לשווק ולמכור את עצמי — שם אני פחות טוב..."
+                            placeholder="לדוגמה: יש לי 15 שנה ניסיון, אבל לשווק ולמכור את עצמי: שם אני פחות טוב..."
                             {...field}
                           />
                         </FormControl>
@@ -386,7 +386,7 @@ const DiagnosticFormSection = () => {
                           </legend>
                           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
                             הרצף מחלץ בידול מתוך עבודה שכבר קרתה. בלי לקוחות
-                            פעילים אין ממה לחלץ — ועדיף שנדע את זה מראש, שנינו.
+                            פעילים אין ממה לחלץ, ועדיף שנדע את זה מראש, שנינו.
                           </p>
                           <div className="mt-3 flex flex-wrap gap-3">
                             {[
@@ -444,7 +444,7 @@ const DiagnosticFormSection = () => {
                   noValidate
                 >
                   <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground/85">
-                    תודה. עוד שדה אחד וסיימנו. הטלפון הוא בשביל שאחזור אליך — לא נעשה ניוזלטר ולא נשתף עם אף אחד.
+                    תודה. עוד שדה אחד וסיימנו. הטלפון הוא בשביל שאחזור אליך, לא נעשה ניוזלטר ולא נשתף עם אף אחד.
                   </p>
 
                   <FormField

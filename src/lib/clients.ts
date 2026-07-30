@@ -38,6 +38,20 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
+/**
+ * The video testimonial's transcript line, moved here from VideoTestimonial so
+ * every verbatim client word lives in one file. Nothing in this file is edited
+ * for house style: these are other people's sentences, and altering them to fit
+ * a rule about punctuation would misquote them. See the exemption in
+ * src/lib/noDashes.test.ts.
+ */
+export const videoTestimonial = {
+  quote:
+    "ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
+  attribution: "גיא כהן",
+  linkedin: "https://www.linkedin.com/in/guycohen-ai/",
+} as const;
+
 export type ClientCredit = {
   name: string;
   /** Short credential line, when one is public. */

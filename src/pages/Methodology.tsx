@@ -21,7 +21,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך — לא חזרה על ניסוח שלי.",
+  "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך, לא חזרה על ניסוח שלי.",
   "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
@@ -29,14 +29,14 @@ const EXIT_CRITERIA: Record<string, string> = {
   // outcome of the stage. Per operator guidance 2026-07-30 that mechanism is
   // not currently anchored enough to promise. This states what the stage
   // produces instead of who arrives at the number.
-  "03": "התמחור מנוסח בכתב, עם הרציונל לצידו — כך שאפשר להגיד אותו בקול בלי להסס, ולהסביר על מה הוא נשען.",
-  "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה — תלוי בכך שיצאה מהיד.",
+  "03": "התמחור מנוסח בכתב, עם הרציונל לצידו, כך שאפשר להגיד אותו בקול בלי להסס, ולהסביר על מה הוא נשען.",
+  "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה, תלוי בכך שיצאה מהיד.",
 };
 
 // What goes into each stage — always the previous stage's output, which is
 // the "כל שלב בונה את הבא" principle below made concrete and checkable.
 const INPUTS: Record<string, string> = {
-  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלך — לא צריך לייצר חומר חדש.",
+  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלך, לא צריך לייצר חומר חדש.",
   "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעת עד היום.",
   "03": "הצעת הערך ומילון הכאב משלב 2.",
   "04": "תיאור המוצר עם התמחור משלב 3.",
@@ -70,9 +70,9 @@ const DARK = "bg-[#15191c] text-[hsl(var(--background))]";
 
 const Methodology = () => {
   useDocumentMeta({
-    title: "המתודולוגיה — הפרוטוקול של COR-SYS | ארז טל-שיר",
+    title: "המתודולוגיה, הפרוטוקול של COR-SYS | ארז טל-שיר",
     description:
-      "איך עובד הרצף: שלב סינון ואז ארבעה שלבים בסדר קבוע — חילוץ, הבלטה, תרגום, הפעלה. למה מבנה מנצח אינטואיציה, ומה יוצא ביד בסוף כל שלב.",
+      "איך עובד הרצף: שלב סינון ואז ארבעה שלבים בסדר קבוע, חילוץ, הבלטה, תרגום, הפעלה. למה מבנה מנצח אינטואיציה, ומה יוצא ביד בסוף כל שלב.",
     path: "/protocol",
   });
 
@@ -122,7 +122,7 @@ const Methodology = () => {
                   to="/#diagnostic-form"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  קבע שיחת התאמה — 20 דקות, בלי לחץ
+                  קבע שיחת התאמה, 20 דקות, בלי לחץ
                 </Link>
               </div>
             </Reveal>
@@ -142,11 +142,11 @@ const Methodology = () => {
             <Reveal>
               <p className="cor-overline-he">לפני שמתחילים</p>
               <h2 id="gate-title" className="cor-title mt-2 text-foreground">
-                שלב 0 — שיחת התאמה
+                שלב 0, שיחת התאמה
               </h2>
               <p className="cor-body-lg mt-4 text-foreground/80">
                 עשרים דקות, ללא תשלום. שתי שאלות: יש לך פרקטיקה פעילה עם לקוחות?
-                ויש בידול שכבר קיים אצלך? בלי השניים האלה, אין ממה לחלץ — ואני אגיד
+                ויש בידול שכבר קיים אצלך? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
                 לך את זה ביושר.
               </p>
             </Reveal>
@@ -175,7 +175,7 @@ const Methodology = () => {
 
             <Reveal delay={0.05}>
               <p className="mb-6 text-sm text-muted-foreground">
-                לחצו בין השלבים לפירוט המלא — קלט, תוצר, וסימן הסיום.
+                לחצו בין השלבים לפירוט המלא, קלט, תוצר, וסימן הסיום.
               </p>
               <StageStepper
                 exitCriteria={EXIT_CRITERIA}
@@ -260,7 +260,7 @@ const Methodology = () => {
                 to="/#diagnostic-form"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                קבע שיחת התאמה — 20 דקות, בלי לחץ
+                קבע שיחת התאמה, 20 דקות, בלי לחץ
               </Link>
             </div>
           </Reveal>

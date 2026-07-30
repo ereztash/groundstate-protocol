@@ -25,7 +25,7 @@ type Stat = {
 
 const STATS: Stat[] = [
   {
-    value: "×5–7.5",
+    value: "×5 עד 7.5",
     label: "הערך שנפתח ביחס למחיר, אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד. n=4",
     level: "operator",
   },

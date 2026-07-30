@@ -56,7 +56,7 @@ const SiteHeader = () => {
         <Link
           to="/"
           className="text-base font-semibold tracking-wide text-[hsl(40_30%_96%)] outline-none"
-          aria-label="COR-SYS — לעמוד הבית"
+          aria-label="COR-SYS, לעמוד הבית"
         >
           COR-SYS
         </Link>

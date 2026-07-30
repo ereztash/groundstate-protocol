@@ -76,6 +76,28 @@ const server = createServer((req, res) => {
     urlPath = urlPath.slice(BASE.length) || "/";
   }
   const filePath = join(DIST, urlPath);
+  // A relative-base build (`base: "./"`, the local default) emits asset URLs
+  // like "./assets/index.js". A browser on a nested route such as
+  // /insights/<slug> resolves those against the route, asking for
+  // "/insights/<slug>/assets/index.js". Left alone, that misses, the SPA
+  // fallback answers with HTML, the module script is rejected on its MIME type,
+  // React never mounts, and the capture waits out a #root that never fills.
+  //
+  // Redirect rather than serve the file from the nested path. App.tsx derives
+  // the router basename from `import.meta.url`, so a bundle served at
+  // /insights/<slug>/assets/index.js yields the basename
+  // "/insights/<slug>/" and the router matches nothing, rendering NotFound into
+  // an otherwise healthy-looking page. Bouncing to the canonical URL keeps
+  // import.meta.url correct and the basename "/".
+  if (!existsSync(filePath)) {
+    const assetIdx = urlPath.lastIndexOf("/assets/");
+    if (assetIdx > 0 && existsSync(join(DIST, urlPath.slice(assetIdx)))) {
+      res.statusCode = 302;
+      res.setHeader("Location", BASE + urlPath.slice(assetIdx));
+      res.end();
+      return;
+    }
+  }
   if (urlPath !== "/" && existsSync(filePath) && statSync(filePath).isFile()) {
     res.setHeader("Content-Type", MIME[extname(filePath)] || "application/octet-stream");
     res.end(readFileSync(filePath));
@@ -101,10 +123,16 @@ for (const route of ROUTES) {
   });
   const navPath = route === "/" ? BASE + "/" : BASE + route;
   await page.goto(`http://127.0.0.1:${port}${navPath}`, { waitUntil: "networkidle" });
-  await page.waitForFunction(() => {
-    const root = document.getElementById("root");
-    return root && root.children.length > 0;
-  }, { timeout: 15000 });
+  // waitForFunction is (fn, arg, options): the timeout was being passed in the
+  // arg position, so it silently ran at the 30s default.
+  await page.waitForFunction(
+    () => {
+      const root = document.getElementById("root");
+      return root && root.children.length > 0;
+    },
+    undefined,
+    { timeout: 15000 },
+  );
   await page.waitForTimeout(300);
   let html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));
   // The async-fonts pattern (media="print" onload="this.media='all'") has
@@ -126,7 +154,24 @@ for (const [route, html] of Object.entries(pages)) {
   const outPath =
     route === "/" ? join(DIST, "index.html") : join(DIST, route, "index.html");
   mkdirSync(dirname(outPath), { recursive: true });
-  writeFileSync(outPath, html);
+
+  // With a relative base, a page written to dist/insights/<slug>/index.html
+  // still carries "./assets/...", which a host resolves against that directory
+  // and 404s. Re-point relative URLs by the route's depth so the promise the
+  // relative base makes (one artifact, any mount path) also holds for the
+  // prerendered nested pages. Absolute-base builds already carry full paths and
+  // are left alone.
+  let out = html;
+  if (!BASE && route !== "/") {
+    const depth = route.split("/").filter(Boolean).length;
+    const prefix = "../".repeat(depth);
+    out = out.replace(
+      /(\s(?:src|href)=")\.\//g,
+      (_m, attr) => `${attr}${prefix}`,
+    );
+  }
+
+  writeFileSync(outPath, out);
   console.log(`prerender: wrote ${outPath.replace(DIST, "dist")}`);
 }
 
