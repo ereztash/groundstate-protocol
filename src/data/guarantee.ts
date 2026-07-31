@@ -19,7 +19,11 @@
  * Never add "no questions asked", and never add a condition that is not here.
  */
 
-export type GuaranteeVariantId = "with-amount" | "without-amount" | "none";
+export type GuaranteeVariantId =
+  | "outreach-sent"
+  | "with-amount"
+  | "without-amount"
+  | "none";
 
 /** Flip only on Erez's decision. "none" renders no guarantee anywhere. */
 export const ACTIVE_VARIANT: GuaranteeVariantId = "none";
@@ -54,6 +58,48 @@ export type GuaranteeVariant = {
 };
 
 export const GUARANTEE_VARIANTS: readonly GuaranteeVariant[] = [
+  {
+    /**
+     * Guarantees a deliverable rather than an outcome.
+     *
+     * The two variants below promise a documented interest signal, which depends
+     * on an end client choosing to respond. That can fail without anyone doing
+     * anything wrong, and neither Erez nor his client controls it. This one
+     * promises the act of sending, which is entirely inside the engagement and
+     * cannot fail for an outside reason.
+     *
+     * The cost of that safety: a deliverable guarantee reverses less perceived
+     * risk. To a buyer, "I promise to do the work I am selling you" is close to
+     * tautological, since their risk is whether it was worth it rather than
+     * whether it happened.
+     *
+     * The four conditions are what keep it from being tautological. Without
+     * them, "five outreach messages" could be five generic emails; with them,
+     * both sides can check whether the guarantee held.
+     */
+    id: "outreach-sent",
+    reviewNote:
+      "מבטיח תוצר שנמצא כולו בשליטתך, ולכן אינו יכול להיכשל מסיבה חיצונית. מפחית פחות סיכון נתפס מהבטחה על תוצאה.",
+    amount: null,
+    headline:
+      "בסוף שלב 4 יצאו חמש פניות בפועל, כל אחת לנמען שנבחר בשמו ובניסוח שנכתב איתי בפגישה. אם לא יצאו, החזר מלא של שלב 4.",
+    signalsLabel: "מה נחשב פנייה שיצאה",
+    signals: [
+      "הנמען נבחר בשמו ובתפקידו, מתוך מיפוי שעשינו יחד",
+      "הניסוח נכתב לנמען הזה ספציפית, ולא תבנית שהותאמה",
+      "ההודעה נשלחה בזמן הפגישה, מהחשבון שלך",
+      "יש לה תיעוד: צילום מסך או קישור",
+    ],
+    signalsNote: "ארבעת התנאים צריכים להתקיים יחד.",
+    excludedLabel: "מה לא מובטח",
+    excluded: [
+      "תגובה מהנמען.",
+      "פגישה.",
+      "עסקה.",
+      "אלה תלויים בצד שלישי, ואינם בשליטתי ולא בשליטתך.",
+    ],
+    documentation: "פנייה שלא תועדה אינה נחשבת.",
+  },
   {
     id: "with-amount",
     reviewNote:
