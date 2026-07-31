@@ -142,14 +142,25 @@ for (const route of ROUTES) {
     /(<link[^>]*fonts\.googleapis\.com[^>]*)media="all"/g,
     '$1media="print"'
   );
-  // Same class of fix as the one above, and the more damaging one. Vite's module
-  // loader injects <link rel="modulepreload"> at runtime for each lazy chunk it
-  // pulls, with hrefs absolute against whatever origin the page was loaded from.
-  // Here that origin is this script's throwaway capture server, so outerHTML
-  // serialised every prerendered page with preloads pointing at
-  // http://127.0.0.1:<ephemeral-port>/assets/... — a host that does not exist
-  // for a visitor, over http from an https page, so browsers block them as
-  // mixed content. Every route shipped with them.
+  // Same class of fix as the one above. Vite's module loader injects
+  // <link rel="modulepreload"> at runtime for each lazy chunk it pulls, and
+  // outerHTML serialises those into the snapshot.
+  //
+  // Whether that is harmless depends on the base, which is why it went unseen:
+  //   - Absolute base (VITE_BASE_PATH set, what deploy.yml currently uses):
+  //     the injected href is root-relative, "/groundstate-protocol/assets/...",
+  //     and resolves correctly. The published site is fine today.
+  //   - Relative base ("./", vite.config.ts's documented default for builds
+  //     with no VITE_BASE_PATH): there is no root to be relative to, so the
+  //     loader resolves against the page origin, which here is this script's
+  //     throwaway capture server. Every route then carries preloads pointing at
+  //     http://127.0.0.1:<ephemeral-port>/assets/... — a host no visitor has,
+  //     over http from an https page, so browsers block them as mixed content.
+  //
+  // That second mode is the one vite.config.ts recommends ("the same artifact
+  // works whether it is served from a sub-path or a root"), and deploy.yml's
+  // header points at it for the apex-domain move. So this is a trap laid on the
+  // documented migration path rather than a defect in what is live now.
   //
   // Stripped rather than rewritten to a relative path. The build did not emit
   // these; they are an artifact of having hydrated before the snapshot, and
