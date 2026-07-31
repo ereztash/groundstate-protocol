@@ -47,6 +47,28 @@ test.describe("prerendered output", () => {
       expect(html).toContain(route.mustContain);
     });
 
+    test(`/${route.path} carries no capture-server URLs`, () => {
+      // This check exists because its absence shipped a bug. The test below
+      // filters absolute URLs out before validating, on the reasoning that a
+      // CDN or font host is not ours to resolve. That filter also swallowed
+      // the case where the absolute host is the prerender's own throwaway
+      // server: every route was published with modulepreload hrefs pointing at
+      // http://127.0.0.1:<port>/assets/..., dead for every visitor and blocked
+      // as mixed content over https, and the suite stayed green throughout.
+      //
+      // The scope of a guard is part of the guard. Loopback and unresolvable
+      // relative-to-nobody hosts are ours, and they are checked here.
+      const html = readFileSync(join(DIST, route.path, "index.html"), "utf8");
+      const local = [...html.matchAll(/\s(?:src|href)="([^"]+)"/g)]
+        .map((m) => m[1])
+        .filter((u) => /^https?:\/\/(127\.0\.0\.1|localhost|0\.0\.0\.0)(:|\/)/.test(u));
+
+      expect(
+        local,
+        `/${route.path} references the machine that built it, not the host that serves it`
+      ).toEqual([]);
+    });
+
     test(`/${route.path} points at assets that exist from its own depth`, () => {
       const html = readFileSync(join(DIST, route.path, "index.html"), "utf8");
       const refs = [...html.matchAll(/\s(?:src|href)="([^"]+\.(?:js|css))"/g)]

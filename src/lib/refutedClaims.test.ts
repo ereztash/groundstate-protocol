@@ -30,8 +30,19 @@ const TEXT_EXT = new Set([".md"]);
 const SELF = "refutedClaims.test.ts";
 
 type RefutedClaim = {
-  /** Substring as it would appear in displayed copy. */
-  phrase: string;
+  /**
+   * Matched against each line of displayed copy. Non-global on purpose: a /g/
+   * regex carries lastIndex between .test() calls and would skip every other
+   * match.
+   *
+   * A pattern rather than a substring because the first version of this file
+   * banned the literal "7.5" and immediately flagged `expect(kb(151079))
+   * .toBe(147.5)` in an unrelated test. An over-broad guard is not a strict
+   * guard; it is one that gets an exemption list, and then the exemption list
+   * is where the real offender eventually hides. Match the claim, not a digit
+   * that appears inside it.
+   */
+  pattern: RegExp;
   /** What asserting it would claim. */
   claim: string;
   /** The ledger row that refutes it, quoted so a failure explains itself. */
@@ -40,19 +51,20 @@ type RefutedClaim = {
 
 const REFUTED: RefutedClaim[] = [
   {
-    phrase: "בתוך הפגישה",
+    pattern: /בתוך הפגישה/,
     claim: "that the first outreach is sent during the stage-4 meeting",
     ledger:
       '`מפגש-4 הפעלה`, 2026-07-04 cross-check and 2026-07-28 re-read: 🪦 קריטריון-"שליחה-במהלך-המפגש" (הופרך ×2). "הפועל ≠ המקודד... בפועל השליחה מחליקה לשיעורי-בית / מפגש-5 / לא-קורית."',
   },
   {
-    phrase: "במהלך המפגש",
+    pattern: /במהלך המפגש/,
     claim: "the same send-inside-the-meeting criterion, phrased differently",
     ledger:
       "`מפגש-4 הפעלה`: the criterion is 🪦 regardless of how the sentence is worded.",
   },
   {
-    phrase: "7.5",
+    // The multiplier form, not the bare number: "5 עד 7.5", "×5-7.5", "5.0-7.5".
+    pattern: /[\u00d7xX]?\s*5(\.0)?\s*(עד|-|\u2013|\u2014|to)\s*7\.5/,
     claim: "a value-to-fee multiplier of 5 to 7.5 per client",
     ledger:
       // Hyphen rather than the ledger's en dash: this string is displayed copy
@@ -61,13 +73,13 @@ const REFUTED: RefutedClaim[] = [
       'Ledger 2026-07-29: "מכפיל «×5.0-7.5» לכל לקוח, אפס הופעות בכספת... ממוצע-ענף הוסב לטבלת-לקוחות". The corroborated band is 2026-07-22: "value/fee ratio: כל 4 בתוך 3x-10x, 0 מדוגלים".',
   },
   {
-    phrase: "86 פגישות",
+    pattern: /86 פגישות/,
     claim: "a measured meeting count feeding a close rate",
     ledger:
       '`חדר-המכירה`, 2026-07-20: "שני המספרים הם הערכת מפעיל, לא מדידה. conversion_log.csv לא נמצא. אסור להשתמש ב-86 או ב-10 אחוז בחישוב, במודל, בהצעה, או בתוכן שיווקי."',
   },
   {
-    phrase: "מיליון שקל",
+    pattern: /מיליון שקל/,
     claim: "an unattributed revenue increase, on a site that declares its claims verifiable",
     ledger:
       "Action plan finding 0.1. Removed from OriginStorySection and About in an earlier round; it survived in content/insights and had no anchor in the vault.",
@@ -100,7 +112,7 @@ describe("refuted claims stay out of displayed copy", () => {
         if (copy === null) continue;
 
         copy.split("\n").forEach((line, i) => {
-          if (line.includes(entry.phrase)) {
+          if (entry.pattern.test(line)) {
             offenders.push(
               `${file.replace(ROOT + "/", "")}:${i + 1}  ${line.trim()}`
             );
@@ -110,7 +122,7 @@ describe("refuted claims stay out of displayed copy", () => {
 
       expect(
         offenders,
-        `"${entry.phrase}" asserts ${entry.claim}.\n\nRefuted by: ${entry.ledger}\n\nFound in:\n${offenders.join("\n")}`
+        `${entry.pattern} asserts ${entry.claim}.\n\nRefuted by: ${entry.ledger}\n\nFound in:\n${offenders.join("\n")}`
       ).toEqual([]);
     });
   }

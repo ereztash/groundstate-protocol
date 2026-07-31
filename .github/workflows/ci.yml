@@ -56,6 +56,12 @@ jobs:
         # Using the composite script rather than a second step keeps this from
         # drifting away from the command deploy actually ships.
         run: bun run build:ssg
+      - name: Transfer-size budget
+        # Runs before the browser tests because it is the cheap check: a bundle
+        # that grew is worth knowing about in two seconds rather than after a
+        # minute of Playwright. dist is already built by the step above, so this
+        # measures exactly what the e2e suite is about to load.
+        run: bun run check:budget
       - name: Run smoke tests
         run: bun run test:e2e
       - name: Upload Playwright report on failure
