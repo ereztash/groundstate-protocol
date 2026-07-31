@@ -121,8 +121,13 @@ export const stages: readonly Stage[] = [
     verb: "הפעלה",
     description:
       "פגישה אחת להפעלה: רשימת מקבלי החלטות וטיוטות פנייה. התוצר עובר משלב התכנון לשלב התנועה בשטח.",
+    // "נשלחו" came out of this line. The graph's `מפגש-4 הפעלה` node marks the
+    // send-inside-the-meeting criterion 🪦 and states the gap plainly: "הפועל ≠
+    // המקודד: '10 פניות נשלחו-ותועדו במפגש' הוא אידיאל. בפועל השליחה מחליקה
+    // לשיעורי-בית / מפגש-5 / לא-קורית." Written and documented is what the
+    // stage actually produces; the guided run is what happens in the room.
     deliverable:
-      "10 פניות שנכתבו, נשלחו, ותועדו עם אותות הקנייה שזיהיתי בתגובות.",
+      "10 פניות שנכתבו ותועדו, והרצה מונחית של הראשונה בחדר. יומן אותות קנייה למעקב אחרי התגובות.",
     priceNis: 1900,
     priceLabel: "₪1,900",
     value: "stage-4",

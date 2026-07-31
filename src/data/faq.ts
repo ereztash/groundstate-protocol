@@ -27,7 +27,11 @@ export const faq: readonly QA[] = [
   },
   {
     q: "מה ההבדל בינך לבין יועץ עסקי או מאמן עסקי?",
-    a: "אולי כבר עבדת עם מישהו ש״פחות הבין את התחום שלך, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ושולח פניות. בסוף כל שלב יש מסמך שאפשר להשתמש בו מחר בבוקר.",
+    // "ושולח פניות" became "ומריץ איתך את הפניות". Weaker case than the stage-4
+    // criterion and not a ledger refutation, but the same assertion in
+    // miniature: `S-ACQ` records that what happens is a guided run in the room,
+    // and the verb list should not be the one place that still says otherwise.
+    a: "אולי כבר עבדת עם מישהו ש״פחות הבין את התחום שלך, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ומריץ איתך את הפניות. בסוף כל שלב יש מסמך שאפשר להשתמש בו מחר בבוקר.",
   },
   {
     q: "אי אפשר פשוט להשתמש ב-GPT?",
@@ -43,6 +47,11 @@ export const faq: readonly QA[] = [
   },
   {
     q: "מה כולל שלב 4 בפועל?",
-    a: "מיפוי של עשרה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, שליחה של הפנייה הראשונה בתוך הפגישה, ותיעוד של אותות הקנייה שחזרו בתגובות. המחיר הוא ₪1,900.",
+    // "שליחה של הפנייה הראשונה בתוך הפגישה" was removed here for the same
+    // reason it was removed from the stage-4 exit criterion: the graph marks
+    // that criterion 🪦, refuted twice on transcript. The buy-signal journal
+    // also stopped being phrased as signals that came back — the journal is a
+    // deliverable, the responses are not something the stage can promise.
+    a: "מיפוי של עשרה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות. המחיר הוא ₪1,900.",
   },
 ];

@@ -30,7 +30,16 @@ const EXIT_CRITERIA: Record<string, string> = {
   // not currently anchored enough to promise. This states what the stage
   // produces instead of who arrives at the number.
   "03": "התמחור מנוסח בכתב, עם הרציונל לצידו, כך שאפשר להגיד אותו בקול בלי להסס, ולהסביר על מה הוא נשען.",
-  "04": "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה, תלוי בכך שיצאה מהיד.",
+  // Was: "הפנייה הראשונה נשלחת בתוך הפגישה. לא תלוי בתגובה, תלוי בכך שיצאה
+  // מהיד." That criterion is 🪦 in the graph: refuted twice on transcript
+  // (`מפגש-4 הפעלה`, cross-check 2026-07-04, re-read 2026-07-28). In the field
+  // the send slides to homework, to a fifth meeting, or does not happen — in
+  // one extraction Erez says so in his own words. Promising it as the exit
+  // criterion promises the one thing the transcripts show does not occur.
+  // The replacement is what the graph records as actually happening (`S-ACQ`:
+  // "הרצה מונחית בחדר") plus the goal `S2 ספרינט-הסנכרון` already holds: the
+  // system removes the dependence on willpower to send, not the send itself.
+  "04": "הרצה מונחית של הפנייה הראשונה בחדר, וההכנה הכתובה שמאפשרת לה לצאת. היעד הוא שהמערכת מסירה את התלות בכוח הרצון לשלוח, ולא השליחה עצמה.",
 };
 
 // What goes into each stage — always the previous stage's output, which is
