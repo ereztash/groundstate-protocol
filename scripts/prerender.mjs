@@ -142,6 +142,28 @@ for (const route of ROUTES) {
     /(<link[^>]*fonts\.googleapis\.com[^>]*)media="all"/g,
     '$1media="print"'
   );
+  // Same class of fix as the one above, and the more damaging one. Vite's module
+  // loader injects <link rel="modulepreload"> at runtime for each lazy chunk it
+  // pulls, with hrefs absolute against whatever origin the page was loaded from.
+  // Here that origin is this script's throwaway capture server, so outerHTML
+  // serialised every prerendered page with preloads pointing at
+  // http://127.0.0.1:<ephemeral-port>/assets/... — a host that does not exist
+  // for a visitor, over http from an https page, so browsers block them as
+  // mixed content. Every route shipped with them.
+  //
+  // Stripped rather than rewritten to a relative path. The build did not emit
+  // these; they are an artifact of having hydrated before the snapshot, and
+  // keeping them would front-load below-fold chunks (StageRecommenderSection and
+  // framer-motion, ~48 kB gzip on "/") into a high-priority fetch competing with
+  // the LCP image. The goal is the document the build produced, not the DOM the
+  // crawl left behind.
+  html = html.replace(
+    new RegExp(
+      `<link[^>]*rel="modulepreload"[^>]*href="http://127\\.0\\.0\\.1:${port}/[^"]*"[^>]*>`,
+      "g"
+    ),
+    ""
+  );
   pages[route] = html;
   await page.close();
   console.log(`prerender: captured ${route} (${(html.length / 1024).toFixed(1)} kB)`);

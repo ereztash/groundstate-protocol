@@ -17,6 +17,8 @@ const FounderMark = ({ photoSrc, size = "md" }: FounderMarkProps) => {
       <img
         src={photoSrc}
         alt="ארז טל-שיר"
+        width={64}
+        height={64}
         className={`${dim} shrink-0 rounded-full object-cover ring-1 ring-border`}
         loading="eager"
       />

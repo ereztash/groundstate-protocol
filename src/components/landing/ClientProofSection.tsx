@@ -82,6 +82,10 @@ const ClientProofSection = () => {
                   <img
                     src={t.photo}
                     alt=""
+                    width={40}
+                    height={40}
+                    loading="lazy"
+                    decoding="async"
                     className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border"
                   />
                 ) : (
