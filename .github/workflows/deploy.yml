@@ -48,11 +48,16 @@ jobs:
       - name: Build
         run: bun run build
         env:
-          # No VITE_BASE_PATH: vite.config.ts defaults production builds to a
-          # relative base ("./"), so this single artifact works both at the
-          # project sub-path (https://<user>.github.io/groundstate-protocol/)
-          # and at the apex custom domain root (ereztalshir.co.il) once its DNS
-          # is connected — no rebuild needed when the domain flips on.
+          # This comment used to say "No VITE_BASE_PATH", describing the
+          # relative-base artifact that works at both the project sub-path and
+          # the apex domain. That is not what happens: VITE_BASE_PATH is set on
+          # the job above, step env does not unset it, and the published HTML
+          # carries "/groundstate-protocol/assets/..." accordingly. The artifact
+          # is wired to the sub-path and will need the job env changed, or
+          # removed, when ereztalshir.co.il is connected.
+          #
+          # Removing it rather than setting it to "/" is the option that walks
+          # into the prerender's modulepreload trap; see scripts/prerender.mjs.
           # Optional secrets — if unset, the app uses the in-code fallbacks
           # for the form endpoint and silently disables GA tracking.
           VITE_APPS_SCRIPT_URL: ${{ secrets.VITE_APPS_SCRIPT_URL }}

@@ -48,13 +48,17 @@ test.describe("prerendered output", () => {
     });
 
     test(`/${route.path} carries no capture-server URLs`, () => {
-      // This check exists because its absence shipped a bug. The test below
-      // filters absolute URLs out before validating, on the reasoning that a
-      // CDN or font host is not ours to resolve. That filter also swallowed
-      // the case where the absolute host is the prerender's own throwaway
-      // server: every route was published with modulepreload hrefs pointing at
-      // http://127.0.0.1:<port>/assets/..., dead for every visitor and blocked
-      // as mixed content over https, and the suite stayed green throughout.
+      // The test below filters absolute URLs out before validating, on the
+      // reasoning that a CDN or font host is not ours to resolve. That filter
+      // also swallows the case where the absolute host is the prerender's own
+      // throwaway capture server, which is what a relative-base build produces
+      // for every runtime-injected modulepreload: hrefs at
+      // http://127.0.0.1:<port>/assets/..., dead for any visitor and blocked as
+      // mixed content over https. The suite stayed green through all of it.
+      //
+      // Live deploys set an absolute base and were never affected, so this is a
+      // guard on the relative-base path rather than a fix for something that
+      // was published. The point stands either way: nothing was watching.
       //
       // The scope of a guard is part of the guard. Loopback and unresolvable
       // relative-to-nobody hosts are ours, and they are checked here.
