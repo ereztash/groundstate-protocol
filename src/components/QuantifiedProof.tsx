@@ -25,14 +25,25 @@ type Stat = {
 
 const STATS: Stat[] = [
   {
-    value: "×5 עד 7.5",
+    // Was "×5 עד 7.5". The ledger audit of 2026-07-29 found that multiplier has
+    // zero occurrences in the vault as a per-client figure, and that the nearest
+    // number is an industry statistic ("ROI פי 5.7–7 בארגונים המחדירים תרבות
+    // אימון") that had been converted into a client table. The band that IS
+    // corroborated is the 2026-07-22 reconciliation: "value/fee ratio: כל 4
+    // בתוך 3x-10x, 0 מדוגלים". Wider and weaker, and the one that is measured.
+    value: "×3 עד 10",
     label: "הערך שנפתח ביחס למחיר, אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד. n=4",
     level: "operator",
   },
   {
+    // Two corrections from ledger 2026-07-13, which supersedes the 07-07 row:
+    // the revenue landed between meetings 3 and 4, not after stage 4, and the
+    // "10 outreaches that went out" framing asserted the same send-in-meeting
+    // mechanism the graph marks 🪦. The CRM cross-check is still pending, which
+    // the reader is entitled to know before weighing a single reported case.
     value: "₪5,500",
     label:
-      "הכנסה שנרשמה אצל לקוח אחד, אחרי שלב 4, מתוך 10 הפניות שיצאו בליווי. n=1",
+      "הכנסה שנרשמה אצל לקוח אחד, בין מפגש 3 למפגש 4. הצלבה מול CRM טרם הושלמה. n=1",
     level: "operator",
   },
 ];
