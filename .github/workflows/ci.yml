@@ -48,7 +48,14 @@ jobs:
       - name: Install Playwright browser
         run: bunx playwright install --with-deps chromium
       - name: Build production bundle
-        run: bun run build
+        # build:ssg, not build: e2e/prerender.spec.ts asserts on
+        # dist/<route>/index.html, and plain `vite build` never writes those.
+        # The spec landed in cbcd8b5 while this step still said `bun run build`,
+        # so the prerender half of the suite could not pass here even though
+        # deploy.yml has always run the prerender step before publishing.
+        # Using the composite script rather than a second step keeps this from
+        # drifting away from the command deploy actually ships.
+        run: bun run build:ssg
       - name: Run smoke tests
         run: bun run test:e2e
       - name: Upload Playwright report on failure
