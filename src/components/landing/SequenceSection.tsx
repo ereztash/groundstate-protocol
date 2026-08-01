@@ -98,15 +98,28 @@ const SequenceSection = () => {
           ביחד, ורוב הלקוחות מתחילים בשלב 1.
         </Reveal>
 
+        {/* One row that swipes on phones and stays a grid from sm up.
+            Stacked, these four cards were 2,768px on a 390px viewport, 16% of
+            the whole page, and a reader met one card per screen anyway — so
+            vertical stacking bought no comparison and cost eleven screens.
+            Swiping between four cards is faster than scrolling past them, and
+            the 82% card width leaves the next one visibly peeking, which is
+            what tells a reader the row moves.
+
+            py-3 is load-bearing: overflow-x on one axis makes the other compute
+            to auto rather than visible, and RevealItem enters from 12px below
+            its resting position, so without the padding the entrance animation
+            would spawn a vertical scrollbar inside the strip. Same trap the
+            comment in Methodology.tsx records. */}
         <RevealStagger
-          className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+          className="-mx-6 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 py-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-8 sm:overflow-visible sm:px-0 sm:py-0 lg:grid-cols-4 lg:gap-6"
           as="ol"
         >
           {stages.map((s) => (
             <RevealItem
               key={s.number}
               as="li"
-              className="group flex flex-col"
+              className="group flex w-[82%] shrink-0 snap-start flex-col sm:w-auto"
             >
               <div
                 className="flex flex-1 flex-col"

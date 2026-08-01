@@ -39,14 +39,24 @@ const DeliverablesPreview = () => {
           </p>
         </Reveal>
 
+        {/* Swipes on phones, grid from sm up — same treatment as the price
+            ladder, and for the same measurement: stacked, these four were
+            1,823px on a 390px viewport. Roughly a quarter of that is the
+            decorative body lines, which are aria-hidden filler standing in for
+            document text, so it was the cheapest height on the page to reclaim.
+            See SequenceSection for why py-3 is required rather than cosmetic. */}
         <RevealStagger
-          className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="-mx-6 mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 py-3 sm:mx-0 sm:grid sm:gap-6 sm:overflow-visible sm:px-0 sm:py-0 sm:grid-cols-2 lg:grid-cols-4"
           as="ul"
         >
           {stages.map((stage) => {
             const a = stage.artifact;
             return (
-              <RevealItem as="li" key={stage.value} className="block">
+              <RevealItem
+                as="li"
+                key={stage.value}
+                className="block w-[82%] shrink-0 snap-start sm:w-auto"
+              >
                 <article
                   aria-label={`תוצר עבור ${stage.name}`}
                   className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card p-5 shadow-[0_2px_6px_-2px_hsl(var(--foreground)/0.06)] transition-shadow hover:shadow-[0_8px_20px_-8px_hsl(var(--foreground)/0.12)]"
