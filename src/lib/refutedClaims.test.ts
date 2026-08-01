@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join, extname } from "node:path";
-import { walk, stripComments } from "./copyScan";
+import { walk, stripComments, flattenJsx } from "./copyScan";
 
 /**
  * Claims the knowledge graph has refuted, barred from displayed copy.
@@ -79,6 +79,16 @@ const REFUTED: RefutedClaim[] = [
       '`חדר-המכירה`, 2026-07-20: "שני המספרים הם הערכת מפעיל, לא מדידה. conversion_log.csv לא נמצא. אסור להשתמש ב-86 או ב-10 אחוז בחישוב, במודל, בהצעה, או בתוכן שיווקי."',
   },
   {
+    // Both nouns. "מפגשים" is the correct word for what 22 counts, which makes
+    // it the likelier way the figure comes back: someone checks the ledger,
+    // finds the noun mismatch, fixes the noun, and leaves the number on a page
+    // where it still reads as delivered client work.
+    pattern: /(?<!\d)22\s*(פגישות|מפגשים)/,
+    claim: "22 delivered meetings, using a research corpus count",
+    ledger:
+      'Ledger 2026-07-13 rows 207-209, all describing the H8 blind-coding corpus: "H8 סבב-2, קידוד-עיוור על הקורפוס המלא (12+10 מתוך 28)" and "146 זוגות תור-מאמן→תגובת-לקוח · 22 מפגשים · 9 לקוחות". Rows 207-208 write "22 פגישות" for that same corpus; row 209 writes "מפגשים". It is 22 of 28 coaching transcripts from 9 clients, sampled for a methodology test, not meetings held with clients.',
+  },
+  {
     pattern: /מיליון שקל/,
     claim: "an unattributed revenue increase, on a site that declares its claims verifiable",
     ledger:
@@ -110,14 +120,27 @@ describe("refuted claims stay out of displayed copy", () => {
       for (const file of files) {
         const copy = displayedCopy(file);
         if (copy === null) continue;
+        const rel = file.replace(ROOT + "/", "");
 
+        let hit = false;
         copy.split("\n").forEach((line, i) => {
           if (entry.pattern.test(line)) {
-            offenders.push(
-              `${file.replace(ROOT + "/", "")}:${i + 1}  ${line.trim()}`
-            );
+            hit = true;
+            offenders.push(`${rel}:${i + 1}  ${line.trim()}`);
           }
         });
+        if (hit) continue;
+
+        // Same claim, spread over several elements. No line number to give: the
+        // sentence does not live on a line. The excerpt is what the reader gets.
+        const flat = flattenJsx(copy);
+        const match = flat.match(entry.pattern);
+        if (match && match.index !== undefined) {
+          const from = Math.max(0, match.index - 40);
+          offenders.push(
+            `${rel}  (split across elements) …${flat.slice(from, match.index + match[0].length + 40).trim()}…`
+          );
+        }
       }
 
       expect(

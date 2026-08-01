@@ -21,6 +21,26 @@ export function walk(dir: string, out: string[] = []): string[] {
 }
 
 /**
+ * Displayed copy with JSX tags dropped and whitespace collapsed, so a scan sees
+ * what a reader sees rather than how the markup happens to be indented.
+ *
+ * A line-by-line regex misses any claim split across elements. That is not a
+ * hypothetical: the meeting counter this repo bans was written as `22` inside
+ * one <span> and `פגישות בוצעו עד כה` inside the next, which is one sentence on
+ * the page and two unrelated lines to the scanner. The guard for it passed
+ * against the very copy it was written to catch.
+ *
+ * Approximate by design. Attribute values are dropped with their tags, and an
+ * arrow function inside an attribute ends the tag early, leaving a fragment of
+ * code in the text. Both failure modes add text rather than hide it, so they
+ * can cost a false positive but cannot let a banned sentence through, which is
+ * the direction a ban list should fail in.
+ */
+export function flattenJsx(src: string): string {
+  return src.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ");
+}
+
+/**
  * Blanks out comments so only strings and JSX text are scanned.
  *
  * String-aware, because a naive scan for "//" also blanks the rest of any line
