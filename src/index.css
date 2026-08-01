@@ -338,7 +338,7 @@
     box-shadow: 0 4px 12px -8px hsl(var(--accent) / 0.3);
   }
 
-  /* Outlined secondary action used in Header / MidPageCTA / Sequence cards. */
+  /* Outlined secondary action used in Header / InlineCTA / Sequence cards. */
   .cta-line {
     background: transparent;
     color: hsl(var(--foreground));

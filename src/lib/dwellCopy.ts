@@ -2,7 +2,7 @@ import type { DwellPhase } from "./useDwellState";
 
 /**
  * Single source of truth for the primary CTA copy across Hero,
- * MidPageCTA, and StickyMobileCTA. The copy escalates with the
+ * InlineCTA, and StickyMobileCTA. The copy escalates with the
  * visitor's commitment level so the same button "grows up" with them.
  *
  * Lengths are bounded so the copy fits even in the narrow mobile

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="COR-SYS">
+  <!--
+    Replaces the Lovable heart, which shipped as the browser-tab icon on a site
+    whose whole argument is that everything on it is verifiable and its own.
+
+    Pure geometry, no <text>: SVG favicons do not reliably load webfonts, so a
+    letterform set in Frank Ruhl Libre would silently fall back to whatever the
+    browser had and change shape per machine. This mark is a stroked arc, which
+    reads as the C of COR-SYS at 16px and is identical everywhere.
+
+    Colours are the site's own tokens: charcoal is --foreground (0 0% 10%), and
+    the copper is the brand accent, the same B87333 that CALENDLY_PAGE_SETTINGS
+    sends to the booking widget, so the tab matches the page it opens.
+  -->
+  <rect width="64" height="64" rx="14" fill="#1A1A1A" />
+  <circle
+    cx="32"
+    cy="32"
+    r="17"
+    fill="none"
+    stroke="#B87333"
+    stroke-width="9"
+    stroke-linecap="round"
+    stroke-dasharray="78 29"
+    transform="rotate(38 32 32)"
+  />
+</svg>

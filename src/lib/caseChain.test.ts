@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import {
   allCases,
   isPublishable,
@@ -101,15 +103,21 @@ describe("isPublishable", () => {
 });
 
 describe("the case files actually in the repo", () => {
-  it("all parse", () => {
-    // A file that fails validation is silently dropped at runtime, so assert
-    // the count here rather than discovering it as a blank section.
-    expect(allCases().length).toBeGreaterThan(0);
+  it("every bundled record parses", () => {
+    // A file that fails validation is silently dropped at runtime, so count
+    // here rather than discovering it as a blank section. The directory is
+    // empty today and that is correct: C1 moved to docs/cases/ on 2026-08-01
+    // because eager globbing was shipping a consent-pending record to every
+    // visitor. See src/data/cases/README.md.
+    const dir = join(process.cwd(), "src", "data", "cases");
+    const onDisk = readdirSync(dir).filter((f) => f.endsWith(".json"));
+    expect(allCases().length).toBe(onDisk.length);
   });
 
   it("publishes nothing until an operator opens both gates", () => {
-    // C1 ships with consent pending and source integrity unconfirmed. If this
-    // ever fails without a deliberate decision, a client case went live.
+    // If this ever fails without a deliberate decision, a client case went
+    // live. src/data/cases.test.ts is the gate on what may sit in the bundled
+    // directory at all; this one is the gate on what renders.
     expect(publishableCases()).toEqual([]);
   });
 
