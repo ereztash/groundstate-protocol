@@ -1,6 +1,7 @@
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import GuaranteeBlock from "@/components/GuaranteeBlock";
-import { ACTIVE_VARIANT, GUARANTEE_VARIANTS } from "@/data/guarantee";
+import { ACTIVE_VARIANT } from "@/data/guarantee";
+import { GUARANTEE_VARIANTS } from "@/data/guaranteeVariants";
 
 /**
  * Renders every guarantee variant as it would actually ship, so the decision is

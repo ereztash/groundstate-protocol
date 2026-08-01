@@ -54,15 +54,10 @@ const SELF = "feminineAddress.test.ts";
  * examples are prompts, and a prompt addresses a model: "אתה יועץ ארגוני בכיר"
  * is the text you type, not the reader being spoken to. Rewriting those would
  * make the examples wrong.
- *
- * `pages/Index.tsx` is not routed in App.tsx and ships in no bundle. It is dead
- * scaffolding from another project, and it is listed here rather than converted
- * so the exemption stays visible until someone deletes the file.
  */
 const EXEMPT = [
   "src/lib/clients.ts",
   "content/insights/why-prompt-engineering-fails.md",
-  "src/pages/Index.tsx",
 ];
 
 /**
