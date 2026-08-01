@@ -76,11 +76,26 @@ const Hero = () => {
               COR-SYS · תוכנית ליווי לעצמאים
             </p>
 
+            {/* Was "תרגום מומחיות מקצועית להצעה שהשוק קונה." — a category
+                definition. It said what the programme is, which is the job of
+                the eyebrow above it, and left the reader nothing to resolve.
+                The strongest sentence on the page was buried in
+                WhatYouTriedSection, four screens down.
+
+                That section's "15 גרסאות" stayed there rather than moving up
+                here: as a symptom in the body it is a mirror, but as the first
+                line on the page a specific count becomes a filter, and a reader
+                on their third rewrite fails it and leaves. The headline keeps
+                the recurrence and drops the tally.
+
+                The old headline's terms ("הצעה שהשוק קונה", the 30 days) moved
+                into the subtitle, so the page still states plainly what it
+                sells and the topical signal does not thin out. */}
             <h1
               id="hero-title"
               className="cor-settle-lcp cor-display mt-5 text-foreground"
             >
-              תרגום מומחיות מקצועית להצעה שהשוק קונה.
+              עוד גרסה של ״מי אני״. ועוד אחת. אף אחת לא מחזיקה חודש.
             </h1>
 
             <p
@@ -88,8 +103,8 @@ const Hero = () => {
               className="cor-settle cor-body-lg mt-5 max-w-xl text-foreground/85"
               style={settleStyle(SETTLE.subtitle)}
             >
-              תוכנית מובנית בת 30 יום לעצמאים שהידע המקצועי שלהם מבוסס, וההצעה
-              העסקית שנגזרת ממנו, פחות.
+              הבעיה היא לא הניסוח. היא שהמומחיות שלך עוד לא תורגמה להצעה שהשוק
+              קונה. זה מה שהתוכנית הזאת עושה, ב-30 יום.
             </p>
 
             {/* Specification grid. The hairline separators come from a 1px gap

@@ -7,7 +7,7 @@ const Privacy = () => {
   useDocumentMeta({
     title: "מדיניות פרטיות | COR-SYS",
     description:
-      "איך נאסף ומשמש מידע באתר COR-SYS: פרטים שאתה מוסר בטופס, נתוני שימוש (רק לאחר אישורך), וזכויותיך.",
+      "איך נאסף ומשמש מידע באתר COR-SYS: פרטים שאת מוסרת בטופס, נתוני שימוש (רק לאחר אישורך), וזכויותיך.",
     path: "/privacy",
   });
 
@@ -41,7 +41,7 @@ const Privacy = () => {
           <section className="space-y-2">
             <h2 className="cor-subheading text-foreground">איזה מידע נאסף</h2>
             <p>
-              <span className="font-semibold text-foreground">פרטים שאתה מוסר בטופס:</span>{" "}
+              <span className="font-semibold text-foreground">פרטים שאת מוסרת בטופס:</span>{" "}
               שם, מספר טלפון, כתובת מייל (אופציונלי), תיאור התקיעה שכתבת, וחלונות
               הזמן המועדפים. המידע משמש אך ורק כדי לחזור אליך ולתאם שיחה.
             </p>
@@ -85,7 +85,7 @@ const Privacy = () => {
           <section className="space-y-2">
             <h2 className="cor-subheading text-foreground">הזכויות שלך</h2>
             <p>
-              אתה רשאי לבקש לעיין במידע שנשמר עליך, לתקן אותו או למחוק אותו. אפשר
+              את רשאית לבקש לעיין במידע שנשמר עליך, לתקן אותו או למחוק אותו. אפשר
               גם לשנות את הסכמת הניתוח בכל עת (ניקוי נתוני הדפדפן יציג שוב את באנר
               ההסכמה). לכל בקשה, פנה למייל למעלה ואחזור אליך.
             </p>

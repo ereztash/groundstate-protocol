@@ -55,7 +55,7 @@ const CHAIN: Link[] = [
     value: "stage-3",
   },
   {
-    goal: "הערך העסקי הייחודי שאתה יכול לתת",
+    goal: "הערך העסקי הייחודי שאת יכולה לתת",
     numeral: "02",
     value: "stage-2",
   },

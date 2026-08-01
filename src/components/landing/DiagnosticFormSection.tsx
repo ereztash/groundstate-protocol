@@ -270,7 +270,7 @@ const DiagnosticFormSection = () => {
                   not have, and it is read before the decision to fill the form
                   at all. Describe what actually happens. */}
               <p className="cor-body-lg text-foreground/80">
-                מיד אחרי הטופס נפתח היומן ואתה בוחר מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                מיד אחרי הטופס נפתח היומן ואת בוחרת מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
               <SpotsLeft className="text-sm text-muted-foreground" />
 
@@ -280,17 +280,28 @@ const DiagnosticFormSection = () => {
               >
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדע אם זה מתאים לך. ביושר, גם אם לא.</span>
+                  <span>תדעי אם זה מתאים לך. ביושר, גם אם לא.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדע מאיזה שלב להתחיל ולמה.</span>
+                  <span>תדעי מאיזה שלב להתחיל ולמה.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תקבל פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
+                  <span>תקבלי פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
                 </li>
               </ul>
+
+              {/* The close was one-directional: fill this in, or nothing. A
+                  reader who is not ready had no second option to weigh, so the
+                  only available choice was to leave. Naming both paths, and
+                  naming the cost of the first one honestly, leaves the decision
+                  with them rather than pushing. */}
+              <p className="mt-5 text-sm leading-relaxed text-foreground/80">
+                יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
+                ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעי מאיזה
+                שלב להתחיל. ההחלטה שלך בלבד.
+              </p>
 
               <div className="flex items-center gap-2 pt-3">
                 <span
@@ -346,7 +357,7 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>במשפט אחד: מה אתה יודע לעשות, שאתה לא מצליח למכור?
+                          <span className="field-num">01.</span>במשפט אחד: מה את יודעת לעשות, שאת לא מצליחה למכור?
                         </FormLabel>
                         <FormControl>
                           <Textarea
@@ -432,7 +443,9 @@ const DiagnosticFormSection = () => {
                       disabled={stepOne.formState.isSubmitting}
                       className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                     >
-                      המשך
+                      {/* Was "המשך". A label that names the mechanism rather
+                          than what the reader gets from pressing it. */}
+                      המשך לתיאום השיחה
                     </button>
                     <p className="text-center text-xs leading-relaxed text-muted-foreground">
                       עוד שלב אחד. המידע נשמר רק לצורך השיחה.
@@ -562,6 +575,13 @@ const DiagnosticFormSection = () => {
                           calendar. */}
                       {isSending ? "שולח" : "שלח ובחר מועד"}
                     </button>
+                    {/* What the reader is actually agreeing to, at the moment
+                        they decide. Each line answers a different unspoken
+                        worry: length, whether this is a pitch, and whether
+                        anything is about to be charged. */}
+                    <p className="text-center text-xs leading-relaxed text-muted-foreground">
+                      20 דקות. בלי מצגת. בלי כרטיס אשראי.
+                    </p>
                   </div>
                 </form>
               </Form>

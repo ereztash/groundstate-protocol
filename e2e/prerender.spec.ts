@@ -19,7 +19,10 @@ import { join } from "node:path";
 const DIST = join(process.cwd(), "dist");
 
 const ROUTES = [
-  { path: "", depth: 0, mustContain: "תרגום מומחיות מקצועית" },
+  // Tracks the hero H1, which is the deepest thing on the landing page that
+  // only exists if React mounted and rendered. Was "תרגום מומחיות מקצועית",
+  // the previous headline; update this string whenever that headline changes.
+  { path: "", depth: 0, mustContain: "אף אחת לא מחזיקה חודש" },
   { path: "protocol", depth: 1, mustContain: "ארבעה שלבים" },
   { path: "about", depth: 1, mustContain: "COR-SYS" },
   { path: "privacy", depth: 1, mustContain: "פרטיות" },

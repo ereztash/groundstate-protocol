@@ -17,7 +17,7 @@ const WhatYouTriedSection = () => {
               id="what-you-tried-title"
               className="cor-title mt-2 text-foreground"
             >
-              ארבעה דברים שאתה מכיר מקרוב.
+              ארבעה דברים שאת מכירה מקרוב.
             </h2>
           </div>
 
@@ -25,7 +25,7 @@ const WhatYouTriedSection = () => {
             <li className="flex gap-3">
               <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
               <p className="cor-body-lg text-foreground/85">
-                כל כמה שבועות אתה נכנס ללינקדאין ומשנה את הכותרת. כבר הצטברו <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״, וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
+                כל כמה שבועות את נכנסת ללינקדאין ומשנה את הכותרת. כבר הצטברו <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״, וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
               </p>
             </li>
             <li className="flex gap-3">
@@ -37,7 +37,7 @@ const WhatYouTriedSection = () => {
             <li className="flex gap-3">
               <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
               <p className="cor-body-lg text-foreground/85">
-                התחלת ב<strong className="font-semibold text-foreground">חמישה תחומים</strong> כי כדאי להיות גמיש. היום אף אחד מהם לא מובהק, ואתה עייף.
+                התחלת ב<strong className="font-semibold text-foreground">חמישה תחומים</strong> כי כדאי להיות גמישה. היום אף אחד מהם לא מובהק, ואת עייפה.
               </p>
             </li>
             <li className="flex gap-3">
@@ -50,16 +50,16 @@ const WhatYouTriedSection = () => {
 
           <div className="border-r-2 border-accent pr-4">
             <p className="cor-body-lg text-foreground">
-              ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם לא. הם ארבע פנים של דבר אחד: <strong className="font-semibold text-accent">עוד לא תרגמת את מה שאתה יודע לשפה שהלקוח שלך משלם עליה.</strong>
+              ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם לא. הם ארבע פנים של דבר אחד: <strong className="font-semibold text-accent">עוד לא תרגמת את מה שאת יודעת לשפה שהלקוח שלך משלם עליה.</strong>
             </p>
           </div>
 
           <p className="cor-body-lg text-foreground/85">
-            וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא מבינים למה דווקא אתה, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא מתרגם, הוא רק מייקר.
+            וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא מבינים למה דווקא את, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא מתרגם, הוא רק מייקר.
           </p>
 
           <p className="cor-body-lg text-foreground/85">
-            וזה גם לא נפתר לבד, ולא נקנה מכלי. GPT יחזיר לך את עצמך עם יותר מילים. יועץ ייתן עצה. מאמן ישאל שאלה. את המסגרת שאתה נמצא בתוכה אי אפשר לראות מבפנים. צריך מישהו מבחוץ שיציב מולה מסגרת אחרת, ויחלץ את מה שאתה כבר יודע אבל עוד לא ניסחת.
+            וזה גם לא נפתר לבד, ולא נקנה מכלי. GPT יחזיר לך את עצמך עם יותר מילים. יועץ ייתן עצה. מאמן ישאל שאלה. את המסגרת שאת נמצאת בתוכה אי אפשר לראות מבפנים. צריך מישהו מבחוץ שיציב מולה מסגרת אחרת, ויחלץ את מה שאת כבר יודעת אבל עוד לא ניסחת.
           </p>
         </Reveal>
       </div>

@@ -129,6 +129,15 @@ const REFUTED: RefutedClaim[] = [
       "Operator decision 2026-08-01: the stage-4 deliverable is five. `guarantee.ts` variant `outreach-sent` already promised \"בסוף שלב 4 יצאו חמש פניות בפועל... אם לא יצאו, החזר מלא של שלב 4\", and a refund-backed number outranks marketing copy. src/data/sprint-stages.ts `outreachCount` is the single source for everything that can import it.",
   },
   {
+    // The spelled-out form. faq.ts said "מיפוי של עשרה מקבלי החלטות ספציפיים,
+    // ניסוח פנייה נפרד לכל אחד מהם", which makes the count of decision makers
+    // the count of outreaches, and the numeral guard above could not see a word.
+    pattern: /עשרה\s+(מקבלי החלטות|פניות|נמענים)/,
+    claim: "ten recipients, which is the superseded outreach count in words",
+    ledger:
+      "Same operator decision 2026-08-01 as the numeral form. Written out rather than digits, so it survived the first pass; the FAQ answer it sat in promised a separate outreach per mapped decision maker, which is the deliverable guarantee.ts refunds.",
+  },
+  {
     pattern: /מיליון שקל/,
     claim: "an unattributed revenue increase, on a site that declares its claims verifiable",
     ledger:

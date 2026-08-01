@@ -56,6 +56,13 @@ export type Stage = {
   verb: string;
   description: string;
   deliverable: string;
+  /**
+   * What the deliverable is FOR, in the reader's terms. A spec answers
+   * "what do I get"; this answers "so what". Kept as a separate field so it
+   * cannot drift into the deliverable and quietly turn a description of an
+   * artefact into a claim about a result.
+   */
+  benefit: string;
   priceNis: number;
   /** Canonical formatting: ₪ prefix, e.g. "₪1,000". One source of truth. */
   priceLabel: string;
@@ -76,15 +83,17 @@ export const stages: readonly Stage[] = [
       "פגישה אחת לחילוץ הבידול שלך מתוך החומר שכבר קיים אצלך. לא מוסיפים. מוציאים החוצה.",
     deliverable:
       "מסמך נרטיב באורך עמוד עד שניים עם 3 עד 5 ניסוחים מילוליים מוכנים.",
+    benefit:
+      "כדי שתפסיקי להחליף כותרת כל שלושה שבועות, ותגידי את אותו משפט גם בעוד חצי שנה.",
     priceNis: 1000,
     priceLabel: "₪1,000",
     value: "stage-1",
-    ctaLabel: "אני רוצה את שלב 1",
+    ctaLabel: "לדבר על שלב 1",
     payloadLabel: "שלב 1, נרטיב ייחודי",
     artifact: {
       docLabel: "מסמך נרטיב",
       sample:
-        "אני עוזר ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
+        "אני עוזרת ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
       sampleSource: "method-reconstruction",
       lineCount: 8,
     },
@@ -96,10 +105,12 @@ export const stages: readonly Stage[] = [
     description:
       "פגישה אחת להבלטת הערך הייחודי שלך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. לא מוותרים על חלקים. בוחרים על מה האור נופל.",
     deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
+    benefit:
+      "כדי שתפסיקי לנחש איזה כאב מדליק לקוח, ותכתבי במילים שהוא כבר אמר.",
     priceNis: 1300,
     priceLabel: "₪1,300",
     value: "stage-2",
-    ctaLabel: "אני רוצה את שלב 2",
+    ctaLabel: "לדבר על שלב 2",
     payloadLabel: "שלב 2, הצעת ערך ייחודית",
     artifact: {
       docLabel: "הצעת ערך",
@@ -117,10 +128,12 @@ export const stages: readonly Stage[] = [
     description:
       "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלך לשפה שהלקוח שלך משלם עליה.",
     deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
+    benefit:
+      "כדי שהלקוח יבין מה הוא קונה עוד לפני שהוא שואל כמה זה עולה.",
     priceNis: 1600,
     priceLabel: "₪1,600",
     value: "stage-3",
-    ctaLabel: "אני רוצה את שלב 3",
+    ctaLabel: "לדבר על שלב 3",
     payloadLabel: "שלב 3, מוצר ייחודי",
     artifact: {
       docLabel: "תיאור מוצר",
@@ -145,10 +158,12 @@ export const stages: readonly Stage[] = [
     // The stage now produces `outreachCount`, matching the number guarantee.ts
     // attaches a refund to.
     deliverable: `${outreachCount} פניות שנכתבו ותועדו, והרצה מונחית של הראשונה בחדר. יומן אותות קנייה למעקב אחרי התגובות.`,
+    benefit:
+      "כדי שהמסמכים ייצאו מהמחשב אל אנשים ששמם ידוע לך, ולא יישארו תוכנית.",
     priceNis: 1900,
     priceLabel: "₪1,900",
     value: "stage-4",
-    ctaLabel: "אני רוצה את שלב 4",
+    ctaLabel: "לדבר על שלב 4",
     payloadLabel: "שלב 4, רכישת לקוחות פרואקטיבית",
     artifact: {
       docLabel: `${outreachCount} פניות מתועדות`,

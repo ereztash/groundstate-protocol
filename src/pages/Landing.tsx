@@ -14,6 +14,8 @@ import ClientProofSection from "@/components/landing/ClientProofSection";
 import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
 import MidPageCTA from "@/components/landing/MidPageCTA";
 import FAQSection from "@/components/landing/FAQSection";
+import Day31Section from "@/components/landing/Day31Section";
+import ObjectionsSection from "@/components/landing/ObjectionsSection";
 import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
 import SiteFooter from "@/components/SiteFooter";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
@@ -135,9 +137,16 @@ const Landing = () => {
           </div>
           <SequenceSection />
           <FullPackageSection />
+          {/* Desire, then the objections that block it, then the filter. The
+              page ran spec → price → filter → FAQ, so it never once showed the
+              reader using any of this, and the two questions that actually stop
+              a sale sat closed inside the accordion below. Day31 is the wanting;
+              ObjectionsSection clears the path to the form. */}
+          <Day31Section />
           <div className="dark bg-background text-foreground">
             <NotForEveryoneSection />
           </div>
+          <ObjectionsSection />
           <FAQSection />
           <DiagnosticFormSection />
         </main>

@@ -70,9 +70,30 @@ const ClientProofSection = () => {
 
           {testimonials.map((t, i) => (
             <figure key={i} className="space-y-5 border-t border-border pt-10">
-              <blockquote className="pull-quote pr-8 md:pr-10">
-                <p>{t.quote}</p>
-              </blockquote>
+              {/* A testimonial with a pullQuote is one nobody was finishing.
+                  <details> rather than a useState toggle: it opens without JS,
+                  so the prerendered file and a reader with a broken bundle both
+                  still hold the full text, and the browser handles the
+                  expanded/collapsed state for assistive tech. The words are
+                  untouched either way. */}
+              {t.pullQuote ? (
+                <blockquote className="pull-quote pr-8 md:pr-10">
+                  <p>{t.pullQuote}</p>
+                  <details className="group mt-3">
+                    <summary className="cursor-pointer list-none text-sm font-semibold text-primary transition-colors marker:content-none hover:text-primary/80">
+                      <span className="group-open:hidden">קרא את העדות המלאה</span>
+                      <span className="hidden group-open:inline">סגור</span>
+                    </summary>
+                    <p className="mt-3 text-base font-normal not-italic leading-relaxed text-foreground/85">
+                      {t.quote}
+                    </p>
+                  </details>
+                </blockquote>
+              ) : (
+                <blockquote className="pull-quote pr-8 md:pr-10">
+                  <p>{t.quote}</p>
+                </blockquote>
+              )}
 
               <figcaption className="flex items-start gap-3 border-t border-border pt-5">
                 {t.photo ? (

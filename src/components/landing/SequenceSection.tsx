@@ -86,8 +86,20 @@ const SequenceSection = () => {
           <NecessityChain activeStage={activeStage} />
         </Reveal>
 
+        {/* This line used to sit UNDER the four cards. The order was the
+            problem: the cards ask the reader to pick a stage, and the answer
+            that they do not have to pick arrived after they had already tried.
+            Read first, it turns four purchase decisions into four descriptions.
+            The card CTAs moved from "אני רוצה את שלב N" to "לדבר על שלב N" for
+            the same reason — every one of them opens the intake form, and none
+            of them buys anything. */}
+        <Reveal className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+          לא בטוחה מאיפה להתחיל? את לא צריכה להחליט עכשיו. בשיחה הראשונה נחליט
+          ביחד, ורוב הלקוחות מתחילים בשלב 1.
+        </Reveal>
+
         <RevealStagger
-          className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+          className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
           as="ol"
         >
           {stages.map((s) => (
@@ -129,6 +141,13 @@ const SequenceSection = () => {
                 <p className="mt-1 text-sm leading-relaxed text-foreground/85">
                   {s.deliverable}
                 </p>
+                {/* The "so what" line. Each deliverable above is a spec, and a
+                    spec read alone leaves the reader to infer why they should
+                    want it. Kept visually quieter than the spec: it explains
+                    the artefact, it does not promise a result. */}
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {s.benefit}
+                </p>
               </div>
 
               {/* Price and CTA pinned to the bottom of the card rather than
@@ -156,12 +175,6 @@ const SequenceSection = () => {
           ))}
         </RevealStagger>
 
-        <Reveal
-          delay={0.1}
-          className="mx-auto mt-14 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground"
-        >
-          לא בטוח מאיפה להתחיל? בשיחה הראשונה נחליט ביחד. רוב הלקוחות מתחילים בשלב 1.
-        </Reveal>
       </div>
     </section>
   );

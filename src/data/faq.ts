@@ -16,10 +16,41 @@
  */
 export type QA = { q: string; a: string };
 
+/**
+ * The two objections that decide the sale, raised in the body of the page
+ * instead of waiting inside a closed accordion.
+ *
+ * These are questions a reader is already asking; leaving them behind a click
+ * means the only people who get an answer are the ones who cared enough to look
+ * for one, which is the wrong half of the audience. ObjectionsSection reads
+ * them from here by question text rather than re-typing them, so the visible
+ * prose, the accordion and the FAQPage structured data cannot drift apart.
+ *
+ * Matched on a distinctive fragment rather than the full string: an edit to
+ * punctuation in the question should not silently empty the section. The lookup
+ * throws instead, and faq.test.ts covers it.
+ */
+export const SURFACED_OBJECTIONS = [
+  "אי אפשר פשוט להשתמש ב-GPT",
+  "מה ההבדל בינך לבין יועץ עסקי או מאמן עסקי",
+] as const;
+
+export function surfacedObjections(): QA[] {
+  return SURFACED_OBJECTIONS.map((fragment) => {
+    const hit = faq.find((item) => item.q.includes(fragment));
+    if (!hit) {
+      throw new Error(
+        `surfacedObjections: no FAQ entry matches "${fragment}". The question was edited; update SURFACED_OBJECTIONS.`
+      );
+    }
+    return hit;
+  });
+}
+
 export const faq: readonly QA[] = [
   {
-    q: "מאיפה להתחיל אם אני לא יודע באיזה שלב אני?",
-    a: "זה בדיוק מה שהשיחה הראשונה עושה. רוב הלקוחות מתחילים בשלב 1 (נרטיב) כי שם יושב הבידול שעוד לא ניסחת. אם יש לך כבר נרטיב חזק, נדלג ונתחיל מהצעת הערך. אתה לא צריך להחליט לבד.",
+    q: "מאיפה להתחיל אם אני לא יודעת באיזה שלב אני?",
+    a: "זה בדיוק מה שהשיחה הראשונה עושה. רוב הלקוחות מתחילים בשלב 1 (נרטיב) כי שם יושב הבידול שעוד לא ניסחת. אם יש לך כבר נרטיב חזק, נדלג ונתחיל מהצעת הערך. את לא צריכה להחליט לבד.",
   },
   {
     q: "אני כבר עם נרטיב, אפשר להתחיל משלב 2?",
@@ -52,6 +83,10 @@ export const faq: readonly QA[] = [
     // that criterion 🪦, refuted twice on transcript. The buy-signal journal
     // also stopped being phrased as signals that came back — the journal is a
     // deliverable, the responses are not something the stage can promise.
-    a: "מיפוי של עשרה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות. המחיר הוא ₪1,900.",
+    // Was "עשרה מקבלי החלטות". Spelled out, so the numeral guard in
+    // refutedClaims did not see it, and "ניסוח פנייה נפרד לכל אחד מהם" makes the
+    // count of decision makers the count of outreaches. It contradicted
+    // outreachCount and the refund in guarantee.ts.
+    a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות. המחיר הוא ₪1,900.",
   },
 ];
