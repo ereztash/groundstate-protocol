@@ -460,7 +460,7 @@ const StageRecommenderSection = () => {
                 במשפט אחד, מה התקיעה הכי בוערת אצלך כרגע?
               </h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                לא חובה. אבל אם תכתוב, אצטט אותך בתשובה, הניתוח יוצא יותר מדויק.
+                לא חובה. אבל אם תכתבי, אצטט אותך בתשובה, הניתוח יוצא יותר מדויק.
               </p>
               <textarea
                 value={openText}

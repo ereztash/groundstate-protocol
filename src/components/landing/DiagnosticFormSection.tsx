@@ -61,7 +61,7 @@ const timeWindows = [
 const stepOneSchema = z.object({
   challenge: z
     .string()
-    .min(3, { message: "כתוב/י משפט אחד" })
+    .min(3, { message: "כתבי משפט אחד" })
     .max(800, { message: "תיאור ארוך מדי" }),
   fullName: z
     .string()
@@ -275,7 +275,7 @@ const DiagnosticFormSection = () => {
               <SpotsLeft className="text-sm text-muted-foreground" />
 
               <ul
-                aria-label="מה תיקח מהשיחה"
+                aria-label="מה תיקחי מהשיחה"
                 className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
               >
                 <li className="flex items-start gap-2.5">
@@ -599,7 +599,7 @@ const DiagnosticFormSection = () => {
               tabIndex={-1}
               className="cor-title text-foreground outline-none"
             >
-              תודה. בוא נקבע את הפגישה.
+              תודה. בואי נקבע את הפגישה.
             </h2>
             <Suspense fallback={<div className="h-[720px]" aria-hidden="true" />}>
               <BookingSection visible />

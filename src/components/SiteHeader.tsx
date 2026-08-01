@@ -82,7 +82,7 @@ const SiteHeader = () => {
             onClick={onCta}
             className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
           >
-            בוא נדבר
+            בואי נדבר
           </Link>
           <button
             type="button"

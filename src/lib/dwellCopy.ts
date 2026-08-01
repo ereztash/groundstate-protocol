@@ -18,7 +18,7 @@ export function getCtaCopy(phase: DwellPhase): string {
     case "engaged":
       return "20 דקות. בלי לחץ למכור.";
     case "committed":
-      return "אם הגעת עד כאן, בוא נדבר.";
+      return "אם הגעת עד כאן, בואי נדבר.";
     case "returning":
       return "שמחתי שחזרת. נקבע שיחה?";
   }
