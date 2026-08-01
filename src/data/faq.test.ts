@@ -52,7 +52,11 @@ describe("FAQ structured data", () => {
   it("carries no retracted framing", () => {
     const text = JSON.stringify(faqFromStructuredData());
     // The value-derived pricing answer and the "not X, it is Y" construction.
-    expect(text).not.toMatch(/אני לא מוכר 10 פניות/);
+    // Digit class rather than the literal 10: the retracted sentence was written
+    // when stage 4 claimed ten outreaches, and the count is now five. Guarding
+    // only the historical wording would let the same retracted framing back in
+    // wearing the current number.
+    expect(text).not.toMatch(/אני לא מוכר \d+ פניות/);
     expect(text).not.toMatch(/התוצר הוא לא תובנה/);
   });
 });

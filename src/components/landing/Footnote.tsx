@@ -38,10 +38,14 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
       {children}
       <Popover onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
+          {/* Ringed rather than bare. The marker used to be a coloured digit and
+              nothing else: no underline, no border, no pointer, so its only
+              signal that it opened anything was hue. A reader reported it as
+              looking like a typo. The ring costs nothing and says "control". */}
           <button
             type="button"
             aria-label={`הערה ${number}, פתח להסבר`}
-            className="ms-0.5 inline-block align-super rounded text-[0.65em] font-bold text-primary/85 transition-colors hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+            className="ms-0.5 inline-block cursor-pointer rounded-full border border-primary/40 px-[0.4em] align-super text-[0.62em] font-bold leading-normal text-primary/90 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {number}
           </button>

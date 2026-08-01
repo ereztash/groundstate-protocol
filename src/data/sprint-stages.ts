@@ -18,6 +18,20 @@ import type { SampleSource } from "@/lib/evidence";
 export type StageNumber = "01" | "02" | "03" | "04";
 
 /**
+ * How many outreach messages stage 4 produces. Operator decision 2026-08-01.
+ *
+ * A constant rather than a typed literal because the number was previously
+ * written by hand in six places and had already drifted: the site said ten
+ * everywhere while guarantee.ts promised five, and the guarantee is the one
+ * that carries a refund. Anything inside the bundle now derives from here.
+ *
+ * index.html and public/llms.txt cannot import it, so they are hand-maintained
+ * and held by the refuted-claims scan instead. That scan is the reason the drift
+ * cannot come back silently.
+ */
+export const outreachCount = 5;
+
+/**
  * The visible deliverable each stage produces. This is a specification of what
  * the client walks away holding, not a claim about an outcome. See
  * src/lib/evidence.ts for why the two are kept apart.
@@ -126,15 +140,18 @@ export const stages: readonly Stage[] = [
     // המקודד: '10 פניות נשלחו-ותועדו במפגש' הוא אידיאל. בפועל השליחה מחליקה
     // לשיעורי-בית / מפגש-5 / לא-קורית." Written and documented is what the
     // stage actually produces; the guided run is what happens in the room.
-    deliverable:
-      "10 פניות שנכתבו ותועדו, והרצה מונחית של הראשונה בחדר. יומן אותות קנייה למעקב אחרי התגובות.",
+    //
+    // The count in that quote is the graph's, from when the stage claimed ten.
+    // The stage now produces `outreachCount`, matching the number guarantee.ts
+    // attaches a refund to.
+    deliverable: `${outreachCount} פניות שנכתבו ותועדו, והרצה מונחית של הראשונה בחדר. יומן אותות קנייה למעקב אחרי התגובות.`,
     priceNis: 1900,
     priceLabel: "₪1,900",
     value: "stage-4",
     ctaLabel: "אני רוצה את שלב 4",
     payloadLabel: "שלב 4, רכישת לקוחות פרואקטיבית",
     artifact: {
-      docLabel: "10 פניות מתועדות",
+      docLabel: `${outreachCount} פניות מתועדות`,
       secondaryDoc: "יומן אותות קנייה",
       sample: "Subject: ראיתי מה שכתבת על המשבר ב-Q2. שאלה אחת.",
       sampleSource: "method-reconstruction",

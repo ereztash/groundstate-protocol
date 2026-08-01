@@ -37,17 +37,31 @@ const FullPackageSection = () => {
             כל ארבעת השלבים. ליווי בין הפגישות. תמחור חבילה שחוסך {fullPackage.savingsLabel} לעומת רכישה שלב אחר שלב.
           </p>
 
-          <div className="mt-8 flex items-baseline gap-3">
+          {/* The footnote marker used to sit on {priceLabel}, i.e. on ₪4,500,
+              while its tip explains what ₪5,800 is. Two defects in one marker.
+
+              Attached to the wrong number: a reader who worked out that the
+              small digit was a button got an answer about the figure beside the
+              one they clicked.
+
+              And attached to a numeral at all: at text-5xl a 0.65em superscript
+              renders around 30px, hard against the price, so "₪4,500" plus "2"
+              reads as ₪4,5002. Editorial practice puts a reference marker after
+              a word for exactly this reason, which is what Hero's footnote 1
+              already does ("כיצד נבנית רשימת הפנייה"). It now hangs off the
+              word, on the figure it actually explains. */}
+          <div className="mt-8 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+              {fullPackage.priceLabel}
+            </p>
+            <p className="text-base text-muted-foreground">
+              <span className="line-through">{fullPackage.fullPriceLabel}</span>{" "}
               <Footnote
                 number={2}
                 tip={`₪${fullPackage.fullPriceNis.toLocaleString("en-US")} הוא הסכום של 4 השלבים בנפרד (1,000 + 1,300 + 1,600 + 1,900). המחיר האגרגטיבי כולל גם ליווי בין הפגישות בלי תוספת תשלום.`}
               >
-                {fullPackage.priceLabel}
+                בנפרד
               </Footnote>
-            </p>
-            <p className="text-base text-muted-foreground">
-              <span className="line-through">{fullPackage.fullPriceLabel}</span>
             </p>
           </div>
 

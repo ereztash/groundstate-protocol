@@ -263,8 +263,14 @@ const DiagnosticFormSection = () => {
               >
                 שיחת התאמה: 20 דקות, ללא עלות
               </h2>
+              {/* Was "אני חוזר אליך תוך 24 שעות". The form does not impose a
+                  wait: on success this section renders BookingSection, which is
+                  an inline Calendly widget, and the visitor picks a slot right
+                  there. The copy was selling a day of latency the product does
+                  not have, and it is read before the decision to fill the form
+                  at all. Describe what actually happens. */}
               <p className="cor-body-lg text-foreground/80">
-                אני חוזר אליך תוך 24 שעות. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                מיד אחרי הטופס נפתח היומן ואתה בוחר מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
               <SpotsLeft className="text-sm text-muted-foreground" />
 
@@ -551,7 +557,10 @@ const DiagnosticFormSection = () => {
                       aria-busy={isSending}
                       className="cta-action inline-flex h-14 w-full items-center justify-center rounded-md text-base font-semibold"
                     >
-                      {isSending ? "שולח" : "שלח, אחזור אליך תוך 24 שעות"}
+                      {/* Was "שלח, אחזור אליך תוך 24 שעות" — the label named a
+                          wait that does not happen. The next screen is the
+                          calendar. */}
+                      {isSending ? "שולח" : "שלח ובחר מועד"}
                     </button>
                   </div>
                 </form>
