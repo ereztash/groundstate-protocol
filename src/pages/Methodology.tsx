@@ -8,6 +8,7 @@ import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { outreachCount } from "@/data/sprint-stages";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -57,7 +58,7 @@ const TRANSFORMATIONS: Record<string, string> = {
   "01": "חמישה סיפורים מקצועיים ← תבנית חוזרת ← משפט ייעוד",
   "02": "תגובות לקוחות ← מילון כאב ← הצעת ערך",
   "03": "הצעת ערך ← מבנה מוצר ← תיאור עם תמחור",
-  "04": "תיאור מוצר ← מיפוי מקבלי החלטות ← 10 פניות מתועדות",
+  "04": `תיאור מוצר ← מיפוי מקבלי החלטות ← ${outreachCount} פניות מתועדות`,
 };
 
 const PRINCIPLES = [

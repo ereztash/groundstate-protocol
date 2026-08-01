@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { join, extname } from "node:path";
 import { walk, stripComments, flattenJsx } from "./copyScan";
 
@@ -22,9 +22,32 @@ import { walk, stripComments, flattenJsx } from "./copyScan";
  */
 
 const ROOT = process.cwd();
-const SCAN = [join(ROOT, "src"), join(ROOT, "content")];
+/**
+ * `public` and the root index.html are scanned as well as the app source.
+ *
+ * They were outside the walk until 2026-08-01, and the gap was not theoretical:
+ * sprint-stages.ts had "נשלחו" removed from the stage-4 deliverable, with the
+ * graph row quoted in the comment, while public/llms.txt went on telling every
+ * model that reads it "10 פניות שנכתבו, נשלחו, ותועדו". The corrected file was
+ * guarded; the file that survives a copy edit longest was not.
+ *
+ * These are the site's highest-leverage sentences per byte — the meta
+ * description is what Google prints, and llms.txt is written to be quoted back
+ * verbatim by an assistant. A retracted claim living there outlives the page.
+ */
+const SCAN = [
+  join(ROOT, "src"),
+  join(ROOT, "content"),
+  join(ROOT, "public"),
+  join(ROOT, "index.html"),
+];
 const CODE_EXT = new Set([".ts", ".tsx"]);
-const TEXT_EXT = new Set([".md"]);
+/**
+ * .txt and .html join .md here for the public roots. Deliberately not .svg or
+ * .xml: sitemap.xml is a URL list and placeholder.svg is path data, so neither
+ * holds a sentence, and scanning them only invents ways to trip the check.
+ */
+const TEXT_EXT = new Set([".md", ".txt", ".html"]);
 
 /** This file necessarily contains the strings it bans. */
 const SELF = "refutedClaims.test.ts";
@@ -89,6 +112,23 @@ const REFUTED: RefutedClaim[] = [
       'Ledger 2026-07-13 rows 207-209, all describing the H8 blind-coding corpus: "H8 סבב-2, קידוד-עיוור על הקורפוס המלא (12+10 מתוך 28)" and "146 זוגות תור-מאמן→תגובת-לקוח · 22 מפגשים · 9 לקוחות". Rows 207-208 write "22 פגישות" for that same corpus; row 209 writes "מפגשים". It is 22 of 28 coaching transcripts from 9 clients, sampled for a methodology test, not meetings held with clients.',
   },
   {
+    // The construction, not the verb alone: "נשלחו" on its own is ordinary
+    // Hebrew and appears in prose that claims nothing.
+    pattern: /פניות\s+שנכתבו,?\s*נשלחו/,
+    claim: "that the outreach messages went out, as a stage-4 deliverable",
+    ledger:
+      '`מפגש-4 הפעלה`: "הפועל ≠ המקודד: \'10 פניות נשלחו-ותועדו במפגש\' הוא אידיאל. בפועל השליחה מחליקה לשיעורי-בית / מפגש-5 / לא-קורית." sprint-stages.ts states the deliverable as written and documented, with a guided run of the first in the room. public/llms.txt kept the retracted wording for as long as the scan did not reach it.',
+  },
+  {
+    // Ten was the count everywhere on the site while guarantee.ts promised five
+    // and attached a refund to it. Now that the two agree, the loser needs a
+    // guard: it is the number in every old draft, deck and screenshot.
+    pattern: /(?<!\d)10\s*פניות/,
+    claim: "ten outreach messages, superseded by the count the guarantee covers",
+    ledger:
+      "Operator decision 2026-08-01: the stage-4 deliverable is five. `guarantee.ts` variant `outreach-sent` already promised \"בסוף שלב 4 יצאו חמש פניות בפועל... אם לא יצאו, החזר מלא של שלב 4\", and a refund-backed number outranks marketing copy. src/data/sprint-stages.ts `outreachCount` is the single source for everything that can import it.",
+  },
+  {
     pattern: /מיליון שקל/,
     claim: "an unattributed revenue increase, on a site that declares its claims verifiable",
     ledger:
@@ -104,7 +144,11 @@ function displayedCopy(path: string): string | null {
 }
 
 describe("refuted claims stay out of displayed copy", () => {
-  const files = SCAN.flatMap((d) => walk(d)).filter((f) => !f.endsWith(SELF));
+  // SCAN holds directories and one bare file (index.html), so entries are
+  // stat'd rather than assumed to be walkable.
+  const files = SCAN.flatMap((p) =>
+    statSync(p).isDirectory() ? walk(p) : [p]
+  ).filter((f) => !f.endsWith(SELF));
 
   it("scans a non-trivial number of files", () => {
     // Guards against the walk silently returning nothing and the suite passing

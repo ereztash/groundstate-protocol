@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
-import CoherenceVectors from "./CoherenceVectors";
+import NecessityChain from "./NecessityChain";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
 import { captureJourney } from "@/lib/journeyCapture";
@@ -21,8 +21,8 @@ const SequenceSection = () => {
   };
 
   // First point on the page a visitor sees a concrete price (each card's
-  // priceLabel) — fires once, matching the pattern CoherenceVectors already
-  // uses for its own entry animation.
+  // priceLabel). Fires once, via the same observe-then-disconnect pattern the
+  // Reveal primitives use for entry.
   useEffect(() => {
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
@@ -77,11 +77,13 @@ const SequenceSection = () => {
           <Guarantee className="mt-6" />
         </Reveal>
 
-        {/* The four vectors the brief names — identity, value, product, sale —
-            resolving into one direction. Decorative: every stage's meaning is
-            in the cards below. */}
-        <Reveal className="mx-auto mt-10 max-w-lg">
-          <CoherenceVectors activeStage={activeStage} className="w-full" />
+        {/* Was CoherenceVectors: four arrows resolving onto a spine, aria-hidden,
+            with the entire figure's meaning carried by a one-shot entry
+            transition. See NecessityChain for why that could not be tuned into
+            working. The chain states the same argument in words, standing
+            still. */}
+        <Reveal className="mx-auto mt-10 max-w-xl">
+          <NecessityChain activeStage={activeStage} />
         </Reveal>
 
         <RevealStagger
@@ -129,17 +131,26 @@ const SequenceSection = () => {
                 </p>
               </div>
 
-              <p className="mt-5 text-base font-semibold text-foreground">
-                {s.priceLabel}
-              </p>
+              {/* Price and CTA pinned to the bottom of the card rather than
+                  flowing after the copy. Stage 04's deliverable wraps to one
+                  more line than the others, which pushed its price and button
+                  23px below the rest (46px at 1024px, where two cards wrap
+                  long). This row is a price ladder, and comparing four prices
+                  is harder when they sit at four heights. The cards already
+                  stretch to equal height, so mt-auto is enough. */}
+              <div className="mt-auto pt-5">
+                <p className="text-base font-semibold text-foreground">
+                  {s.priceLabel}
+                </p>
 
-              <button
-                type="button"
-                onClick={() => handleClick(s)}
-                className="cta-line mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
-              >
-                {s.ctaLabel}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => handleClick(s)}
+                  className="cta-line mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
+                >
+                  {s.ctaLabel}
+                </button>
+              </div>
               </div>
             </RevealItem>
           ))}
