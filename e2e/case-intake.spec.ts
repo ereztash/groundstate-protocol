@@ -123,11 +123,36 @@ test.describe("undecided material stays out of the bundle", () => {
       [
         "בסוף הספרינט יש בידך אות התעניינות מתועד",
         "בסוף שלב 4 יצאו חמש פניות בפועל",
-        "מבטיח תוצר שנמצא כולו בשליטתך",
         "אות שלא תועד אינו נחשב",
         "הנמען נבחר בשמו ובתפקידו",
       ],
       'Guarantee copy shipped while ACTIVE_VARIANT is "none". If a variant just went live, delete this test:'
+    );
+  });
+
+  /**
+   * Unlike the two above, this one is never deleted.
+   *
+   * The variants are visitor copy and are meant to ship the day one goes live.
+   * The review notes are not: they are the read on how much perceived risk each
+   * option reverses and what exposure it leaves open, written for the person
+   * choosing between them. A prospect who opened the bundle would be reading an
+   * assessment of the weakness of the promise being made to them.
+   *
+   * They lived on the variant objects until review of this PR caught that the
+   * split protected them only while ACTIVE_VARIANT was "none" — that is, only
+   * while nobody could see the guarantee anyway. They now sit in
+   * src/data/guaranteeReviewNotes.ts, whose sole importer is /guarantee-review,
+   * which is compiled out of production. This assertion holds in every state.
+   */
+  test("no operator review notes, in any state", () => {
+    absent(
+      [
+        "מבטיח תוצר שנמצא כולו בשליטתך",
+        "כלשונו בגרף. מפחית סיכון נתפס",
+        "מסיר את החשיפה על הנגזרת",
+      ],
+      "Operator-facing review notes reached the bundle. These are never visitor copy:"
     );
   });
 });

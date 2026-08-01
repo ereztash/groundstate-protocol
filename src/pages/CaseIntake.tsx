@@ -15,9 +15,17 @@ import { EVIDENCE_LABEL, EVIDENCE_MEANING, type EvidenceLevel } from "@/lib/evid
  * Three deliberate properties:
  *
  *  - Nothing is transmitted. The form has no endpoint: it formats a JSON record
- *    for the operator to paste into src/data/cases/. Client detail therefore
- *    never crosses the network from this page, which is the only way to hold a
- *    tool like this on a public host.
+ *    for the operator to paste into docs/cases/. Client detail therefore never
+ *    crosses the network from this page, which is the only way to hold a tool
+ *    like this on a public host.
+ *
+ *    docs/cases/, never src/data/cases/. This tool writes `consent_state:
+ *    "pending"` by construction (see below), and src/data/cases is globbed
+ *    eagerly into the production bundle, so a record pasted there would ship to
+ *    every visitor before its subject had agreed to anything. That is the exact
+ *    leak the split was made to close; src/data/cases.test.ts fails on it, but
+ *    a tool that instructs an operator to trip a guard is a bad tool. See
+ *    src/data/cases/README.md.
  *  - Not indexed, and not linked from the site. It carries a noindex directive
  *    and is left out of the prerender route list, so no static HTML exists for a
  *    crawler to find.
@@ -254,8 +262,14 @@ const CaseIntake = () => {
               role="status"
               className={`text-sm ${valid ? "text-muted-foreground" : "text-destructive"}`}
             >
+              {/* docs/cases, not src/data/cases: this record is written with
+                  consent pending, and src/data/cases ships to every visitor.
+                  The sentence names the reason, because an operator following
+                  a bare path has no way to know it matters. The leading clause
+                  is unchanged on purpose, e2e/case-intake.spec.ts uses it as
+                  the marker proving this tool never reaches production. */}
               {valid
-                ? "הרשומה תקפה. הדבק אותה לקובץ חדש תחת src/data/cases."
+                ? "הרשומה תקפה. הדבק אותה לקובץ חדש תחת docs/cases, שלא נכנס לבנייה. היא תעבור ל-src/data/cases רק אחרי שההסכמה והאימות ניתנו."
                 : "הרשומה עדיין חסרה שדה. כל חמשת השלבים והתיאור הכללי נדרשים."}
             </span>
           </div>

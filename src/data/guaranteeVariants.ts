@@ -4,16 +4,16 @@ import type { GuaranteeVariant } from "./guarantee";
  * The three guarantee options, in full.
  *
  * Split out of guarantee.ts because all three were shipping to every visitor
- * while ACTIVE_VARIANT was "none" and none of them rendered. That included
- * `reviewNote`, which is not visitor copy at all: it is the operator-facing
- * assessment of how much perceived risk each option reverses and what
- * commercial exposure it leaves open. Internal notes about pricing exposure do
- * not belong in a public JavaScript file.
+ * while ACTIVE_VARIANT was "none" and none of them rendered. activeGuarantee()
+ * reaches this module only when ACTIVE_VARIANT is not "none", and that
+ * comparison folds at build time, so the variants ship exactly when one of them
+ * is live and not before. /guarantee-review imports it directly and is already
+ * compiled out of production.
  *
- * activeGuarantee() reaches this module only when ACTIVE_VARIANT is not
- * "none", and that comparison folds at build time, so the variants ship
- * exactly when one of them is live and not before. /guarantee-review imports
- * it directly and is already compiled out of production.
+ * Visitor copy only. The operator-facing notes on each option moved to
+ * ./guaranteeReviewNotes when a reviewer pointed out that this split protected
+ * them only while the feature was switched off, which is the one state in which
+ * protecting them does not matter.
  */
 
 const SIGNALS = [
@@ -51,8 +51,6 @@ export const GUARANTEE_VARIANTS: readonly GuaranteeVariant[] = [
      * both sides can check whether the guarantee held.
      */
     id: "outreach-sent",
-    reviewNote:
-      "מבטיח תוצר שנמצא כולו בשליטתך, ולכן אינו יכול להיכשל מסיבה חיצונית. מפחית פחות סיכון נתפס מהבטחה על תוצאה.",
     amount: null,
     headline:
       "בסוף שלב 4 יצאו חמש פניות בפועל, כל אחת לנמען שנבחר בשמו ובניסוח שנכתב איתי בפגישה. אם לא יצאו, החזר מלא של שלב 4.",
@@ -75,8 +73,6 @@ export const GUARANTEE_VARIANTS: readonly GuaranteeVariant[] = [
   },
   {
     id: "with-amount",
-    reviewNote:
-      "כלשונו בגרף. מפחית סיכון נתפס בצורה הברורה ביותר, ומשאיר את החשיפה על ₪1,900 פתוחה.",
     amount: "₪1,900",
     headline:
       "בסוף הספרינט יש בידך אות התעניינות מתועד מלקוח קצה אחד לפחות, או החזר מלא של ₪1,900.",
@@ -89,8 +85,6 @@ export const GUARANTEE_VARIANTS: readonly GuaranteeVariant[] = [
   },
   {
     id: "without-amount",
-    reviewNote:
-      "מסיר את החשיפה על הנגזרת, כי אינו נוקב במספר. דורש הכרעת תמחור על מה בדיוק מוחזר.",
     amount: null,
     headline:
       "בסוף הספרינט יש בידך אות התעניינות מתועד מלקוח קצה אחד לפחות, או החזר מלא של שלב 4.",

@@ -32,8 +32,6 @@ export const ACTIVE_VARIANT: GuaranteeVariantId = "none";
 
 export type GuaranteeVariant = {
   id: Exclude<GuaranteeVariantId, "none">;
-  /** One-line summary for the review page. */
-  reviewNote: string;
   /** The money amount, or null when the variant states no number. */
   amount: string | null;
   headline: string;

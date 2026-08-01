@@ -2,6 +2,9 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import GuaranteeBlock from "@/components/GuaranteeBlock";
 import { ACTIVE_VARIANT } from "@/data/guarantee";
 import { GUARANTEE_VARIANTS } from "@/data/guaranteeVariants";
+// Operator notes live apart from the variants so they cannot ride into a
+// production bundle when one goes live. This page is the only importer.
+import { GUARANTEE_REVIEW_NOTES } from "@/data/guaranteeReviewNotes";
 
 /**
  * Renders every guarantee variant as it would actually ship, so the decision is
@@ -47,7 +50,7 @@ const GuaranteeReview = () => {
             <div className="border-b border-border pb-3">
               <h2 className="cor-heading text-foreground">{variant.id}</h2>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                {variant.reviewNote}
+                {GUARANTEE_REVIEW_NOTES[variant.id]}
               </p>
             </div>
 
