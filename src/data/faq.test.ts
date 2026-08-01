@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { faq } from "./faq";
+import { faq, surfacedObjections, SURFACED_OBJECTIONS } from "./faq";
 
 /**
  * index.html serves an FAQPage block to search engines. It was maintained by
@@ -47,6 +47,20 @@ describe("FAQ structured data", () => {
     const text = JSON.stringify(faqFromStructuredData());
     expect(text).not.toMatch(/אחריות החזר/);
     expect(text).not.toMatch(/בלי טפסים|בלי ויכוח/);
+  });
+
+  it("resolves every surfaced objection to a live FAQ entry", () => {
+    // ObjectionsSection renders these in the page body by looking them up in
+    // the FAQ. The lookup throws on a miss rather than rendering an empty
+    // section, so this test is what turns "someone reworded a question" from a
+    // silently blank block into a failing build.
+    const surfaced = surfacedObjections();
+    expect(surfaced).toHaveLength(SURFACED_OBJECTIONS.length);
+    for (const item of surfaced) {
+      expect(item.q.length).toBeGreaterThan(0);
+      expect(item.a.length).toBeGreaterThan(0);
+      expect(faq).toContain(item);
+    }
   });
 
   it("carries no retracted framing", () => {

@@ -73,7 +73,7 @@ async function completeStepOne({ activePractice = "כן" } = {}) {
   // The anti-ICP screening radio. Required — step 1 will not advance without
   // it, which is the point: every CTA on the site lands on this field.
   fireEvent.click(screen.getByRole("radio", { name: activePractice }));
-  fireEvent.click(screen.getByRole("button", { name: "המשך" }));
+  fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
   // Step 2 is reached only once step 1 validates and submits.
   return screen.findByPlaceholderText("05X-XXXXXXX");
 }
@@ -171,7 +171,7 @@ describe("DiagnosticFormSection", () => {
     fireEvent.change(screen.getByLabelText(/איך לקרוא לך/), {
       target: { value: "ישראל ישראלי" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "המשך" }));
+    fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
     expect(
       await screen.findByText("בחר/י אחת מהאפשרויות")
@@ -194,7 +194,7 @@ describe("DiagnosticFormSection", () => {
     renderForm();
 
     // Submit step 1 empty — validation should keep us on step 1 (no phone field).
-    fireEvent.click(screen.getByRole("button", { name: "המשך" }));
+    fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
     expect(await screen.findByText("כתוב/י משפט אחד")).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();

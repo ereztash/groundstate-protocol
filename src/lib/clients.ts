@@ -9,6 +9,17 @@
 
 export type Testimonial = {
   quote: string;
+  /**
+   * One sentence from `quote`, verbatim, shown before the rest is expanded.
+   *
+   * Only for testimonials long enough that nobody reads them: F-pattern
+   * scanning means a twelve-line block is skipped whole, so the strongest
+   * sentence in it never lands. This is progressive disclosure, not editing —
+   * the full text is always present and one click away, and the rule at the top
+   * of this file still holds. Must appear in `quote` character for character;
+   * clients.test.ts fails if it does not.
+   */
+  pullQuote?: string;
   attribution: string;
   /** Optional secondary credential / outcome line under the name. */
   outcome?: string;
@@ -32,6 +43,8 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "הגעתי לארז אחרי תקופה ארוכה של חיפושים מתישים במיוחד, והוא פשוט שינה לי את הפרספקטיבה. במקום להמשיך ״לירות לכל הכיוונים״ עם מאות קורות חיים, הוא עזר לי להתמקד במה שאני באמת חזק בו ולהפוך את זה לכלי עבודה בשטח. ארז יורד לפרטים הכי קטנים, והמתודולוגיה שלו מבוססת על הניסיון המעשי והאקדמי המרשים מאוד שלו. הוא ידע לזהות בדיוק איפה החוזקות שלי ואיפה אני צריך להשתפר, ונתן לי ביטחון בדרך שבה אני מציג את עצמי. הוא עזר לי ״לטרגט״ את משרות היעד שלי, ובפרט את בעלי התפקידים שאיתם אני צריך ליצור חיבור כדי להגיע אליהן. אבל מה שבאמת הכי חימם לי את הלב, מעבר למקצועיות: הוא קודם כל בן אדם שמדבר בגובה העיניים, איש נחמד שמנסה לעזור בכל דרך אפשרית, הוא מחזק מילואימניקים ומקדם אותנו בדרך המאוד מסובכת שלנו בחזרה הביתה, והוא לעולם לא מסתכל על השעון כשהוא מדבר איתך. ממליץ בחום לכל מי שרוצה תוצאות ולא רק הבטחות — ובעיקר למי שרוצה לדבר עם בן אדם ולא עם ארנק שממתין לכסף שלך.",
+    pullQuote:
+      "ממליץ בחום לכל מי שרוצה תוצאות ולא רק הבטחות",
     attribution: "סמואל די פורטו",
     linkedin: "https://www.linkedin.com/in/samuel-di-porto-83151a369/",
     photo: `${import.meta.env.BASE_URL}clients/samuel-di-porto.webp`,
