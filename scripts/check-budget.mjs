@@ -15,11 +15,15 @@
  *    stays visible rather than being quietly absorbed into the limit.
  *
  * 2. Initial payload and lazy chunks are budgeted separately, because they are
- *    not the same cost. `CoherenceGL` is 215 kB gzip and sits behind four gates
- *    (prefers-reduced-motion, WebGL support, saveData, a minimum viewport), so
- *    it is never on a first paint's critical path. Summing it into one total
- *    would report a weight no visitor actually pays, and would make the number
- *    that does matter, the initial payload, impossible to see.
+ *    not the same cost. A gated, lazily-imported chunk is not on a first
+ *    paint's critical path, so summing it into one total would report a weight
+ *    no visitor actually pays and would bury the number that does matter.
+ *
+ * The lazy ceiling was 222 kB when this landed, sized around a WebGL layer that
+ * three.js made 216 kB gzip. Rewriting that layer against the WebGL context
+ * directly took it to 3 kB, so the ceiling came down with it. A budget left at
+ * the old number after the thing it was sized for went away is not a lenient
+ * budget, it is an inactive one.
  *
  * Measured in gzip because that is what crosses the wire. GitHub Pages serves
  * gzip; brotli would be smaller still, so this is the conservative reading.
@@ -37,11 +41,11 @@ const KB = 1024;
  */
 export const BUDGETS = {
   /** Everything dist/index.html references: the cost of a first landing view. */
-  initial: { limit: 156, target: 140 },
-  /** Any single lazy chunk. CoherenceGL is the one that matters. */
-  lazyChunk: { limit: 222, target: 150 },
+  initial: { limit: 152, target: 140 },
+  /** Any single lazy chunk. The largest is now framer-motion at ~40 kB. */
+  lazyChunk: { limit: 46, target: 42 },
   /** The stylesheet, which is render-blocking and so is called out on its own. */
-  css: { limit: 16, target: 16 },
+  css: { limit: 15, target: 13 },
 };
 
 /** kB, to one decimal, from a byte count. */
