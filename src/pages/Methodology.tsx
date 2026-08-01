@@ -22,7 +22,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "אתה מנסח בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך, לא חזרה על ניסוח שלי.",
+  "01": "את מנסחת בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך, לא חזרה על ניסוח שלי.",
   "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
@@ -260,7 +260,7 @@ const Methodology = () => {
         <section dir="rtl" className={`${DARK} py-20 md:py-28`}>
           <Reveal className="mx-auto max-w-2xl px-6 text-center">
             <h2 className="cor-title text-[hsl(var(--background))]">
-              לא בטוח מאיפה להתחיל?
+              לא בטוחה מאיפה להתחיל?
             </h2>
             <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
               בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים. רוב הלקוחות מתחילים בשלב 1.

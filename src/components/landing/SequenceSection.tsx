@@ -94,7 +94,7 @@ const SequenceSection = () => {
             the same reason — every one of them opens the intake form, and none
             of them buys anything. */}
         <Reveal className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-          לא בטוח מאיפה להתחיל? אתה לא צריך להחליט עכשיו. בשיחה הראשונה נחליט
+          לא בטוחה מאיפה להתחיל? את לא צריכה להחליט עכשיו. בשיחה הראשונה נחליט
           ביחד, ורוב הלקוחות מתחילים בשלב 1.
         </Reveal>
 

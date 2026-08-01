@@ -36,7 +36,7 @@ const Day31Section = () => {
 
           <div className="mt-6 space-y-4 text-foreground/85">
             <p className="cor-body-lg">
-              מישהו שואל במה אתה עוסק. יש לך משפט אחד. אתה אומר אותו, ולא מוסיף
+              מישהו שואל במה את עוסקת. יש לך משפט אחד. את אומרת אותו, ולא מוסיפה
               אחריו הסתייגות.
             </p>
             <p className="cor-body-lg">

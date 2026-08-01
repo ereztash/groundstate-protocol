@@ -270,7 +270,7 @@ const DiagnosticFormSection = () => {
                   not have, and it is read before the decision to fill the form
                   at all. Describe what actually happens. */}
               <p className="cor-body-lg text-foreground/80">
-                מיד אחרי הטופס נפתח היומן ואתה בוחר מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                מיד אחרי הטופס נפתח היומן ואת בוחרת מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
               </p>
               <SpotsLeft className="text-sm text-muted-foreground" />
 
@@ -280,15 +280,15 @@ const DiagnosticFormSection = () => {
               >
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדע אם זה מתאים לך. ביושר, גם אם לא.</span>
+                  <span>תדעי אם זה מתאים לך. ביושר, גם אם לא.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדע מאיזה שלב להתחיל ולמה.</span>
+                  <span>תדעי מאיזה שלב להתחיל ולמה.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תקבל פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
+                  <span>תקבלי פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
                 </li>
               </ul>
 
@@ -299,7 +299,7 @@ const DiagnosticFormSection = () => {
                   with them rather than pushing. */}
               <p className="mt-5 text-sm leading-relaxed text-foreground/80">
                 יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
-                ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדע מאיזה
+                ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעי מאיזה
                 שלב להתחיל. ההחלטה שלך בלבד.
               </p>
 
@@ -357,7 +357,7 @@ const DiagnosticFormSection = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>במשפט אחד: מה אתה יודע לעשות, שאתה לא מצליח למכור?
+                          <span className="field-num">01.</span>במשפט אחד: מה את יודעת לעשות, שאת לא מצליחה למכור?
                         </FormLabel>
                         <FormControl>
                           <Textarea

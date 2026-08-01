@@ -27,7 +27,7 @@ const ObjectionsSection = () => {
     >
       <div className="mx-auto max-w-2xl px-6">
         <Reveal>
-          <p className="cor-overline-he">מה שאתה כנראה חושב עכשיו</p>
+          <p className="cor-overline-he">מה שאת כנראה חושבת עכשיו</p>
           <h2 id="objections-title" className="cor-title mt-2 text-foreground">
             שתי השאלות שעוצרות אנשים כאן.
           </h2>
