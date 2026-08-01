@@ -12,7 +12,7 @@ import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
 import FullPackageSection from "@/components/landing/FullPackageSection";
 import ClientProofSection from "@/components/landing/ClientProofSection";
 import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
-import MidPageCTA from "@/components/landing/MidPageCTA";
+import InlineCTA from "@/components/landing/InlineCTA";
 import FAQSection from "@/components/landing/FAQSection";
 import Day31Section from "@/components/landing/Day31Section";
 import ObjectionsSection from "@/components/landing/ObjectionsSection";
@@ -114,7 +114,11 @@ const Landing = () => {
               down (after they've seen pain → proof → what the call is) catches
               them without competing with the page's single conversion goal. */}
           <div className="dark bg-background text-foreground">
-            <MidPageCTA />
+            <InlineCTA
+              prompt="הצעד הבא הוא שיחה."
+              ctaName="mid_page"
+              source="mid_cta"
+            />
           </div>
           {/* min-height reserves the section's box so the lazy chunk arriving
               cannot shift the sections below it. */}
@@ -123,30 +127,52 @@ const Landing = () => {
           </Suspense>
           {/* Value before price: the tangible deliverables run before the price
               ladder, so the numbers land on top of value already built. The two
-              priced offers (Sequence → FullPackage) stay contiguous, and the
-              "not for everyone" filter follows them as the final take-away. */}
+              priced offers (Sequence → FullPackage) stay contiguous. */}
           <DeliverablesPreview />
           {/* Renders nothing until a case passes both publication gates. */}
           <EvidenceChain />
+          <SequenceSection />
+          <FullPackageSection />
+          {/* ClaimsShelf and PreRegistration used to run BETWEEN the deliverables
+              and the price, which put three consecutive sections of epistemics
+              (17% of the page on desktop, 21% on mobile) in front of a reader
+              who had not yet seen a number. Measured, the price ladder did not
+              arrive until 63% of scroll depth — thirteen screens in on mobile.
+
+              They sit here instead. What the method has and has not proven is a
+              question a reader asks once she is weighing the thing, not while
+              deciding whether it is worth reading on. Moving them costs the
+              evidence layer no prominence and buys the price roughly thirteen
+              points of depth. DeliverablesPreview deliberately did NOT move:
+              value before price is the order that comment above is protecting.
+
+              Desire first, though. Day31 answers "what is this for" while the
+              number is still on screen. */}
+          <Day31Section />
           {/* The two claims at their two levels, then the commitment to measure
-              the one that is not earned yet. Neither needs a gate: neither is a claim
-              about a client. */}
+              the one that is not earned yet. Neither needs a gate: neither is a
+              claim about a client. */}
           <ClaimsShelf />
+          {/* Two dark bands back to back, on purpose. Both are the sobering
+              beats — what is not proven, and who this is not for — and reading
+              them as one block matches what they do. */}
           <div className="dark bg-background text-foreground">
             <PreRegistration />
           </div>
-          <SequenceSection />
-          <FullPackageSection />
-          {/* Desire, then the objections that block it, then the filter. The
-              page ran spec → price → filter → FAQ, so it never once showed the
-              reader using any of this, and the two questions that actually stop
-              a sale sat closed inside the accordion below. Day31 is the wanting;
-              ObjectionsSection clears the path to the form. */}
-          <Day31Section />
           <div className="dark bg-background text-foreground">
             <NotForEveryoneSection />
           </div>
           <ObjectionsSection />
+          {/* Closes the 29-point CTA gap this page used to carry between 68% and
+              the form at 97%. Placed directly after the objections rather than
+              before them: a reader who has just had the two blocking questions
+              answered is as ready as she gets, and the next thing she meets
+              should be a way to act rather than the FAQ. */}
+          <InlineCTA
+            prompt="אם נשארו עוד שאלות, זו השיחה."
+            ctaName="post_objections"
+            source="post_objections"
+          />
           <FAQSection />
           <DiagnosticFormSection />
         </main>

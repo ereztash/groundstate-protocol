@@ -45,6 +45,10 @@ export type Web3FormsResult = {
 export type LeadSource =
   | "hero"
   | "mid_cta"
+  // The conversion point after ObjectionsSection. Separate from mid_cta on
+  // purpose: the two sit at very different depths and answer different states,
+  // and collapsing them would hide which one actually converts.
+  | "post_objections"
   | "sticky"
   | "sequence"
   | "full_package"
@@ -58,6 +62,7 @@ export function parseLeadSource(value: string | null): LeadSource | null {
   const allowed: LeadSource[] = [
     "hero",
     "mid_cta",
+    "post_objections",
     "sticky",
     "sequence",
     "full_package",

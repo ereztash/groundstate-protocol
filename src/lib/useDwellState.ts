@@ -12,7 +12,7 @@ const COMMITTED_AFTER_MS = 60_000;
  * once and cached at module scope so every consumer on the page agrees.
  *
  * Without this, the first useDwellState effect to run writes the visit marker,
- * and any sibling mounted after it (MidPageCTA, StickyMobileCTA) would then
+ * and any sibling mounted after it (InlineCTA, StickyMobileCTA) would then
  * read that just-written marker and misclassify a brand-new visitor as
  * "returning", showing them "glad you're back" copy on their very first visit.
  * Reading (and marking) the visit exactly once, before anyone mutates it,
