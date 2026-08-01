@@ -42,32 +42,29 @@ const ClientProofSection = () => {
               grows with price/perceived risk — so a higher-ticket 1:1 offer
               benefits most. NN/g lists "connected to the rest of the web"
               (third-party validation) as one of four core credibility factors.
-              The numbers here are real and deliberately NOT inflated: 22
-              sessions delivered to date, and every testimonial is attributable
-              (full name + LinkedIn), which is what separates trusted proof from
-              anonymous praise that visitors discount. */}
-          <dl className="flex flex-wrap items-center gap-x-5 gap-y-3 border-y border-border/80 py-4">
-            <div className="flex items-baseline gap-2">
-              <dt className="sr-only">פגישות שבוצעו עד כה</dt>
-              <dd className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold tracking-tight text-foreground">
-                  22
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  פגישות בוצעו עד כה
-                </span>
-              </dd>
-            </div>
-            <span aria-hidden="true" className="hidden text-border sm:inline">
-              •
-            </span>
-            <div className="flex items-baseline gap-2">
-              <dt className="sr-only">אמינות העדויות</dt>
-              <dd className="text-sm text-muted-foreground">
-                כל העדויות בשם מלא ובקישור ללינקדאין, ניתנות לאימות.
-              </dd>
-            </div>
-          </dl>
+
+              Removed: a "22" counter labelled "פגישות בוצעו עד כה". It was not a
+              meeting count. 22 appears in the ledger three times, all on
+              2026-07-13, all describing one thing: the H8 blind-coding corpus of
+              coaching transcripts. Row 209 gets the noun right, "22 מפגשים · 9
+              לקוחות"; rows 207 and 208 write "22 פגישות" for the same corpus,
+              and that is the string that reached this file. It is a sample of 22
+              out of 28 transcripts from 9 clients, used for a methodology test.
+              A visitor asking "22 meetings with whom" would get an answer about
+              research transcripts.
+
+              Nothing replaces it. The counter carried no evidence tag and no n,
+              which is the exact defect QuantifiedProof exists to prevent two
+              sections away. The labelled figure that IS measured (117 rows in
+              meeting_labels.csv) lives in the vault, which per docs/graph/P-SITE
+              is not reachable from this build, and it is a floor rather than a
+              total: the export stops 2026-07-20 and omits at least one live
+              deal. Publishing it needs a ledger row and its framing in the same
+              breath, not a swap of one bare number for another. What remains
+              here is the claim a reader can check without leaving the page. */}
+          <p className="border-y border-border/80 py-4 text-sm text-muted-foreground">
+            כל העדויות בשם מלא ובקישור ללינקדאין, ניתנות לאימות.
+          </p>
 
           <VideoTestimonial />
 
