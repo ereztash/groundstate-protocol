@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -27,66 +26,18 @@ import {
 } from "@/lib/web3forms";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 import { formatWizardAnswers, loadWizardState } from "@/lib/wizardState";
-import { stagePayloadLabels } from "@/data/sprint-stages";
 import { captureJourney } from "@/lib/journeyCapture";
 
-const ISRAELI_PHONE = /^0\d{1,2}-?\d{7}$|^0\d{9}$/;
-
-// Derived, not re-typed. These labels used to repeat all four stage names as
-// literals, so renaming a stage had three places to go wrong.
-const stageLabels = stagePayloadLabels;
-
-const timeWindows = [
-  { id: "morning", label: "בוקר, 08:00 עד 12:00" },
-  { id: "noon", label: "צהריים, 12:00 עד 16:00" },
-  { id: "evening", label: "ערב, 16:00 עד 20:00" },
-] as const;
-
-/**
- * Two-step progressive form, psychological order:
- * Step 1 (low-stakes emotional entry): the pain in one sentence + name, then
- *   the one screening question.
- *   Lets the visitor "pay" with a small disclosure before identity.
- * Step 2 (commitment): phone (required), email + time windows (optional).
- *   They are already invested by this point.
- * Stage selection (which package) is decided in the call, not on the form.
- *
- * The screening question is the objective half of NotForEveryoneSection's
- * filter, and matches the "שלב 0" gate already written on /protocol. It sits in
- * step 1 specifically because every CTA on the site lands here — the prose
- * filter further up the page can be scrolled past by any of the six entry
- * points, this cannot. A "no" never blocks the submit (it is still a lead); it
- * tags the row so follow-up can be prioritised and worded differently.
- */
-const stepOneSchema = z.object({
-  challenge: z
-    .string()
-    .min(3, { message: "כתבי משפט אחד" })
-    .max(800, { message: "תיאור ארוך מדי" }),
-  fullName: z
-    .string()
-    .min(2, { message: "שם קצר מדי" })
-    .max(80, { message: "שם ארוך מדי" }),
-  activePractice: z.enum(["yes", "no"], {
-    errorMap: () => ({ message: "בחר/י אחת מהאפשרויות" }),
-  }),
-});
-
-const stepTwoSchema = z.object({
-  phone: z
-    .string()
-    .min(9, { message: "מספר טלפון לא תקין" })
-    .regex(ISRAELI_PHONE, { message: "מספר טלפון ישראלי לא תקין" }),
-  email: z
-    .string()
-    .email({ message: "כתובת מייל לא תקינה" })
-    .optional()
-    .or(z.literal("")),
-  preferredTimes: z.array(z.string()).optional(),
-});
-
-type StepOneValues = z.infer<typeof stepOneSchema>;
-type StepTwoValues = z.infer<typeof stepTwoSchema>;
+// Validation contract and option lists, split out so the rules that decide
+// whether a lead is accepted can be tested without mounting the form.
+import {
+  stageLabels,
+  stepOneSchema,
+  stepTwoSchema,
+  timeWindows,
+  type StepOneValues,
+  type StepTwoValues,
+} from "@/lib/diagnosticSchema";
 
 const DiagnosticFormSection = () => {
   const { selectedStage, source } = useDiagnosticForm();

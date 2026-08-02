@@ -173,7 +173,7 @@ describe("DiagnosticFormSection", () => {
     fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
     expect(
-      await screen.findByText("בחר/י אחת מהאפשרויות")
+      await screen.findByText("בחרי אחת מהאפשרויות")
     ).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
