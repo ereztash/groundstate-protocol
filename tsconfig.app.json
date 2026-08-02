@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    /* Two test files import the analysis scripts directly, so those .mjs files
+       are part of the program. checkJs stays off: their exports are inferred
+       for the importers, the scripts themselves are not type-checked. */
+    "allowJs": true,
+    "checkJs": false,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -12,17 +17,16 @@
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "target": "ES2020",
     "types": [
       "vitest/globals"
@@ -30,6 +34,7 @@
     "useDefineForClassFields": true
   },
   "include": [
-    "src"
+    "src",
+    "scripts"
   ]
 }

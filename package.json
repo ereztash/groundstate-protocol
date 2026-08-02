@@ -11,6 +11,7 @@
     "check:budget": "node scripts/check-budget.mjs",
     "build:ssg": "vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

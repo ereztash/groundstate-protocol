@@ -203,7 +203,9 @@ export function recommend(answers: Answer[], openText: string): Recommendation {
   } else if (twos.length === 1) {
     base = SINGLE_RECS[twos[0]];
   } else {
-    const sum = answers.reduce((s, v) => s + v, 0);
+    // Annotated, because Answer is a 0|1|2 union: without it the accumulator is
+    // inferred as Answer and s + v widens to number, which does not fit back in.
+    const sum = answers.reduce<number>((s, v) => s + v, 0);
     base = sum === 0 ? ALL_ZERO_REC : MILD_REC;
   }
 

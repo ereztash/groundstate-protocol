@@ -45,7 +45,6 @@ beforeAll(() => {
     unobserve() {}
     disconnect() {}
   }
-  // @ts-expect-error jsdom has no ResizeObserver
   global.ResizeObserver = RO;
 
   Element.prototype.scrollIntoView = vi.fn();
