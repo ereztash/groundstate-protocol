@@ -22,7 +22,7 @@ function guaranteeItem(): QA | null {
 }
 
 
-const allItems: QA[] = (() => {
+const allItems: readonly QA[] = (() => {
   const g = guaranteeItem();
   return g ? [...items.slice(0, 5), g, ...items.slice(5)] : items;
 })();

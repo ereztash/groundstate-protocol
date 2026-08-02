@@ -11,6 +11,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  types:
+    # Nothing in this pipeline used to run the type checker. `vite build`
+    # transpiles through esbuild, which strips types without reading them, so
+    # every annotation in the repo was documentation and two real errors had
+    # been sitting on main unseen. Its own job rather than a step in Lint, so a
+    # lint failure does not hide the type result.
+    name: Types (tsc)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+      - run: bun run typecheck
+
   lint:
     name: Lint
     runs-on: ubuntu-latest

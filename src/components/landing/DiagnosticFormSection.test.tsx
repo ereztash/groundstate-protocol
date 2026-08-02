@@ -45,7 +45,6 @@ beforeAll(() => {
     unobserve() {}
     disconnect() {}
   }
-  // @ts-expect-error jsdom has no ResizeObserver
   global.ResizeObserver = RO;
 
   Element.prototype.scrollIntoView = vi.fn();
@@ -90,7 +89,7 @@ describe("DiagnosticFormSection", () => {
 
     // Success heading replaces the form.
     expect(
-      await screen.findByText("תודה. בוא נקבע את הפגישה.")
+      await screen.findByText("תודה. בואי נקבע את הפגישה.")
     ).toBeInTheDocument();
 
     // The payload that reaches the backend carries the step-1 + step-2 data,
@@ -126,7 +125,7 @@ describe("DiagnosticFormSection", () => {
 
     // Still a lead — the screening flag prioritises follow-up, it never gates.
     expect(
-      await screen.findByText("תודה. בוא נקבע את הפגישה.")
+      await screen.findByText("תודה. בואי נקבע את הפגישה.")
     ).toBeInTheDocument();
     expect(submitForm).toHaveBeenCalledWith(
       expect.objectContaining({ screeningFlag: "no_active_practice" })
@@ -151,7 +150,7 @@ describe("DiagnosticFormSection", () => {
     fireEvent.change(phone, { target: { value: "0501234567" } });
     fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
 
-    await screen.findByText("תודה. בוא נקבע את הפגישה.");
+    await screen.findByText("תודה. בואי נקבע את הפגישה.");
     // The five signals the wizard collects used to be discarded at submit.
     expect(submitForm).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -174,7 +173,7 @@ describe("DiagnosticFormSection", () => {
     fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
     expect(
-      await screen.findByText("בחר/י אחת מהאפשרויות")
+      await screen.findByText("בחרי אחת מהאפשרויות")
     ).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
@@ -196,7 +195,7 @@ describe("DiagnosticFormSection", () => {
     // Submit step 1 empty — validation should keep us on step 1 (no phone field).
     fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
-    expect(await screen.findByText("כתוב/י משפט אחד")).toBeInTheDocument();
+    expect(await screen.findByText("כתבי משפט אחד")).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
 });

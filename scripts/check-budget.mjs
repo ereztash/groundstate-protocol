@@ -57,6 +57,15 @@ export function kb(bytes) {
  * Pure evaluation, split from the filesystem so it can be tested without a
  * build. Returns every row plus the ones over budget; the caller decides what
  * to do about them.
+ *
+ * `budgets` is annotated as a lookup rather than left to inference. Inferred
+ * from the default it would be exactly the three keys of BUDGETS, and a caller
+ * passing the one budget its rows actually reference would be rejected for
+ * omitting the other two. The lookup is by name and throws on a miss, so any
+ * map that covers the rows is valid.
+ *
+ * @param {{ name: string, bytes: number, budget: string }[]} measured
+ * @param {Record<string, { limit: number, target: number }>} [budgets]
  */
 export function evaluate(measured, budgets = BUDGETS) {
   const rows = measured.map((m) => {

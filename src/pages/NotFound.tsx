@@ -17,7 +17,7 @@ const NotFound = () => {
           <p className="cor-overline-he">שגיאה 404</p>
           <h1 className="cor-display mt-4 text-foreground">הדף לא נמצא</h1>
           <p className="mt-4 text-muted-foreground">
-            הקישור שגוי או שהדף הוסר. בוא נחזיר אותך למסלול.
+            הקישור שגוי או שהדף הוסר. בואי נחזיר אותך למסלול.
           </p>
           <Link
             to="/"

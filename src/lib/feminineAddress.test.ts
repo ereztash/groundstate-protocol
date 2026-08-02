@@ -16,13 +16,21 @@ import { walk, stripComments } from "./copyScan";
  * copy edit will be written in the register the writer thinks in, and one
  * "אתה" in a new section is invisible in review and jarring on the page.
  *
- * SCOPE, and its limit: this checks the pronoun, not every conjugation. In
- * unvocalised Hebrew the second-person-masculine future is homographic with the
- * third-person-feminine future — תקבל is both "you (m) will receive" and "she
- * will receive" — so banning those forms would flag "המערכת תקבל" and every
- * sentence like it. The pronoun is unambiguous, it is what a writer reaches for
- * first, and a section written in masculine will always contain one. Verb
- * agreement is left to review.
+ * SCOPE, and its limit: this checks the pronoun and a short list of imperatives,
+ * not every conjugation. In unvocalised Hebrew the second-person-masculine
+ * future is homographic with the third-person-feminine future — תקבל is both
+ * "you (m) will receive" and "she will receive" — so banning those forms would
+ * flag "המערכת תקבל" and every sentence like it. The pronoun is unambiguous, it
+ * is what a writer reaches for first, and a section written in masculine will
+ * always contain one. Remaining verb agreement is left to review.
+ *
+ * The imperative list was added on 2026-08-01, after the pronoun rule went green
+ * while "בוא נדבר" was still the header CTA on every page. An imperative carries
+ * no pronoun, so the first rule could not see it, and it is the one form a
+ * writer uses without noticing the register: "בוא נדבר" reads as an idiom rather
+ * than as addressing a man. Only forms with no other reading are listed, which
+ * is why it is five words and not fifty — בדוק is also "verified", כתוב is also
+ * "written", עשה and נסה and שאל are also third-person past. Those stay out.
  *
  * Note that many forms need no rule at all: שלך, לך, אותך, איתך, עצמך, אמרת,
  * ניסית and עבדת are spelled identically in both genders unvocalised, and were
@@ -66,6 +74,17 @@ const EXEMPT = [
  * Hebrew as word characters the way this needs.
  */
 const MASCULINE_YOU = /(?<![א-ת])(אתה|ואתה|שאתה|כשאתה)(?![א-ת])/;
+
+/**
+ * Masculine singular imperatives that have no second reading, with an optional
+ * ו prefix. Each one's feminine differs by a letter that a reader notices:
+ * בואי, קחי, תני, שימי, דמייני.
+ *
+ * The plural בואו is deliberately absent. It addresses a group, where the
+ * masculine plural is the only form Hebrew offers for a mixed one, and the
+ * decision recorded above is about how the site speaks to one reader.
+ */
+const MASCULINE_IMPERATIVE = /(?<![א-ת])ו?(בוא|קח|תן|שים|דמיין)(?![א-ת])/;
 
 /**
  * Blanks verbatim testimony inside the structured data before scanning.
@@ -112,7 +131,7 @@ describe("displayed copy addresses the reader in the feminine", () => {
     expect(rel).toContain("public/llms.txt");
   });
 
-  it("uses no masculine second-person pronoun", () => {
+  const scanFor = (re: RegExp): string[] => {
     const offenders: string[] = [];
 
     for (const file of files) {
@@ -120,7 +139,7 @@ describe("displayed copy addresses the reader in the feminine", () => {
       if (copy === null) continue;
 
       copy.split("\n").forEach((line, i) => {
-        if (MASCULINE_YOU.test(line)) {
+        if (re.test(line)) {
           offenders.push(
             `${file.replace(ROOT + "/", "")}:${i + 1}  ${line.trim().slice(0, 120)}`
           );
@@ -128,9 +147,24 @@ describe("displayed copy addresses the reader in the feminine", () => {
       });
     }
 
+    return offenders;
+  };
+
+  it("uses no masculine second-person pronoun", () => {
+    const offenders = scanFor(MASCULINE_YOU);
+
     expect(
       offenders,
       `Masculine second person in displayed copy. The site addresses the reader as "את".\nIf this is verbatim client testimony or a prompt example, add the file to EXEMPT with the reason.\n\n${offenders.join("\n")}`
+    ).toEqual([]);
+  });
+
+  it("uses no masculine imperative", () => {
+    const offenders = scanFor(MASCULINE_IMPERATIVE);
+
+    expect(
+      offenders,
+      `Masculine imperative in displayed copy. Use בואי, קחי, תני, שימי, דמייני.\nThese five have no other reading, so a hit here is a real one.\n\n${offenders.join("\n")}`
     ).toEqual([]);
   });
 });

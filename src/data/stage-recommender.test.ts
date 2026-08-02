@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { recommend } from "@/components/landing/StageRecommenderSection";
-import type { Answer } from "@/components/landing/StageRecommenderSection";
+import { recommend } from "./stage-recommender";
+import type { Answer } from "@/lib/wizardState";
 
 /**
  * Logic tests for the wizard's `recommend()` function. The function maps

@@ -1,16 +1,20 @@
 {
+  /* Solution file: no sources of its own, it only points at the two real
+     projects. These options exist so an editor that falls back here reads the
+     same rules CI enforces, rather than the looser scaffold defaults it shipped
+     with. Keep them in step with tsconfig.app.json. */
   "compilerOptions": {
     "allowJs": true,
-    "noImplicitAny": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "checkJs": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
     "skipLibCheck": true,
-    "strictNullChecks": false
+    "strict": true
   },
   "files": [],
   "references": [
