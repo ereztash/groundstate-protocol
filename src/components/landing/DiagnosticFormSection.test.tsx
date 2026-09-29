@@ -66,7 +66,7 @@ async function completeStepOne({ activePractice = "כן" } = {}) {
   fireEvent.change(screen.getByPlaceholderText(/לדוגמה/), {
     target: { value: "יש לי 15 שנות ניסיון אבל אין פניות" },
   });
-  fireEvent.change(screen.getByLabelText(/איך לקרוא לך/), {
+  fireEvent.change(screen.getByLabelText(/איך לקרוא לכם/), {
     target: { value: "ישראל ישראלי" },
   });
   // The anti-ICP screening radio. Required — step 1 will not advance without
@@ -85,11 +85,11 @@ describe("DiagnosticFormSection", () => {
     const phone = await completeStepOne();
 
     fireEvent.change(phone, { target: { value: "0501234567" } });
-    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+    fireEvent.click(screen.getByRole("button", { name: /לשליחה/ }));
 
     // Success heading replaces the form.
     expect(
-      await screen.findByText("תודה. בואי נקבע את הפגישה.")
+      await screen.findByText("תודה. בואו נקבע את הפגישה.")
     ).toBeInTheDocument();
 
     // The payload that reaches the backend carries the step-1 + step-2 data,
@@ -121,11 +121,11 @@ describe("DiagnosticFormSection", () => {
     const phone = await completeStepOne({ activePractice: "עדיין לא" });
 
     fireEvent.change(phone, { target: { value: "0501234567" } });
-    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+    fireEvent.click(screen.getByRole("button", { name: /לשליחה/ }));
 
     // Still a lead — the screening flag prioritises follow-up, it never gates.
     expect(
-      await screen.findByText("תודה. בואי נקבע את הפגישה.")
+      await screen.findByText("תודה. בואו נקבע את הפגישה.")
     ).toBeInTheDocument();
     expect(submitForm).toHaveBeenCalledWith(
       expect.objectContaining({ screeningFlag: "no_active_practice" })
@@ -148,9 +148,9 @@ describe("DiagnosticFormSection", () => {
     const phone = await completeStepOne();
 
     fireEvent.change(phone, { target: { value: "0501234567" } });
-    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+    fireEvent.click(screen.getByRole("button", { name: /לשליחה/ }));
 
-    await screen.findByText("תודה. בואי נקבע את הפגישה.");
+    await screen.findByText("תודה. בואו נקבע את הפגישה.");
     // The five signals the wizard collects used to be discarded at submit.
     expect(submitForm).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -167,13 +167,13 @@ describe("DiagnosticFormSection", () => {
     fireEvent.change(screen.getByPlaceholderText(/לדוגמה/), {
       target: { value: "יש לי 15 שנות ניסיון אבל אין פניות" },
     });
-    fireEvent.change(screen.getByLabelText(/איך לקרוא לך/), {
+    fireEvent.change(screen.getByLabelText(/איך לקרוא לכם/), {
       target: { value: "ישראל ישראלי" },
     });
     fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
     expect(
-      await screen.findByText("בחרי אחת מהאפשרויות")
+      await screen.findByText("בחרו אחת מהאפשרויות")
     ).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
@@ -183,7 +183,7 @@ describe("DiagnosticFormSection", () => {
     const phone = await completeStepOne();
 
     fireEvent.change(phone, { target: { value: "123" } });
-    fireEvent.click(screen.getByRole("button", { name: /שלח/ }));
+    fireEvent.click(screen.getByRole("button", { name: /לשליחה/ }));
 
     expect(await screen.findByText("מספר טלפון לא תקין")).toBeInTheDocument();
     expect(submitForm).not.toHaveBeenCalled();
@@ -195,7 +195,7 @@ describe("DiagnosticFormSection", () => {
     // Submit step 1 empty — validation should keep us on step 1 (no phone field).
     fireEvent.click(screen.getByRole("button", { name: "המשך לתיאום השיחה" }));
 
-    expect(await screen.findByText("כתבי משפט אחד")).toBeInTheDocument();
+    expect(await screen.findByText("כתבו משפט אחד")).toBeInTheDocument();
     expect(screen.queryByPlaceholderText("05X-XXXXXXX")).not.toBeInTheDocument();
   });
 });

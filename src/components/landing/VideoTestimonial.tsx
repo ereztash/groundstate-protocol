@@ -53,7 +53,7 @@ const VideoTestimonial = () => {
             <button
               type="button"
               onClick={play}
-              aria-label="נגן את עדות הווידאו של גיא כהן (37 שניות)"
+              aria-label="הפעלת עדות הווידאו של גיא כהן (37 שניות)"
               className="group absolute inset-0 h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <img

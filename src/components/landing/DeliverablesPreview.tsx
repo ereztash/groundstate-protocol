@@ -31,10 +31,10 @@ const DeliverablesPreview = () => {
         <Reveal className="mx-auto max-w-2xl">
           <p className="cor-overline-he">ארבעה תוצרים</p>
           <h2 id="deliverables-title" className="cor-title mt-2 text-foreground">
-            ככה נראה התוצר שנשאר אצלך.
+            ככה נראה התוצר שנשאר אצלכם.
           </h2>
           <p className="cor-body-lg mt-4 text-foreground/80">
-            כל שלב מסתיים במסמך שאת לוקחת הביתה. אפשר לפתוח אותו שוב מחר, בעוד
+            כל שלב מסתיים במסמך שאתם לוקחים הביתה. אפשר לפתוח אותו שוב מחר, בעוד
             חודש, או להעביר ליועץ אחר כדי לבחון.
           </p>
         </Reveal>

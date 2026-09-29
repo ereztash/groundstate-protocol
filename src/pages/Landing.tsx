@@ -88,7 +88,7 @@ const Landing = () => {
     <DiagnosticFormProvider initialSource={initialSource}>
       <ScrollProgress />
       <a href="#hero" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
 
       <div className="min-h-screen overflow-x-hidden bg-background text-foreground">

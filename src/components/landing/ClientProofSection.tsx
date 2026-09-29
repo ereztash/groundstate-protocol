@@ -81,8 +81,8 @@ const ClientProofSection = () => {
                   <p>{t.pullQuote}</p>
                   <details className="group mt-3">
                     <summary className="cursor-pointer list-none text-sm font-semibold text-primary transition-colors marker:content-none hover:text-primary/80">
-                      <span className="group-open:hidden">קרא את העדות המלאה</span>
-                      <span className="hidden group-open:inline">סגור</span>
+                      <span className="group-open:hidden">לעדות המלאה</span>
+                      <span className="hidden group-open:inline">סגירה</span>
                     </summary>
                     <p className="mt-3 text-base font-normal not-italic leading-relaxed text-foreground/85">
                       {t.quote}

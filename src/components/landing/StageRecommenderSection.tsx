@@ -230,19 +230,21 @@ const StageRecommenderSection = () => {
                   first in the heading, asking the visitor to already know what
                   a junction is. The heading now uses the vocabulary the page
                   defines (שלבים), and the intro introduces the metaphor once,
-                  with its meaning attached. */}
+                  with its meaning attached. 2026-09-29: the result texts in
+                  src/data/stage-recommender.ts no longer use the metaphor, so
+                  the intro no longer names it either. */}
               <h2 className="cor-title text-foreground">
-                איפה את בארבעת השלבים?
+                איפה אתם בארבעת השלבים?
               </h2>
               <p className="cor-body-lg text-foreground/80">
-                5 שאלות, דקה. שאלה אחת פתוחה ו-4 בחירה. בסוף לא ״מה לקנות״: אקרא איפה את ואגיד מאיזה שלב להתחיל: הצומת שפתיחתו משחררת את השאר.
+                5 שאלות, דקה. שאלה אחת פתוחה ו-4 בחירה. בסוף אגיד מאיזה שלב כדאי להתחיל: זה שפתיחתו משחררת את השאר.
               </p>
               <button
                 type="button"
                 onClick={startWizard}
                 className="cta-line mt-2 inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
               >
-                התחל את הבדיקה
+                להתחלת הבדיקה
               </button>
             </motion.div>
           )}
@@ -259,15 +261,15 @@ const StageRecommenderSection = () => {
                 </p>
               </div>
               <h2 className="cor-title text-foreground">
-                במשפט אחד, מה התקיעה הכי בוערת אצלך כרגע?
+                במשפט אחד, מה התקיעה הכי בוערת אצלכם כרגע?
               </h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                לא חובה. אבל אם תכתבי, אצטט אותך בתשובה, הניתוח יוצא יותר מדויק.
+                לא חובה. אבל אם תכתבו, אצטט אתכם בתשובה, והניתוח יוצא מדויק יותר.
               </p>
               <textarea
                 value={openText}
                 onChange={(e) => setOpenText(e.target.value.slice(0, 280))}
-                placeholder="לדוגמה: ״הסיפור שלי נשמע כמו של כל יועץ אחר, ואני לא יודעת איך לחדד אותו…״"
+                placeholder="לדוגמה: ״הסיפור שלי נשמע כמו של כל יועץ אחר, ואין לי מושג איך לחדד אותו…״"
                 className="block w-full rounded-md border border-border bg-card px-4 py-3 text-base leading-relaxed md:text-[15px] text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 rows={4}
                 maxLength={280}
@@ -287,14 +289,14 @@ const StageRecommenderSection = () => {
                 >
                   {openText.trim()
                     ? "המשך ל-4 השאלות"
-                    : "דלג, קחו אותי ל-4 השאלות"}
+                    : "דילוג, ישר ל-4 השאלות"}
                 </button>
                 <button
                   type="button"
                   onClick={backFromOpen}
                   className="text-xs text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  חזור להתחלה
+                  חזרה להתחלה
                 </button>
               </div>
             </motion.div>
@@ -344,7 +346,7 @@ const StageRecommenderSection = () => {
                 >
                   {previousAnswerLabel && (
                     <p className="text-xs leading-relaxed text-muted-foreground">
-                      <span className="text-primary/70">ענית: </span>
+                      <span className="text-primary/70">עניתם: </span>
                       <span className="text-foreground/70">
                         ״{previousAnswerLabel}״
                       </span>
@@ -407,14 +409,14 @@ const StageRecommenderSection = () => {
                       disabled={pendingChoice !== null}
                       className="text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
                     >
-                      {stepIndex === 0 ? "חזור לשאלה הפתוחה" : "שאלה קודמת"}
+                      {stepIndex === 0 ? "חזרה לשאלה הפתוחה" : "שאלה קודמת"}
                     </button>
                     <a
                       href="#diagnostic-form"
                       onClick={onSkipToForm}
                       className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      דלג ישר לשיחה ←
+                      דילוג ישר לשיחה ←
                     </a>
                   </div>
                 </motion.div>
@@ -445,7 +447,7 @@ const StageRecommenderSection = () => {
                   tabIndex={-1}
                   className="cor-display text-foreground outline-none"
                 >
-                  בסדר. אני מבין איפה את.
+                  בסדר. אני מבין איפה אתם עומדים.
                 </h2>
               </motion.div>
 
@@ -529,7 +531,7 @@ const StageRecommenderSection = () => {
                     onClick={() => onCtaSecondary(result)}
                     className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
                   >
-                    קבע שיחת התאמה, 20 דקות, בחינם
+                    לתיאום שיחת התאמה, 20 דקות, בלי עלות
                   </button>
                   <button
                     type="button"
@@ -545,7 +547,7 @@ const StageRecommenderSection = () => {
                   onClick={restart}
                   className="text-xs text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  שנה תשובות
+                  לשנות תשובות
                 </button>
               </motion.div>
             </motion.div>

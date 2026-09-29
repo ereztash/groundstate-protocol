@@ -14,12 +14,12 @@ export function getCtaCopy(phase: DwellPhase): string {
       // Names the call the same way every other surface does ("שיחת התאמה").
       // The later phases deliberately don't name it — by then the visitor
       // knows what the button does, and the shorter copy fits the mobile bar.
-      return "לתיאום שיחת התאמה, 20 דקות, בחינם";
+      return "לתיאום שיחת התאמה, 20 דקות, בלי עלות";
     case "engaged":
       return "20 דקות. בלי לחץ למכור.";
     case "committed":
-      return "אם הגעת עד כאן, בואי נדבר.";
+      return "הגעתם עד כאן. לשיחת התאמה של 20 דקות?";
     case "returning":
-      return "שמחתי שחזרת. נקבע שיחה?";
+      return "שמחתי שחזרתם. נקבע שיחת התאמה?";
   }
 }
