@@ -1,7 +1,11 @@
 import type { GuaranteeVariant } from "./guarantee";
+import { SIGNED_PROPOSAL_GUARANTEE } from "./guaranteeSigned";
 
 /**
- * The three guarantee options, in full.
+ * The three guarantee options that waited for a decision, in full, plus the one
+ * that was adopted instead (see ./guaranteeSigned). /guarantee-review renders
+ * all four side by side, in dev. Nothing in the production bundle imports this
+ * module any more.
  *
  * Split out of guarantee.ts because all three were shipping to every visitor
  * while ACTIVE_VARIANT was "none" and none of them rendered. activeGuarantee()
@@ -31,6 +35,7 @@ const EXCLUDED = [
 const DOCUMENTATION = "אות שלא תועד אינו נחשב.";
 
 export const GUARANTEE_VARIANTS: readonly GuaranteeVariant[] = [
+  SIGNED_PROPOSAL_GUARANTEE,
   {
     /**
      * Guarantees a deliverable rather than an outcome.

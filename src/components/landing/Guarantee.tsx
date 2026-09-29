@@ -2,8 +2,8 @@ import GuaranteeBlock from "@/components/GuaranteeBlock";
 import { activeGuarantee } from "@/data/guarantee";
 
 /**
- * Compact guarantee line inside SequenceSection. Renders nothing until a
- * variant is chosen; see src/data/guarantee.ts.
+ * Compact guarantee line under the price in FullPackageSection. Renders nothing
+ * while no variant is live; see src/data/guarantee.ts.
  */
 const Guarantee = ({ className = "" }: { className?: string }) => {
   const variant = activeGuarantee();

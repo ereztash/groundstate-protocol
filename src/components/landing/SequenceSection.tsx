@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Reveal, RevealItem, RevealStagger } from "./Reveal";
 import NecessityChain from "./NecessityChain";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
-import { trackCtaClick, trackEvent } from "@/lib/analytics";
-import { captureJourney } from "@/lib/journeyCapture";
+import { trackCtaClick } from "@/lib/analytics";
 import { stages, type Stage } from "@/data/sprint-stages";
-import Guarantee from "./Guarantee";
 
 const SequenceSection = () => {
   const { requestStage } = useDiagnosticForm();
@@ -13,42 +11,18 @@ const SequenceSection = () => {
   // diagram lights up. Set on hover and on keyboard focus, so it works without
   // a pointer — the cards already take focus for their CTA.
   const [activeStage, setActiveStage] = useState<string | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
 
   const handleClick = (stage: Stage) => {
     trackCtaClick(`sequence_${stage.value}`);
     requestStage(stage.value, "sequence");
   };
 
-  // First point on the page a visitor sees a concrete price (each card's
-  // priceLabel). Fires once, via the same observe-then-disconnect pattern the
-  // Reveal primitives use for entry.
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        trackEvent("pricing_reached", { source: "sequence_section" });
-        captureJourney({
-          stage: "interest",
-          event: "reached",
-          evidence_type: "observed",
-          outcome_type: "unknown",
-          summary_code: "pricing_seen",
-        });
-        observer.disconnect();
-      },
-      { rootMargin: "0px 0px -40px 0px" },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  // The pricing_reached event moved to FullPackageSection with the price
+  // itself: the stage cards stopped carrying prices on 2026-09-29, when the
+  // programme became a single ₪4,000 unit.
 
   return (
     <section
-      ref={sectionRef}
       id="sequence"
       dir="rtl"
       className="relative py-20 md:py-28"
@@ -73,8 +47,10 @@ const SequenceSection = () => {
               stated as fact with no n and no source, directly above the price
               ladder. QuantifiedProof.tsx commits the site to "מעט ומאומת" and
               deliberately withholds figures the evidence doesn't carry; this
-              line failed that standard. Deleted rather than hedged. */}
-          <Guarantee className="mt-6" />
+              line failed that standard. Deleted rather than hedged. The
+              guarantee that used to render here moved next to the price in
+              FullPackageSection: it refunds the payment, so it belongs where
+              the payment is stated. */}
         </Reveal>
 
         {/* Was CoherenceVectors: four arrows resolving onto a spine, aria-hidden,
@@ -91,11 +67,12 @@ const SequenceSection = () => {
             that they do not have to pick arrived after they had already tried.
             Read first, it turns four purchase decisions into four descriptions.
             The card CTAs moved from "אני רוצה את שלב N" to "לדבר על שלב N" for
-            the same reason — every one of them opens the intake form, and none
-            of them buys anything. */}
+            the same reason, and then to "להתחיל משלב N" once the programme
+            became one unit: every one of them opens the intake form with an
+            entry point, and none of them buys anything. */}
         <Reveal className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-          לא בטוחה מאיפה להתחיל? את לא צריכה להחליט עכשיו. בשיחה הראשונה נחליט
-          ביחד, ורוב הלקוחות מתחילים בשלב 1.
+          ארבעת השלבים הם תוכנית אחת. מאיפה נכון להתחיל בודקים יחד בשיחה
+          הראשונה, ורוב הלקוחות מתחילים בשלב 1.
         </Reveal>
 
         {/* One row that swipes on phones and stays a grid from sm up.
@@ -163,22 +140,18 @@ const SequenceSection = () => {
                 </p>
               </div>
 
-              {/* Price and CTA pinned to the bottom of the card rather than
-                  flowing after the copy. Stage 04's deliverable wraps to one
-                  more line than the others, which pushed its price and button
-                  23px below the rest (46px at 1024px, where two cards wrap
-                  long). This row is a price ladder, and comparing four prices
-                  is harder when they sit at four heights. The cards already
-                  stretch to equal height, so mt-auto is enough. */}
+              {/* CTA pinned to the bottom of the card rather than flowing
+                  after the copy. Stage 04's deliverable wraps to one more line
+                  than the others, which pushed its button 23px below the rest
+                  (46px at 1024px, where two cards wrap long). The cards already
+                  stretch to equal height, so mt-auto is enough. Each button
+                  names an entry point into the one programme; the price lives
+                  in FullPackageSection. */}
               <div className="mt-auto pt-5">
-                <p className="text-base font-semibold text-foreground">
-                  {s.priceLabel}
-                </p>
-
                 <button
                   type="button"
                   onClick={() => handleClick(s)}
-                  className="cta-line mt-4 inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
+                  className="cta-line inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
                 >
                   {s.ctaLabel}
                 </button>

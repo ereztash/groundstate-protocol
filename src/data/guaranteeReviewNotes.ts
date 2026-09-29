@@ -24,6 +24,8 @@ export const GUARANTEE_REVIEW_NOTES: Record<
   Exclude<GuaranteeVariantId, "none">,
   string
 > = {
+  "signed-proposal":
+    "הנוסח מההצעה שנחתמה ב-31.8.2026, כפי שהוא. מבטיח שני תוצרים שבשליטת התהליך, ומחזיר את התשלום כולו. הגרסה שאומצה.",
   "outreach-sent":
     "מבטיח תוצר שנמצא כולו בשליטתך, ולכן אינו יכול להיכשל מסיבה חיצונית. מפחית פחות סיכון נתפס מהבטחה על תוצאה.",
   "with-amount":

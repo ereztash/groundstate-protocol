@@ -3,6 +3,7 @@ import { trackCtaClick } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { Footnote } from "./Footnote";
 import EvidenceTag from "@/components/EvidenceTag";
+import { outreachCount, program } from "@/data/sprint-stages";
 
 // Portrait lives under public/ so index.html can preload it before the JS
 // bundle even parses. Cuts ~500ms off mobile LCP. The literal path uses
@@ -19,12 +20,17 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * matches the prerendered markup. Only the dt/dd resolve — the grid frame
  * itself never moves, so the read is "data settling into a structure" rather
  * than the structure wobbling.
+ *
+ * The outreach count and the price are read from sprint-stages.ts. The count
+ * was typed here as "10" after the operator set it to five on 2026-08-01, and
+ * the refuted-claims scan could not see it because the number and "פניות" sit
+ * in separate fields. Importing it is the fix; the scan never could be.
  */
 const SPEC = [
   { value: "30", unit: "יום", label: "משך התוכנית", scatter: { x: "-9px", r: "-1.1deg" } },
   { value: "4", unit: "מפגשים", label: "בני 60 דקות", scatter: { x: "7px", r: "0.9deg" } },
-  { value: "10", unit: "פניות", label: "יוצאות, בסיום", scatter: { x: "-6px", r: "1.2deg" } },
-  { value: "₪1,000", unit: "", label: "החל מ־", scatter: { x: "8px", r: "-0.8deg" } },
+  { value: String(outreachCount), unit: "פניות", label: "יוצאות, בסיום", scatter: { x: "-6px", r: "1.2deg" } },
+  { value: program.priceLabel, unit: "", label: "מחיר התוכנית", scatter: { x: "8px", r: "-0.8deg" } },
 ];
 
 /** Entrance offsets, in ms. The last cell resolves at 580 + 560 = 1140ms. */
@@ -103,8 +109,8 @@ const Hero = () => {
               className="cor-settle cor-body-lg mt-5 max-w-xl text-foreground/85"
               style={settleStyle(SETTLE.subtitle)}
             >
-              הבעיה היא לא הניסוח. היא שהמומחיות שלך עוד לא תורגמה להצעה שהשוק
-              קונה. זה מה שהתוכנית הזאת עושה, ב-30 יום.
+              המומחיות שלכם עוד לא תורגמה להצעה שהשוק קונה. את התרגום הזה
+              התוכנית עושה, ב-30 יום.
             </p>
 
             {/* Specification grid. The hairline separators come from a 1px gap
@@ -177,7 +183,7 @@ const Hero = () => {
                   הכנסה שנרשמה אצל לקוח אחד, בתוך החודש הראשון לתוכנית.{" "}
                   <Footnote
                     number={1}
-                    tip="רשימת הפנייה נבנית מול Decision Makers שמזוהים בשיחת ההתאמה הראשונה, ולא רשימה גנרית."
+                    tip="רשימת הפנייה נבנית בשלב 4, מול מקבלי החלטות שממופים בשמם ובתפקידם."
                   >
                     כיצד נבנית רשימת הפנייה
                   </Footnote>

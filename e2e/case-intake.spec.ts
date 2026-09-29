@@ -118,7 +118,14 @@ test.describe("undecided material stays out of the bundle", () => {
    * copy that is live and rendering, so the string ships legitimately. These
    * markers are whole sentences unique to the variants.
    */
-  test("no guarantee variant while none is live", () => {
+  test("no superseded guarantee option ships", () => {
+    // Was "no guarantee variant while none is live". A guarantee went live on
+    // 2026-09-29, and it is none of the three options this test used to keep
+    // out: Erez chose the wording of his signed proposal (guaranteeSigned.ts).
+    // The three options still exist for /guarantee-review, so the risk this
+    // guards is the same one as before, a promise nobody chose reaching
+    // visitors. activeGuarantee() can return only the adopted wording, and
+    // this is the proof that the others stayed behind.
     absent(
       [
         "בסוף הספרינט יש בידך אות התעניינות מתועד",
@@ -126,7 +133,7 @@ test.describe("undecided material stays out of the bundle", () => {
         "אות שלא תועד אינו נחשב",
         "הנמען נבחר בשמו ובתפקידו",
       ],
-      'Guarantee copy shipped while ACTIVE_VARIANT is "none". If a variant just went live, delete this test:'
+      "A guarantee option that was not adopted reached the bundle:"
     );
   });
 
@@ -151,6 +158,7 @@ test.describe("undecided material stays out of the bundle", () => {
         "מבטיח תוצר שנמצא כולו בשליטתך",
         "כלשונו בגרף. מפחית סיכון נתפס",
         "מסיר את החשיפה על הנגזרת",
+        "הנוסח מההצעה שנחתמה ב-31.8.2026",
       ],
       "Operator-facing review notes reached the bundle. These are never visitor copy:"
     );

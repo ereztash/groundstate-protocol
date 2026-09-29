@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { recommend } from "./stage-recommender";
+import { program } from "./sprint-stages";
 import type { Answer } from "@/lib/wizardState";
 
 /**
@@ -133,7 +134,7 @@ describe("recommend()", () => {
     it("non-empty open text → reflection prepends a quote of the user's words", () => {
       const userInput = "אני לא יודע איך להציג את עצמי";
       const r = recommend(a(2, 0, 0, 0), userInput);
-      expect(r.reflection.startsWith("כתבת:")).toBe(true);
+      expect(r.reflection.startsWith("כתבתם:")).toBe(true);
       expect(r.reflection).toContain(userInput);
     });
 
@@ -153,8 +154,11 @@ describe("recommend()", () => {
   });
 
   describe("CTA copy", () => {
-    it("exposes price in primary CTA for every recommendation path", () => {
-      // every stage's ctaPrimary should mention a shekel sign
+    it("exposes the programme price on every recommendation path", () => {
+      // Was "exposes price in primary CTA": each stage had its own price and
+      // the buy-stage CTA carried it. Since 2026-09-29 the programme is one
+      // unit, so the CTA names an entry point and the result card's price line
+      // carries the one price. The intent is unchanged: no path hides it.
       const cases: Answer[][] = [
         a(2, 0, 0, 0),
         a(0, 2, 0, 0),
@@ -169,7 +173,7 @@ describe("recommend()", () => {
         const r = recommend(ans, "");
         // Currency is the ₪-prefix form site-wide (see stages.ts) — the page
         // previously mixed "1,000 ש״ח", "1,000 ₪" and "₪1,000".
-        expect(r.ctaPrimary).toMatch(/₪[\d,]+/);
+        expect(r.price).toContain(program.priceLabel);
       }
     });
   });

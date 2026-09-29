@@ -27,17 +27,19 @@ const GuaranteeReview = () => {
       <div className="mx-auto max-w-3xl space-y-12">
         <header>
           <p className="cor-overline-he">כלי פנימי</p>
-          <h1 className="cor-title mt-2">שלוש אפשרויות לאחריות</h1>
+          <h1 className="cor-title mt-2">האחריות: הגרסה שאומצה והאפשרויות שקדמו לה</h1>
           <p className="cor-body-lg mt-4 text-foreground/80">
-            אף אחת מהן אינה באוויר. כדי להעלות אחת, שנה את{" "}
+            באוויר מאז 29.9.2026: הנוסח מההצעה החתומה (signed-proposal). שלוש
+            האפשרויות האחרות נשמרות כאן לתיעוד, ואינן נכנסות לבנדל. הערך
+            הנוכחי של{" "}
             <code className="rounded bg-foreground/[0.07] px-1.5 py-0.5 text-sm">
               ACTIVE_VARIANT
             </code>{" "}
             בקובץ{" "}
             <code className="rounded bg-foreground/[0.07] px-1.5 py-0.5 text-sm">
               src/data/guarantee.ts
-            </code>
-            .
+            </code>{" "}
+            מוצג למטה.
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
             המצב הנוכחי:{" "}
@@ -69,8 +71,8 @@ const GuaranteeReview = () => {
         <section className="space-y-3 border-t border-border pt-8">
           <h2 className="cor-heading text-foreground">none</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            אפס חשיפה, ואפס הפחתת סיכון. זה המצב באוויר כרגע: שני המשטחים
-            מרנדרים כלום, ושאלת האחריות יורדת מה-FAQ.
+            אפס חשיפה, ואפס הפחתת סיכון. זה היה המצב באוויר עד 29.9.2026: שני
+            המשטחים לא הציגו כלום, ושאלת האחריות ירדה מה-FAQ.
           </p>
         </section>
       </div>
