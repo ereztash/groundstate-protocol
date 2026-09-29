@@ -16,6 +16,7 @@ const LINKS = [
   { to: "/#full-package", label: "תמחור" },
   { to: "/#faq", label: "שאלות" },
   { to: "/privacy", label: "פרטיות" },
+  { to: "/accessibility", label: "נגישות" },
 ];
 
 const SiteFooter = () => (
@@ -28,7 +29,7 @@ const SiteFooter = () => (
         <div className="space-y-1.5">
           <p className="text-base font-semibold">ארז טל-שיר</p>
           <p className="text-xs leading-relaxed text-white/55">
-            עובד סוציאלי בהכשרה. יועץ עסקי לעצמאים בפועל.
+            עובד סוציאלי טכנולוגי. יועץ עסקי לעצמאים.
           </p>
         </div>
 
