@@ -31,7 +31,8 @@
 
 import { gzipSync } from "node:zlib";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { join, basename } from "node:path";
+import { join, basename, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const KB = 1024;
 
@@ -40,10 +41,27 @@ const KB = 1024;
  * should be and is reported, never enforced.
  */
 export const BUDGETS = {
-  /** Everything dist/index.html references: the cost of a first landing view. */
-  initial: { limit: 152, target: 140 },
-  /** Any single lazy chunk. The largest is now framer-motion at ~40 kB. */
+  /**
+   * Everything dist/index.html references: the cost of a first landing view.
+   * Ratcheted down from 152 on 2026-09-29, when the landing rebuild took the
+   * payload from 148.1 to 106.9 kB. The gain is only kept if the gate holds it.
+   */
+  initial: { limit: 116, target: 108 },
+  /** Any single lazy chunk. The largest is the diagnostic form at ~29 kB. */
   lazyChunk: { limit: 46, target: 42 },
+  /**
+   * The /protocol page chunk, on its own ceiling since 2026-09-29. framer-motion
+   * (~40 kB) used to sit in a chunk of its own because two lazy modules shared
+   * it: the landing page's stage quiz and this page. The quiz was removed, so
+   * Rollup folded the library into this chunk: 8.9 + 40.4 kB became 51.9 kB,
+   * the same download for a /protocol visit plus ~2.6 kB of price list and
+   * evidence sections moved here from the landing page. Splitting it back with
+   * manualChunks pulled the library into the landing page's initial payload
+   * (vite.config.ts records an earlier breakage from manual chunking), so the
+   * honest fix is a ceiling that names the page. The way under it is taking
+   * framer-motion out of StageFieldTrace and CoherenceField.
+   */
+  protocolChunk: { limit: 56, target: 46 },
   /** The stylesheet, which is render-blocking and so is called out on its own. */
   css: { limit: 15, target: 13 },
 };
@@ -144,7 +162,8 @@ function main() {
     if (!entry.endsWith(".js")) continue;
     const rel = `assets/${entry}`;
     if (referenced.includes(rel)) continue;
-    measured.push({ name: entry, bytes: gz(join(assetsDir, entry)), budget: "lazyChunk" });
+    const budget = entry.startsWith("Methodology-") ? "protocolChunk" : "lazyChunk";
+    measured.push({ name: entry, bytes: gz(join(assetsDir, entry)), budget });
   }
 
   const { rows, breaches } = evaluate(measured);
@@ -181,4 +200,8 @@ function main() {
   );
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) main();
+// Compared as paths, not URL strings. `file://${argv[1]}` never equals
+// import.meta.url on Windows ("file:///C:/..." against "file://C:\..."), so
+// the gate skipped main() and exited 0 there: a size check that silently
+// passed on the operator's own machine.
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) main();
