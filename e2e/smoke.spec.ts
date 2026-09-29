@@ -68,13 +68,43 @@ test.describe("Landing page (production bundle)", () => {
     page,
   }) => {
     await page.goto("/");
-    const cta = page.locator("#hero button").first();
+    // A link, not a button, since 2026-09-29: it has to work on a slow phone
+    // before the bundle has hydrated, and every CTA on the page lands on #book.
+    const cta = page.locator('#hero a[href="#book"]').first();
     await expect(cta).toContainText("לתיאום שיחת התאמה");
   });
 
-  test("page title is the Hebrew brand title", async ({ page }) => {
+  test("landing page hydrates the prerendered DOM instead of redrawing it", async ({
+    page,
+  }) => {
+    // main.tsx hydrates the landing page so the static HTML a phone has
+    // already painted is kept, not torn down and rebuilt after the bundle
+    // runs. Any mismatch (a Suspense boundary above the page, adjacent text
+    // nodes without separators) makes React fall back to a full client render
+    // with no visible error, so the only reliable check is node identity:
+    // the headline parsed from HTML must be the headline on screen after load.
+    await page.addInitScript(() => {
+      document.addEventListener("readystatechange", () => {
+        if (document.readyState === "interactive") {
+          (window as unknown as { __h1: Element | null }).__h1 =
+            document.querySelector("#hero-title");
+        }
+      });
+    });
     await page.goto("/");
-    await expect(page).toHaveTitle(/COR-SYS/);
+    await page.waitForLoadState("networkidle");
+    const kept = await page.evaluate(() => {
+      const parsed = (window as unknown as { __h1: Element | null }).__h1;
+      return parsed !== null && parsed === document.querySelector("#hero-title");
+    });
+    expect(kept, "the prerendered headline was replaced: hydration fell back to a client render").toBe(true);
+  });
+
+  test("page title leads with the search terms and carries the name", async ({ page }) => {
+    // Was /COR-SYS/. The title now leads with what a stranger searches for;
+    // nobody searches the brand yet, and og:title keeps it for link previews.
+    await page.goto("/");
+    await expect(page).toHaveTitle(/ליווי עסקי לעצמאים.*ארז טל-שיר/);
   });
 });
 

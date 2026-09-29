@@ -162,6 +162,24 @@ for (const route of ROUTES) {
     { timeout: 15000 },
   );
   await page.waitForTimeout(300);
+  // Separate adjacent text nodes with an empty comment, the way ReactDOMServer
+  // does (`<!-- -->`). React renders `ו-{count}` as two text nodes; serialised
+  // with outerHTML they come back from the parser as one, and hydrateRoot
+  // (main.tsx, landing page) fails on the first such node with error #418 and
+  // re-renders the whole root from scratch, which is the cost hydration was
+  // meant to remove. Hydration skips plain comments, so the markers are inert.
+  await page.evaluate(() => {
+    const root = document.getElementById("root");
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    for (const t of texts) {
+      if (t.nextSibling && t.nextSibling.nodeType === Node.TEXT_NODE) {
+        t.after(document.createComment(" "));
+      }
+    }
+  });
   let html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));
   // The async-fonts pattern (media="print" onload="this.media='all'") has
   // already fired by capture time, so the snapshot carries media="all" — which
