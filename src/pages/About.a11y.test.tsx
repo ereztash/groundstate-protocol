@@ -35,7 +35,7 @@ describe("About accessibility", () => {
     // Scope to <main> — the footer tagline repeats some of this copy.
     const main = within(getByRole("main"));
     // First and last steps — dimmed steps must still be real, readable text.
-    expect(main.getByText(/עובד סוציאלי בהכשרה/)).toBeInTheDocument();
+    expect(main.getByText(/עובד סוציאלי טכנולוגי/)).toBeInTheDocument();
     expect(main.getByText(/מסעותיו של ארז/)).toBeInTheDocument();
   });
 
