@@ -6,14 +6,14 @@ import { useOptionalDiagnosticForm } from "@/components/landing/DiagnosticFormPr
 
 /**
  * The one site-wide top bar, used by every page (replacing the per-page
- * headers). Charcoal so it reads as a single consistent frame over any
- * section beneath it — and so it matches the dark bands and the /protocol hero.
+ * headers). Paper with an ink rule since 2026-09-29, so the page reads as one
+ * printed sheet from the first pixel rather than a dark app frame around it.
  *
  * Wayfinding without leaking conversion: the nav points only to owned content
  * (protocol / insights / about) that builds trust, and the copper CTA stays the
  * visually dominant action. On the landing route the CTA scrolls to the form
- * in-page; everywhere else it deep-links to /#diagnostic-form (Landing scrolls
- * to the hash on mount). Nav collapses into an accessible disclosure menu on
+ * in-page; everywhere else it deep-links to /#book (Landing scrolls to the hash
+ * on mount). Nav collapses into an accessible disclosure menu on
  * mobile; the CTA stays visible at every width.
  */
 
@@ -48,14 +48,14 @@ const SiteHeader = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#15191c]/90 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/90 backdrop-blur-md">
       <div
         dir="rtl"
-        className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5"
+        className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6"
       >
         <Link
           to="/"
-          className="text-base font-semibold tracking-wide text-[hsl(40_30%_96%)] outline-none"
+          className="font-heading text-lg font-black tracking-tight text-foreground outline-none"
           aria-label="COR-SYS, לעמוד הבית"
         >
           COR-SYS
@@ -66,8 +66,8 @@ const SiteHeader = () => {
             <NavLink
               key={item.to}
               to={item.to}
-              className="text-sm text-white/65 transition-colors hover:text-white"
-              activeClassName="text-white"
+              className="text-sm font-semibold text-foreground/65 transition-colors hover:text-foreground"
+              activeClassName="text-foreground"
             >
               {item.label}
             </NavLink>
@@ -78,15 +78,15 @@ const SiteHeader = () => {
           {/* Off-landing this is a real navigation, so the source rides the
               query string — Landing reads it into the provider on mount. */}
           <Link
-            to="/?src=header#diagnostic-form"
+            to="/?src=header#book"
             onClick={onCta}
-            className="cta-warm inline-flex h-9 items-center rounded-md px-3.5 text-xs font-semibold md:px-4 md:text-sm"
+            className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
           >
             בואי נדבר
           </Link>
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/75 transition-colors hover:text-foreground md:hidden"
             aria-label={open ? "סגירת תפריט" : "פתיחת תפריט"}
             aria-expanded={open}
             aria-controls="site-nav-mobile"
@@ -107,7 +107,7 @@ const SiteHeader = () => {
         <nav
           id="site-nav-mobile"
           dir="rtl"
-          className="border-t border-white/10 bg-[#15191c]/97 px-6 py-2 md:hidden"
+          className="border-t border-foreground/10 bg-background px-5 py-2 md:hidden"
         >
           <ul className="flex flex-col">
             {NAV.map((item) => (
@@ -115,8 +115,8 @@ const SiteHeader = () => {
                 <NavLink
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-2 py-3 text-sm text-white/75 transition-colors hover:bg-white/5 hover:text-white"
-                  activeClassName="text-white"
+                  className="block rounded-sm px-2 py-3 text-sm font-semibold text-foreground/75 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                  activeClassName="text-foreground"
                 >
                   {item.label}
                 </NavLink>

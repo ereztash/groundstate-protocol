@@ -19,9 +19,9 @@ describe("SiteHeader", () => {
     expect(links.some((h) => h.endsWith("/protocol"))).toBe(true);
     expect(links.some((h) => h.endsWith("/insights"))).toBe(true);
     expect(links.some((h) => h.endsWith("/about"))).toBe(true);
-    // CTA deep-links to the form.
+    // CTA deep-links to the booking block.
     expect(getByRole("link", { name: /בואי נדבר/ }).getAttribute("href")).toContain(
-      "#diagnostic-form"
+      "#book"
     );
   });
 

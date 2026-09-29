@@ -6,63 +6,70 @@
 @tailwind utilities;
 
 @layer base {
+  /* "The last draft" palette (2026-09-29). The site sells documents that hold,
+     so it is typeset like one: paper, ink, a fountain-pen blue for structure
+     and links, and one red editing pencil that means "act" and nothing else.
+     Contrast, measured: ink on paper 15.2:1, muted on paper 6.3:1, pen on
+     paper 9.9:1, pencil on paper 5.1:1, sheet text on pencil 5.9:1. */
   :root {
-    /* Cream base #FAF9F6 */
-    --background: 40 30% 97%;
-    --foreground: 0 0% 10%;
+    /* Paper #F3EDE2 */
+    --background: 39 41% 92%;
+    /* Ink #1B1813 */
+    --foreground: 38 17% 9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    /* Sheet #FFFCF6: the lighter stock a finished document is printed on. */
+    --card: 40 100% 98%;
+    --card-foreground: 38 17% 9%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover: 40 100% 98%;
+    --popover-foreground: 38 17% 9%;
 
-    /* Dark turquoise #2C5F70 (links / brand) */
-    --primary: 195 44% 31%;
-    --primary-foreground: 40 30% 97%;
+    /* Fountain-pen blue #1E3A60 (links / structure) */
+    --primary: 215 52% 25%;
+    --primary-foreground: 40 100% 98%;
 
-    --secondary: 40 25% 92%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 39 30% 87%;
+    --secondary-foreground: 38 17% 9%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 39 30% 88%;
+    /* #5C554A */
+    --muted-foreground: 37 11% 33%;
 
-    /* Copper #A8632B (accent / CTA). Darkened from the original 46% L so
-       white button text clears WCAG AA: white-on-accent is now ~4.8:1
-       (was ~3.79:1 at 46%, which failed the 4.5:1 normal-text threshold). */
-    --accent: 29 58% 40%;
-    --accent-foreground: 0 0% 100%;
+    /* Editing pencil #B23A12 (the one action colour) */
+    --accent: 15 82% 38%;
+    --accent-foreground: 40 100% 98%;
 
     --destructive: 0 60% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 86%;
-    --input: 40 15% 86%;
-    --ring: 29 57% 46%;
+    /* Rule #D9CFBE */
+    --border: 38 26% 80%;
+    --input: 38 26% 76%;
+    --ring: 15 82% 38%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 40 30% 97%;
-    --sidebar-foreground: 0 0% 10%;
-    --sidebar-primary: 195 44% 31%;
-    --sidebar-primary-foreground: 40 30% 97%;
-    --sidebar-accent: 40 20% 94%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 40 15% 86%;
-    --sidebar-ring: 29 57% 46%;
+    --sidebar-background: 39 41% 92%;
+    --sidebar-foreground: 38 17% 9%;
+    --sidebar-primary: 215 52% 25%;
+    --sidebar-primary-foreground: 40 100% 98%;
+    --sidebar-accent: 39 30% 88%;
+    --sidebar-accent-foreground: 38 17% 9%;
+    --sidebar-border: 38 26% 80%;
+    --sidebar-ring: 15 82% 38%;
 
     --crisis: 0 70% 45%;
     --crisis-foreground: 0 0% 100%;
-    --glow: 29 57% 46%;
+    --glow: 15 82% 38%;
 
-    /* CTA accent token (copper) — kept in sync with --accent for AA contrast. */
-    --cor-opportunity: 29 58% 40%;
-    --cor-opportunity-foreground: 0 0% 100%;
-    --cor-success: 142 45% 35%;
+    /* CTA accent token (pencil), kept in sync with --accent for AA contrast. */
+    --cor-opportunity: 15 82% 38%;
+    --cor-opportunity-foreground: 40 100% 98%;
+    --cor-success: 142 45% 30%;
     --cor-success-foreground: 0 0% 100%;
-    --cor-warning: 38 80% 42%;
+    --cor-warning: 38 80% 36%;
     --cor-warning-foreground: 0 0% 100%;
-    --cor-insight: 195 44% 31%;
+    --cor-insight: 215 52% 25%;
     --cor-insight-foreground: 0 0% 100%;
 
     --dur-fast: 150ms;
@@ -73,42 +80,46 @@
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Charcoal band palette. Applied by wrapping a section in `.dark` — every
+  /* Ink band palette. Applied by wrapping a section in `.dark`: every
      token-based utility (bg-background, text-foreground, border-border, …)
      inside then resolves to these values, so the same components render on a
-     dark surface with no per-component changes. Teal (--primary) is brightened
-     for legibility on charcoal; copper (--accent) stays at the light-theme
-     lightness so white-on-copper CTAs keep their ~4.8:1 AA contrast and look
-     identical in both bands. This is art direction (fixed per-section), not a
-     user-facing theme toggle. */
+     dark surface with no per-component changes. The pen blue is lightened for
+     legibility on ink (10.0:1). So is the pencil: the light-theme pencil
+     measures 3.07:1 on ink, under AA for the small labels that use it, so on
+     ink it is #E07A52 (6.2:1) and a pencil button carries ink text instead of
+     sheet text (6.2:1). Art direction per section, not a user-facing theme
+     toggle. */
   .dark {
-    --background: 200 14% 10%;
-    --foreground: 40 30% 96%;
+    /* Ink #16140F */
+    --background: 43 19% 7%;
+    --foreground: 39 41% 92%;
 
-    --card: 200 12% 15%;
-    --card-foreground: 40 30% 96%;
+    --card: 40 16% 11%;
+    --card-foreground: 39 41% 92%;
 
-    --popover: 200 12% 15%;
-    --popover-foreground: 40 30% 96%;
+    --popover: 40 16% 11%;
+    --popover-foreground: 39 41% 92%;
 
-    --primary: 190 52% 62%;
-    --primary-foreground: 200 14% 10%;
+    --primary: 216 55% 78%;
+    --primary-foreground: 43 19% 7%;
 
-    --secondary: 200 10% 20%;
-    --secondary-foreground: 40 30% 96%;
+    --secondary: 40 12% 16%;
+    --secondary-foreground: 39 41% 92%;
 
-    --muted: 200 10% 20%;
-    --muted-foreground: 40 14% 76%;
+    --muted: 40 12% 16%;
+    /* #B8AE9C, 8.4:1 on ink */
+    --muted-foreground: 39 16% 67%;
 
-    --accent: 29 58% 44%;
-    --accent-foreground: 0 0% 100%;
+    /* #E07A52 */
+    --accent: 16 70% 60%;
+    --accent-foreground: 43 19% 7%;
 
     --destructive: 0 62% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 10% 28%;
-    --input: 200 10% 26%;
-    --ring: 29 60% 55%;
+    --border: 40 10% 24%;
+    --input: 40 10% 26%;
+    --ring: 216 55% 78%;
   }
 }
 
@@ -123,7 +134,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Assistant', 'Inter', sans-serif;
+    font-family: 'Assistant', sans-serif;
     font-feature-settings: 'kern';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -147,17 +158,17 @@
 @layer components {
   .cor-display {
     font-family: 'Frank Ruhl Libre', 'Assistant', serif;
-    font-size: clamp(1.875rem, 4.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.18;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.125rem, 6.2vw, 4.25rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
   }
   .cor-title {
     font-family: 'Frank Ruhl Libre', 'Assistant', serif;
-    font-size: clamp(1.5rem, 3vw, 2.125rem);
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.75rem, 3.6vw, 2.625rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
   .cor-heading {
     font-size: clamp(1.25rem, 2.25vw, 1.5rem);
@@ -180,25 +191,30 @@
     color: hsl(var(--muted-foreground));
   }
 
-  /* RTL overline used by every landing section header.
-     Color = primary (teal): the page's "structure" tone. Reserves
-     accent (copper) exclusively for action / CTA. Also: teal on cream
-     gives 7.2:1 contrast (AAA), vs copper-on-cream's 3.6:1. */
+  /* RTL overline used by every section header, set like a running head in a
+     printed document. Colour = primary (pen blue), the structure tone; the
+     pencil is reserved for action. Pen on paper is 9.9:1. */
   .cor-overline-he {
-    display: inline-block;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     color: hsl(var(--primary));
-    padding-bottom: 0.25rem;
-    border-bottom: 1px solid hsl(var(--primary) / 0.3);
+  }
+  .cor-overline-he::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
   }
 
   /* Form field numeric prefix (01., 02., ...). Structural label, not action. */
   .field-num {
     display: inline-block;
-    font-family: 'Inter', 'Assistant', monospace;
+    font-family: 'Assistant', monospace;
     font-size: 0.6875rem;
     font-weight: 500;
     letter-spacing: 0.06em;
@@ -225,9 +241,9 @@
      Teal carries "ordered structure", which is what these numbers mean. */
   .stage-numeral {
     display: inline-block;
-    font-family: 'Inter', 'Assistant', sans-serif;
+    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
     font-size: clamp(2.5rem, 4.5vw, 3.25rem);
-    font-weight: 300;
+    font-weight: 500;
     line-height: 1;
     letter-spacing: -0.02em;
     color: hsl(var(--primary));
@@ -247,11 +263,11 @@
     content: '\201D';
     position: absolute;
     right: -0.05em;
-    top: -0.55em;
-    font-family: 'Inter', 'Assistant', serif;
-    font-size: 3.25rem;
-    font-weight: 600;
-    color: hsl(var(--primary) / 0.4);
+    top: -0.45em;
+    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-size: 3.75rem;
+    font-weight: 900;
+    color: hsl(var(--accent) / 0.35);
     line-height: 1;
     pointer-events: none;
   }
@@ -472,8 +488,8 @@
   .animate-text-shrink { animation: text-shrink 2s ease-out forwards; }
 
   .font-display {
-    font-family: 'Inter', 'Assistant', sans-serif;
-    font-weight: 200;
+    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-weight: 500;
     letter-spacing: -0.03em;
   }
   .tracking-display { letter-spacing: 0.4em; }
@@ -568,7 +584,7 @@
   opacity: var(--n, 0);
 }
 .cor-trace__num {
-  font-family: 'Inter', 'Assistant', sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-size: 12px;
   font-weight: 400;
   font-feature-settings: 'tnum' on;
@@ -590,7 +606,8 @@
 }
 .cor-trace-step[data-dim] h3,
 .cor-trace-step[data-dim] p:not(:first-child) {
-  color: hsl(var(--foreground) / 0.5);
+  /* 65%, as .about-step uses: 50% measured 3.23:1 on paper, under AA. */
+  color: hsl(var(--foreground) / 0.65);
 }
 
 /* Scroll-entry reveal, driven by Reveal.tsx toggling `.is-shown` from an
@@ -628,94 +645,204 @@
 .cor-reveal-group.is-shown .cor-reveal-item:nth-child(9) { --reveal-delay: 0.4s; }
 .cor-reveal-group.is-shown .cor-reveal-item:nth-child(n + 10) { --reveal-delay: 0.45s; }
 
-/* Scroll progress bar. `scaleX` rather than `width`: width forces layout on
-   every frame, a transform is compositor-only. `transform-origin: right` makes
-   it grow from the right, matching the document's RTL direction.
+/* ── The last draft (landing, 2026-09-29) ─────────────────────────────────
+   The reader arrives on version fifteen of "who am I". The page shows the
+   drafts struck through in pencil and the one sheet that survives, and then
+   sells the four sheets she will leave with. Paper, ink, one pencil.
 
-   Where the browser supports scroll-driven animations — all three engines as
-   of 2026, ~84% of users — the bar is driven straight off the scroll timeline
-   with no JS at all, and ScrollProgress's effect bails out. Everyone else gets
-   the rAF fallback in that component. */
-@keyframes cor-scroll-progress {
-  from {
-    transform: scaleX(0);
-  }
+   Motion is CSS only and finishes in under two seconds. Nothing the reader
+   needs to read is ever animated from invisible: the headline, the price and
+   every CTA paint in their final state, so the prerendered HTML is already
+   the page. Only the decorative drafts draw in. */
+
+/* Paper grain. A 160px feTurbulence tile at 6% alpha, inlined, no request. */
+.ld-paper {
+  background-color: hsl(var(--background));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark.ld-paper,
+.dark .ld-paper {
+  background-color: hsl(var(--background));
+}
+
+/* A finished document: lighter stock, a hairline edge, and the soft drop of
+   a sheet lying on a desk. Square corners, because paper has them. */
+.ld-sheet {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 hsl(var(--foreground) / 0.04),
+    0 22px 44px -28px hsl(var(--foreground) / 0.38);
+}
+
+/* A draft that did not survive: thinner stock, dashed edge, slightly lifted
+   off true. Set per element with --tilt. */
+.ld-draft {
+  position: relative;
+  background: hsl(var(--card) / 0.66);
+  border: 1px dashed hsl(var(--foreground) / 0.22);
+  border-radius: 2px;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+/* The pencil stroke through a draft. A hand-wobbled line drawn as a background
+   on the inline text, so it covers the words and not the empty width of the
+   slip, and box-decoration-break strikes every wrapped line on its own. It
+   grows from the right, the direction the line was written in. The colour is
+   the pencil token, spelled out because a data URI cannot read a variable. */
+.ld-struck {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 6 C 18 3, 34 8, 52 5 S 84 3, 100 6' fill='none' stroke='%23B23A12' stroke-width='2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 58%;
+  background-size: 0% 0.75em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: ld-strike-grow 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes ld-strike-grow {
   to {
-    transform: scaleX(1);
-  }
-}
-.cor-scroll-progress {
-  transform: scaleX(0);
-  transform-origin: right center;
-}
-@supports (animation-timeline: scroll()) {
-  .cor-scroll-progress {
-    animation: cor-scroll-progress linear both;
-    animation-timeline: scroll(root block);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    /* The global reduced-motion rule clamps animation-duration to 0.01ms.
-       On a scroll timeline that is not a shortened animation, it pegs the bar
-       at 100% and the indicator silently lies. This bar tracks scroll position
-       rather than moving of its own accord, so there is nothing to suppress —
-       hand it back its auto duration. */
-    .cor-scroll-progress {
-      animation-duration: auto !important;
-    }
+    background-size: 100% 0.75em;
   }
 }
 
-/* Hero entrance — the About page's noise → coherence motif (.about-shard),
-   played once instead of scrubbed by scroll. Each element arrives fractionally
-   out of true (offset, a degree of tilt, transparent) and resolves into the
-   grid. The whole sequence finishes inside ~1.26s and stops; nothing loops.
-
-   `both` fill is load-bearing: `backwards` holds the from-state through the
-   stagger delay so nothing flashes into place early, and `forwards` pins the
-   resolved state afterwards. That also makes the reduced-motion override safe
-   — collapsing the duration to 0.01ms lands on the resolved state rather than
-   stranding an element at opacity 0.
-
-   Displacements stay small on purpose: at an institutional register the read
-   should be "settling into alignment", not "flying in". */
-@keyframes cor-settle {
+/* The surviving sheet slides onto the stack once the strikes are done. It is
+   decorative (the same sentence is not the page's claim), so an entrance from
+   partial opacity costs nothing a reader needs. */
+.ld-arrive {
+  animation: ld-arrive 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes ld-arrive {
   from {
     opacity: 0;
-    transform: translate3d(var(--settle-x, 0), var(--settle-y, 10px), 0)
-      rotate(var(--settle-r, 0deg));
+    transform: translate3d(0, 18px, 0) rotate(-2.5deg);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0) rotate(0deg);
+    transform: translate3d(0, 0, 0) rotate(var(--tilt, 0deg));
   }
 }
 
-.cor-settle {
-  animation: cor-settle 0.56s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  animation-delay: var(--settle-delay, 0ms);
-  will-change: transform, opacity;
+/* Hand marks in the margin: circles, arrows, ticks. */
+.ld-mark {
+  fill: none;
+  stroke: hsl(var(--accent));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-/* The headline is the hero's LCP candidate, so it resolves on its own short
-   curve with no delay — a stagger here would postpone the largest paint by the
-   full offset, which is not a trade worth making on a page being indexed. */
-.cor-settle-lcp {
-  animation: cor-settle 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  --settle-y: 6px;
+/* The one button. Pencil fill, square-ish corners, a letterpress inset. */
+.ld-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 3.5rem;
+  padding: 0 1.75rem;
+  border-radius: 3px;
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  box-shadow:
+    inset 0 -2px 0 hsl(0 0% 0% / 0.2),
+    0 14px 26px -16px hsl(var(--accent) / 0.75);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.ld-cta:hover {
+  background: hsl(15 82% 33%);
+  transform: translateY(-1px);
+}
+.ld-cta:active {
+  transform: translateY(0);
+}
+.ld-cta:focus-visible {
+  outline: 3px solid hsl(var(--primary));
+  outline-offset: 3px;
+}
+.dark .ld-cta:hover {
+  background: hsl(16 70% 66%);
+}
+.dark .ld-cta:focus-visible {
+  outline-color: hsl(var(--foreground));
 }
 
-/* The global reduced-motion rule collapses animation-duration but says nothing
-   about animation-delay, so without this the stagger survives and holds the
-   later elements at opacity 0 for up to 660ms — a staggered reveal being
-   exactly what someone with a vestibular sensitivity opted out of. Drop the
-   offsets too, so the section simply renders resolved. */
+/* Secondary action: pen-blue text with a ruled underline. */
+.ld-link {
+  color: hsl(var(--primary));
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: hsl(var(--primary) / 0.45);
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+.ld-link:hover {
+  text-decoration-color: hsl(var(--primary));
+}
+.ld-link:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Section rhythm and the running head's rule. */
+.ld-section {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+}
+.ld-rule {
+  height: 1px;
+  background: hsl(var(--foreground) / 0.14);
+}
+
+/* Money in the display face, isolated so the shekel sign stays a prefix. */
+.ld-price {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+  font-weight: 900;
+  font-size: clamp(3.25rem, 9vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* Large folio numeral on each document (1–4). */
+.ld-folio {
+  font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 0.9;
+  color: hsl(var(--accent));
+  font-feature-settings: 'lnum' on;
+}
+
+/* Sticky mobile bar: rises once the hero CTA has scrolled away. */
+.ld-sticky {
+  transform: translateY(110%);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.ld-sticky[data-shown] {
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cor-settle,
-  .cor-settle-lcp {
-    animation-delay: 0ms !important;
-    --settle-x: 0;
-    --settle-y: 0;
-    --settle-r: 0deg;
+  .ld-struck {
+    animation: none;
+    background-size: 100% 0.75em;
+  }
+  .ld-arrive {
+    animation: none;
+  }
+  .ld-cta:hover {
+    transform: none;
   }
 }
