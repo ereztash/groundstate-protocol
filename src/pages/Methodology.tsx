@@ -8,7 +8,10 @@ import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { outreachCount } from "@/data/sprint-stages";
+import ClaimsShelf from "@/components/landing/ClaimsShelf";
+import PreRegistration from "@/components/landing/PreRegistration";
+import EvidenceChain from "@/components/landing/EvidenceChain";
+import { fullPackage, outreachCount, stages } from "@/data/sprint-stages";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -76,7 +79,7 @@ const PRINCIPLES = [
   },
 ];
 
-const DARK = "bg-[#15191c] text-[hsl(var(--background))]";
+const DARK = "bg-[#16140F] text-[hsl(var(--background))]";
 
 const Methodology = () => {
   useDocumentMeta({
@@ -115,7 +118,7 @@ const Methodology = () => {
           />
           <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
                 המתודולוגיה
               </p>
               <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
@@ -129,10 +132,10 @@ const Methodology = () => {
               </p>
               <div className="mt-8">
                 <Link
-                  to="/#diagnostic-form"
+                  to="/#book"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  קבע שיחת התאמה, 20 דקות, בלי לחץ
+                  לתיאום שיחת התאמה, 20 דקות
                 </Link>
               </div>
             </Reveal>
@@ -196,6 +199,47 @@ const Methodology = () => {
           </div>
         </section>
 
+        {/* Prices, stage by stage. The landing page sells the programme as one
+            offer; this is where the FAQ sends a reader who wants a single
+            stage. Read from sprint-stages, never re-typed. */}
+        <section
+          id="prices"
+          dir="rtl"
+          className="scroll-mt-16 pb-16 md:pb-20"
+          aria-labelledby="prices-title"
+        >
+          <div className="mx-auto max-w-4xl px-6">
+            <p className="cor-overline-he">מחירים</p>
+            <h2 id="prices-title" className="cor-title mt-2 text-foreground">
+              כל שלב גם בנפרד.
+            </h2>
+            <ul className="mt-8 border-t border-border">
+              {stages.map((s) => (
+                <li
+                  key={s.number}
+                  className="flex items-baseline justify-between gap-6 border-b border-border py-4"
+                >
+                  <span className="text-foreground">
+                    <span className="me-2 text-sm text-muted-foreground">שלב {Number(s.number)}</span>
+                    {s.name}
+                  </span>
+                  <span className="cor-price font-heading text-xl font-black text-foreground">
+                    {s.priceLabel}
+                  </span>
+                </li>
+              ))}
+              <li className="flex items-baseline justify-between gap-6 py-5">
+                <span className="font-bold text-foreground">
+                  {fullPackage.name}, ארבעת השלבים ברצף
+                </span>
+                <span className="cor-price font-heading text-2xl font-black text-accent">
+                  {fullPackage.priceLabel}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
         {/* Why a protocol — dark, mid-page anchor. */}
         <section
           dir="rtl"
@@ -204,7 +248,7 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
                 למה פרוטוקול
               </p>
               <h2
@@ -244,6 +288,15 @@ const Methodology = () => {
           </div>
         </section>
 
+        {/* What the method has and has not proven. Moved here from the landing
+            page on 2026-09-29: it is the question a reader asks while weighing
+            the method, and this is the page where she weighs it. */}
+        <EvidenceChain />
+        <ClaimsShelf />
+        <div className="dark bg-background text-foreground">
+          <PreRegistration />
+        </div>
+
         {/* Risk reversal — the guarantee, right before the decision. */}
         <section dir="rtl" className="pb-4 md:pb-8" aria-labelledby="guarantee-title">
           <div className="mx-auto max-w-3xl px-6">
@@ -263,14 +316,14 @@ const Methodology = () => {
               לא בטוחה מאיפה להתחיל?
             </h2>
             <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
-              בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים. רוב הלקוחות מתחילים בשלב 1.
+              בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים.
             </p>
             <div className="mt-8">
               <Link
-                to="/#diagnostic-form"
+                to="/#book"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                קבע שיחת התאמה, 20 דקות, בלי לחץ
+                לתיאום שיחת התאמה, 20 דקות
               </Link>
             </div>
           </Reveal>

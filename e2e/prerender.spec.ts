@@ -52,8 +52,9 @@ test.describe("prerendered output", () => {
         `/${route.path} looks like an empty shell (${html.length} bytes)`
       ).toBeGreaterThan(floor);
 
-      // The mounted app, not just the container element.
-      expect(html).toMatch(/id="root"><div/);
+      // The mounted app, not just the container element. Any element, not
+      // `<div` specifically: the landing page opens on its skip link.
+      expect(html).toMatch(/id="root"><[a-z]/);
       expect(html).toContain(route.mustContain);
     });
 

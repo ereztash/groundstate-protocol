@@ -1,13 +1,12 @@
-import { Reveal } from "./Reveal";
 import { outreachCount } from "@/data/sprint-stages";
 
 /**
- * The scene after the sprint ends.
+ * The scene after the sprint ends, and the one ink band on the landing page.
  *
  * The page had process and artefacts and no picture of the reader using
- * either — the D in AIDA was simply absent, and a spec sheet does not create
- * wanting. This section is the one place the site describes an ordinary moment
- * rather than a deliverable.
+ * either, and a spec sheet does not create wanting. This section is the one
+ * place the site describes an ordinary moment rather than a deliverable, so it
+ * gets the page's only dark surface and the largest type below the hero.
  *
  * The last paragraph is not a softener that can be trimmed later. A vivid scene
  * of success reads as a forecast, and `src/data/claims.ts` holds the business
@@ -19,44 +18,44 @@ import { outreachCount } from "@/data/sprint-stages";
  * Nothing here is a new claim: the sentence, the price and the outreaches are
  * the stage 1, 3 and 4 deliverables already specified in sprint-stages.ts.
  */
-
-const Day31Section = () => {
-  return (
-    <section
-      dir="rtl"
-      className="relative py-20 md:py-28"
-      aria-labelledby="day-31-title"
-    >
-      <div className="mx-auto max-w-2xl px-6">
-        <Reveal>
+const Day31Section = () => (
+  <section
+    dir="rtl"
+    aria-labelledby="day-31-title"
+    className="dark ld-section bg-background text-foreground"
+  >
+    <div className="mx-auto max-w-6xl px-5 sm:px-6">
+      <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-16">
+        <div>
           <p className="cor-overline-he">אחרי</p>
-          <h2 id="day-31-title" className="cor-title mt-2 text-foreground">
+          <h2
+            id="day-31-title"
+            className="mt-4 font-heading text-[4.5rem] font-black leading-none tracking-tight sm:text-[6.5rem]"
+          >
             יום 31.
           </h2>
+        </div>
 
-          <div className="mt-6 space-y-4 text-foreground/85">
-            <p className="cor-body-lg">
-              מישהו שואל במה את עוסקת. יש לך משפט אחד. את אומרת אותו, ולא מוסיפה
-              אחריו הסתייגות.
-            </p>
-            <p className="cor-body-lg">
-              הוא שואל כמה זה עולה. המספר כתוב אצלך במסמך, אז הוא יוצא כמו שהוא.
-              בלי לבדוק את הפנים שלו קודם.
-            </p>
-            <p className="cor-body-lg">
-              ו-{outreachCount} הפניות כבר בחוץ, כל אחת לאדם ששמו ידוע לך.
-            </p>
-          </div>
+        <div className="max-w-2xl space-y-6 font-heading text-[1.375rem] leading-[1.45] sm:text-[1.625rem]">
+          <p>
+            מישהו שואל במה את עוסקת. יש לך משפט אחד. את אומרת אותו, ולא מוסיפה
+            אחריו הסתייגות.
+          </p>
+          <p>
+            הוא שואל כמה זה עולה. המספר כתוב אצלך במסמך, אז הוא יוצא כמו שהוא.
+            בלי לבדוק את הפנים שלו קודם.
+          </p>
+          <p>ו-{outreachCount} הפניות כבר בחוץ, כל אחת לאדם ששמו ידוע לך.</p>
 
-          <p className="mt-8 border-t border-border pt-5 text-sm leading-relaxed text-muted-foreground">
+          <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">
             זה מה שארבעת המסמכים נועדו לאפשר. לא הבטחה שזה יקרה, אלא תיאור של מה
             שצריך להיות בידך כדי שזה יהיה אפשרי. מה שקורה אחר כך תלוי גם בשוק,
             וגם באנשים שבחרת לפנות אליהם.
           </p>
-        </Reveal>
+        </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Day31Section;

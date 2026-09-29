@@ -1,43 +1,46 @@
-import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
-import OriginStorySection from "@/components/landing/OriginStorySection";
-import SequenceSection from "@/components/landing/SequenceSection";
-import DeliverablesPreview from "@/components/landing/DeliverablesPreview";
-import EvidenceChain from "@/components/landing/EvidenceChain";
-import ClaimsShelf from "@/components/landing/ClaimsShelf";
-import PreRegistration from "@/components/landing/PreRegistration";
-import NotForEveryoneSection from "@/components/landing/NotForEveryoneSection";
-import FullPackageSection from "@/components/landing/FullPackageSection";
-import ClientProofSection from "@/components/landing/ClientProofSection";
-import ProcessPreviewSection from "@/components/landing/ProcessPreviewSection";
-import InlineCTA from "@/components/landing/InlineCTA";
-import FAQSection from "@/components/landing/FAQSection";
+import OfferSection from "@/components/landing/OfferSection";
 import Day31Section from "@/components/landing/Day31Section";
-import ObjectionsSection from "@/components/landing/ObjectionsSection";
-import DiagnosticFormSection from "@/components/landing/DiagnosticFormSection";
+import ProofSection from "@/components/landing/ProofSection";
+import FitSection from "@/components/landing/FitSection";
+import FAQSection from "@/components/landing/FAQSection";
+import BookSection from "@/components/landing/BookSection";
 import SiteFooter from "@/components/SiteFooter";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
-import ScrollProgress from "@/components/landing/ScrollProgress";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
 import { trackScrollDepth } from "@/lib/analytics";
 import { parseLeadSource } from "@/lib/web3forms";
 
-// The stage recommender is the only thing on this page still using
-// framer-motion (AnimatePresence over a multi-step quiz). Splitting it out
-// keeps that runtime out of the first paint — it sits roughly six viewports
-// down, so it loads long before a visitor reaches it.
-const StageRecommenderSection = lazy(
-  () => import("@/components/landing/StageRecommenderSection"),
-);
-
+/**
+ * The landing page, rebuilt 2026-09-29 ("the last draft").
+ *
+ * Nine blocks where there were twenty-two, in the order a buying decision is
+ * made: recognise the problem, see what you get and what it costs, want it,
+ * check that others got it, check that it fits you, clear the last questions,
+ * book. The page was 17 screens deep on a phone and put the price thirteen
+ * screens down; it is now roughly a third of that, with the price in the hero.
+ *
+ * What left, and where it went:
+ * - The stage-by-stage price ladder, the package-as-discount card and the
+ *   stage quiz: one offer now (OfferSection). Stages remain for sale, priced
+ *   on /protocol.
+ * - What the method has and has not proven (ClaimsShelf, PreRegistration,
+ *   EvidenceChain): moved to /protocol intact. It is a question a reader asks
+ *   while weighing the method, and /protocol is where she weighs it.
+ * - The two surfaced objections: folded into the FAQ, printed open.
+ * - The "what happens in the call" timeline and the mid-page CTAs: the call
+ *   now sits next to the calendar it is booked in (BookSection), and the
+ *   phone keeps a sticky CTA between the hero and the calendar.
+ */
 const Landing = () => {
   const reachedRef = useRef<Set<number>>(new Set());
 
   // Visitors arriving from another page's CTA carry ?src=. Read once, on the
-  // first render, so the value is already in the provider if they submit
-  // without touching any in-page CTA.
+  // first render, so the value is already in the provider if they book or
+  // submit without touching any in-page CTA.
   const initialSource = useMemo(() => {
     if (typeof window === "undefined") return null;
     return parseLeadSource(
@@ -45,18 +48,18 @@ const Landing = () => {
     );
   }, []);
 
-  // Deep-link support: content pages (articles, about, protocol) send their
-  // CTA to "/#diagnostic-form" so a warm reader lands ON the form, not at the
-  // top of the funnel. React Router doesn't scroll to hashes on navigation, so
-  // do it here once the sections have mounted.
+  // Deep-link support. Content pages send their CTA to "/#book". Links already
+  // out in the world still say "/#diagnostic-form", which now lives inside the
+  // booking block and only mounts on demand, so that hash lands on #book too.
+  // React Router doesn't scroll to hashes on navigation, so do it here.
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!id) return;
-    // Two frames: let lazy sections lay out before measuring.
+    const raw = window.location.hash.slice(1);
+    if (!raw) return;
+    const id = raw === "diagnostic-form" ? "book" : raw;
     const raf = requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         document.getElementById(id)?.scrollIntoView({ block: "start" });
-      })
+      }),
     );
     return () => cancelAnimationFrame(raf);
   }, []);
@@ -69,7 +72,7 @@ const Landing = () => {
       if (docHeight <= 0) return;
       const percent = Math.min(
         100,
-        Math.round((window.scrollY / docHeight) * 100)
+        Math.round((window.scrollY / docHeight) * 100),
       );
       for (const m of milestones) {
         if (percent >= m && !reachedRef.current.has(m)) {
@@ -86,95 +89,22 @@ const Landing = () => {
 
   return (
     <DiagnosticFormProvider initialSource={initialSource}>
-      <ScrollProgress />
       <a href="#hero" className="skip-to-content">
         דלג לתוכן
       </a>
 
-      <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <div data-page="landing" className="ld-paper min-h-screen overflow-x-hidden text-foreground">
         <SiteHeader />
 
-        {/* Dark/light band rhythm: story, mid-CTA and the "not for everyone"
-            filter run on charcoal for depth and emphasis; the hero, proof,
-            pricing and the form stay light for scannability and conversion
-            clarity. Each dark wrapper scopes the .dark token palette (see
-            index.css) so the section components render unchanged on charcoal. */}
-        <main className="divide-y divide-border">
+        <main>
           <Hero />
           <WhatYouTriedSection />
-          <ClientProofSection />
-          <div className="dark bg-background text-foreground">
-            <OriginStorySection />
-          </div>
-          <ProcessPreviewSection />
-          {/* Mid-page conversion point for "ready-now" visitors. NN/g
-              eye-tracking shows attention collapses after the fold (~57% of
-              viewing time above it), so a single bottom CTA leaks the visitors
-              who are already convinced; re-surfacing the same one goal partway
-              down (after they've seen pain → proof → what the call is) catches
-              them without competing with the page's single conversion goal. */}
-          <div className="dark bg-background text-foreground">
-            <InlineCTA
-              prompt="הצעד הבא הוא שיחה."
-              ctaName="mid_page"
-              source="mid_cta"
-            />
-          </div>
-          {/* min-height reserves the section's box so the lazy chunk arriving
-              cannot shift the sections below it. */}
-          <Suspense fallback={<div className="min-h-[468px]" />}>
-            <StageRecommenderSection />
-          </Suspense>
-          {/* Value before price: the tangible deliverables run before the price
-              ladder, so the numbers land on top of value already built. The two
-              priced offers (Sequence → FullPackage) stay contiguous. */}
-          <DeliverablesPreview />
-          {/* Renders nothing until a case passes both publication gates. */}
-          <EvidenceChain />
-          <SequenceSection />
-          <FullPackageSection />
-          {/* ClaimsShelf and PreRegistration used to run BETWEEN the deliverables
-              and the price, which put three consecutive sections of epistemics
-              (17% of the page on desktop, 21% on mobile) in front of a reader
-              who had not yet seen a number. Measured, the price ladder did not
-              arrive until 63% of scroll depth — thirteen screens in on mobile.
-
-              They sit here instead. What the method has and has not proven is a
-              question a reader asks once she is weighing the thing, not while
-              deciding whether it is worth reading on. Moving them costs the
-              evidence layer no prominence and buys the price roughly thirteen
-              points of depth. DeliverablesPreview deliberately did NOT move:
-              value before price is the order that comment above is protecting.
-
-              Desire first, though. Day31 answers "what is this for" while the
-              number is still on screen. */}
+          <OfferSection />
           <Day31Section />
-          {/* The two claims at their two levels, then the commitment to measure
-              the one that is not earned yet. Neither needs a gate: neither is a
-              claim about a client. */}
-          <ClaimsShelf />
-          {/* Two dark bands back to back, on purpose. Both are the sobering
-              beats — what is not proven, and who this is not for — and reading
-              them as one block matches what they do. */}
-          <div className="dark bg-background text-foreground">
-            <PreRegistration />
-          </div>
-          <div className="dark bg-background text-foreground">
-            <NotForEveryoneSection />
-          </div>
-          <ObjectionsSection />
-          {/* Closes the 29-point CTA gap this page used to carry between 68% and
-              the form at 97%. Placed directly after the objections rather than
-              before them: a reader who has just had the two blocking questions
-              answered is as ready as she gets, and the next thing she meets
-              should be a way to act rather than the FAQ. */}
-          <InlineCTA
-            prompt="אם נשארו עוד שאלות, זו השיחה."
-            ctaName="post_objections"
-            source="post_objections"
-          />
+          <ProofSection />
+          <FitSection />
           <FAQSection />
-          <DiagnosticFormSection />
+          <BookSection />
         </main>
 
         <SiteFooter />

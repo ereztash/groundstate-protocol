@@ -48,13 +48,12 @@ export function surfacedObjections(): QA[] {
 }
 
 export const faq: readonly QA[] = [
+  // The two stage-entry questions were merged when the landing page moved to a
+  // single offer (2026-09-29). "רוב הלקוחות מתחילים בשלב 1" went with them: it
+  // was a frequency claim with no count behind it.
   {
-    q: "מאיפה להתחיל אם אני לא יודעת באיזה שלב אני?",
-    a: "זה בדיוק מה שהשיחה הראשונה עושה. רוב הלקוחות מתחילים בשלב 1 (נרטיב) כי שם יושב הבידול שעוד לא ניסחת. אם יש לך כבר נרטיב חזק, נדלג ונתחיל מהצעת הערך. את לא צריכה להחליט לבד.",
-  },
-  {
-    q: "אני כבר עם נרטיב, אפשר להתחיל משלב 2?",
-    a: "כן. בשיחה נבדוק שהנרטיב הקיים עומד בתנאים, ואם כן, מתחילים משלב 2.",
+    q: "ואם כבר יש לי נרטיב?",
+    a: "בשיחה הראשונה נבדוק שהנרטיב הקיים עומד בתנאים. אם כן, מתחילים משלב 2. את לא צריכה להחליט לבד.",
   },
   {
     q: "מה ההבדל בינך לבין יועץ עסקי או מאמן עסקי?",
@@ -87,6 +86,13 @@ export const faq: readonly QA[] = [
     // refutedClaims did not see it, and "ניסוח פנייה נפרד לכל אחד מהם" makes the
     // count of decision makers the count of outreaches. It contradicted
     // outreachCount and the refund in guarantee.ts.
-    a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות. המחיר הוא ₪1,900.",
+    a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות.",
+  },
+  // The landing page sells one programme; the stages are still sold one by one,
+  // and this is where a reader who wants that finds out. Prices stay on
+  // /protocol so the cheapest door is not the loudest thing on the page.
+  {
+    q: "אפשר לקנות שלב אחד בלבד?",
+    a: "כן. כל שלב נמכר גם בנפרד, והמחירים מופיעים בעמוד הפרוטוקול. התוכנית המלאה זולה מסכום השלבים.",
   },
 ];

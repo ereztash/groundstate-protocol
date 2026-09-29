@@ -33,10 +33,15 @@ type Ctx = {
 
 const DiagnosticFormContext = createContext<Ctx | null>(null);
 
+/**
+ * Every CTA lands on the booking block (#book), where the calendar comes first
+ * and the form is the alternative. The form keeps its own #diagnostic-form id
+ * for links already out in the world; Landing maps that hash here too.
+ */
 function scrollToForm(): void {
   if (typeof window === "undefined") return;
   document
-    .getElementById("diagnostic-form")
+    .getElementById("book")
     ?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 

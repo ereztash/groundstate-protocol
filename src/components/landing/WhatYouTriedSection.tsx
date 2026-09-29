@@ -1,70 +1,75 @@
-import { Reveal } from "./Reveal";
+import type { CSSProperties, ReactNode } from "react";
 
-const WhatYouTriedSection = () => {
-  return (
-    <section
-      dir="rtl"
-      className="relative py-20 md:py-28"
-      aria-labelledby="what-you-tried-title"
-    >
-      <div className="mx-auto max-w-3xl px-6">
-        <Reveal className="space-y-8">
-          <div>
-            <p className="cor-overline-he">
-              למה הגעת לכאן
-            </p>
-            <h2
-              id="what-you-tried-title"
-              className="cor-title mt-2 text-foreground"
-            >
-              ארבעה דברים שאת מכירה מקרוב.
-            </h2>
-          </div>
+/**
+ * The four symptoms, set as four notes pinned side by side, then the one
+ * diagnosis they share in the display face.
+ *
+ * The copy is unchanged from the previous page apart from the last paragraph,
+ * which answered "why not GPT / a coach"; that answer lives in the FAQ now,
+ * where a reader who has that question goes looking for it. The line about
+ * time only making it dearer stays, because it is the reason to act this
+ * month rather than someday.
+ */
+const NOTES: ReactNode[] = [
+  <>
+    כל כמה שבועות את נכנסת ללינקדאין ומשנה את הכותרת. כבר הצטברו{" "}
+    <strong className="font-bold text-foreground">15 גרסאות</strong> של ״מי
+    אני״, וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
+  </>,
+  <>
+    רשמת מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול, התחלת להסס, ו
+    <strong className="font-bold text-foreground">מספר נמוך יותר</strong> יצא
+    לך מהפה.
+  </>,
+  <>
+    התחלת ב<strong className="font-bold text-foreground">חמישה תחומים</strong>{" "}
+    כי כדאי להיות גמישה. היום אף אחד מהם לא מובהק, ואת עייפה.
+  </>,
+  <>
+    נתת חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלך הוא הידע שלך,{" "}
+    <strong className="font-bold text-foreground">נתת אותו במתנה</strong>.
+  </>,
+];
 
-          <ul className="space-y-4">
-            <li className="flex gap-3">
-              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
-              <p className="cor-body-lg text-foreground/85">
-                כל כמה שבועות את נכנסת ללינקדאין ומשנה את הכותרת. כבר הצטברו <strong className="font-semibold text-foreground">15 גרסאות</strong> של ״מי אני״, וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
-              </p>
-            </li>
-            <li className="flex gap-3">
-              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
-              <p className="cor-body-lg text-foreground/85">
-                רשמת מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול, התחלת להסס, ו<strong className="font-semibold text-foreground">מספר נמוך יותר</strong> יצא לך מהפה.
-              </p>
-            </li>
-            <li className="flex gap-3">
-              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
-              <p className="cor-body-lg text-foreground/85">
-                התחלת ב<strong className="font-semibold text-foreground">חמישה תחומים</strong> כי כדאי להיות גמישה. היום אף אחד מהם לא מובהק, ואת עייפה.
-              </p>
-            </li>
-            <li className="flex gap-3">
-              <span aria-hidden="true" className="mt-2.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
-              <p className="cor-body-lg text-foreground/85">
-                נתת חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלך הוא הידע שלך, <strong className="font-semibold text-foreground">נתת אותו במתנה</strong>.
-              </p>
-            </li>
-          </ul>
+const WhatYouTriedSection = () => (
+  <section
+    dir="rtl"
+    aria-labelledby="what-you-tried-title"
+    className="ld-section border-t border-foreground/10"
+  >
+    <div className="mx-auto max-w-6xl px-5 sm:px-6">
+      <p className="cor-overline-he">למה הגעת לכאן</p>
+      <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
+        ארבעה דברים שאת מכירה מקרוב.
+      </h2>
 
-          <div className="border-r-2 border-accent pr-4">
-            <p className="cor-body-lg text-foreground">
-              ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם לא. הם ארבע פנים של דבר אחד: <strong className="font-semibold text-accent">עוד לא תרגמת את מה שאת יודעת לשפה שהלקוח שלך משלם עליה.</strong>
-            </p>
-          </div>
+      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {NOTES.map((note, i) => (
+          <li key={i} className="ld-draft px-5 py-5" style={{ "--tilt": i % 2 ? "0.5deg" : "-0.5deg" } as CSSProperties}>
+            <span className="font-heading text-sm font-black text-accent" aria-hidden="true">
+              {i + 1}.
+            </span>
+            <p className="mt-2 leading-relaxed text-foreground/85">{note}</p>
+          </li>
+        ))}
+      </ul>
 
-          <p className="cor-body-lg text-foreground/85">
-            וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא מבינים למה דווקא את, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא מתרגם, הוא רק מייקר.
-          </p>
-
-          <p className="cor-body-lg text-foreground/85">
-            וזה גם לא נפתר לבד, ולא נקנה מכלי. GPT יחזיר לך את עצמך עם יותר מילים. יועץ ייתן עצה. מאמן ישאל שאלה. את המסגרת שאת נמצאת בתוכה אי אפשר לראות מבפנים. צריך מישהו מבחוץ שיציב מולה מסגרת אחרת, ויחלץ את מה שאת כבר יודעת אבל עוד לא ניסחת.
-          </p>
-        </Reveal>
+      <div className="mt-14 max-w-4xl">
+        <p className="font-heading text-[1.625rem] font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
+          ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
+          אחד:{" "}
+          <span className="underline decoration-accent decoration-[3px] underline-offset-[0.28em]">
+            עוד לא תרגמת את מה שאת יודעת לשפה שהלקוח שלך משלם עליה.
+          </span>
+        </p>
+        <p className="cor-body-lg mt-6 max-w-2xl text-foreground/80">
+          וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא
+          מבינים למה דווקא את, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
+          מתרגם, הוא רק מייקר.
+        </p>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default WhatYouTriedSection;

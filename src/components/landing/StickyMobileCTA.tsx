@@ -1,45 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
-import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import { getConsent } from "@/lib/consent";
-import { useDwellState } from "@/lib/useDwellState";
-import { getCtaCopy } from "@/lib/dwellCopy";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
 
+/**
+ * Phone-only bar that carries the CTA once the hero's has scrolled away.
+ *
+ * Shown between the hero and the booking block: it has no job while either
+ * CTA is already on screen, and it would sit on top of the calendar. It also
+ * waits for the consent banner, which occupies the same strip.
+ *
+ * The dwell-phase copy that used to rotate the label by time on page is gone.
+ * One label, the same one the hero uses, so the button a reader meets at the
+ * bottom is recognisably the button she skipped at the top.
+ *
+ * While hidden it leaves the tab order: an aria-hidden container with a
+ * focusable control inside is what Lighthouse flagged on the previous page.
+ */
 const StickyMobileCTA = () => {
   const { requestForm } = useDiagnosticForm();
-  const [visible, setVisible] = useState(false);
-  const phase = useDwellState();
-  const ctaCopy = getCtaCopy(phase);
+  const [pastHero, setPastHero] = useState(false);
+  const [atBook, setAtBook] = useState(false);
+  const [consentPending, setConsentPending] = useState(true);
 
   useEffect(() => {
-    // The consent banner shares bottom-0 with a higher z-index; while it's up
-    // (first visit, no choice stored yet) it would bury this CTA — so stay
-    // hidden until the visitor makes a consent choice.
-    let consentPending = getConsent() === null;
-    const handleScroll = () => {
-      const y = window.scrollY;
-      const pageBottom =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const showAfterHero = y > window.innerHeight * 0.3;
-      const nearBottom = y > pageBottom - 400;
-      setVisible(showAfterHero && !nearBottom && !consentPending);
-    };
-    const onConsent = () => {
-      consentPending = false;
-      handleScroll();
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    setConsentPending(getConsent() === null);
+    const onConsent = () => setConsentPending(false);
     window.addEventListener("cor:consent-decided", onConsent);
+
+    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    let io: IntersectionObserver | undefined;
+    const book = document.getElementById("book");
+    if (book && typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(([entry]) => setAtBook(entry.isIntersecting), {
+        rootMargin: "0px 0px -20% 0px",
+      });
+      io.observe(book);
+    }
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("cor:consent-decided", onConsent);
+      window.removeEventListener("scroll", onScroll);
+      io?.disconnect();
     };
   }, []);
 
-  const handleClick = () => {
+  const visible = pastHero && !atBook && !consentPending;
+
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     trackCtaClick("sticky_mobile");
+    e.preventDefault();
     requestForm("sticky");
   };
 
@@ -47,22 +60,17 @@ const StickyMobileCTA = () => {
     <div
       dir="rtl"
       aria-hidden={!visible}
-      className={`fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md transition-all duration-300 md:hidden ${
-        visible
-          ? "translate-y-0 opacity-100"
-          : "pointer-events-none translate-y-full opacity-0"
-      }`}
+      data-shown={visible ? "" : undefined}
+      className="ld-sticky fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
     >
-      <div className="mx-auto max-w-xl">
-        <button
-          type="button"
-          onClick={handleClick}
-          className="cta-action inline-flex h-12 w-full items-center justify-center rounded-md text-sm font-semibold"
-          aria-label={ctaCopy}
-        >
-          {ctaCopy}
-        </button>
-      </div>
+      <a
+        href="#book"
+        onClick={onClick}
+        tabIndex={visible ? 0 : -1}
+        className="ld-cta mx-auto flex w-full max-w-xl"
+      >
+        לתיאום שיחת התאמה · 20 דקות
+      </a>
     </div>
   );
 };
