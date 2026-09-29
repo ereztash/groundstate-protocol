@@ -30,8 +30,14 @@ const ROUTES = [
   { path: "insights/anatomy-of-a-mistake", depth: 2, mustContain: "COR-SYS" },
 ];
 
-/** Byte floor for "this is a page, not a shell". The empty shell is ~10 kB. */
-const MIN_BYTES = 12_000;
+/**
+ * Byte floor for "this is a page, not a shell". The empty shell is ~10 kB on
+ * the landing page. Every other route has the landing JSON-LD trimmed off by
+ * prerender.mjs, which takes its shell to ~5.5 kB and /privacy, the smallest
+ * real page, to ~11.5 kB (measured 2026-09-29), so those get a lower floor.
+ */
+const MIN_BYTES_LANDING = 12_000;
+const MIN_BYTES_ROUTE = 8_000;
 
 test.describe("prerendered output", () => {
   for (const route of ROUTES) {
@@ -40,10 +46,11 @@ test.describe("prerendered output", () => {
       expect(existsSync(file), `${file} was not written`).toBe(true);
 
       const html = readFileSync(file, "utf8");
+      const floor = route.depth === 0 ? MIN_BYTES_LANDING : MIN_BYTES_ROUTE;
       expect(
         html.length,
         `/${route.path} looks like an empty shell (${html.length} bytes)`
-      ).toBeGreaterThan(MIN_BYTES);
+      ).toBeGreaterThan(floor);
 
       // The mounted app, not just the container element.
       expect(html).toMatch(/id="root"><div/);
@@ -74,6 +81,16 @@ test.describe("prerendered output", () => {
         local,
         `/${route.path} references the machine that built it, not the host that serves it`
       ).toEqual([]);
+    });
+
+    test(`/${route.path} carries only the structured data it shows`, () => {
+      // index.html holds the landing page's JSON-LD, and every route used to
+      // inherit it: /privacy advertised offers, reviews and an FAQ it does not
+      // render. prerender.mjs now trims it off every route but "/".
+      const html = readFileSync(join(DIST, route.path, "index.html"), "utf8");
+      const landingOnly = /"@type":"(Service|Review|VideoObject|FAQPage)"/;
+      if (route.depth === 0) expect(html).toMatch(landingOnly);
+      else expect(html).not.toMatch(landingOnly);
     });
 
     test(`/${route.path} points at assets that exist from its own depth`, () => {
