@@ -60,9 +60,12 @@ const Hero = () => {
               page's one large layout shift (CLS 0.28 in Lighthouse mobile, 0.06
               before it). Above the text nothing can push it. From md up it is
               absolute to the section, so its place in the DOM does not matter. */}
-          <SignalField className="-mx-5 mb-6 block h-[150px] w-[calc(100%+2.5rem)] sm:-mx-6 sm:w-[calc(100%+3rem)] md:absolute md:inset-y-0 md:left-0 md:-z-10 md:mx-0 md:mb-0 md:h-full md:w-[46%]" />
+          <SignalField className="-mx-5 mb-6 block h-24 min-[380px]:h-[150px] w-[calc(100%+2.5rem)] sm:-mx-6 sm:w-[calc(100%+3rem)] md:absolute md:inset-y-0 md:left-0 md:-z-10 md:mx-0 md:mb-0 md:h-full md:w-[46%]" />
 
-          <p className="cor-overline-he">ליווי עסקי לעצמאים · 30 יום</p>
+          {/* The offer in one line, at a size a five-second glance reads: the
+              headline beside it is the pain, not the product, so this line is
+              what tells a stranger what is sold and to whom. */}
+          <p className="cor-overline-he !text-[15px] sm:!text-base">ליווי עסקי לעצמאים · 30 יום</p>
 
           {/* Three lines reserved on a phone, for the same reason as the
               paragraph below: at 412–430px the headline is two lines in the
