@@ -16,8 +16,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Assistant", "sans-serif"],
-        heading: ["Frank Ruhl Libre", "Assistant", "serif"],
+        sans: ["Heebo", "Assistant", "sans-serif"],
+        heading: ["Frank Ruhl Libre", "Heebo", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,17 +57,23 @@ export default {
           DEFAULT: "hsl(var(--crisis))",
           foreground: "hsl(var(--crisis-foreground))",
         },
+        // The cor-brand signal: the point, the price, the marks.
+        signal: "hsl(var(--signal))",
+        cta: {
+          DEFAULT: "hsl(var(--cta))",
+          foreground: "hsl(var(--cta-foreground))",
+        },
         copper: {
           DEFAULT: "#B87333",
-          foreground: "#FFFFFF",
+          foreground: "#1C1C2E",
         },
         turquoise: {
-          DEFAULT: "#2C5F70",
-          foreground: "#FAF9F6",
+          DEFAULT: "#2A6B6B",
+          foreground: "#F5F2ED",
         },
         cream: {
-          DEFAULT: "#FAF9F6",
-          foreground: "#1A1A1A",
+          DEFAULT: "#F5F2ED",
+          foreground: "#1C1C2E",
         },
         "cor-opportunity": {
           DEFAULT: "hsl(var(--cor-opportunity))",

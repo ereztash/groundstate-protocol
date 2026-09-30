@@ -33,7 +33,7 @@ const Day31Section = () => (
             id="day-31-title"
             className="mt-4 font-heading text-[4.5rem] font-black leading-none tracking-tight sm:text-[6.5rem]"
           >
-            יום 31.
+            יום 31<span className="cor-point">.</span>
           </h2>
         </div>
 

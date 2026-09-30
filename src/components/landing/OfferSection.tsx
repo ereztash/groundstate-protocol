@@ -6,6 +6,7 @@ import { trackCtaClick } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
+import { CorSeal } from "@/components/brand/CorMark";
 
 /**
  * What the reader leaves with, and what it costs. One offer.
@@ -167,7 +168,10 @@ const OfferSection = () => {
               number it backs. */}
           <GuaranteeBand framed={false} className="mt-10 border-t border-foreground/15 pt-8" />
 
-          <div className="mt-10 flex justify-end">
+          {/* Signed and sealed: the brand's seal pressed beside the signature,
+              overlapping the line the way a stamp lands on paper. */}
+          <div className="mt-10 flex items-end justify-end">
+            <CorSeal id="cor-seal-offer" className="cor-seal relative z-10 -me-6 h-24 w-24 shrink-0 sm:h-28 sm:w-28" />
             <div className="ld-sign w-56 text-center">
               <span className="font-heading text-lg font-bold text-foreground">ארז טל-שיר</span>
             </div>

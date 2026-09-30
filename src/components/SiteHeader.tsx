@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { NavLink } from "@/components/NavLink";
 import { trackCtaClick } from "@/lib/analytics";
 import { useOptionalDiagnosticForm } from "@/components/landing/DiagnosticFormProvider";
+import { CorMark } from "@/components/brand/CorMark";
 
 /**
  * The one site-wide top bar, used by every page (replacing the per-page
@@ -55,10 +56,11 @@ const SiteHeader = () => {
       >
         <Link
           to="/"
-          className="font-heading text-lg font-black tracking-tight text-foreground outline-none"
+          className="flex items-center gap-2.5 font-heading text-lg font-black tracking-tight text-foreground outline-none"
           aria-label="COR-SYS, לעמוד הבית"
         >
           COR-SYS
+          <CorMark className="h-4 w-[43px]" />
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
