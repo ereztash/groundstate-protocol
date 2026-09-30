@@ -240,14 +240,14 @@ const About = () => {
               רוצים לבדוק מאיפה נכון להתחיל?
             </p>
             <p className="mt-3 text-sm leading-relaxed text-foreground">
-              שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
+              שיחה בת 30 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
               הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
             </p>
             <Link
               to="/#book"
               className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
             >
-              לתיאום שיחת התאמה, 20 דקות
+              לתיאום שיחת התאמה, 30 דקות
             </Link>
           </div>
         </section>

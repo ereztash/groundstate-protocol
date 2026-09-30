@@ -101,7 +101,7 @@ const Hero = () => {
               לתיאום שיחת התאמה
             </a>
             <p id="hero-cta-note" className="text-sm text-muted-foreground">
-              20 דקות, ללא עלות. בוחרים מועד ביומן.
+              30 דקות, ללא עלות. בוחרים מועד ביומן.
             </p>
           </div>
 

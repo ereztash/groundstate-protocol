@@ -8,7 +8,7 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * call, on one spread.
  *
  * The filter is part of the conversion, not a courtesy: a call with someone
- * the programme cannot help costs both people twenty minutes and trains the
+ * the programme cannot help costs both people thirty minutes and trains the
  * page to attract the wrong reader. The "for" list is written as situations,
  * not segments (graph H21), and drawn from conditions the graph and the site
  * already state: the ICP node's entry trigger (left a job, unpaid leave,

@@ -69,7 +69,7 @@ const StickyMobileCTA = () => {
         tabIndex={visible ? 0 : -1}
         className="ld-cta mx-auto flex w-full max-w-xl"
       >
-        לתיאום שיחת התאמה · 20 דקות
+        לתיאום שיחת התאמה · 30 דקות
       </a>
     </div>
   );
