@@ -32,7 +32,7 @@ const InsightsIndex = () => {
           <h1 className="cor-display mt-4 text-foreground">
             מה שאתם יודעים, בשפה שהלקוח משלם עליה
           </h1>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             מאמרים על בידול, תמחור, וסנכרון בין המשאב לתכלית, המתודולוגיה של
             COR-SYS, בכתב.
           </p>
@@ -56,7 +56,7 @@ const InsightsIndex = () => {
                 <h2 className="cor-heading mt-2 text-foreground group-hover:text-primary">
                   {a.title}
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+                <p className="mt-3 text-sm leading-relaxed text-foreground">
                   {a.description}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">

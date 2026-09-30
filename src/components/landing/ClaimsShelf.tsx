@@ -32,7 +32,7 @@ const ClaimsShelf = () => {
           <h2 id="claims-title" className="cor-title mt-2 text-foreground">
             מה נבדק, ומה עדיין לא.
           </h2>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             שתי טענות נפרדות, בשתי רמות ראיה שונות. הן מוצגות יחד כדי שאף אחת
             מהן לא תיקרא כאילו היא האחרת.
           </p>
@@ -46,17 +46,17 @@ const ClaimsShelf = () => {
                 className="flex h-full flex-col rounded-xl border border-border bg-card p-6"
               >
                 <header className="flex items-center justify-between gap-3 border-b border-border pb-3">
-                  <span className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground">
+                  <span className="text-xs font-semibold tracking-[0.16em] text-muted-foreground">
                     {claim.label}
                   </span>
                   <EvidenceTag level={claim.level} />
                 </header>
 
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground/85">
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
                   {claim.statement}
                 </p>
 
-                <p className="mt-5 border-t border-border pt-4 text-sm leading-relaxed text-foreground/70">
+                <p className="mt-5 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">
                   {claim.entitlement}
                 </p>
               </article>

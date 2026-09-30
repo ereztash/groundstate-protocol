@@ -64,7 +64,7 @@ const QuantifiedProof = ({ className }: { className?: string }) => {
               </span>
               <EvidenceTag level={s.level} />
             </dt>
-            <dd className="mt-2 text-sm leading-relaxed text-foreground/80">
+            <dd className="mt-2 text-sm leading-relaxed text-foreground">
               {s.label}
             </dd>
           </div>

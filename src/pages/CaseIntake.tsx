@@ -110,7 +110,7 @@ const CaseIntake = () => {
       <div className="mx-auto max-w-3xl">
         <p className="cor-overline-he">כלי פנימי</p>
         <h1 className="cor-title mt-2">קליטת מקרה</h1>
-        <p className="cor-body-lg mt-4 text-foreground/80">
+        <p className="cor-body-lg mt-4 text-foreground">
           חמשת השדות של שרשרת הראיה. הטופס לא שולח לשום מקום: הוא מרכיב רשומה
           שאפשר להעתיק לתיקיית המקרים. שני שערי הפרסום נשארים סגורים בברירת מחדל.
         </p>

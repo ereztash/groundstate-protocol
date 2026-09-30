@@ -37,7 +37,7 @@ const GuaranteeBlock = ({
 
   if (compact) {
     return (
-      <div className={`text-sm leading-relaxed text-foreground/80 ${className}`}>
+      <div className={`text-sm leading-relaxed text-foreground ${className}`}>
         <p className="flex items-start gap-2.5">
           <ShieldCheck
             aria-hidden="true"
@@ -69,7 +69,7 @@ const GuaranteeBlock = ({
       <p className="text-xs font-bold tracking-[0.08em] text-primary">
         סעיף אחריות
       </p>
-      <p className="mt-2 font-heading text-lg font-bold leading-snug text-foreground sm:text-xl">
+      <p className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
         {headline}
       </p>
 
@@ -80,7 +80,7 @@ const GuaranteeBlock = ({
           </p>
           <ul className="mt-2 space-y-1.5">
             {variant.signals.map((s) => (
-              <li key={s} className="text-sm leading-relaxed text-foreground/85">
+              <li key={s} className="text-sm leading-relaxed text-foreground">
                 {s}
               </li>
             ))}
@@ -94,7 +94,7 @@ const GuaranteeBlock = ({
           </p>
           <ul className="mt-2 space-y-1.5">
             {variant.excluded.map((s) => (
-              <li key={s} className="text-sm leading-relaxed text-foreground/85">
+              <li key={s} className="text-sm leading-relaxed text-foreground">
                 {s}
               </li>
             ))}

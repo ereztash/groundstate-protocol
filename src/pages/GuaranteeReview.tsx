@@ -28,7 +28,7 @@ const GuaranteeReview = () => {
         <header>
           <p className="cor-overline-he">כלי פנימי</p>
           <h1 className="cor-title mt-2">האחריות: הגרסה שאומצה והאפשרויות שקדמו לה</h1>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             באוויר מאז 29.9.2026: הנוסח מההצעה החתומה (signed-proposal). שלוש
             האפשרויות האחרות נשמרות כאן לתיעוד, ואינן נכנסות לבנדל. הערך
             הנוכחי של{" "}
@@ -56,12 +56,12 @@ const GuaranteeReview = () => {
               </p>
             </div>
 
-            <p className="text-[11px] font-semibold tracking-[0.16em] text-primary">
+            <p className="text-xs font-semibold tracking-[0.16em] text-primary">
               כפי שייראה ב-/protocol
             </p>
             <GuaranteeBlock variant={variant} />
 
-            <p className="pt-2 text-[11px] font-semibold tracking-[0.16em] text-primary">
+            <p className="pt-2 text-xs font-semibold tracking-[0.16em] text-primary">
               כפי שייראה בעמוד הנחיתה
             </p>
             <GuaranteeBlock variant={variant} compact />

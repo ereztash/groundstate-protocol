@@ -53,7 +53,7 @@ const FitSection = () => (
           </h3>
           <ul className="mt-5 space-y-4">
             {FOR.map((line) => (
-              <li key={line} className="flex gap-3 leading-relaxed text-foreground/85">
+              <li key={line} className="flex gap-3 leading-relaxed text-foreground">
                 <svg viewBox="0 0 28 20" aria-hidden="true" className="mt-1.5 h-3.5 w-5 shrink-0">
                   <path className="ld-mark" d="M2 11 L10 18 L26 2" />
                 </svg>
@@ -69,7 +69,7 @@ const FitSection = () => (
           </h3>
           <ul className="mt-5 space-y-4">
             {NOT_FOR.map((line) => (
-              <li key={line} className="flex gap-3 leading-relaxed text-foreground/75">
+              <li key={line} className="flex gap-3 leading-relaxed text-muted-foreground">
                 <svg viewBox="0 0 20 20" aria-hidden="true" className="mt-1.5 h-3.5 w-3.5 shrink-0">
                   <path className="ld-mark" d="M3 3 L17 17 M17 3 L3 17" />
                 </svg>
@@ -96,7 +96,7 @@ const FitSection = () => (
           <p className="mt-4 font-heading text-2xl font-black leading-snug text-foreground sm:text-3xl">
             גם לי היה ידע. ולא ידעתי איך להעביר אותו.
           </p>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             שנים החזקתי רק את הצד האנושי, סיפור ונרטיב. כשנכנסתי לעולם העסקי,
             גיליתי שאני יודע דברים שאחרים לא יודעים, וגם שאין לי שום מושג איך
             להסביר את זה ללקוח. מצאתי שהמבנה הוא החצי השני של אותה צורה.

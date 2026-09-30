@@ -62,7 +62,7 @@ const FAQSection = () => (
               <h3 className="font-heading text-xl font-black leading-snug text-foreground">
                 {q}
               </h3>
-              <p className="mt-3 leading-relaxed text-foreground/80">{a}</p>
+              <p className="mt-3 leading-relaxed text-foreground">{a}</p>
             </div>
           ))}
         </div>
@@ -73,7 +73,7 @@ const FAQSection = () => (
               <AccordionTrigger className="gap-4 py-5 text-right text-base font-bold text-foreground hover:no-underline">
                 {q}
               </AccordionTrigger>
-              <AccordionContent className="pb-5 pt-1 leading-relaxed text-foreground/75">
+              <AccordionContent className="pb-5 pt-1 leading-relaxed text-muted-foreground">
                 {a}
               </AccordionContent>
             </AccordionItem>

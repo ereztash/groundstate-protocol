@@ -22,11 +22,11 @@ function QuoteCard({ t }: { t: Testimonial }) {
           <span className="group-open:hidden">להמלצה המלאה</span>
           <span className="hidden group-open:inline">לסגור</span>
         </summary>
-        <p className="mt-3 leading-relaxed text-foreground/80">{t.quote}</p>
+        <p className="mt-3 leading-relaxed text-foreground">{t.quote}</p>
       </details>
     </>
   ) : (
-    <p className="leading-relaxed text-foreground/85">{t.quote}</p>
+    <p className="leading-relaxed text-foreground">{t.quote}</p>
   );
 
   return (

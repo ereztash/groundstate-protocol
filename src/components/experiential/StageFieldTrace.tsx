@@ -222,13 +222,13 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
               data-dim={i === active ? undefined : ""}
               className="cor-trace-step flex min-h-[46vh] flex-col justify-center py-6"
             >
-              <p className="text-[11px] font-semibold tracking-[0.2em] text-primary">
+              <p className="text-xs font-semibold tracking-[0.2em] text-primary">
                 {n.stage.number} · {n.stage.verb}
               </p>
               <h3 className="cor-heading mt-2 text-foreground">
                 {n.stage.name}
               </h3>
-              <p className="mt-3 font-mono text-xs leading-relaxed text-foreground/75 sm:text-sm">
+              <p className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 {transformations[n.stage.number]}
               </p>
             </li>

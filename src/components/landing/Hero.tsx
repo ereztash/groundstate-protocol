@@ -65,7 +65,7 @@ const Hero = () => {
           {/* The offer in one line, at a size a five-second glance reads: the
               headline beside it is the pain, not the product, so this line is
               what tells a stranger what is sold and to whom. */}
-          <p className="cor-overline-he !text-[15px] sm:!text-base">ליווי עסקי לעצמאים · 30 יום</p>
+          <p className="cor-overline-he !text-base">ליווי עסקי לעצמאים · 30 יום</p>
 
           {/* Three lines reserved on a phone, for the same reason as the
               paragraph below: at 412–430px the headline is two lines in the
@@ -84,7 +84,7 @@ const Hero = () => {
               it. From sm up the paragraph is wide enough not to rewrap. */}
           <p
             id="hero-subtitle"
-            className="cor-body-lg mt-6 min-h-[4lh] max-w-xl text-foreground/80 sm:min-h-0"
+            className="cor-body-lg mt-6 min-h-[4lh] max-w-xl text-foreground sm:min-h-0"
           >
             בארבע פגישות בחודש, מה שאתם כבר יודעים הופך לארבעה מסמכים: משפט
             אחד שמחזיק, הצעת ערך, מוצר עם מחיר, ו-{outreachCount} פניות לאנשים

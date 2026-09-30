@@ -37,7 +37,7 @@ const PreRegistration = () => {
           >
             מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
           </h2>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             זו התחייבות לפרסם מה קרה, כולל המקרה שבו השיטה לא עבדה. ההתחייבות
             עצמה אינה הוכחה שהשיטה עובדת.
           </p>
@@ -47,10 +47,10 @@ const PreRegistration = () => {
           <dl className="divide-y divide-border border-y border-border">
             {ROWS.map((row) => (
               <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
-                <dt className="text-[11px] font-semibold tracking-[0.16em] text-primary">
+                <dt className="text-xs font-semibold tracking-[0.16em] text-primary">
                   {row.label}
                 </dt>
-                <dd className="text-sm leading-relaxed text-foreground/85">
+                <dd className="text-sm leading-relaxed text-foreground">
                   {"items" in row ? (
                     <ul className="space-y-1">
                       {row.items.map((item) => (
@@ -77,7 +77,7 @@ const PreRegistration = () => {
             of the only thing that costs anything to say. */}
         <Reveal delay={0.1} className="mt-8">
           <div className="border-s-2 border-accent ps-5">
-            <p className="text-[11px] font-semibold tracking-[0.16em] text-accent">
+            <p className="text-xs font-semibold tracking-[0.16em] text-accent">
               {pre.failureThreshold.label}
             </p>
             <p className="cor-body-lg mt-2 text-foreground">

@@ -31,7 +31,7 @@ const EvidenceTag = ({
   <span
     dir="rtl"
     title={EVIDENCE_MEANING[level]}
-    className={`inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide ${STYLE[level]} ${className}`}
+    className={`inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-xs font-semibold tracking-wide ${STYLE[level]} ${className}`}
   >
     <span className="sr-only">רמת ראיה: </span>
     {EVIDENCE_LABEL[level]}

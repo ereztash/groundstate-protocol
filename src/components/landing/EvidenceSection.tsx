@@ -30,8 +30,9 @@ const WINDOW_END = pre.window.value.match(/\d{2}\/\d{4}/)?.[0] ?? null;
  *
  * Nothing is softened: the failure threshold is shown whole, at full weight.
  *
- * Charcoal with a structure-teal grid (2026-09-30): the brand's diagnostic
- * screen, for the one section that is a measurement record. The threshold
+ * A structure-teal grid on the sheet (2026-09-30): the brand's diagnostic
+ * screen, for the one section that is a measurement record. It was charcoal
+ * until the 30.9 pilot (see Day31Section). The threshold
  * figure is the section's copper, because it is the line that costs something
  * to say.
  */
@@ -40,7 +41,7 @@ const EvidenceSection = () => (
     id="evidence"
     dir="rtl"
     aria-labelledby="evidence-title"
-    className="dark ld-section cor-blueprint bg-background text-foreground"
+    className="ld-section ld-band-sheet cor-blueprint border-y border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="max-w-2xl">
@@ -48,7 +49,7 @@ const EvidenceSection = () => (
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
           מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
         </h2>
-        <p className="cor-body-lg mt-5 text-foreground/80">
+        <p className="cor-body-lg mt-5 text-foreground">
           זה כאן כדי שבעוד שנה תוכלו לבדוק אם מה שכתוב בעמוד הזה החזיק. זו
           התחייבות לפרסם מה קרה, כולל המקרה שבו השיטה לא עבדה, והיא אינה הוכחה
           שהיא עובדת.
@@ -65,7 +66,7 @@ const EvidenceSection = () => (
               <EvidenceTag level={c.level} />
             </div>
             <p className="mt-3 leading-relaxed text-foreground">{c.statement}</p>
-            <p className="mt-auto border-t border-border pt-4 text-sm leading-relaxed text-foreground/70">
+            <p className="mt-auto border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">
               {c.entitlement}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
@@ -82,7 +83,7 @@ const EvidenceSection = () => (
               <dt className="text-xs font-bold tracking-[0.08em] text-primary">
                 {row.label}
               </dt>
-              <dd className="leading-relaxed text-foreground/85">
+              <dd className="leading-relaxed text-foreground">
                 {"items" in row ? (
                   <ul className="space-y-1">
                     {row.items.map((item) => (
@@ -102,7 +103,7 @@ const EvidenceSection = () => (
             say. */}
         <div className="relative self-start border border-border border-s-4 border-s-signal bg-card p-6 pt-8 sm:p-7 sm:pt-9">
           {WINDOW_END && (
-            <span className="ld-stamp absolute -top-5 end-5 bg-card text-[11px]" aria-hidden="true">
+            <span className="ld-stamp absolute -top-5 end-5 bg-card text-xs" aria-hidden="true">
               <span>נרשם מראש</span>
               <span className="font-heading text-sm">עד {WINDOW_END}</span>
             </span>
@@ -112,13 +113,13 @@ const EvidenceSection = () => (
           </p>
           {THRESHOLD && (
             <p
-              className="mt-2 font-heading text-[4.5rem] font-black leading-none text-signal"
+              className="mt-2 font-heading text-[3.25rem] font-black leading-none text-signal"
               aria-hidden="true"
             >
               <span dir="ltr">{THRESHOLD}</span>
             </p>
           )}
-          <p className="mt-3 font-heading text-xl font-black leading-snug text-foreground">
+          <p className="mt-3 text-xl font-bold leading-snug text-foreground">
             {pre.failureThreshold.value}
           </p>
         </div>

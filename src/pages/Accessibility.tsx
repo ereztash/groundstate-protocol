@@ -43,7 +43,7 @@ const Accessibility = () => {
           עודכן לאחרונה: ספטמבר 2026
         </p>
 
-        <div className="mt-10 space-y-9 text-[15px] leading-relaxed text-foreground/85">
+        <div className="mt-10 space-y-9 text-base leading-relaxed text-foreground">
           <section className="space-y-2">
             <h2 className="cor-subheading text-foreground">רמת הנגישות</h2>
             <p>

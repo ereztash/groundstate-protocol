@@ -33,7 +33,7 @@ class ErrorBoundary extends Component<Props, State> {
         <div className="space-y-3">
           <p className="cor-overline-he">רגע</p>
           <h1 className="cor-title text-foreground">משהו נתקע כאן לרגע.</h1>
-          <p className="cor-body-lg max-w-md text-foreground/80">
+          <p className="cor-body-lg max-w-md text-foreground">
             אפשר לרענן את העמוד, או פשוט לקבוע איתי שיחה ישירות, וגם זה ייפתר.
           </p>
         </div>

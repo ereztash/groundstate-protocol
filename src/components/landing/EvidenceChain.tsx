@@ -28,7 +28,7 @@ import {
 
 const OutcomeBadge = ({ outcome }: { outcome: CaseRecord["outcome"] }) => (
   <span
-    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${
+    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
       outcome === "converted"
         ? "border-primary/40 bg-primary/[0.07] text-primary"
         : "border-border bg-foreground/[0.05] text-muted-foreground"
@@ -47,7 +47,7 @@ const CaseChain = ({ record }: { record: CaseRecord }) => {
       className="rounded-xl border border-border bg-card p-6 md:p-8"
     >
       <header className="flex flex-wrap items-center gap-3 border-b border-border pb-4">
-        <span className="text-[11px] font-semibold tracking-[0.2em] text-muted-foreground">
+        <span className="text-xs font-semibold tracking-[0.2em] text-muted-foreground">
           {record.subject_label}
         </span>
         <OutcomeBadge outcome={record.outcome} />
@@ -55,10 +55,10 @@ const CaseChain = ({ record }: { record: CaseRecord }) => {
 
       {record.pre_registered_rule && (
         <div className="mt-5 border-s-2 border-primary/40 ps-4">
-          <p className="text-[11px] font-semibold tracking-wide text-primary">
+          <p className="text-xs font-semibold tracking-wide text-primary">
             הכלל שנרשם לפני שהתוצאה היתה ידועה
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+          <p className="mt-1 text-sm leading-relaxed text-foreground">
             {record.pre_registered_rule}
           </p>
         </div>
@@ -73,14 +73,14 @@ const CaseChain = ({ record }: { record: CaseRecord }) => {
           return (
             <li key={col} className="flex flex-col">
               <div className="flex items-baseline gap-2 border-t border-foreground/80 pt-3">
-                <span className="font-mono text-[11px] text-muted-foreground">
+                <span className="font-mono text-xs text-muted-foreground">
                   0{i + 1}
                 </span>
-                <span className="text-[11px] font-semibold tracking-wide text-foreground">
+                <span className="text-xs font-semibold tracking-wide text-foreground">
                   {CHAIN_COLUMN_LABEL[col]}
                 </span>
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/85">
+              <p className="mt-2 text-sm leading-relaxed text-foreground">
                 {cell.text}
               </p>
               <p className="mt-3">
@@ -93,14 +93,14 @@ const CaseChain = ({ record }: { record: CaseRecord }) => {
 
       {record.caveats.length > 0 && (
         <div className="mt-7 border-t border-border pt-5">
-          <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground">
             מה המקרה הזה לא אומר
           </p>
           <ul className="mt-2 space-y-1.5">
             {record.caveats.map((c) => (
               <li
                 key={c}
-                className="flex items-start gap-2.5 text-sm leading-relaxed text-foreground/80"
+                className="flex items-start gap-2.5 text-sm leading-relaxed text-foreground"
               >
                 <span
                   aria-hidden="true"
@@ -136,7 +136,7 @@ const EvidenceChain = () => {
           >
             מה נאמר, מה זוהה, מה נוצר, מה נעשה, מה קרה.
           </h2>
-          <p className="cor-body-lg mt-4 text-foreground/80">
+          <p className="cor-body-lg mt-4 text-foreground">
             לכל שלב בשרשרת יש תג שאומר על מה הוא נשען: שורת פנקס, דיווח שלי, או
             לא נמדד. התגים מוצגים במלואם, גם כשהם מחלישים את הטענה.
           </p>

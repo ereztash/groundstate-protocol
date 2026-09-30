@@ -108,30 +108,30 @@ const StageStepper = ({
             <h3 className="cor-heading text-foreground">{s.name}</h3>
           </div>
 
-          <p className="mt-5 cor-body-lg text-foreground/85">{s.description}</p>
+          <p className="mt-5 cor-body-lg text-foreground">{s.description}</p>
 
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
             <div className="border-r-2 border-border pr-3">
-              <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
+              <p className="text-xs font-semibold tracking-wide text-muted-foreground">
                 קלט
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+              <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {inputs[s.number]}
               </p>
             </div>
             <div className="border-r-2 border-border pr-3">
-              <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
+              <p className="text-xs font-semibold tracking-wide text-muted-foreground">
                 תוצר ביד
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+              <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {s.deliverable}
               </p>
             </div>
             <div className="border-r-2 border-accent/40 pr-3">
-              <p className="text-[11px] font-semibold tracking-wide text-accent">
+              <p className="text-xs font-semibold tracking-wide text-accent">
                 הסימן שסיימנו
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+              <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {exitCriteria[s.number]}
               </p>
             </div>

@@ -2,12 +2,15 @@ import { outreachCount } from "@/data/sprint-stages";
 import SectionHead from "./SectionHead";
 
 /**
- * The scene after the sprint ends, and the one ink band on the landing page.
+ * The scene after the sprint ends.
  *
  * The page had process and artefacts and no picture of the reader using
  * either, and a spec sheet does not create wanting. This section is the one
  * place the site describes an ordinary moment rather than a deliverable, so it
- * gets the page's only dark surface and the largest type below the hero.
+ * gets its own sheet band and the largest type below the hero. It was
+ * charcoal until the 30.9 pilot: four dark bands in ten sections broke the
+ * brand book's one-in-three-or-four, and both respondents found the page too
+ * dark to read comfortably.
  *
  * The last paragraph is not a softener that can be trimmed later. A vivid scene
  * of success reads as a forecast, and `src/data/claims.ts` holds the business
@@ -23,7 +26,7 @@ const Day31Section = () => (
   <section
     dir="rtl"
     aria-labelledby="day-31-title"
-    className="dark ld-section bg-background text-foreground"
+    className="ld-section ld-band-sheet border-y border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-16">
@@ -31,13 +34,13 @@ const Day31Section = () => (
           <SectionHead n="03" label="אחרי" />
           <h2
             id="day-31-title"
-            className="mt-4 font-heading text-[4.5rem] font-black leading-none tracking-tight sm:text-[6.5rem]"
+            className="mt-4 font-heading text-[3.25rem] font-black leading-none tracking-tight sm:text-[5rem]"
           >
             יום 31<span className="cor-point">.</span>
           </h2>
         </div>
 
-        <div className="max-w-2xl space-y-6 font-heading text-[1.375rem] leading-[1.45] sm:text-[1.625rem]">
+        <div className="max-w-2xl space-y-6 text-2xl leading-[1.5]">
           <p>
             מישהו שואל במה אתם עוסקים. יש לכם משפט אחד. אתם אומרים אותו, ולא
             מוסיפים אחריו הסתייגות.
