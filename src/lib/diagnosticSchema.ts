@@ -52,14 +52,14 @@ export const timeWindows = [
 export const stepOneSchema = z.object({
   challenge: z
     .string()
-    .min(3, { message: "כתבי משפט אחד" })
+    .min(3, { message: "כתבו משפט אחד" })
     .max(800, { message: "תיאור ארוך מדי" }),
   fullName: z
     .string()
     .min(2, { message: "שם קצר מדי" })
     .max(80, { message: "שם ארוך מדי" }),
   activePractice: z.enum(["yes", "no"], {
-    errorMap: () => ({ message: "בחרי אחת מהאפשרויות" }),
+    errorMap: () => ({ message: "בחרו אחת מהאפשרויות" }),
   }),
 });
 

@@ -75,7 +75,7 @@ const InsightArticle = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <a href="#article-main" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
       <script
         type="application/ld+json"
@@ -145,17 +145,21 @@ const InsightArticle = () => {
         {/* Single CTA — the whole site funnels to the fit call. */}
         <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
           <p className="cor-heading text-foreground">
-            רוצה לבדוק איפה הזרימה שלך נעצרת?
+            רוצים לבדוק מאיפה נכון להתחיל?
           </p>
+          {/* Aligned with the hero's description of the same call on
+              2026-09-29. This block described it as a "מפת סנכרון" with an
+              annual cost estimate, the hero as a fit assessment; one call,
+              one description. */}
           <p className="mt-3 text-sm leading-relaxed text-foreground/80">
-            מפת סנכרון של 20 דקות: נקודת חנק אחת שסומנה, אומדן למה שהיא עולה לך בשנה,
-            וצעד תיקון אחד. במספר, לא בתחושה.
+            שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
+            הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
           </p>
           <Link
             to="/#book"
             className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
           >
-            קבע שיחת התאמה, 20 דקות, בלי לחץ
+            לתיאום שיחת התאמה, 20 דקות, בלי לחץ
           </Link>
         </Reveal>
 

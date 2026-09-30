@@ -218,10 +218,10 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                     id="diagnostic-form-title"
                     className="font-heading text-xl font-black text-foreground"
                   >
-                    השאירי פרטים, ואחזור אלייך לתיאום.
+                    השאירו פרטים, ואחזור אליכם לתיאום.
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    שני שלבים קצרים. בסופם נפתח גם היומן, אם תרצי לבחור מועד בעצמך.
+                    שני שלבים קצרים. בסופם נפתח גם היומן, אם תרצו לבחור מועד בעצמכם.
                   </p>
                 </>
               ) : (
@@ -242,25 +242,25 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       not have, and it is read before the decision to fill the form
                       at all. Describe what actually happens. */}
                   <p className="cor-body-lg text-foreground/80">
-                    מיד אחרי הטופס נפתח היומן ואת בוחרת מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                    מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
                   </p>
                   <SpotsLeft className="text-sm text-muted-foreground" />
 
                   <ul
-                    aria-label="מה תיקחי מהשיחה"
+                    aria-label="מה תקבלו מהשיחה"
                     className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
                   >
                     <li className="flex items-start gap-2.5">
                       <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                      <span>תדעי אם זה מתאים לך. ביושר, גם אם לא.</span>
+                      <span>תדעו אם זה מתאים לכם. ביושר, גם אם לא.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                      <span>תדעי מאיזה שלב להתחיל ולמה.</span>
+                      <span>תדעו מאיזה שלב להתחיל ולמה.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                      <span>תקבלי פרשנות אחת על התקיעה שלך, גם אם לא נמשיך ביחד.</span>
+                      <span>תקבלו פרשנות אחת על התקיעה שלכם, גם אם לא נמשיך ביחד.</span>
                     </li>
                   </ul>
 
@@ -271,8 +271,8 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       with them rather than pushing. */}
                   <p className="mt-5 text-sm leading-relaxed text-foreground/80">
                     יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
-                    ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעי מאיזה
-                    שלב להתחיל. ההחלטה שלך בלבד.
+                    ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעו מאיזה
+                    שלב להתחיל. ההחלטה שלכם בלבד.
                   </p>
 
                 </>
@@ -306,7 +306,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
               className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden opacity-0"
             >
               <label>
-                אל תמלא/י שדה זה
+                אל תמלאו שדה זה
                 <input
                   type="text"
                   name="company"
@@ -332,13 +332,13 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">01.</span>במשפט אחד: מה את יודעת לעשות, שאת לא מצליחה למכור?
+                          <span className="field-num">01.</span>במשפט אחד: מה אתם יודעים לעשות, שאתם לא מצליחים למכור?
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             rows={3}
                             maxLength={800}
-                            placeholder="לדוגמה: יש לי 15 שנה ניסיון, אבל לשווק ולמכור את עצמי: שם אני פחות טוב..."
+                            placeholder="לדוגמה: 15 שנות ניסיון, אבל לשווק ולמכור את עצמי זה החלק שנתקע."
                             {...field}
                           />
                         </FormControl>
@@ -353,7 +353,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          <span className="field-num">02.</span>איך לקרוא לך
+                          <span className="field-num">02.</span>איך לקרוא לכם
                         </FormLabel>
                         <FormControl>
                           <Input type="text" autoComplete="name" {...field} />
@@ -373,12 +373,12 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       <FormItem>
                         <fieldset>
                           <legend className="text-sm font-medium leading-none text-foreground">
-                            <span className="field-num">03.</span>יש לך פרקטיקה
+                            <span className="field-num">03.</span>יש לכם פרקטיקה
                             פעילה עם לקוחות?
                           </legend>
                           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
                             הרצף מחלץ בידול מתוך עבודה שכבר קרתה. בלי לקוחות
-                            פעילים אין ממה לחלץ, ועדיף שנדע את זה מראש, שנינו.
+                            פעילים אין ממה לחלץ, ועדיף שנדע את זה מראש.
                           </p>
                           <div className="mt-3 flex flex-wrap gap-3">
                             {[
@@ -438,7 +438,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                   noValidate
                 >
                   <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground/85">
-                    תודה. עוד שדה אחד וסיימנו. הטלפון הוא בשביל שאחזור אליך, לא נעשה ניוזלטר ולא נשתף עם אף אחד.
+                    תודה. עוד שדה אחד וסיימנו. הטלפון הוא כדי לחזור אליכם. לא נרשמים לניוזלטר, והפרטים לא נמסרים לאף גורם שיווקי.
                   </p>
 
                   <FormField
@@ -548,7 +548,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       {/* Was "שלח, אחזור אליך תוך 24 שעות" — the label named a
                           wait that does not happen. The next screen is the
                           calendar. */}
-                      {isSending ? "שולח" : "שלח ובחר מועד"}
+                      {isSending ? "שולחים" : "לשליחה ובחירת מועד"}
                     </button>
                     {/* What the reader is actually agreeing to, at the moment
                         they decide. Each line answers a different unspoken
@@ -574,7 +574,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
               tabIndex={-1}
               className="cor-title text-foreground outline-none"
             >
-              תודה. בואי נקבע את הפגישה.
+              תודה. בואו נקבע את הפגישה.
             </h2>
             <Suspense fallback={<div className="h-[720px]" aria-hidden="true" />}>
               <BookingSection visible />

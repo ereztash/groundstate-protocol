@@ -1,6 +1,6 @@
 import type { MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
-import { fullPackage, outreachCount } from "@/data/sprint-stages";
+import { outreachCount, program } from "@/data/sprint-stages";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import DraftStack from "./DraftStack";
 
@@ -57,9 +57,9 @@ const Hero = () => {
             id="hero-subtitle"
             className="cor-body-lg mt-6 max-w-xl text-foreground/80"
           >
-            בארבע פגישות בחודש, מה שאת כבר יודעת הופך לארבעה מסמכים: משפט אחד
-            שמחזיק, הצעת ערך, מוצר עם מחיר, ו-{outreachCount} פניות לאנשים ששמם
-            ידוע לך.
+            בארבע פגישות בחודש, מה שאתם כבר יודעים הופך לארבעה מסמכים: משפט
+            אחד שמחזיק, הצעת ערך, מוצר עם מחיר, ו-{outreachCount} פניות לאנשים
+            ששמם ידוע לכם.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
@@ -81,8 +81,9 @@ const Hero = () => {
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">כל התוכנית</dt>
               <dd className="cor-price font-heading text-2xl font-black text-foreground">
-                {fullPackage.priceLabel}
+                {program.priceLabel}
               </dd>
+              <dd className="text-muted-foreground">{program.installmentsLabel}</dd>
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">פגישות</dt>
@@ -90,7 +91,7 @@ const Hero = () => {
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">בסוף</dt>
-              <dd className="font-bold text-foreground">4 מסמכים שלך</dd>
+              <dd className="font-bold text-foreground">4 מסמכים שלכם</dd>
             </div>
           </dl>
 
@@ -108,7 +109,7 @@ const Hero = () => {
             <p className="text-sm leading-snug">
               <span className="block font-bold text-foreground">ארז טל-שיר</span>
               <span className="text-muted-foreground">
-                עובד סוציאלי בהכשרה, יועץ עסקי לעצמאים
+                עובד סוציאלי טכנולוגי, יועץ עסקי לעצמאים
               </span>
             </p>
           </div>

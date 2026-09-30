@@ -26,6 +26,7 @@ const ROUTES = [
   { path: "protocol", depth: 1, mustContain: "ארבעה שלבים" },
   { path: "about", depth: 1, mustContain: "COR-SYS" },
   { path: "privacy", depth: 1, mustContain: "פרטיות" },
+  { path: "accessibility", depth: 1, mustContain: "הצהרת נגישות" },
   { path: "insights", depth: 1, mustContain: "תובנות" },
   { path: "insights/anatomy-of-a-mistake", depth: 2, mustContain: "COR-SYS" },
 ];

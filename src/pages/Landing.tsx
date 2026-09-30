@@ -93,7 +93,7 @@ const Landing = () => {
   return (
     <DiagnosticFormProvider initialSource={initialSource}>
       <a href="#hero" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
 
       <div data-page="landing" className="ld-paper min-h-screen overflow-x-hidden text-foreground">

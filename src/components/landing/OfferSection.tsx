@@ -1,13 +1,13 @@
 import type { MouseEvent } from "react";
-import { Link } from "react-router-dom";
-import { fullPackage, stages } from "@/data/sprint-stages";
+import { program, stages } from "@/data/sprint-stages";
+import GuaranteeBand from "@/components/GuaranteeBand";
 import { SAMPLE_SOURCE_LABEL } from "@/lib/evidence";
 import { trackCtaClick } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 
 /**
- * What she leaves with, and what it costs. One offer.
+ * What the reader leaves with, and what it costs. One offer.
  *
  * The page used to sell five things: four stages priced one by one, and a
  * package framed as a discount on their sum, with a quiz to pick between
@@ -16,8 +16,9 @@ import SpotsLeft from "./SpotsLeft";
  * through. Here the four stages are what they actually are, four weeks of one
  * programme, each ending in a document, and there is one price.
  *
- * The stages are still sold separately; that line sits under the price and
- * links to /protocol, where each one is priced. It is a door, not a menu.
+ * Operator decision 2026-09-29: one price for the programme, in two payments,
+ * and the stages are not sold separately. The signed guarantee sits on the
+ * price sheet, under the number it backs.
  *
  * Every word about a stage is read from sprint-stages. Nothing is re-typed.
  *
@@ -46,14 +47,14 @@ const OfferSection = () => {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <p className="cor-overline-he">מה נשאר אצלך</p>
+          <p className="cor-overline-he">מה נשאר אצלכם</p>
           <h2 id="offer-title" className="cor-title mt-4 text-foreground">
             ארבעה שבועות. ארבעה מסמכים. כל אחד נבנה על הקודם.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground/80">
             בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. מבנה שנבנה תחת
-            עומס נשאר, ומבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ ממך את הניסוח,
-            ולא נותן לך אותו.
+            עומס נשאר, ומבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ מכם את הניסוח,
+            ולא נותן לכם אותו.
           </p>
         </div>
 
@@ -113,12 +114,13 @@ const OfferSection = () => {
           <div>
             <p className="cor-overline-he">התוכנית המלאה</p>
             <p className="mt-4 text-foreground">
-              <span className="ld-price">{fullPackage.priceLabel}</span>
+              <span className="ld-price">{program.priceLabel}</span>
             </p>
+            <p className="mt-2 text-muted-foreground">{program.installmentsLabel}</p>
             <ul className="mt-6 grid gap-2 text-foreground/85 sm:grid-cols-2 sm:gap-x-8">
               <li>30 יום, 4 פגישות של 60 דקות</li>
               <li>ליווי בין הפגישות</li>
-              <li>4 מסמכים שנשארים אצלך</li>
+              <li>4 מסמכים שנשארים אצלכם</li>
               <li>הרצה מונחית של הפנייה הראשונה</li>
             </ul>
             <SpotsLeft className="mt-5 text-sm text-muted-foreground" />
@@ -131,13 +133,10 @@ const OfferSection = () => {
             <p className="text-sm leading-relaxed text-muted-foreground">
               בשיחה בודקים אם יש התאמה ומאיפה מתחילים. אם אין, אומרים את זה.
             </p>
-            <p className="text-sm text-muted-foreground">
-              כל שלב נמכר גם בנפרד.{" "}
-              <Link to="/protocol#prices" className="ld-link font-semibold">
-                המחירים לפי שלב
-              </Link>
-            </p>
           </div>
+
+          {/* The signed guarantee, in full, under the number it backs. */}
+          <GuaranteeBand className="md:col-span-2" />
         </div>
       </div>
     </section>

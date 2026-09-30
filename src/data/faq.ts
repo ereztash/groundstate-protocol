@@ -14,6 +14,8 @@
  * guarantee variant is live, so it never reaches the structured data while the
  * decision is open.
  */
+import { program } from "./sprint-stages";
+
 export type QA = { q: string; a: string };
 
 /**
@@ -47,13 +49,16 @@ export function surfacedObjections(): QA[] {
   });
 }
 
+// "רוב הלקוחות מתחילים בשלב 1" became a description of stage 1 (2026-09-30):
+// it was a frequency claim with no count behind it.
 export const faq: readonly QA[] = [
-  // The two stage-entry questions were merged when the landing page moved to a
-  // single offer (2026-09-29). "רוב הלקוחות מתחילים בשלב 1" went with them: it
-  // was a frequency claim with no count behind it.
   {
-    q: "ואם כבר יש לי נרטיב?",
-    a: "בשיחה הראשונה נבדוק שהנרטיב הקיים עומד בתנאים. אם כן, מתחילים משלב 2. את לא צריכה להחליט לבד.",
+    q: "מאיפה להתחיל כשלא ברור באיזה שלב אני?",
+    a: "זה בדיוק מה שהשיחה הראשונה עושה. שלב 1 (נרטיב) הוא המקום שבו יושב הבידול שעוד לא נוסח. אם כבר יש לכם נרטיב ברור, מדלגים ומתחילים מהצעת הערך. לא צריך להחליט לבד.",
+  },
+  {
+    q: "אני כבר עם נרטיב, אפשר להתחיל משלב 2?",
+    a: "כן. בשיחה נבדוק שהנרטיב הקיים עומד בתנאים, ואם כן, מתחילים משלב 2.",
   },
   {
     q: "מה ההבדל בינך לבין יועץ עסקי או מאמן עסקי?",
@@ -61,18 +66,18 @@ export const faq: readonly QA[] = [
     // criterion and not a ledger refutation, but the same assertion in
     // miniature: `S-ACQ` records that what happens is a guided run in the room,
     // and the verb list should not be the one place that still says otherwise.
-    a: "אולי כבר עבדת עם מישהו ש״פחות הבין את התחום שלך, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ומריץ איתך את הפניות. בסוף כל שלב יש מסמך שאפשר להשתמש בו מחר בבוקר.",
+    a: "אולי כבר עבדתם עם מישהו ש״פחות הבין את התחום, יותר היה כללי״. יועץ נותן עצות. מאמן שואל שאלות. אני מחלץ נרטיב, מנסח הצעת ערך, בונה מוצר, ומריץ איתכם את הפניות. בסוף כל שלב יש מסמך שאפשר להשתמש בו מחר בבוקר.",
   },
   {
     q: "אי אפשר פשוט להשתמש ב-GPT?",
-    a: "ניסית ״תעזור לי לדייק את עצמי״, ואחרי חודש זה שוב ״לא מספיק מדויק״. GPT יחזיר לך את עצמך עם יותר מילים: הוא יודע מה שסיפרת לו. אני מחלץ את מה שלא סיפרת, את ההבדל בינך לאלף שעושים אותו דבר.",
+    a: "ניסיתם ״תעזור לי לדייק את עצמי״, ואחרי חודש זה שוב ״לא מספיק מדויק״. GPT יחזיר לכם את עצמכם עם יותר מילים: הוא יודע מה שסיפרתם לו. אני מחלץ את מה שלא סיפרתם, את ההבדל ביניכם לבין אלף שעושים אותו דבר.",
   },
   {
     q: "מה קורה אם שלב 1 לא מניב את מה שציפיתי?",
     a: "אם הנרטיב לא ברור או לא מדויק, אנחנו לא ממשיכים. אני לא מוכר רצף שמתחיל בכשל.",
   },
   {
-    q: "שלושים ימים זה מציאותי לעצמאי שעובד במקביל?",
+    q: "שלושים ימים זה מציאותי כשעובדים במקביל?",
     a: "ארבע פגישות בארבעה שבועות. בין הפגישות יש משימות קצרות. אם השבוע הזה עמוס מדי, נדחה את הפגישה לשבוע הבא. לוח הזמנים גמיש, רק הסדר חשוב.",
   },
   {
@@ -86,13 +91,12 @@ export const faq: readonly QA[] = [
     // refutedClaims did not see it, and "ניסוח פנייה נפרד לכל אחד מהם" makes the
     // count of decision makers the count of outreaches. It contradicted
     // outreachCount and the refund in guarantee.ts.
-    a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלך, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות.",
+    // The closing "המחיר הוא ₪1,900" went with the per-stage prices on
+    // 2026-09-29. The price has its own question below.
+    a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלכם, ניסוח פנייה נפרד לכל אחד מהם, והרצה מונחית של הפנייה הראשונה בחדר. יומן אותות הקנייה נבנה כדי לתעד את מה שחוזר בתגובות.",
   },
-  // The landing page sells one programme; the stages are still sold one by one,
-  // and this is where a reader who wants that finds out. Prices stay on
-  // /protocol so the cheapest door is not the loudest thing on the page.
   {
-    q: "אפשר לקנות שלב אחד בלבד?",
-    a: "כן. כל שלב נמכר גם בנפרד, והמחירים מופיעים בעמוד הפרוטוקול. התוכנית המלאה זולה מסכום השלבים.",
+    q: "כמה עולה התוכנית?",
+    a: `${program.priceLabel} לתוכנית כולה, ${program.installmentsLabel}. ארבעה מפגשים וליווי בין הפגישות. השלבים לא נמכרים בנפרד.`,
   },
 ];

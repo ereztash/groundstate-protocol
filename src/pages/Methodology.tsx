@@ -8,10 +8,7 @@ import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import ClaimsShelf from "@/components/landing/ClaimsShelf";
-import PreRegistration from "@/components/landing/PreRegistration";
-import EvidenceChain from "@/components/landing/EvidenceChain";
-import { fullPackage, outreachCount, stages } from "@/data/sprint-stages";
+import { outreachCount } from "@/data/sprint-stages";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 /**
@@ -25,8 +22,8 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "את מנסחת בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך, לא חזרה על ניסוח שלי.",
-  "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
+  "01": "אתם מנסחים בעצמכם, במילים שלכם, את משפט הייעוד. הסימן: ניסוח חדש שיצא מכם, לא חזרה על ניסוח שלי.",
+  "02": "אפשר לחזור על הצעת הערך שלכם במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
   // client computing the number from an external benchmark — as a certain
@@ -49,8 +46,8 @@ const EXIT_CRITERIA: Record<string, string> = {
 // What goes into each stage — always the previous stage's output, which is
 // the "כל שלב בונה את הבא" principle below made concrete and checkable.
 const INPUTS: Record<string, string> = {
-  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלך, לא צריך לייצר חומר חדש.",
-  "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעת עד היום.",
+  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלכם, לא צריך לייצר חומר חדש.",
+  "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעתם עד היום.",
   "03": "הצעת הערך ומילון הכאב משלב 2.",
   "04": "תיאור המוצר עם התמחור משלב 3.",
 };
@@ -67,7 +64,7 @@ const TRANSFORMATIONS: Record<string, string> = {
 const PRINCIPLES = [
   {
     title: "בעלות מרוויחים, לא מקבלים",
-    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ ממך את הניסוח, לא נותן לך אותו.",
+    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ מכם את הניסוח, ולא נותן לכם אותו.",
   },
   {
     title: "סדר קבוע. כל שלב בונה את הבא",
@@ -97,7 +94,7 @@ const Methodology = () => {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a href="#protocol-main" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
 
       <SiteHeader />
@@ -135,7 +132,7 @@ const Methodology = () => {
                   to="/#book"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  לתיאום שיחת התאמה, 20 דקות
+                  לתיאום שיחת התאמה, 20 דקות, בלי לחץ
                 </Link>
               </div>
             </Reveal>
@@ -158,9 +155,9 @@ const Methodology = () => {
                 שלב 0, שיחת התאמה
               </h2>
               <p className="cor-body-lg mt-4 text-foreground/80">
-                עשרים דקות, ללא תשלום. שתי שאלות: יש לך פרקטיקה פעילה עם לקוחות?
-                ויש בידול שכבר קיים אצלך? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
-                לך את זה ביושר.
+                עשרים דקות, ללא תשלום. שתי שאלות: יש לכם פרקטיקה פעילה עם לקוחות?
+                ויש בידול שכבר קיים אצלכם? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
+                לכם את זה ביושר.
               </p>
             </Reveal>
           </div>
@@ -196,47 +193,6 @@ const Methodology = () => {
                 transformations={TRANSFORMATIONS}
               />
             </Reveal>
-          </div>
-        </section>
-
-        {/* Prices, stage by stage. The landing page sells the programme as one
-            offer; this is where the FAQ sends a reader who wants a single
-            stage. Read from sprint-stages, never re-typed. */}
-        <section
-          id="prices"
-          dir="rtl"
-          className="scroll-mt-16 pb-16 md:pb-20"
-          aria-labelledby="prices-title"
-        >
-          <div className="mx-auto max-w-4xl px-6">
-            <p className="cor-overline-he">מחירים</p>
-            <h2 id="prices-title" className="cor-title mt-2 text-foreground">
-              כל שלב גם בנפרד.
-            </h2>
-            <ul className="mt-8 border-t border-border">
-              {stages.map((s) => (
-                <li
-                  key={s.number}
-                  className="flex items-baseline justify-between gap-6 border-b border-border py-4"
-                >
-                  <span className="text-foreground">
-                    <span className="me-2 text-sm text-muted-foreground">שלב {Number(s.number)}</span>
-                    {s.name}
-                  </span>
-                  <span className="cor-price font-heading text-xl font-black text-foreground">
-                    {s.priceLabel}
-                  </span>
-                </li>
-              ))}
-              <li className="flex items-baseline justify-between gap-6 py-5">
-                <span className="font-bold text-foreground">
-                  {fullPackage.name}, ארבעת השלבים ברצף
-                </span>
-                <span className="cor-price font-heading text-2xl font-black text-accent">
-                  {fullPackage.priceLabel}
-                </span>
-              </li>
-            </ul>
           </div>
         </section>
 
@@ -288,15 +244,6 @@ const Methodology = () => {
           </div>
         </section>
 
-        {/* What the method has and has not proven. Moved here from the landing
-            page on 2026-09-29: it is the question a reader asks while weighing
-            the method, and this is the page where she weighs it. */}
-        <EvidenceChain />
-        <ClaimsShelf />
-        <div className="dark bg-background text-foreground">
-          <PreRegistration />
-        </div>
-
         {/* Risk reversal — the guarantee, right before the decision. */}
         <section dir="rtl" className="pb-4 md:pb-8" aria-labelledby="guarantee-title">
           <div className="mx-auto max-w-3xl px-6">
@@ -313,7 +260,7 @@ const Methodology = () => {
         <section dir="rtl" className={`${DARK} py-20 md:py-28`}>
           <Reveal className="mx-auto max-w-2xl px-6 text-center">
             <h2 className="cor-title text-[hsl(var(--background))]">
-              לא בטוחה מאיפה להתחיל?
+              לא בטוחים מאיפה להתחיל?
             </h2>
             <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
               בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים.
@@ -323,7 +270,7 @@ const Methodology = () => {
                 to="/#book"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                לתיאום שיחת התאמה, 20 דקות
+                לתיאום שיחת התאמה, 20 דקות, בלי לחץ
               </Link>
             </div>
           </Reveal>

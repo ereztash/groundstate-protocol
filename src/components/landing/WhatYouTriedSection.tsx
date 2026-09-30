@@ -14,28 +14,29 @@ import type { CSSProperties, ReactNode } from "react";
  * not present it as a problem, so the note described the coach's exercise,
  * not the reader.
  *
- * The heading is the ICP node's bullseye, in the wording the site's own article
- * title already uses ("נתקעת", not the banned "מגמגמת").
+ * The heading is the ICP line in the plural the site uses since 2026-09-30,
+ * with "נתקעים" rather than the banned "מגמגמים". The notes keep main's plural
+ * wording where the sentence already existed.
  */
 const NOTES: ReactNode[] = [
   <>
-    את יודעת בדיוק מה את עושה בשביל לקוחות. כשמישהי חדשה שואלת{" "}
-    <strong className="font-bold text-foreground">מה את מוכרת</strong>, התשובה
-    עוד לא ברורה, גם לך.
+    אתם יודעים בדיוק מה אתם עושים בשביל לקוחות. כשמישהו חדש שואל{" "}
+    <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, התשובה
+    עוד לא ברורה, גם לכם.
   </>,
   <>
-    כל כמה שבועות את נכנסת ללינקדאין ומשנה את הכותרת. כבר הצטברו{" "}
+    כל כמה שבועות אתם נכנסים ללינקדאין ומשנים את הכותרת. כבר הצטברו{" "}
     <strong className="font-bold text-foreground">15 גרסאות</strong> של ״מי
     אני״, וכל אחת, אחרי חודש, כבר ״לא מספיק מדויקת״.
   </>,
   <>
-    רשמת מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול, התחלת להסס, ו
+    רשמתם מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול, התחלתם להסס, ו
     <strong className="font-bold text-foreground">מספר נמוך יותר</strong> יצא
-    לך מהפה.
+    לכם מהפה.
   </>,
   <>
-    נתת חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלך הוא הידע שלך,{" "}
-    <strong className="font-bold text-foreground">נתת אותו במתנה</strong>.
+    נתתם חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלכם הוא הידע שלכם,{" "}
+    <strong className="font-bold text-foreground">נתתם אותו במתנה</strong>.
   </>,
 ];
 
@@ -46,9 +47,9 @@ const WhatYouTriedSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <p className="cor-overline-he">למה הגעת לכאן</p>
+      <p className="cor-overline-he">למה הגעתם לכאן</p>
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        מבריקה על הלקוחות שלך. נתקעת על עצמך.
+        מבריקים על הלקוחות שלכם. נתקעים על עצמכם.
       </h2>
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -67,12 +68,12 @@ const WhatYouTriedSection = () => (
           ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
           אחד:{" "}
           <span className="underline decoration-accent decoration-[3px] underline-offset-[0.28em]">
-            עוד לא תרגמת את מה שאת יודעת לשפה שהלקוח שלך משלם עליה.
+            עוד לא תרגמתם את מה שאתם יודעים לשפה שהלקוח שלכם משלם עליה.
           </span>
         </p>
         <p className="cor-body-lg mt-6 max-w-2xl text-foreground/80">
           וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא
-          מבינים למה דווקא את, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
+          מבינים למה דווקא אתם, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
           מתרגם, הוא רק מייקר.
         </p>
       </div>

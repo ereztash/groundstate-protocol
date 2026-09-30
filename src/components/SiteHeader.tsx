@@ -82,7 +82,7 @@ const SiteHeader = () => {
             onClick={onCta}
             className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
           >
-            בואי נדבר
+            שיחת התאמה, 20 דקות
           </Link>
           <button
             type="button"

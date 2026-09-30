@@ -14,22 +14,22 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * unstable income), which is what makes the gap felt now (the payable-answer
  * filter's first condition); the form's screen for an active practice; and
  * the FAQ's weekly rhythm. The "not for" list is the previous
- * NotForEveryoneSection, verbatim.
+ * NotForEveryoneSection, in the plural it took on 2026-09-30.
  *
  * The origin paragraph is OriginStorySection's, cut to its first beat.
  */
 const FOR = [
-  "משהו השתנה לאחרונה: עזבת עבודה, יצאת לחל״ת, או שההכנסה עוד לא יציבה, והשאלה מה את מוכרת הפכה דחופה.",
-  "יש לך כבר לקוחות, והם מרוצים. הקושי הוא להסביר למי שעוד לא עבד איתך למה דווקא את.",
-  "את משלבת שני עולמות, ולא מצליחה להגיד את הצירוף במשפט אחד.",
-  "את מוכנה לפגישה בשבוע ולמשימה קצרה בין הפגישות, במשך חודש.",
+  "משהו השתנה לאחרונה: עזבתם עבודה, יצאתם לחל״ת, או שההכנסה עוד לא יציבה, והשאלה מה אתם מוכרים הפכה דחופה.",
+  "יש לכם כבר לקוחות, והם מרוצים. הקושי הוא להסביר למי שעוד לא עבד איתכם למה דווקא אתם.",
+  "אתם משלבים שני עולמות, ולא מצליחים להגיד את הצירוף במשפט אחד.",
+  "אתם מוכנים לפגישה בשבוע ולמשימה קצרה בין הפגישות, במשך חודש.",
 ];
 
 const NOT_FOR = [
-  "את נותנת שירות בעיקר לתאגידים, לא לעצמאים.",
-  "יש לך כבר 30+ לקוחות פעילים ואת רוצה לסנן.",
-  "את רגילה לעבוד על תחושה ולא על מבנה, זה ירגיש מעצבן.",
-  "את מחפשת חימום רגשי לפני פעולה, אני לא הכתובת.",
+  "אתם נותנים שירות בעיקר לתאגידים, לא לעצמאים.",
+  "יש לכם כבר 30+ לקוחות פעילים ואתם רוצים לסנן.",
+  "אתם רגילים לעבוד על תחושה ולא על מבנה, זה ירגיש מעצבן.",
+  "אתם מחפשים חימום רגשי לפני פעולה, אני לא הכתובת.",
 ];
 
 const FitSection = () => (
@@ -48,7 +48,7 @@ const FitSection = () => (
       <div className="mt-12 grid gap-6 md:grid-cols-2">
         <div className="ld-sheet p-6 sm:p-8">
           <h3 className="font-heading text-xl font-black text-foreground">
-            זה בשבילך אם
+            זה בשבילכם אם
           </h3>
           <ul className="mt-5 space-y-4">
             {FOR.map((line) => (
@@ -64,7 +64,7 @@ const FitSection = () => (
 
         <div className="ld-draft p-6 sm:p-8">
           <h3 className="font-heading text-xl font-black text-foreground">
-            זה לא בשבילך אם
+            זה לא בשבילכם אם
           </h3>
           <ul className="mt-5 space-y-4">
             {NOT_FOR.map((line) => (
@@ -91,7 +91,7 @@ const FitSection = () => (
           className="h-36 w-36 rounded-full border border-border object-cover sm:h-44 sm:w-44"
         />
         <div className="max-w-2xl">
-          <p className="cor-overline-he">מי מולך בשיחה</p>
+          <p className="cor-overline-he">מי מולכם בשיחה</p>
           <p className="mt-4 font-heading text-2xl font-black leading-snug text-foreground sm:text-3xl">
             גם לי היה ידע. ולא ידעתי איך להעביר אותו.
           </p>

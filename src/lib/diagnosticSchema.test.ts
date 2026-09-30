@@ -129,12 +129,12 @@ describe("stepOneSchema", () => {
   it("addresses the visitor in the feminine when it complains", () => {
     const r = stepOneSchema.safeParse(one({ challenge: "כן" }));
     expect(r.success).toBe(false);
-    if (!r.success) expect(r.error.issues[0].message).toBe("כתבי משפט אחד");
+    if (!r.success) expect(r.error.issues[0].message).toBe("כתבו משפט אחד");
 
     const s = stepOneSchema.safeParse(one({ activePractice: "maybe" }));
     expect(s.success).toBe(false);
     if (!s.success)
-      expect(s.error.issues[0].message).toBe("בחרי אחת מהאפשרויות");
+      expect(s.error.issues[0].message).toBe("בחרו אחת מהאפשרויות");
   });
 });
 

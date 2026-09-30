@@ -65,7 +65,7 @@ const DraftStack = () => (
           {/* Hers, not handed over: the stage-1 exit criterion is a sentence
               that came from the client, not a repeat of the coach's. */}
           <p className="text-[11px] font-bold tracking-[0.08em] text-primary">
-            {narrative.docLabel} · במילים שלך, הגרסה שנשארת
+            {narrative.docLabel} · במילים שלכם, הגרסה שנשארת
           </p>
           {/* A pencil tick in the margin: the editor's approval. */}
           <svg viewBox="0 0 28 20" className="h-4 w-6 shrink-0">

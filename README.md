@@ -18,8 +18,9 @@ source is worthless. That premise is enforced by the test suite rather than by
 discipline.
 
 Seven guard suites fail the build on specific strings. Three of them sweep every
-file that can produce visible text: `refutedClaims` and `feminineAddress` over
-`src/`, `content/`, `public/` and `index.html`, `noDashes` over the first two.
+file that can produce visible text: `refutedClaims` and `readerAddress` over
+`src/`, `content/`, `public/` and `index.html`, `noDashes` over the first two
+plus `public/llms.txt` and `index.html`.
 The rest check a particular dataset against its source. Each one quotes, in its
 own code, the dated ledger row that refutes the claim it bans. They are not
 style checks. They exist because each of these claims was on the site once and
@@ -28,7 +29,7 @@ was found to be unsupported.
 | Guard | What fails the build |
 |---|---|
 | `src/lib/refutedClaims.test.ts` | Nine specific claims, among them a meeting count that was really the size of a research corpus, a value-to-fee multiplier, a superseded outreach count, and an unattributed revenue increase |
-| `src/lib/feminineAddress.test.ts` | Masculine second-person address. Roughly 70% of clients are women, and Hebrew has no neutral second person, so "generic" masculine was a choice made against the majority of readers |
+| `src/lib/readerAddress.test.ts` | Singular second-person address, masculine or feminine. The readership is mixed (the CRM shows three women and two men among paying clients), so the site speaks in the plural or neutrally. Replaced `feminineAddress.test.ts` on 2026-09-29, whose premise of "roughly 70% women" had no source |
 | `src/lib/noDashes.test.ts` | Em and en dashes in displayed copy |
 | `src/data/cases.test.ts` | A case record in `src/data/cases/` that lacks consent |
 | `src/lib/clients.test.ts` | A testimonial pull quote that is not verbatim from, and shorter than, the full quote the client gave |
@@ -99,8 +100,8 @@ per-route `<head>` tags. Asset paths are rewritten per route depth, because a
 page at `/insights/<slug>/` resolves a relative `./assets/index.js` against its
 own directory.
 
-Ten routes: `/`, `/protocol`, `/insights`, one page per article in
-`content/insights/`, `/about`, `/privacy`. Article routes are discovered from
+Eleven routes: `/`, `/protocol`, `/insights`, one page per article in
+`content/insights/`, `/about`, `/privacy`, `/accessibility`. Article routes are discovered from
 the filesystem, so adding a markdown file is enough. The one manual step is
 adding the URL to `public/sitemap.xml`.
 
@@ -237,13 +238,17 @@ person who finds it inconvenient.
 in this repo was falsified against the copy it claims to catch before it was
 committed. A test that has only ever passed proves nothing about what it scans.
 
-**Displayed copy addresses the reader in the feminine.** Enforced for pronouns
-and for five imperatives that have no other reading. Verb agreement is left to
-review, because in unvocalised Hebrew the second-person-masculine future is
-homographic with the third-person-feminine future, and banning those forms would
-flag every correct sentence about a third party.
+**Displayed copy addresses the reader in the plural, or neutrally.** Buttons
+take an infinitive ("לתיאום שיחת התאמה"), prose takes "אתם" or an impersonal
+form. Enforced for the pronoun אתה, the singular suffixes (שלך, לך, אותך and
+the rest, spelled the same in both genders) and a short list of imperatives
+with no other reading. The feminine pronoun את is not enforced, because it is
+spelled like the accusative marker, and verb agreement is left to review.
 
-**No em dashes** in `src/` or `content/`.
+**No em dashes** in `src/`, `content/`, `public/llms.txt` or `index.html`.
+
+**One price.** The programme is sold as one unit, `program` in
+`src/data/sprint-stages.ts`. Stages are entry points and carry no price.
 
 ---
 
@@ -251,9 +256,8 @@ flag every correct sentence about a third party.
 
 Waiting on the operator, not on code:
 
-- **Guarantee.** Three variants exist in `src/data/guaranteeVariants.ts`;
-  `ACTIVE_VARIANT` has been `"none"` since 2026-07-30, and while it is none, no
-  variant ships. Review them at `/guarantee-review` in dev.
+- **Retention period.** `/privacy` says data is kept as long as it is needed,
+  without a number, because none was found in the operator's documents.
 - **Case C1.** Sitting in `docs/cases/`, awaiting the client's publication
   consent. Granting it turns on the evidence chain, which is the highest
   value-per-effort item in the repo.

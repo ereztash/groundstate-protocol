@@ -20,7 +20,7 @@ describe("SiteHeader", () => {
     expect(links.some((h) => h.endsWith("/insights"))).toBe(true);
     expect(links.some((h) => h.endsWith("/about"))).toBe(true);
     // CTA deep-links to the booking block.
-    expect(getByRole("link", { name: /בואי נדבר/ }).getAttribute("href")).toContain(
+    expect(getByRole("link", { name: /שיחת התאמה, 20 דקות/ }).getAttribute("href")).toContain(
       "#book"
     );
   });

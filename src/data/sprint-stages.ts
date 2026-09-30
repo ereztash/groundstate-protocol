@@ -11,8 +11,13 @@ import type { SampleSource } from "@/lib/evidence";
  * DiagnosticFormSection's payload labels, so a rename had three places to go
  * wrong.
  *
- * Anything that needs a stage name, price, deliverable or artefact sample reads
- * it from here. Nothing re-types them.
+ * Anything that needs a stage name, deliverable or artefact sample reads it from
+ * here. Nothing re-types them.
+ *
+ * The stages carry no price of their own. Operator decision 2026-09-29: the
+ * programme is sold as one unit at `program.priceLabel`, and a stage is an
+ * entry point into it, not something bought separately. The per-stage ladder
+ * (1,000 / 1,300 / 1,600 / 1,900, package 4,500) came out with that decision.
  */
 
 export type StageNumber = "01" | "02" | "03" | "04";
@@ -72,11 +77,8 @@ export type Stage = {
    * artefact into a claim about a result.
    */
   benefit: string;
-  priceNis: number;
-  /** Canonical formatting: ₪ prefix, e.g. "₪1,000". One source of truth. */
-  priceLabel: string;
   value: StageValue;
-  /** CTA copy used in SequenceSection cards. */
+  /** CTA copy used in SequenceSection cards and the wizard. Names an entry point. */
   ctaLabel: string;
   /** Label used on the lead payload and in the operator's sheet. */
   payloadLabel: string;
@@ -90,15 +92,13 @@ export const stages: readonly Stage[] = [
     buyerTitle: "משפט אחד שמחזיק גם בעוד חצי שנה",
     verb: "חילוץ",
     description:
-      "פגישה אחת לחילוץ הבידול שלך מתוך החומר שכבר קיים אצלך. לא מוסיפים. מוציאים החוצה.",
+      "פגישה אחת שמחלצת את הבידול שלכם מתוך החומר שכבר קיים אצלכם.",
     deliverable:
       "מסמך נרטיב באורך עמוד עד שניים עם 3 עד 5 ניסוחים מילוליים מוכנים.",
     benefit:
-      "כדי שתפסיקי להחליף כותרת כל שלושה שבועות, ותגידי את אותו משפט גם בעוד חצי שנה.",
-    priceNis: 1000,
-    priceLabel: "₪1,000",
+      "כדי להפסיק להחליף כותרת כל שלושה שבועות, ולהגיד את אותו משפט גם בעוד חצי שנה.",
     value: "stage-1",
-    ctaLabel: "לדבר על שלב 1",
+    ctaLabel: "להתחיל משלב 1",
     payloadLabel: "שלב 1, נרטיב ייחודי",
     artifact: {
       docLabel: "מסמך נרטיב",
@@ -114,17 +114,15 @@ export const stages: readonly Stage[] = [
   {
     number: "02",
     name: "הצעת ערך ייחודית",
-    buyerTitle: "המילים שהלקוחות שלך כבר אומרים",
+    buyerTitle: "המילים שהלקוחות שלכם כבר אומרים",
     verb: "הבלטה",
     description:
-      "פגישה אחת להבלטת הערך הייחודי שלך מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. לא מוותרים על חלקים. בוחרים על מה האור נופל.",
+      "פגישה אחת להבלטת הערך הייחודי שלכם מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. כל החלקים נשארים, ובוחרים על מה האור נופל.",
     deliverable: "משפט ליבה ומילון כאב מוכן לשליחה.",
     benefit:
-      "כדי שתפסיקי לנחש איזה כאב מדליק לקוח, ותכתבי במילים שהוא כבר אמר.",
-    priceNis: 1300,
-    priceLabel: "₪1,300",
+      "כדי להפסיק לנחש איזה כאב מדליק לקוח, ולכתוב במילים שהוא כבר אמר.",
     value: "stage-2",
-    ctaLabel: "לדבר על שלב 2",
+    ctaLabel: "להתחיל משלב 2",
     payloadLabel: "שלב 2, הצעת ערך ייחודית",
     artifact: {
       docLabel: "הצעת ערך",
@@ -141,14 +139,12 @@ export const stages: readonly Stage[] = [
     buyerTitle: "מוצר עם מחיר שאפשר להגיד בקול",
     verb: "תרגום",
     description:
-      "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלך לשפה שהלקוח שלך משלם עליה.",
+      "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלכם לשפה שהלקוח שלכם משלם עליה.",
     deliverable: "תיאור מוצר עם תמחור ורציונל, מוכן לשליחה.",
     benefit:
       "כדי שהלקוח יבין מה הוא קונה עוד לפני שהוא שואל כמה זה עולה.",
-    priceNis: 1600,
-    priceLabel: "₪1,600",
     value: "stage-3",
-    ctaLabel: "לדבר על שלב 3",
+    ctaLabel: "להתחיל משלב 3",
     payloadLabel: "שלב 3, מוצר ייחודי",
     artifact: {
       docLabel: "תיאור מוצר",
@@ -160,7 +156,7 @@ export const stages: readonly Stage[] = [
   {
     number: "04",
     name: "רכישת לקוחות פרואקטיבית",
-    buyerTitle: `${outreachCount} פניות לאנשים ששמם ידוע לך`,
+    buyerTitle: `${outreachCount} פניות לאנשים ששמם ידוע לכם`,
     verb: "הפעלה",
     description:
       "פגישה אחת להפעלה: רשימת מקבלי החלטות וטיוטות פנייה. התוצר עובר משלב התכנון לשלב התנועה בשטח.",
@@ -175,11 +171,9 @@ export const stages: readonly Stage[] = [
     // attaches a refund to.
     deliverable: `${outreachCount} פניות שנכתבו ותועדו, והרצה מונחית של הראשונה בחדר. יומן אותות קנייה למעקב אחרי התגובות.`,
     benefit:
-      "כדי שהמסמכים ייצאו מהמחשב אל אנשים ששמם ידוע לך, ולא יישארו תוכנית.",
-    priceNis: 1900,
-    priceLabel: "₪1,900",
+      "כדי שהמסמכים ייצאו מהמחשב אל אנשים ששמם ידוע לכם, ולא יישארו תוכנית.",
     value: "stage-4",
-    ctaLabel: "לדבר על שלב 4",
+    ctaLabel: "להתחיל משלב 4",
     payloadLabel: "שלב 4, רכישת לקוחות פרואקטיבית",
     artifact: {
       docLabel: `${outreachCount} פניות מתועדות`,
@@ -198,23 +192,22 @@ export function getStage(value: StageValue): Stage | undefined {
 /** Payload labels, derived rather than re-typed. */
 export const stagePayloadLabels: Record<string, string> = {
   ...Object.fromEntries(stages.map((s) => [s.value, s.payloadLabel])),
-  "full-package": "חבילה מלאה",
+  "full-package": "התוכנית המלאה",
 };
 
 /**
- * Full-package pricing. The discount math (full − bundled = savings) lives here
- * so the kicker, the savings copy, and the wizard all agree.
+ * The programme, sold as one unit. Operator decision 2026-09-29, matching the
+ * standard price in the webinar plan of 2026-08-05: four meetings, ₪4,000, in
+ * two payments of ₪2,000.
+ *
+ * The stage value stays "full-package" because the lead sheet and the journey
+ * enums already carry it; only the visible label changed.
  */
-export const fullPackage = {
-  priceNis: 4500,
-  priceLabel: "₪4,500",
-  fullPriceNis: 5800,
-  fullPriceLabel: "₪5,800",
-  savingsNis: 1300,
-  savingsLabel: "₪1,300",
-  name: "החבילה המלאה",
-  deliverable: "כל ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
-  description:
-    "כל ארבעת השלבים. ליווי בין הפגישות. תמחור אגרגטיבי שחוסך ₪1,300 לעומת רכישה שלב אחר שלב.",
-  ctaLabel: "אני רוצה את החבילה המלאה",
+export const program = {
+  priceNis: 4000,
+  priceLabel: "₪4,000",
+  installmentsLabel: "בשני תשלומים של ₪2,000",
+  name: "התוכנית המלאה",
+  deliverable: "ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
+  ctaLabel: "לשיחת התאמה על התוכנית",
 } as const;

@@ -14,14 +14,14 @@ const InsightsIndex = () => {
   useDocumentMeta({
     title: "תובנות, COR-SYS | ארז טל-שיר",
     description:
-      "מאמרים על בידול, תמחור, וסנכרון בין מה שאת יודעת לבין מה שהלקוח משלם עליו. המתודולוגיה של COR-SYS, בכתב.",
+      "מאמרים על בידול, תמחור, וסנכרון בין מה שאתם יודעים לבין מה שהלקוח משלם עליו. המתודולוגיה של COR-SYS, בכתב.",
     path: "/insights",
   });
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <a href="#insights-main" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
 
       <SiteHeader />
@@ -30,7 +30,7 @@ const InsightsIndex = () => {
         <Reveal className="max-w-2xl">
           <p className="cor-overline-he">תובנות</p>
           <h1 className="cor-display mt-4 text-foreground">
-            מה שאת יודעת, בשפה שהלקוח משלם עליה
+            מה שאתם יודעים, בשפה שהלקוח משלם עליה
           </h1>
           <p className="cor-body-lg mt-4 text-foreground/80">
             מאמרים על בידול, תמחור, וסנכרון בין המשאב לתכלית, המתודולוגיה של
