@@ -76,7 +76,7 @@ const PRINCIPLES = [
   },
 ];
 
-const DARK = "bg-[#15191c] text-[hsl(var(--background))]";
+const DARK = "bg-[#16140F] text-[hsl(var(--background))]";
 
 const Methodology = () => {
   useDocumentMeta({
@@ -115,7 +115,7 @@ const Methodology = () => {
           />
           <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
                 המתודולוגיה
               </p>
               <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
@@ -129,7 +129,7 @@ const Methodology = () => {
               </p>
               <div className="mt-8">
                 <Link
-                  to="/#diagnostic-form"
+                  to="/#book"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
                   לתיאום שיחת התאמה, 20 דקות, בלי לחץ
@@ -204,7 +204,7 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
                 למה פרוטוקול
               </p>
               <h2
@@ -263,11 +263,11 @@ const Methodology = () => {
               לא בטוחים מאיפה להתחיל?
             </h2>
             <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
-              בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים. רוב הלקוחות מתחילים בשלב 1.
+              בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים.
             </p>
             <div className="mt-8">
               <Link
-                to="/#diagnostic-form"
+                to="/#book"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
                 לתיאום שיחת התאמה, 20 דקות, בלי לחץ

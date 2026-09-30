@@ -57,6 +57,15 @@ export type StageArtifact = {
 export type Stage = {
   number: StageNumber;
   name: string;
+  /**
+   * The stage in the buyer's words: what she walks out holding, as she would
+   * say it. Shown as the heading on the landing page, where the method's own
+   * names ("נרטיב ייחודי", "חילוץ") read as the expert's vocabulary. Graph
+   * heuristic H21 (שפת-הלקוח-הסופי): at the marketing gate, describe the
+   * problem the way the buyer describes it. Each title is lifted from this
+   * stage's own `benefit` or its /protocol exit criterion, so it adds no claim.
+   */
+  buyerTitle: string;
   /** The cognitive verb for this stage. */
   verb: string;
   description: string;
@@ -80,6 +89,7 @@ export const stages: readonly Stage[] = [
   {
     number: "01",
     name: "נרטיב ייחודי",
+    buyerTitle: "משפט אחד שמחזיק גם בעוד חצי שנה",
     verb: "חילוץ",
     description:
       "פגישה אחת שמחלצת את הבידול שלכם מתוך החומר שכבר קיים אצלכם.",
@@ -93,7 +103,10 @@ export const stages: readonly Stage[] = [
     artifact: {
       docLabel: "מסמך נרטיב",
       sample:
-        "אני עוזרת ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי לגמגם.",
+        // Was "...שאומרים בלי לגמגם". The content iron rules (graph node
+        // כללי-ברזל RUNNER) ban "גמגם/גמגום" as insulting to the reader, and
+        // this line became the hero's centrepiece on 2026-09-29.
+        "אני עוזרת ליועצים להפוך 20 שנות ניסיון למשפט אחד שאומרים בלי להסס.",
       sampleSource: "method-reconstruction",
       lineCount: 8,
     },
@@ -101,6 +114,7 @@ export const stages: readonly Stage[] = [
   {
     number: "02",
     name: "הצעת ערך ייחודית",
+    buyerTitle: "המילים שהלקוחות שלכם כבר אומרים",
     verb: "הבלטה",
     description:
       "פגישה אחת להבלטת הערך הייחודי שלכם מתוך הנרטיב, עם ניתוח שוק ומילון כאב מבוסס שיח לקוחות. כל החלקים נשארים, ובוחרים על מה האור נופל.",
@@ -122,6 +136,7 @@ export const stages: readonly Stage[] = [
   {
     number: "03",
     name: "מוצר ייחודי",
+    buyerTitle: "מוצר עם מחיר שאפשר להגיד בקול",
     verb: "תרגום",
     description:
       "פגישה אחת לתרגום הצעת הערך למוצר עם תמחור ורציונל. מהשפה שלכם לשפה שהלקוח שלכם משלם עליה.",
@@ -141,6 +156,7 @@ export const stages: readonly Stage[] = [
   {
     number: "04",
     name: "רכישת לקוחות פרואקטיבית",
+    buyerTitle: `${outreachCount} פניות לאנשים ששמם ידוע לכם`,
     verb: "הפעלה",
     description:
       "פגישה אחת להפעלה: רשימת מקבלי החלטות וטיוטות פנייה. התוצר עובר משלב התכנון לשלב התנועה בשטח.",

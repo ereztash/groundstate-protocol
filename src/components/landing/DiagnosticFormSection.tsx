@@ -39,7 +39,12 @@ import {
   type StepTwoValues,
 } from "@/lib/diagnosticSchema";
 
-const DiagnosticFormSection = () => {
+/**
+ * `embedded`: rendered inside BookSection as the "call me back" alternative to
+ * the calendar. The page around it already states what the call is, so the
+ * long header collapses to one line and the section drops its own padding.
+ */
+const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => {
   const { selectedStage, source } = useDiagnosticForm();
   const [step, setStep] = useState<1 | 2>(1);
   const [stepOneData, setStepOneData] = useState<StepOneValues | null>(null);
@@ -196,63 +201,82 @@ const DiagnosticFormSection = () => {
     <section
       id="diagnostic-form"
       dir="rtl"
-      className="relative py-20 md:py-28"
+      className={embedded ? "relative" : "relative py-20 md:py-28"}
       aria-labelledby="diagnostic-form-title"
       data-clarity-mask="true"
     >
-      <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
-      <div className="relative mx-auto max-w-2xl px-6">
+      {!embedded && (
+        <div className="pointer-events-none absolute inset-0 bg-radial-soft" aria-hidden="true" />
+      )}
+      <div className={embedded ? "relative" : "relative mx-auto max-w-2xl px-6"}>
         {!submitted && (
           <Reveal className="cor-card-form space-y-10 p-7 md:p-10">
             <div className="space-y-3">
-              <p className="cor-overline-he">
-                שיחה ראשונה
-              </p>
-              <h2
-                id="diagnostic-form-title"
-                className="cor-title text-foreground"
-              >
-                שיחת התאמה: 20 דקות, ללא עלות
-              </h2>
-              {/* Was "אני חוזר אליך תוך 24 שעות". The form does not impose a
-                  wait: on success this section renders BookingSection, which is
-                  an inline Calendly widget, and the visitor picks a slot right
-                  there. The copy was selling a day of latency the product does
-                  not have, and it is read before the decision to fill the form
-                  at all. Describe what actually happens. */}
-              <p className="cor-body-lg text-foreground/80">
-                מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
-              </p>
-              <SpotsLeft className="text-sm text-muted-foreground" />
+              {embedded ? (
+                <>
+                  <h3
+                    id="diagnostic-form-title"
+                    className="font-heading text-xl font-black text-foreground"
+                  >
+                    השאירו פרטים, ואחזור אליכם לתיאום.
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    שני שלבים קצרים. בסופם נפתח גם היומן, אם תרצו לבחור מועד בעצמכם.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="cor-overline-he">
+                    שיחה ראשונה
+                  </p>
+                  <h2
+                    id="diagnostic-form-title"
+                    className="cor-title text-foreground"
+                  >
+                    שיחת התאמה: 20 דקות, ללא עלות
+                  </h2>
+                  {/* Was "אני חוזר אליך תוך 24 שעות". The form does not impose a
+                      wait: on success this section renders BookingSection, which is
+                      an inline Calendly widget, and the visitor picks a slot right
+                      there. The copy was selling a day of latency the product does
+                      not have, and it is read before the decision to fill the form
+                      at all. Describe what actually happens. */}
+                  <p className="cor-body-lg text-foreground/80">
+                    מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                  </p>
+                  <SpotsLeft className="text-sm text-muted-foreground" />
 
-              <ul
-                aria-label="מה תקבלו מהשיחה"
-                className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
-              >
-                <li className="flex items-start gap-2.5">
-                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדעו אם זה מתאים לכם. ביושר, גם אם לא.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תדעו מאיזה שלב להתחיל ולמה.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                  <span>תקבלו פרשנות אחת על התקיעה שלכם, גם אם לא נמשיך ביחד.</span>
-                </li>
-              </ul>
+                  <ul
+                    aria-label="מה תקבלו מהשיחה"
+                    className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
+                  >
+                    <li className="flex items-start gap-2.5">
+                      <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                      <span>תדעו אם זה מתאים לכם. ביושר, גם אם לא.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                      <span>תדעו מאיזה שלב להתחיל ולמה.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                      <span>תקבלו פרשנות אחת על התקיעה שלכם, גם אם לא נמשיך ביחד.</span>
+                    </li>
+                  </ul>
 
-              {/* The close was one-directional: fill this in, or nothing. A
-                  reader who is not ready had no second option to weigh, so the
-                  only available choice was to leave. Naming both paths, and
-                  naming the cost of the first one honestly, leaves the decision
-                  with them rather than pushing. */}
-              <p className="mt-5 text-sm leading-relaxed text-foreground/80">
-                יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
-                ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעו מאיזה
-                שלב להתחיל. ההחלטה שלכם בלבד.
-              </p>
+                  {/* The close was one-directional: fill this in, or nothing. A
+                      reader who is not ready had no second option to weigh, so the
+                      only available choice was to leave. Naming both paths, and
+                      naming the cost of the first one honestly, leaves the decision
+                      with them rather than pushing. */}
+                  <p className="mt-5 text-sm leading-relaxed text-foreground/80">
+                    יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
+                    ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעו מאיזה
+                    שלב להתחיל. ההחלטה שלכם בלבד.
+                  </p>
+
+                </>
+              )}
 
               <div className="flex items-center gap-2 pt-3">
                 <span

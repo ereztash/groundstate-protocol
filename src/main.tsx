@@ -1,8 +1,9 @@
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { initAnalytics, trackError } from "./lib/analytics";
 import { initClarity } from "./lib/clarity";
 import { getConsent } from "./lib/consent";
+import { visitChannel } from "./lib/calendly";
 import "./index.css";
 
 // Privacy-by-default: analytics + session recording (GA4, Microsoft Clarity)
@@ -14,6 +15,11 @@ if (getConsent() === "granted") {
   initAnalytics();
   initClarity();
 }
+
+// Record the visit's channel (?c= tag or referrer) on the first page, before
+// any in-app navigation drops the query string. The booking widget reads it
+// later for its UTM campaign.
+visitChannel();
 
 // Global error capture — reports to analytics when it's available (post-
 // consent) so production crashes we'd otherwise never see become visible.
@@ -34,4 +40,33 @@ if (typeof window !== "undefined") {
   });
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+const container = document.getElementById("root")!;
+
+// The prerendered landing page is adopted, not redrawn. createRoot discards the
+// static DOM and renders it again once the bundle has run; on a mid-range phone
+// that is several seconds in which the page the visitor is already reading is
+// torn down and rebuilt, and it was the largest single cost in the landing
+// page's 4.5s of blocked main thread. Only the landing page opts in: other
+// routes render scroll-reveal state differently during prerender
+// (window.__PRERENDER__), which would not hydrate cleanly.
+//
+// Both conditions are needed. GitHub Pages answers unknown paths with 404.html,
+// which is a copy of the landing page, so landing markup in the container does
+// not mean the router is about to render the landing page. The site root is
+// derived the same way App.tsx derives the router basename.
+const moduleParentPath = "../";
+const siteRoot = new URL(moduleParentPath, import.meta.url).pathname;
+const onLanding = [siteRoot, siteRoot.replace(/\/$/, ""), `${siteRoot}index.html`].includes(
+  window.location.pathname
+);
+if (onLanding && container.querySelector('[data-page="landing"]')) {
+  hydrateRoot(container, <App />, {
+    onRecoverableError: (error) =>
+      trackError(
+        "hydration",
+        error instanceof Error ? error.message : String(error)
+      ),
+  });
+} else {
+  createRoot(container).render(<App />);
+}

@@ -41,6 +41,34 @@ const ROUTES = ["/", "/protocol", "/insights", ...insightRoutes, "/about", "/pri
 const RAW_BASE = process.env.VITE_BASE_PATH || "/";
 const BASE = RAW_BASE === "/" ? "" : "/" + RAW_BASE.replace(/^\/+|\/+$/g, "");
 
+// Nodes of the landing page's @graph that hold on every route. The rest
+// (Service with its offers, Review, VideoObject, FAQPage) describe content only
+// the landing page renders.
+const SITE_WIDE_TYPES = new Set(["WebSite", "Person"]);
+
+/** Trims the landing page's JSON-LD block down to its site-wide nodes. */
+function scopeLandingJsonLd(html) {
+  return html.replace(
+    /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g,
+    (whole, open, body, close) => {
+      let data;
+      try {
+        data = JSON.parse(body);
+      } catch {
+        return whole;
+      }
+      const graph = data["@graph"];
+      // Identified by content, not position: the article and /about blocks
+      // rendered by React carry no Service node and pass through untouched.
+      if (!Array.isArray(graph) || !graph.some((n) => n["@type"] === "Service")) {
+        return whole;
+      }
+      data["@graph"] = graph.filter((n) => SITE_WIDE_TYPES.has(n["@type"]));
+      return open + JSON.stringify(data) + close;
+    },
+  );
+}
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -134,6 +162,24 @@ for (const route of ROUTES) {
     { timeout: 15000 },
   );
   await page.waitForTimeout(300);
+  // Separate adjacent text nodes with an empty comment, the way ReactDOMServer
+  // does (`<!-- -->`). React renders `ו-{count}` as two text nodes; serialised
+  // with outerHTML they come back from the parser as one, and hydrateRoot
+  // (main.tsx, landing page) fails on the first such node with error #418 and
+  // re-renders the whole root from scratch, which is the cost hydration was
+  // meant to remove. Hydration skips plain comments, so the markers are inert.
+  await page.evaluate(() => {
+    const root = document.getElementById("root");
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    for (const t of texts) {
+      if (t.nextSibling && t.nextSibling.nodeType === Node.TEXT_NODE) {
+        t.after(document.createComment(" "));
+      }
+    }
+  });
   let html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));
   // The async-fonts pattern (media="print" onload="this.media='all'") has
   // already fired by capture time, so the snapshot carries media="all" — which
@@ -175,6 +221,12 @@ for (const route of ROUTES) {
     ),
     ""
   );
+  // index.html carries the landing page's JSON-LD (offers, reviews, video, FAQ),
+  // so every captured route inherited it, /privacy included. Google treats
+  // markup that describes something the page does not show as a guideline
+  // breach. Off the landing page, keep only the site-wide nodes that articles
+  // and /about point at by @id.
+  if (route !== "/") html = scopeLandingJsonLd(html);
   pages[route] = html;
   await page.close();
   console.log(`prerender: captured ${route} (${(html.length / 1024).toFixed(1)} kB)`);

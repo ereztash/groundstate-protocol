@@ -1,230 +1,121 @@
-import type { CSSProperties } from "react";
+import type { MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
-import { useDiagnosticForm } from "./DiagnosticFormProvider";
-import { Footnote } from "./Footnote";
-import EvidenceTag from "@/components/EvidenceTag";
 import { outreachCount, program } from "@/data/sprint-stages";
+import { useDiagnosticForm } from "./DiagnosticFormProvider";
+import DraftStack from "./DraftStack";
 
-// Portrait lives under public/ so index.html can preload it before the JS
-// bundle even parses. Cuts ~500ms off mobile LCP. The literal path uses
-// BASE_URL at runtime so it works at both / (Lovable) and /groundstate-
-// protocol/ (GitHub Pages).
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 
 /**
- * The programme's hard numbers, promoted out of the old 11.5px kicker line.
+ * The hero, rebuilt 2026-09-29 around one job: get a fitting reader to a dated
+ * call with the price already on the table.
  *
- * `scatter` is each cell's starting offset for the entrance: a small
- * displacement and a degree of tilt that resolves to zero. The values are
- * hand-set rather than random so the sequence is identical on every load and
- * matches the prerendered markup. Only the dt/dd resolve — the grid frame
- * itself never moves, so the read is "data settling into a structure" rather
- * than the structure wobbling.
+ * Three decisions carry it:
  *
- * The outreach count and the price are read from sprint-stages.ts. The count
- * was typed here as "10" after the operator set it to five on 2026-08-01, and
- * the refuted-claims scan could not see it because the number and "פניות" sit
- * in separate fields. Importing it is the fix; the scan never could be.
+ * - Nothing here animates from invisible. The previous hero faded every element
+ *   in from opacity 0, and main.tsx re-rendered the prerendered DOM with
+ *   createRoot, which restarted the fade after the bundle ran: on a mid-range
+ *   phone the headline first painted at ~5.5s. The copy now paints in its final
+ *   state from the static HTML; only the decorative DraftStack draws in.
+ *
+ * - The CTA is a real link to #book. Before hydration it still works, which on
+ *   a slow phone is most of the first five seconds. With JS it routes through
+ *   the provider so the lead records the hero as its source.
+ *
+ * - The price is stated here, not thirteen screens down. The first call works
+ *   when the person in it has already seen the number; a visitor who leaves on
+ *   seeing it was not going to buy after a free call either.
+ *
+ * The headline is unchanged. It is the strongest sentence on the site and the
+ * prerender spec pins it.
  */
-const SPEC = [
-  { value: "30", unit: "יום", label: "משך התוכנית", scatter: { x: "-9px", r: "-1.1deg" } },
-  { value: "4", unit: "מפגשים", label: "בני 60 דקות", scatter: { x: "7px", r: "0.9deg" } },
-  { value: String(outreachCount), unit: "פניות", label: "יוצאות, בסיום", scatter: { x: "-6px", r: "1.2deg" } },
-  { value: program.priceLabel, unit: "", label: "מחיר התוכנית", scatter: { x: "8px", r: "-0.8deg" } },
-];
-
-/** Entrance offsets, in ms. The last cell resolves at 580 + 560 = 1140ms. */
-const SETTLE = {
-  eyebrow: 0,
-  subtitle: 140,
-  portrait: 220,
-  specFirst: 340,
-  specStep: 80,
-  cta: 660,
-} as const;
-
-/** Feeds `.cor-settle` (index.css) its per-element delay and starting offset. */
-function settleStyle(
-  delayMs: number,
-  scatter?: { x: string; r: string },
-): CSSProperties {
-  return {
-    "--settle-delay": `${delayMs}ms`,
-    ...(scatter && { "--settle-x": scatter.x, "--settle-r": scatter.r }),
-  } as CSSProperties;
-}
-
 const Hero = () => {
   const { requestForm } = useDiagnosticForm();
 
-  const scrollToForm = () => {
-    trackCtaClick("hero_diagnostic");
+  const onCta = (e: MouseEvent<HTMLAnchorElement>) => {
+    trackCtaClick("hero_book");
+    e.preventDefault();
     requestForm("hero");
   };
 
   return (
     <section
       dir="rtl"
-      className="relative pt-28 pb-20 md:pt-32 md:pb-24"
       id="hero"
       aria-labelledby="hero-title"
+      className="ld-paper relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24"
     >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid items-start gap-10 md:grid-cols-[1.25fr_1fr] md:gap-16">
-          {/* Order 1 on every breakpoint — text leads on mobile, no founder-face wall */}
-          <div className="order-1">
-            {/* Programme label. Institutional register: names the offering
-                rather than addressing the reader. */}
-            <p
-              className="cor-settle text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85"
-              style={settleStyle(SETTLE.eyebrow)}
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-14">
+        <div>
+          <p className="cor-overline-he">ליווי עסקי לעצמאים · 30 יום</p>
+
+          <h1 id="hero-title" className="cor-display mt-5 text-foreground">
+            עוד גרסה של ״מי אני״. ועוד אחת. אף אחת לא מחזיקה חודש.
+          </h1>
+
+          <p
+            id="hero-subtitle"
+            className="cor-body-lg mt-6 max-w-xl text-foreground/80"
+          >
+            בארבע פגישות בחודש, מה שאתם כבר יודעים הופך לארבעה מסמכים: משפט
+            אחד שמחזיק, הצעת ערך, מוצר עם מחיר, ו-{outreachCount} פניות לאנשים
+            ששמם ידוע לכם.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <a
+              href="#book"
+              onClick={onCta}
+              aria-describedby="hero-cta-note"
+              className="ld-cta w-full sm:w-auto"
             >
-              COR-SYS · תוכנית ליווי לעצמאים
+              לתיאום שיחת התאמה
+            </a>
+            <p id="hero-cta-note" className="text-sm text-muted-foreground">
+              20 דקות, ללא עלות. בוחרים מועד ביומן.
             </p>
-
-            {/* Was "תרגום מומחיות מקצועית להצעה שהשוק קונה." — a category
-                definition. It said what the programme is, which is the job of
-                the eyebrow above it, and left the reader nothing to resolve.
-                The strongest sentence on the page was buried in
-                WhatYouTriedSection, four screens down.
-
-                That section's "15 גרסאות" stayed there rather than moving up
-                here: as a symptom in the body it is a mirror, but as the first
-                line on the page a specific count becomes a filter, and a reader
-                on their third rewrite fails it and leaves. The headline keeps
-                the recurrence and drops the tally.
-
-                The old headline's terms ("הצעה שהשוק קונה", the 30 days) moved
-                into the subtitle, so the page still states plainly what it
-                sells and the topical signal does not thin out. */}
-            <h1
-              id="hero-title"
-              className="cor-settle-lcp cor-display mt-5 text-foreground"
-            >
-              עוד גרסה של ״מי אני״. ועוד אחת. אף אחת לא מחזיקה חודש.
-            </h1>
-
-            <p
-              id="hero-subtitle"
-              className="cor-settle cor-body-lg mt-5 max-w-xl text-foreground/85"
-              style={settleStyle(SETTLE.subtitle)}
-            >
-              המומחיות שלכם עוד לא תורגמה להצעה שהשוק קונה. את התרגום הזה
-              התוכנית עושה, ב-30 יום.
-            </p>
-
-            {/* Specification grid. The hairline separators come from a 1px gap
-                over a border-coloured backdrop, which stays correct in RTL
-                without any directional border utilities. */}
-            <dl className="mt-7 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-4">
-              {SPEC.map((item, i) => {
-                const style = settleStyle(
-                  SETTLE.specFirst + i * SETTLE.specStep,
-                  item.scatter,
-                );
-                return (
-                  <div key={item.label} className="bg-background px-3 py-3 sm:px-4 sm:py-4">
-                    <dt
-                      className="cor-settle text-[11px] font-medium tracking-[0.08em] text-muted-foreground"
-                      style={style}
-                    >
-                      {item.label}
-                    </dt>
-                    <dd
-                      className="cor-settle mt-1 flex items-baseline gap-1.5"
-                      style={style}
-                    >
-                      <span className="text-xl font-bold leading-none tracking-tight text-foreground sm:text-2xl">
-                        {item.value}
-                      </span>
-                      {item.unit && (
-                        <span className="text-sm text-foreground/70">
-                          {item.unit}
-                        </span>
-                      )}
-                    </dd>
-                  </div>
-                );
-              })}
-            </dl>
-
-            <div className="cor-settle mt-7" style={settleStyle(SETTLE.cta)}>
-              <button
-                type="button"
-                onClick={scrollToForm}
-                aria-describedby="hero-subtitle hero-cta-note"
-                className="cta-warm-lg inline-flex h-14 w-full items-center justify-center rounded-md px-8 text-base transition-[background,transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto"
-              >
-                לתיאום שיחת התאמה
-              </button>
-              <p
-                id="hero-cta-note"
-                className="mt-4 max-w-md text-sm leading-relaxed text-foreground/70"
-              >
-                שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
-                הפתיחה המומלצת, והאם קיימת התאמה לתוכנית. במקרה שאין, הדבר ייאמר
-                במפורש.
-              </p>
-
-              {/* Corroboration, not a precondition for acting, so it sits below
-                  the CTA. "תוצאה מתועדת" used to open this line, which claimed
-                  ledger-level backing for a figure that is operator-reported and
-                  not cross-checked. The tag now states the level instead of the
-                  copy implying a stronger one. */}
-              <div className="mt-6 border-s-2 border-primary/40 ps-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold text-foreground">
-                    ₪5,500
-                  </span>
-                  <EvidenceTag level="operator" />
-                  <span className="text-sm text-foreground/70">n=1</span>
-                </div>
-                <p className="mt-1.5 text-sm leading-relaxed text-foreground/80">
-                  הכנסה שנרשמה אצל לקוח אחד, בתוך החודש הראשון לתוכנית.{" "}
-                  <Footnote
-                    number={1}
-                    tip="רשימת הפנייה נבנית בשלב 4, מול מקבלי החלטות שממופים בשמם ובתפקידם."
-                  >
-                    כיצד נבנית רשימת הפנייה
-                  </Footnote>
-                </p>
-              </div>
-            </div>
           </div>
 
-          {/* Portrait: hidden on the smallest phones (under 380px), small on
-              normal mobile, full size on desktop. Saves a viewport worth of
-              vertical space on tight screens where the CTA is what matters. */}
-          <div
-            className="cor-settle order-2 hidden min-[380px]:block"
-            style={settleStyle(SETTLE.portrait)}
-          >
-            {/* The asset itself carries a baked-in circular crop on charcoal,
-                so a square frame exposes the dark corners and reads as a
-                mistake. Kept round — but as a plain ring, with the halo,
-                breathing aura and pulse glow all removed. */}
-            <figure className="mx-auto w-44 sm:w-56 md:w-full md:max-w-[320px]">
-              <div className="overflow-hidden rounded-full border border-border">
-                <img
-                  src={portrait}
-                  alt="תמונת פורטרט: גבר במעיל כהה וחולצה לבנה, מבט ישיר למצלמה, רקע ירוק זית."
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  width={420}
-                  height={420}
-                  className="aspect-square h-full w-full object-cover object-center"
-                />
-              </div>
-              <figcaption className="mt-5 border-t border-border pt-3 text-center text-sm text-foreground/75 md:text-start">
-                <span className="font-semibold text-foreground">ארז טל-שיר</span>
-                <span className="block text-sm text-muted-foreground">
-                  מייסד COR-SYS
-                </span>
-              </figcaption>
-            </figure>
+          {/* Price and shape, stated flat. */}
+          <dl className="mt-9 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-foreground/15 pt-5 text-sm">
+            <div className="flex items-baseline gap-2">
+              <dt className="text-muted-foreground">כל התוכנית</dt>
+              <dd className="cor-price font-heading text-2xl font-black text-foreground">
+                {program.priceLabel}
+              </dd>
+              <dd className="text-muted-foreground">{program.installmentsLabel}</dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt className="text-muted-foreground">פגישות</dt>
+              <dd className="font-bold text-foreground">4, אחת בשבוע</dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt className="text-muted-foreground">בסוף</dt>
+              <dd className="font-bold text-foreground">4 מסמכים שלכם</dd>
+            </div>
+          </dl>
+
+          {/* Byline: who is behind the page, signed the way an author signs. */}
+          <div className="mt-7 flex items-center gap-3">
+            <img
+              src={portrait}
+              alt="תמונת פורטרט: גבר במעיל כהה וחולצה לבנה, מבט ישיר למצלמה, רקע ירוק זית."
+              width={56}
+              height={56}
+              loading="eager"
+              decoding="async"
+              className="h-14 w-14 shrink-0 rounded-full border border-border object-cover"
+            />
+            <p className="text-sm leading-snug">
+              <span className="block font-bold text-foreground">ארז טל-שיר</span>
+              <span className="text-muted-foreground">
+                עובד סוציאלי טכנולוגי, יועץ עסקי לעצמאים
+              </span>
+            </p>
           </div>
         </div>
+
+        <DraftStack />
       </div>
     </section>
   );

@@ -16,7 +16,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Assistant", "Inter", "sans-serif"],
+        sans: ["Assistant", "sans-serif"],
         heading: ["Frank Ruhl Libre", "Assistant", "serif"],
       },
       colors: {

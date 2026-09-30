@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, type ComponentType } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing";
@@ -44,7 +44,7 @@ const GuaranteeReview = CASE_INTAKE_ENABLED
  * Reset scroll to the top on client-side navigation. Without this, following a
  * cross-page link from a page bottom (e.g. the footer nav) lands the reader at
  * the previous scroll offset on the new page. Hash targets (e.g.
- * /#diagnostic-form) are left alone so they scroll to their anchor instead.
+ * /#book) are left alone so they scroll to their anchor instead.
  */
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -74,6 +74,13 @@ const ScrollToTop = () => {
 const moduleParentPath = "../";
 const routerBasename = new URL(moduleParentPath, import.meta.url).pathname;
 
+/** A lazily loaded page inside its own Suspense boundary. */
+const lazyRoute = (Page: ComponentType) => (
+  <Suspense fallback={null}>
+    <Page />
+  </Suspense>
+);
+
 const App = () => (
   <ErrorBoundary>
     <TooltipProvider>
@@ -82,25 +89,29 @@ const App = () => (
           subpath like /groundstate-protocol/ on GitHub Pages. */}
       <BrowserRouter basename={routerBasename}>
         <ScrollToTop />
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/protocol" element={<Methodology />} />
-            <Route path="/insights" element={<InsightsIndex />} />
-            <Route path="/insights/:slug" element={<InsightArticle />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/accessibility" element={<Accessibility />} />
-            {CASE_INTAKE_ENABLED && CaseIntake && (
-              <Route path="/case-intake" element={<CaseIntake />} />
-            )}
-            {CASE_INTAKE_ENABLED && GuaranteeReview && (
-              <Route path="/guarantee-review" element={<GuaranteeReview />} />
-            )}
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        {/* Each lazy route carries its own Suspense boundary; the landing page
+            has none above it. That is what lets main.tsx hydrate the
+            prerendered landing page: hydration expects ReactDOMServer's
+            <!--$--> markers around every boundary it passes through, and a
+            browser snapshot has none, so one shared boundary here made every
+            hydration fail (React #418) and re-render the page from scratch. */}
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/protocol" element={lazyRoute(Methodology)} />
+          <Route path="/insights" element={lazyRoute(InsightsIndex)} />
+          <Route path="/insights/:slug" element={lazyRoute(InsightArticle)} />
+          <Route path="/about" element={lazyRoute(About)} />
+          <Route path="/privacy" element={lazyRoute(Privacy)} />
+          <Route path="/accessibility" element={lazyRoute(Accessibility)} />
+          {CASE_INTAKE_ENABLED && CaseIntake && (
+            <Route path="/case-intake" element={lazyRoute(CaseIntake)} />
+          )}
+          {CASE_INTAKE_ENABLED && GuaranteeReview && (
+            <Route path="/guarantee-review" element={lazyRoute(GuaranteeReview)} />
+          )}
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={lazyRoute(NotFound)} />
+        </Routes>
         {/* Privacy-by-default consent gate. Lives inside BrowserRouter
             because it links to /privacy. Shows once (until a choice is
             stored), then inits analytics + Clarity only on accept. */}
