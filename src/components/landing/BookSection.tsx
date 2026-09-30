@@ -141,7 +141,23 @@ const BookSection = () => {
               ))}
             </ol>
 
-            <SpotsLeft className="mt-8 text-sm text-muted-foreground" />
+            {/* The ICP node's screening question, handed over as preparation. A
+              sharp, owned answer means the reader does not need the programme;
+              a long or generic one is what the call is for. It also sets the
+              call's genre before it starts: a fit check, not free advice. */}
+          <div className="mt-8 ld-sheet p-5">
+            <p className="text-xs font-bold tracking-[0.08em] text-primary">
+              שאלה אחת להביא לשיחה
+            </p>
+            <p className="mt-2 font-heading text-lg font-bold leading-snug text-foreground">
+              אם מישהי אחרת נותנת בדיוק את אותו שירות, למה שיבחרו בך?
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              אם התשובה לוקחת יותר ממשפט, בשביל זה השיחה.
+            </p>
+          </div>
+
+          <SpotsLeft className="mt-8 text-sm text-muted-foreground" />
           </div>
 
           <div ref={anchor} className="order-1 lg:order-2">

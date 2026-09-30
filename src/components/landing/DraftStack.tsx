@@ -4,7 +4,10 @@ import { SAMPLE_SOURCE_LABEL } from "@/lib/evidence";
 
 /**
  * The hero's picture: three versions of "who am I" struck through in pencil,
- * and the one sheet that survives lying on top of them.
+ * and the one sheet that survives lying on top of them. The surviving sheet is
+ * labelled as hers: the method draws the sentence out of the client rather
+ * than writing it for her (graph H18 / U1), and the stage-1 exit criterion on
+ * /protocol is "a new formulation that came from you, not a repeat of mine".
  *
  * It is the headline drawn rather than illustrated. The drafts are the pain
  * the reader already has; the sheet is stage 1's actual artefact line, read
@@ -59,8 +62,10 @@ const DraftStack = () => (
         style={{ "--d": `${SHEET_MS}ms`, "--tilt": "0.6deg" } as CSSProperties}
       >
         <div className="flex items-center justify-between gap-3">
+          {/* Hers, not handed over: the stage-1 exit criterion is a sentence
+              that came from the client, not a repeat of the coach's. */}
           <p className="text-[11px] font-bold tracking-[0.08em] text-primary">
-            {narrative.docLabel} · הגרסה שנשארת
+            {narrative.docLabel} · במילים שלך, הגרסה שנשארת
           </p>
           {/* A pencil tick in the margin: the editor's approval. */}
           <svg viewBox="0 0 28 20" className="h-4 w-6 shrink-0">

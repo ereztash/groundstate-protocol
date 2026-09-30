@@ -20,6 +20,13 @@ import SpotsLeft from "./SpotsLeft";
  * links to /protocol, where each one is priced. It is a door, not a menu.
  *
  * Every word about a stage is read from sprint-stages. Nothing is re-typed.
+ *
+ * Headings are the buyer's words (`buyerTitle`), with the method's own stage
+ * names demoted to a label: graph heuristic H21 says the marketing gate speaks
+ * the way the buyer describes the problem, and the verbs (חילוץ, הבלטה…) are
+ * the expert's map. The intro carries the method's ownership principle in the
+ * wording /protocol already uses, because the documents are hers, not handed
+ * over (graph heuristic H18, U1).
  */
 const OfferSection = () => {
   const { requestForm } = useDiagnosticForm();
@@ -44,8 +51,9 @@ const OfferSection = () => {
             ארבעה שבועות. ארבעה מסמכים. כל אחד נבנה על הקודם.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground/80">
-            לא עצות ולא השראה. בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר
-            בבוקר, והסדר קבוע: אי אפשר לתמחר מוצר לפני שיודעים מה הבידול.
+            בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. מבנה שנבנה תחת
+            עומס נשאר, ומבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ ממך את הניסוח,
+            ולא נותן לך אותו.
           </p>
         </div>
 
@@ -70,13 +78,13 @@ const OfferSection = () => {
                   {i + 1}
                 </span>
                 <span className="pt-1 text-xs font-bold tracking-[0.08em] text-muted-foreground">
-                  שבוע {i + 1} · {s.verb}
+                  שבוע {i + 1} · {s.name}
                 </span>
               </div>
 
               <h3 className="mt-4 font-heading text-2xl font-black leading-tight text-foreground">
                 <span className="sr-only">שבוע {i + 1}: </span>
-                {s.name}
+                {s.buyerTitle}
               </h3>
               <p className="mt-2 leading-relaxed text-foreground/80">
                 {s.deliverable}

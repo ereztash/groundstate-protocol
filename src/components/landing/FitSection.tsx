@@ -8,15 +8,18 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  *
  * The filter is part of the conversion, not a courtesy: a call with someone
  * the programme cannot help costs both people twenty minutes and trains the
- * page to attract the wrong reader. The "for" list is drawn from conditions
- * the site already states elsewhere: the form's screen for an active practice
- * (without clients there is nothing to extract from), and the FAQ's weekly
- * rhythm with short tasks between meetings. The "not for" list is the previous
+ * page to attract the wrong reader. The "for" list is written as situations,
+ * not segments (graph H21), and drawn from conditions the graph and the site
+ * already state: the ICP node's entry trigger (left a job, unpaid leave,
+ * unstable income), which is what makes the gap felt now (the payable-answer
+ * filter's first condition); the form's screen for an active practice; and
+ * the FAQ's weekly rhythm. The "not for" list is the previous
  * NotForEveryoneSection, verbatim.
  *
  * The origin paragraph is OriginStorySection's, cut to its first beat.
  */
 const FOR = [
+  "משהו השתנה לאחרונה: עזבת עבודה, יצאת לחל״ת, או שההכנסה עוד לא יציבה, והשאלה מה את מוכרת הפכה דחופה.",
   "יש לך כבר לקוחות, והם מרוצים. הקושי הוא להסביר למי שעוד לא עבד איתך למה דווקא את.",
   "את משלבת שני עולמות, ולא מצליחה להגיד את הצירוף במשפט אחד.",
   "את מוכנה לפגישה בשבוע ולמשימה קצרה בין הפגישות, במשך חודש.",

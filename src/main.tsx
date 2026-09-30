@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import { initAnalytics, trackError } from "./lib/analytics";
 import { initClarity } from "./lib/clarity";
 import { getConsent } from "./lib/consent";
+import { visitChannel } from "./lib/calendly";
 import "./index.css";
 
 // Privacy-by-default: analytics + session recording (GA4, Microsoft Clarity)
@@ -14,6 +15,11 @@ if (getConsent() === "granted") {
   initAnalytics();
   initClarity();
 }
+
+// Record the visit's channel (?c= tag or referrer) on the first page, before
+// any in-app navigation drops the query string. The booking widget reads it
+// later for its UTM campaign.
+visitChannel();
 
 // Global error capture — reports to analytics when it's available (post-
 // consent) so production crashes we'd otherwise never see become visible.

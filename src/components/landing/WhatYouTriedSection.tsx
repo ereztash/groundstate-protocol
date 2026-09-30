@@ -4,13 +4,25 @@ import type { CSSProperties, ReactNode } from "react";
  * The four symptoms, set as four notes pinned side by side, then the one
  * diagnosis they share in the display face.
  *
- * The copy is unchanged from the previous page apart from the last paragraph,
- * which answered "why not GPT / a coach"; that answer lives in the FAQ now,
- * where a reader who has that question goes looking for it. The line about
- * time only making it dearer stays, because it is the reason to act this
- * month rather than someday.
+ * Chosen and ordered by the operator's client-language research, which ranks
+ * pain patterns by how many clients raised them: "knows the work, not what she
+ * sells" is the most common and comes first. Paraphrased at pattern level; no
+ * client is quoted.
+ *
+ * The "five fields" note that used to sit here was dropped: the same research
+ * found that people with several fields are proud of the combination and do
+ * not present it as a problem, so the note described the coach's exercise,
+ * not the reader.
+ *
+ * The heading is the ICP node's bullseye, in the wording the site's own article
+ * title already uses ("נתקעת", not the banned "מגמגמת").
  */
 const NOTES: ReactNode[] = [
+  <>
+    את יודעת בדיוק מה את עושה בשביל לקוחות. כשמישהי חדשה שואלת{" "}
+    <strong className="font-bold text-foreground">מה את מוכרת</strong>, התשובה
+    עוד לא ברורה, גם לך.
+  </>,
   <>
     כל כמה שבועות את נכנסת ללינקדאין ומשנה את הכותרת. כבר הצטברו{" "}
     <strong className="font-bold text-foreground">15 גרסאות</strong> של ״מי
@@ -20,10 +32,6 @@ const NOTES: ReactNode[] = [
     רשמת מספר לפני השיחה. כשהגיע הרגע להגיד אותו בקול, התחלת להסס, ו
     <strong className="font-bold text-foreground">מספר נמוך יותר</strong> יצא
     לך מהפה.
-  </>,
-  <>
-    התחלת ב<strong className="font-bold text-foreground">חמישה תחומים</strong>{" "}
-    כי כדאי להיות גמישה. היום אף אחד מהם לא מובהק, ואת עייפה.
   </>,
   <>
     נתת חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלך הוא הידע שלך,{" "}
@@ -40,7 +48,7 @@ const WhatYouTriedSection = () => (
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <p className="cor-overline-he">למה הגעת לכאן</p>
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        ארבעה דברים שאת מכירה מקרוב.
+        מבריקה על הלקוחות שלך. נתקעת על עצמך.
       </h2>
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

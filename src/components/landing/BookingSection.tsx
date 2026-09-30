@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
-import { CALENDLY_URL, CALENDLY_PAGE_SETTINGS } from "@/lib/calendly";
+import { CALENDLY_URL, CALENDLY_PAGE_SETTINGS, visitChannel } from "@/lib/calendly";
 import { trackEvent } from "@/lib/analytics";
 import type { LeadSource } from "@/lib/web3forms";
 
@@ -26,12 +26,14 @@ const BookingSection = ({
     }
   }, [visible, surface]);
 
+  const channel = useMemo(visitChannel, []);
+
   // The site's first direct conversion measure: a slot actually booked. Until
   // 2026-09-29 the funnel stopped at form_submit, which is one step short of
   // the thing that turns into money: a call with a date on it.
   useCalendlyEventListener({
     onEventScheduled: () =>
-      trackEvent("booking_scheduled", { surface, source: source ?? "direct" }),
+      trackEvent("booking_scheduled", { surface, source: source ?? "direct", channel }),
   });
 
   if (!visible) return null;
@@ -44,7 +46,12 @@ const BookingSection = ({
           pageSettings={CALENDLY_PAGE_SETTINGS}
           // Calendly stores UTM on the booking itself, so the operator can see
           // which CTA produced a meeting without any analytics consent.
-          utm={{ utmSource: "site", utmMedium: surface, utmContent: source ?? "direct" }}
+          utm={{
+            utmSource: "site",
+            utmMedium: surface,
+            utmCampaign: channel,
+            utmContent: source ?? "direct",
+          }}
           styles={{ height: "700px", minWidth: "300px" }}
         />
       </div>

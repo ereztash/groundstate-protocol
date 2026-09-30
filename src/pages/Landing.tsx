@@ -5,6 +5,7 @@ import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OfferSection from "@/components/landing/OfferSection";
 import Day31Section from "@/components/landing/Day31Section";
 import ProofSection from "@/components/landing/ProofSection";
+import EvidenceSection from "@/components/landing/EvidenceSection";
 import FitSection from "@/components/landing/FitSection";
 import FAQSection from "@/components/landing/FAQSection";
 import BookSection from "@/components/landing/BookSection";
@@ -27,9 +28,11 @@ import { parseLeadSource } from "@/lib/web3forms";
  * - The stage-by-stage price ladder, the package-as-discount card and the
  *   stage quiz: one offer now (OfferSection). Stages remain for sale, priced
  *   on /protocol.
- * - What the method has and has not proven (ClaimsShelf, PreRegistration,
- *   EvidenceChain): moved to /protocol intact. It is a question a reader asks
- *   while weighing the method, and /protocol is where she weighs it.
+ * - What the method has and has not proven: back on this page as
+ *   EvidenceSection, right after the testimonials, where the reader is
+ *   weighing whether to believe them. The operator's site brief treats the
+ *   published pre-registration as the site's one uncopyable asset.
+ *   /protocol keeps the fuller ClaimsShelf and PreRegistration.
  * - The two surfaced objections: folded into the FAQ, printed open.
  * - The "what happens in the call" timeline and the mid-page CTAs: the call
  *   now sits next to the calendar it is booked in (BookSection), and the
@@ -102,6 +105,7 @@ const Landing = () => {
           <OfferSection />
           <Day31Section />
           <ProofSection />
+          <EvidenceSection />
           <FitSection />
           <FAQSection />
           <BookSection />

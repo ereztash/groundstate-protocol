@@ -33,7 +33,12 @@ export const claims: readonly Claim[] = [
     label: "מה נבדק",
     statement:
       "אותו מהלך זוהה בכמה תחומים שונים. זו טענה על מבנה: הצורה חוזרת על עצמה, ואפשר לזהות אותה שוב.",
-    level: "anchored",
+    // Was "anchored", which this site defines as "a ledger or CRM row exists".
+    // Checked 2026-09-29: the research note behind it is still marked low
+    // trust, waiting on its source-integrity check, and no corroboration row
+    // backs the structural claim. The analysis is the operator's own, so the
+    // honest tag is the operator tag until that check passes.
+    level: "operator",
     entitlement: "מותר להסיק שהמהלך אינו ייחודי לתחום אחד.",
   },
   {
