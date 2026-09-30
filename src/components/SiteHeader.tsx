@@ -49,7 +49,7 @@ const SiteHeader = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/90 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div
         dir="rtl"
         className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6"
@@ -68,7 +68,7 @@ const SiteHeader = () => {
             <NavLink
               key={item.to}
               to={item.to}
-              className="text-sm font-semibold text-foreground/65 transition-colors hover:text-foreground"
+              className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
               activeClassName="text-foreground"
             >
               {item.label}
