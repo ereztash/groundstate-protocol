@@ -30,30 +30,51 @@ type Step = {
   link?: { to: string; label: string };
 };
 
+/**
+ * The story, rewritten 2026-09-29 from Erez's own documents: his CV, his
+ * self-description, the COR-SYS vision document and the method paper. The
+ * previous version told the arc (human side, then structure) without a single
+ * fact a reader could hold on to. Every step below is a fact from those
+ * documents, or his own framing of it ("ראיתי פער. בניתי ממשק.").
+ *
+ * Deliberately left out: the bookstore revenue figure (self-reported, no
+ * record; refutedClaims bans unattributed revenue increases), and personal
+ * details from private documents that he has not published himself.
+ */
 const STEPS: Step[] = [
   {
     overline: "אודות",
     title: "ארז טל-שיר",
-    body: "עובד סוציאלי בהכשרה. יועץ עסקי לעצמאים בפועל.",
+    body: "עובד סוציאלי טכנולוגי. יועץ עסקי לעצמאים.",
   },
   {
     lead: "איך הגעתי לכאן",
-    body: "שנים החזקתי רק צד אחד, הצד האנושי. סיפור, נרטיב, אנשים.",
+    body: "מ-2015 אני עובד עם נוער. למדתי עבודה סוציאלית בתל-חי, במסלול דחק וטראומה.",
   },
   {
-    body: "כשנכנסתי לעולם העסקי גיליתי שאני יודע דברים שאחרים לא, ואין לי מושג איך להסביר אותם ללקוח. נשמע מוכר?",
+    body: "במקביל ניהלתי סניף של צומת ספרים. שם ראיתי שמכירה נשענת על מבנה: מי במשמרת, מה מוזמן ומתי.",
   },
   {
-    body: "ואז זה התחבר: המבנה הוא החצי השני של אותה צורה. מי שמשלב שני עולמות לא צריך לבחור אחד מהם, הוא צריך משפט אחד שמסביר למה דווקא הצירוף הזה הוא היתרון.",
+    lead: "אוקטובר 2023",
+    body: "ניהלתי את החינוך הבלתי פורמלי לנוער שדרות שפונה לים המלח, עד ינואר 2024. ראיתי מקרוב מה קורה כשמערכת אנושית נכנסת למשבר: שרשרת ניהולית שבורה, מידע שלא עובר, החלטות שמחכות.",
+  },
+  {
+    body: "יצאתי משם עם מסקנה אחת: יעילות של מערכת היא תשתית. ראיתי פער. בניתי ממשק.",
+  },
+  {
+    lead: "למה COR-SYS",
+    body: "COR, על שם תיאוריית שימור המשאבים של הובפול: אנשים שומרים על משאבים, והפסד כואב יותר מרווח מקביל. SYS, כי ההתערבות תמיד מבנית.",
+  },
+  {
+    body: "כשהתחלתי לייעץ לעצמאים ראיתי אותו דפוס: אנשים שיודעים דברים שאחרים לא, ואין להם משפט אחד שמסביר את זה ללקוח. נשמע מוכר?",
   },
   {
     // The million-shekel retail claim was removed from OriginStorySection
     // because no evidence exists for it, and the landing tells the visitor
     // every figure is "ניתנות לאימות". The same sentence was still live here.
-    // Removed for the same reason, not rephrased — the lead is also dropped,
-    // since "וזה לא תיאוריה" was introducing the number.
+    // Removed for the same reason, not rephrased.
     lead: "מה שיש",
-    body: "את הרצף הזה לעצמאים בניתי השנה.",
+    body: "את הרצף הזה לעצמאים בניתי השנה: ארבעה שלבים, מהסיפור ועד פניות שיוצאות בפועל.",
   },
   {
     lead: "יש גם סיפור מתחת לסיפור",
@@ -69,7 +90,7 @@ const About = () => {
   useDocumentMeta({
     title: "אודות, ארז טל-שיר | COR-SYS",
     description:
-      "עובד סוציאלי בהכשרה, יועץ עסקי לעצמאים. איך שני עולמות, נרטיב אנושי ומבנה עסקי, הפכו לשיטה אחת. הסיפור מאחורי COR-SYS.",
+      "עובד סוציאלי טכנולוגי ויועץ עסקי לעצמאים. איך שני עולמות, נרטיב אנושי ומבנה עסקי, הפכו לשיטה אחת. הסיפור מאחורי COR-SYS.",
     path: "/about",
   });
 
@@ -132,10 +153,11 @@ const About = () => {
     "@type": "Person",
     name: "ארז טל-שיר",
     url: `${SITE_ORIGIN}/about/`,
-    jobTitle: "יועץ עסקי לעצמאים",
+    jobTitle: "עובד סוציאלי טכנולוגי, יועץ עסקי לעצמאים",
     description:
-      "עובד סוציאלי בהכשרה, יועץ עסקי לעצמאים. משלב נרטיב אנושי עם מבנה עסקי, המתודולוגיה של COR-SYS.",
+      "עובד סוציאלי טכנולוגי ויועץ עסקי לעצמאים. משלב נרטיב אנושי עם מבנה עסקי, המתודולוגיה של COR-SYS.",
     knowsAbout: ["בידול", "תמחור", "מיצוב", "התערבות התנהגותית"],
+    alumniOf: { "@type": "CollegeOrUniversity", name: "המכללה האקדמית תל-חי" },
     worksFor: { "@type": "Organization", name: "COR-SYS" },
   };
 
@@ -144,7 +166,7 @@ const About = () => {
     // container, which silently disables position:sticky for the pinned scene.
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a href="#about-main" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
       <script
         type="application/ld+json"
@@ -215,17 +237,17 @@ const About = () => {
         <section dir="rtl" className="mx-auto max-w-3xl px-6 pb-20">
           <div className="rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
             <p className="cor-heading text-foreground">
-              רוצה לבדוק איפה הזרימה שלך נעצרת?
+              רוצים לבדוק מאיפה נכון להתחיל?
             </p>
             <p className="mt-3 text-sm leading-relaxed text-foreground/80">
-              מפת סנכרון של 20 דקות: נקודת חנק אחת שסומנה, אומדן למה שהיא עולה לך
-              בשנה, וצעד תיקון אחד. במספר, לא בתחושה.
+              שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
+              הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
             </p>
             <Link
               to="/#diagnostic-form"
               className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
             >
-              קבע שיחת התאמה, 20 דקות, בלי לחץ
+              לתיאום שיחת התאמה, 20 דקות
             </Link>
           </div>
         </section>

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { faq, surfacedObjections, SURFACED_OBJECTIONS } from "./faq";
+import { program } from "./sprint-stages";
 
 /**
  * index.html serves an FAQPage block to search engines. It was maintained by
@@ -31,6 +32,33 @@ function faqFromStructuredData() {
     acceptedAnswer: { text: string };
   }>).map((q) => ({ q: q.name, a: q.acceptedAnswer.text }));
 }
+
+function graphNodes(): Array<Record<string, unknown>> {
+  const block = html.match(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/
+  );
+  if (!block) throw new Error("no JSON-LD block in index.html");
+  const parsed = JSON.parse(block[1]);
+  return parsed["@graph"] ?? [parsed];
+}
+
+describe("Service structured data", () => {
+  it("offers the programme at the price the page shows, and nothing else", () => {
+    // The structured data carried five offers (four stages and a package) after
+    // the page moved to one programme price on 2026-09-29, it would have kept
+    // telling search engines about prices the site no longer charges.
+    const service = graphNodes().find((n) => n["@type"] === "Service");
+    expect(service).toBeDefined();
+    const offers = service!.offers as Array<{ price: string }>;
+    expect(offers.map((o) => o.price)).toEqual([String(program.priceNis)]);
+  });
+
+  it("carries no self-assigned star ratings", () => {
+    // Two Review nodes each carried ratingValue 5 that no client gave. The
+    // testimonials are real and consented; the stars were not.
+    expect(JSON.stringify(graphNodes())).not.toMatch(/ratingValue/);
+  });
+});
 
 describe("FAQ structured data", () => {
   it("matches the FAQ the page actually renders", () => {

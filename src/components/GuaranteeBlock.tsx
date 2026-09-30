@@ -6,9 +6,9 @@ import type { GuaranteeVariant } from "@/data/guarantee";
  * Renders one guarantee variant. Shared by the two live surfaces and by the
  * review page, so what Erez approves is exactly what would ship.
  *
- * `compact` is the inline form used inside SequenceSection; the full form is the
- * band on /protocol. The signal list travels in both, because the promise is
- * only checkable if the trigger is spelled out.
+ * `compact` is the inline form used under the price in FullPackageSection; the
+ * full form is the band on /protocol. The signal list travels in both, because
+ * the promise is only checkable if the trigger is spelled out.
  */
 const GuaranteeBlock = ({
   variant,
@@ -45,7 +45,8 @@ const GuaranteeBlock = ({
         <p className="mt-2 ps-7 text-xs leading-relaxed text-muted-foreground">
           {variant.signalsLabel}: {variant.signals.join("; ")}.{" "}
           {variant.signalsNote} {variant.excludedLabel}:{" "}
-          {variant.excluded.join(" ")} {variant.documentation}
+          {variant.excluded.join(" ")}
+          {variant.documentation && ` ${variant.documentation}`}
         </p>
       </div>
     );
@@ -90,9 +91,11 @@ const GuaranteeBlock = ({
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 text-xs text-muted-foreground">
-                {variant.documentation}
-              </p>
+              {variant.documentation && (
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {variant.documentation}
+                </p>
+              )}
             </div>
           </div>
         </div>

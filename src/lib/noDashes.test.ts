@@ -14,9 +14,15 @@ import { walk, stripComments } from "./copyScan";
  */
 
 const ROOT = process.cwd();
+/**
+ * public/llms.txt and index.html joined the scan on 2026-09-29. Both are read
+ * by machines on the site's behalf (AI engines, search snippets), and llms.txt
+ * had drifted to seventeen dashes while src/ was clean, because nothing looked.
+ */
 const SCAN = [join(ROOT, "src"), join(ROOT, "content")];
+const EXTRA_FILES = [join(ROOT, "public", "llms.txt"), join(ROOT, "index.html")];
 const CODE_EXT = new Set([".ts", ".tsx"]);
-const TEXT_EXT = new Set([".md"]);
+const TEXT_EXT = new Set([".md", ".txt"]);
 const DASHES = /[—–]/;
 
 /** This file necessarily contains the characters it bans. */
@@ -36,7 +42,7 @@ const QUOTE_FILES = ["src/lib/clients.ts"];
 // needed the same comment handling.
 
 describe("no em or en dashes in displayed copy", () => {
-  const files = SCAN.flatMap((d) => walk(d)).filter(
+  const files = [...SCAN.flatMap((d) => walk(d)), ...EXTRA_FILES].filter(
     (f) =>
       !f.endsWith(SELF) &&
       !QUOTE_FILES.some((q) => f.endsWith(q.replace(/\//g, "/")))
@@ -56,6 +62,11 @@ describe("no em or en dashes in displayed copy", () => {
       let text: string;
       if (CODE_EXT.has(ext)) text = stripComments(readFileSync(file, "utf8"));
       else if (TEXT_EXT.has(ext)) text = readFileSync(file, "utf8");
+      else if (ext === ".html")
+        // HTML comments are the same kind of record as code comments.
+        text = readFileSync(file, "utf8").replace(/<!--[\s\S]*?-->/g, (c) =>
+          c.replace(/[^\n]/g, " ")
+        );
       else continue;
 
       text.split("\n").forEach((line, i) => {

@@ -44,7 +44,7 @@ export const Footnote = ({ number, tip, children }: FootnoteProps) => {
               looking like a typo. The ring costs nothing and says "control". */}
           <button
             type="button"
-            aria-label={`הערה ${number}, פתח להסבר`}
+            aria-label={`הערה ${number}, פתיחת ההסבר`}
             className="ms-0.5 inline-block cursor-pointer rounded-full border border-primary/40 px-[0.4em] align-super text-[0.62em] font-bold leading-normal text-primary/90 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {number}

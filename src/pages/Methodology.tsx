@@ -22,8 +22,8 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "את מנסחת בעצמך, במילים שלך, את משפט הייעוד. הסימן: ניסוח חדש שיצא ממך, לא חזרה על ניסוח שלי.",
-  "02": "אפשר לחזור על הצעת הערך שלך במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
+  "01": "אתם מנסחים בעצמכם, במילים שלכם, את משפט הייעוד. הסימן: ניסוח חדש שיצא מכם, לא חזרה על ניסוח שלי.",
+  "02": "אפשר לחזור על הצעת הערך שלכם במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
   // client computing the number from an external benchmark — as a certain
@@ -46,8 +46,8 @@ const EXIT_CRITERIA: Record<string, string> = {
 // What goes into each stage — always the previous stage's output, which is
 // the "כל שלב בונה את הבא" principle below made concrete and checkable.
 const INPUTS: Record<string, string> = {
-  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלך, לא צריך לייצר חומר חדש.",
-  "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעת עד היום.",
+  "01": "חמישה סיפורים מקצועיים או רגעי שיא שכבר קיימים אצלכם, לא צריך לייצר חומר חדש.",
+  "02": "הנרטיב משלב 1, ותגובות אמיתיות של לקוחות למה שהצעתם עד היום.",
   "03": "הצעת הערך ומילון הכאב משלב 2.",
   "04": "תיאור המוצר עם התמחור משלב 3.",
 };
@@ -64,7 +64,7 @@ const TRANSFORMATIONS: Record<string, string> = {
 const PRINCIPLES = [
   {
     title: "בעלות מרוויחים, לא מקבלים",
-    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ ממך את הניסוח, לא נותן לך אותו.",
+    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ מכם את הניסוח, ולא נותן לכם אותו.",
   },
   {
     title: "סדר קבוע. כל שלב בונה את הבא",
@@ -94,7 +94,7 @@ const Methodology = () => {
   return (
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <a href="#protocol-main" className="skip-to-content">
-        דלג לתוכן
+        דילוג לתוכן
       </a>
 
       <SiteHeader />
@@ -132,7 +132,7 @@ const Methodology = () => {
                   to="/#diagnostic-form"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  קבע שיחת התאמה, 20 דקות, בלי לחץ
+                  לתיאום שיחת התאמה, 20 דקות, בלי לחץ
                 </Link>
               </div>
             </Reveal>
@@ -155,9 +155,9 @@ const Methodology = () => {
                 שלב 0, שיחת התאמה
               </h2>
               <p className="cor-body-lg mt-4 text-foreground/80">
-                עשרים דקות, ללא תשלום. שתי שאלות: יש לך פרקטיקה פעילה עם לקוחות?
-                ויש בידול שכבר קיים אצלך? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
-                לך את זה ביושר.
+                עשרים דקות, ללא תשלום. שתי שאלות: יש לכם פרקטיקה פעילה עם לקוחות?
+                ויש בידול שכבר קיים אצלכם? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
+                לכם את זה ביושר.
               </p>
             </Reveal>
           </div>
@@ -260,7 +260,7 @@ const Methodology = () => {
         <section dir="rtl" className={`${DARK} py-20 md:py-28`}>
           <Reveal className="mx-auto max-w-2xl px-6 text-center">
             <h2 className="cor-title text-[hsl(var(--background))]">
-              לא בטוחה מאיפה להתחיל?
+              לא בטוחים מאיפה להתחיל?
             </h2>
             <p className="cor-body-lg mt-4 text-[hsl(var(--background))]/75">
               בשיחת ההתאמה נחליט ביחד מאיזה שלב מתחילים. רוב הלקוחות מתחילים בשלב 1.
@@ -270,7 +270,7 @@ const Methodology = () => {
                 to="/#diagnostic-form"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                קבע שיחת התאמה, 20 דקות, בלי לחץ
+                לתיאום שיחת התאמה, 20 דקות, בלי לחץ
               </Link>
             </div>
           </Reveal>

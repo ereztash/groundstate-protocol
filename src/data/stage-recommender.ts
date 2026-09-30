@@ -1,5 +1,5 @@
 import type { StageValue } from "@/components/landing/DiagnosticFormProvider";
-import { fullPackage, getStage } from "@/data/sprint-stages";
+import { getStage, outreachCount, program } from "@/data/sprint-stages";
 import type { Answer } from "@/lib/wizardState";
 
 /**
@@ -11,10 +11,14 @@ import type { Answer } from "@/lib/wizardState";
  * text, `recommend()` is a pure function, and it is the part with behaviour
  * worth testing on its own. The component keeps the wizard's UI and state.
  *
- * Stage facts — number, name, price, deliverable — are read from
- * sprint-stages.ts rather than repeated, so the wizard and the price ladder
- * cannot drift. Each recommendation owns only what is specific to it: the
- * reflection shown back to the reader, and the reason for the stage.
+ * Stage facts (number, name, deliverable) and the programme price are read from
+ * sprint-stages.ts rather than repeated, so the wizard and the page cannot
+ * drift. Each recommendation owns only what is specific to it: the reflection
+ * shown back to the reader, and the reason for the entry point.
+ *
+ * Since 2026-09-29 the programme is one unit at `program.priceLabel`, so a
+ * recommendation names where to start, not what to buy. Copy addresses the
+ * reader in the plural, per the operator decision of the same day.
  */
 
 type Option = {
@@ -33,12 +37,15 @@ export type Recommendation = {
   stage: StageValue;
   number: "01" | "02" | "03" | "04" | null;
   name: string;
+  /** The programme price, shown on every path. Stages are not priced. */
   price: string;
   deliverable: string;
   reflection: string;
   reason: string;
   ctaPrimary: string;
 };
+
+const PROGRAM_PRICE = `נקודת כניסה לתוכנית המלאה, ${program.priceLabel}`;
 
 function baseFor(
   value: StageValue
@@ -52,9 +59,9 @@ function baseFor(
     stage: value,
     number: s.number,
     name: s.name,
-    price: s.priceLabel,
+    price: PROGRAM_PRICE,
     deliverable: s.deliverable,
-    ctaPrimary: `${s.ctaLabel}, ${s.priceLabel}`,
+    ctaPrimary: s.ctaLabel,
   };
 }
 
@@ -62,12 +69,12 @@ export const QUESTIONS: Question[] = [
   {
     key: "narrative",
     anticipation: "שתי השניות הראשונות של כל פגישה.",
-    text: "כשאת אומרת במסיבה ״אני עוסקת ב-X״, מה קורה לרוב?",
+    text: "כשאתם מספרים במסיבה במה אתם עוסקים, מה קורה לרוב?",
     options: [
       { label: "האדם מבין מיד ושואל שאלה ספציפית.", value: 0 },
       {
         label:
-          "האדם מנסה לקטלג (״אה, אז את כמו…?״) ואני מסבירה עוד שני משפטים.",
+          "האדם מנסה לקטלג (״אה, אז זה כמו…?״) ונדרשים עוד שני משפטי הסבר.",
         value: 1,
       },
       { label: "האדם מהנהן בנימוס ומחליף נושא.", value: 2 },
@@ -76,33 +83,33 @@ export const QUESTIONS: Question[] = [
   {
     key: "valueprop",
     anticipation: "הרגע השני של אמת, מיד אחרי המשפט.",
-    text: "כשלקוח רואה את המחיר שלך, מה התגובה הראשונה?",
+    text: "כשלקוח רואה את המחיר שלכם, מה התגובה הראשונה?",
     options: [
       { label: "״מצוין, מתי מתחילים?״", value: 0 },
-      { label: "״אהמ, אחזור אליך״ (לפעמים חוזרים, לפעמים לא).", value: 1 },
+      { label: "״אהמ, אחזור אליכם״ (לפעמים חוזרים, לפעמים לא).", value: 1 },
       { label: "״וואו, זה הרבה״, וצריך לנמק.", value: 2 },
     ],
   },
   {
     key: "product",
-    anticipation: "מה את שולחת, אחרי שהוא ביקש.",
-    text: "לקוח שואל ״מה אני מקבל בדיוק?״, מה את עושה?",
+    anticipation: "מה אתם שולחים, אחרי שהוא ביקש.",
+    text: "לקוח שואל ״מה אני מקבל בדיוק?״, מה אתם עושים?",
     options: [
-      { label: "שולחת קובץ מוכן שאני שולחת לכל פנייה.", value: 0 },
-      { label: "שולחת משהו ישן ומוסיפה הסבר בגוף המייל.", value: 1 },
-      { label: "פותחת Word ריק ומתחילה לכתוב.", value: 2 },
+      { label: "שולחים קובץ מוכן שיוצא לכל פנייה.", value: 0 },
+      { label: "שולחים משהו ישן ומוסיפים הסבר בגוף המייל.", value: 1 },
+      { label: "פותחים Word ריק ומתחילים לכתוב.", value: 2 },
     ],
   },
   {
     key: "outreach",
     anticipation: "השאלה האחרונה, והקריטית מכולן.",
-    text: "חודש הבא, מאיפה הלקוחות הבאים שלך יבואו?",
+    text: "בחודש הבא, מאיפה הלקוחות הבאים שלכם יבואו?",
     options: [
       {
-        label: "יודעת בדיוק, יש 3 שיחות פתוחות / לקוח חוזר / הפניה ידועה.",
+        label: "ידוע בדיוק: יש 3 שיחות פתוחות / לקוח חוזר / הפניה ידועה.",
         value: 0,
       },
-      { label: "מקווה, יש כמה הזדמנויות, לא בטוחה.", value: 1 },
+      { label: "יש כמה הזדמנויות ותקווה, בלי ודאות.", value: 1 },
       { label: "אין לי מושג. אם לא ייכנס משהו, החודש יהיה ריק.", value: 2 },
     ],
   },
@@ -113,75 +120,84 @@ const SINGLE_RECS: Record<number, Recommendation> = {
   0: {
     ...baseFor("stage-1"),
     reflection:
-      "אמרת שכשאת אומרת במסיבה מה את עושה, האדם מהנהן ומחליף נושא. זה האות שהנרטיב עוד לא יודע לתפוס את הקרקע. כל מה שבא אחריו, מחיר, מוצר, פניות, נשען עליו. אז שם מתחילים.",
+      "אמרתם שכשאתם מספרים במסיבה מה אתם עושים, האדם מהנהן ומחליף נושא. זה האות שהנרטיב עוד לא יודע לתפוס את הקרקע. כל מה שבא אחריו, מחיר, מוצר, פניות, נשען עליו. אז שם מתחילים.",
     reason:
-      "כל מה שבא אחר כך מבוסס על משפט הליבה שלך. בלעדיו, השלבים הבאים נשענים על קרקע רכה.",
+      "כל מה שבא אחר כך מבוסס על משפט הליבה שלכם. בלעדיו, השלבים הבאים נשענים על קרקע רכה.",
   },
   1: {
     ...baseFor("stage-2"),
+    // Was "זו לא בעיה של מחיר, זו בעיה של הצעה": the not-X-it-is-Y
+    // construction the house rules ban. Same diagnosis, stated directly.
     reflection:
-      "סיפרת שלקוח רואה את המחיר ואומר ״וואו, זה הרבה״, ואת מנמקת בכל פעם. זו לא בעיה של מחיר, זו בעיה של הצעה. אם הלקוח לא רואה למה זה שווה לפני שראה את הסכום, הסכום תמיד יהיה גדול.",
+      "סיפרתם שלקוח רואה את המחיר ואומר ״וואו, זה הרבה״, ואתם מנמקים בכל פעם. מה שדורש עבודה הוא ההצעה, והמחיר רק חושף את זה. אם הלקוח לא רואה למה זה שווה לפני שראה את הסכום, הסכום תמיד ייראה גדול.",
     reason:
-      "יש לך נרטיב. החסר הוא ההצעה הברורה ללקוח, מה הוא מקבל, ולמה זה שווה את הסכום.",
+      "יש לכם נרטיב. מה שחסר הוא הצעה ברורה ללקוח: מה הוא מקבל, ולמה זה שווה את הסכום.",
   },
   2: {
     ...baseFor("stage-3"),
     reflection:
-      "אמרת שכשלקוח שואל ״מה אני מקבל?״ את פותחת Word ריק. זה אומר שאת מתחילה מאפס לכל לקוח, וזה גוזל זמן ומשדר חוסר ביטחון. צריך מסמך אחד שעובד פעם אחר פעם.",
+      "אמרתם שכשלקוח שואל ״מה אני מקבל?״ אתם פותחים Word ריק. כלומר כל לקוח מתחיל מאפס, וזה גוזל זמן ומשדר חוסר ביטחון. צריך מסמך אחד שעובד פעם אחר פעם.",
     reason:
-      "יש לך הצעת ערך אבל אין תיעוד מוצרי. ניצור מסמך אחד שנשלח שוב ושוב, במקום לבנות מאפס בכל פעם.",
+      "יש לכם הצעת ערך, אבל אין תיעוד מוצרי. ניצור מסמך אחד שנשלח שוב ושוב, במקום לבנות מאפס בכל פעם.",
   },
   3: {
     ...baseFor("stage-4"),
     reflection:
-      "אמרת שאת לא יודעת מאיפה יבואו הלקוחות הבאים. זו לא בעיה של איכות, זו בעיה של מערכת. כל החודש שלך נסמך על תקווה. צריך צינור פעיל, גם אם הוא קטן.",
-    reason:
-      "המוצר מוכן והנרטיב חד. חסר רק צינור פנייה שיביא את 10 השיחות הבאות.",
+      "אמרתם שאתם לא יודעים מאיפה יבואו הלקוחות הבאים. מה שחסר כאן הוא מערכת. כל החודש נסמך על תקווה, וצריך צינור פעיל, גם אם הוא קטן.",
+    // Was "שיביא את 10 השיחות הבאות": an outcome number with no evidence
+    // level, from a stage that produces outreachCount messages.
+    reason: `המוצר מוכן והנרטיב חד. חסר צינור פנייה פעיל, שמתחיל ב-${outreachCount} פניות.`,
   },
 };
 
-// Dual-problem reflections — when exactly two answers are "2".
+// Dual-problem reflections: when exactly two answers are "2".
 // Recommendation is always the lower-indexed stage (more foundational).
 const DUAL_REFLECTIONS: Record<string, string> = {
   "0-1":
-    "אנשים מהנהנים ומחליפים נושא, וגם לקוחות בוואו על המחיר. שני אלה ביחד מצביעים על נושא אחד: המאזין לא מבין מה את מוכרת עד שראה את הסכום. ובלי הבנה, סכום תמיד גדול. הנרטיב הוא הקרקע, אז משם מתחילים.",
+    "אנשים מהנהנים ומחליפים נושא, וגם לקוחות אומרים וואו על המחיר. שני אלה מצביעים על נושא אחד: המאזין לא מבין מה אתם מוכרים עד שראה את הסכום, ובלי הבנה סכום תמיד נראה גדול. הנרטיב הוא הקרקע, אז משם מתחילים.",
   "0-2":
-    "אנשים מהנהנים ומחליפים נושא, וגם את פותחת Word ריק לכל לקוח. שני אלה ביחד אומרים שהמסר עוד לא מקודד. בלי משפט ליבה לא תוכלי לתחזק מסמך אחד; בלי מסמך אחד, כל לקוח דורש מאמץ מאפס. נרטיב ראשון, מוצר אחריו.",
+    "אנשים מהנהנים ומחליפים נושא, וגם אתם פותחים Word ריק לכל לקוח. שני אלה אומרים שהמסר עוד לא מקודד. בלי משפט ליבה אי אפשר לתחזק מסמך אחד, ובלי מסמך אחד כל לקוח דורש מאמץ מאפס. נרטיב ראשון, מוצר אחריו.",
   "0-3":
-    "אנשים מהנהנים ומחליפים נושא, וגם את לא יודעת מאיפה יבוא חודש הבא. אם פניות יוצאות לא מצליחות, חלק גדול מהסיבה הוא שהמשפט הראשון לא תופס. נרטיב מתקן את שני הצמתים ביחד.",
+    "אנשים מהנהנים ומחליפים נושא, וגם לא ברור מאיפה יבוא החודש הבא. כשפניות יוצאות לא עובדות, חלק גדול מהסיבה הוא משפט ראשון שלא תופס. הנרטיב מטפל בשני הדברים יחד.",
+  // Used to say stage 2 "מייצר את התיאור הראשון". The product description is
+  // stage 3's deliverable; stage 2 produces the core sentence and pain lexicon.
   "1-2":
-    "לקוחות בוואו על המחיר, וגם את פותחת Word ריק לכל פנייה. כשאין הצעת ערך ברורה, אין מה לקבוע במסמך; וכשאין מסמך, הצעת הערך נשארת בעל-פה. שני אלה נפתרים בשלב 2 שמייצר את התיאור הראשון.",
+    "לקוחות אומרים וואו על המחיר, וגם אתם פותחים Word ריק לכל פנייה. כשאין הצעת ערך ברורה, אין מה לקבע במסמך, וכשאין מסמך, הצעת הערך נשארת בעל פה. מתחילים בשלב 2, ושלב 3 מקבע אותה בתיאור מוצר.",
   "1-3":
-    "לקוחות בוואו על המחיר, וגם אין צינור פנייה ברור. שני אלה ביחד אומרים: הצעת הערך לא מספיק חדה כדי שמי שמקבל פנייה ידע מהר למה זה רלוונטי אליו. עובדים על שלב 2 קודם, אחר כך שלב 4 יהיה הרבה יותר קל.",
+    "לקוחות אומרים וואו על המחיר, וגם אין צינור פנייה ברור. שני אלה אומרים שהצעת הערך עוד לא חדה מספיק כדי שמי שמקבל פנייה יבין מהר למה זה רלוונטי אליו. עובדים על שלב 2 קודם, ואז שלב 4 נעשה הרבה יותר קל.",
   "2-3":
-    "את פותחת Word ריק לכל לקוח, וגם אין צינור פנייה ברור. שני אלה ביחד אומרים שאין לך ׳נכס׳ להעביר הלאה. בלי מוצר מנוסח, הפנייה, גם אם תיכתב, לא תפעל. שלב 3 הוא הצומת הראשון.",
+    "אתם פותחים Word ריק לכל לקוח, וגם אין צינור פנייה ברור. שני אלה אומרים שעוד אין נכס להעביר הלאה. בלי מוצר מנוסח, גם פנייה שנכתבה לא תפעל. מתחילים בשלב 3.",
 };
 
 const ALL_ZERO_REC: Recommendation = {
   ...baseFor("stage-4"),
+  // "רוב הלקוחות שלי מגיעים אחרי שמשהו נשבר" came out: a claim about the
+  // client base with no count behind it.
   reflection:
-    "מבחינת המבנה, את במצב טוב. נרטיב חד, הצעה ברורה, מוצר מוכן. רוב הלקוחות שלי מגיעים אחרי שמשהו נשבר פתאום: לקוח מרכזי עזב, השוק זז, החלטת להעלות מחיר. עד שזה קורה אצלך, תוסף של פניות יוצאות יכול להגדיל בלי להזיז דבר אחר.",
+    "מבחינת המבנה, אתם במצב טוב. נרטיב חד, הצעה ברורה, מוצר מוכן. מה שמוסיף כאן הוא שכבה של פניות יוצאות, שמגדילה בלי להזיז דבר אחר.",
   reason:
-    "את במצב טוב. פניות יוצאות הן תוסף, לא תיקון, אלא שכבה שתיתן לך שליטה על קצב הלקוחות.",
+    "אתם במצב טוב. פניות יוצאות הן שכבה נוספת, שנותנת שליטה על קצב הלקוחות.",
 };
 
 const MILD_REC: Recommendation = {
   ...baseFor("stage-1"),
   reflection:
-    "יש לך כיוון בכל ארבעת הצמתים, אבל אף אחד לא ממש חד. ברוב המקרים, חידוד הנרטיב הוא הצומת שכשפותחים אותו השאר נפתח אוטומטית. עדיף לחדד את הקרקע לפני שמוסיפים שכבות.",
+    "יש לכם כיוון בכל ארבעת התחומים, אבל אף אחד מהם לא ממש חד. חידוד הנרטיב הוא בדרך כלל הנקודה שכשפותחים אותה, השאר נפתח אחריה. עדיף לחדד את הקרקע לפני שמוסיפים שכבות.",
   reason:
-    "יש לך כיוון בכל הצמתים, אף אחד לא חד. חידוד הנרטיב מחדד את שאר השלבים כתוצאה.",
+    "יש כיוון בכל התחומים, ואף אחד לא חד. חידוד הנרטיב מחדד גם את שאר השלבים.",
 };
 
 const FULL_PACKAGE_REC: Recommendation = {
   stage: "full-package",
   number: null,
-  name: fullPackage.name,
-  price: fullPackage.priceLabel,
-  deliverable: fullPackage.deliverable,
-  reflection: `כמה צמתים דורשים עבודה ביחד. במקום לקנות שלבים בנפרד, החבילה המלאה זולה ב-${fullPackage.savingsLabel} ושומרת על המומנטום בין הפגישות.`,
-  reason: `כמה שלבים דורשים עבודה. החבילה המלאה זולה ב-${fullPackage.savingsLabel} לעומת רכישה שלב-אחר-שלב, ושומרת על המומנטום.`,
-  ctaPrimary: `${fullPackage.ctaLabel}, ${fullPackage.priceLabel}`,
+  name: program.name,
+  price: `${program.priceLabel}, ${program.installmentsLabel}`,
+  deliverable: program.deliverable,
+  reflection:
+    "כמה תחומים דורשים עבודה במקביל. כאן הרצף המלא עושה את העבודה: ארבעה שלבים בסדר קבוע, עם ליווי בין הפגישות ששומר על המומנטום.",
+  reason:
+    "כמה שלבים דורשים עבודה. הרצף המלא, מהשלב הראשון, שומר על המומנטום בין הפגישות.",
+  ctaPrimary: program.ctaLabel,
 };
 
 function findTwos(answers: Answer[]): number[] {
@@ -217,7 +233,7 @@ export function recommend(answers: Answer[], openText: string): Recommendation {
     const quote = openText.trim().slice(0, 200);
     return {
       ...base,
-      reflection: `כתבת: ״${quote}״.\n\n${base.reflection}`,
+      reflection: `כתבתם: ״${quote}״.\n\n${base.reflection}`,
     };
   }
 

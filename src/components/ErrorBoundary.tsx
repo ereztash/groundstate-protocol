@@ -43,7 +43,7 @@ class ErrorBoundary extends Component<Props, State> {
             onClick={() => window.location.reload()}
             className="cta-line inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
           >
-            רענן את העמוד
+            רענון העמוד
           </button>
           <a
             href={CALENDLY_URL}
@@ -51,7 +51,7 @@ class ErrorBoundary extends Component<Props, State> {
             rel="noreferrer"
             className="cta-action inline-flex h-11 items-center justify-center rounded-md px-6 text-sm"
           >
-            קבע שיחה עכשיו
+            לתיאום שיחת התאמה
           </a>
         </div>
       </div>

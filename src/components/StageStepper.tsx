@@ -102,11 +102,10 @@ const StageStepper = ({
           hidden={i !== active}
           className="mt-8 rounded-xl border border-border bg-card p-6 md:p-8"
         >
-          <div className="flex items-baseline justify-between border-b border-border pb-4">
+          {/* The stage price that sat opposite the name came out on
+              2026-09-29, when the programme became one unit. */}
+          <div className="border-b border-border pb-4">
             <h3 className="cor-heading text-foreground">{s.name}</h3>
-            <span className="text-base font-semibold text-foreground">
-              {s.priceLabel}
-            </span>
           </div>
 
           <p className="mt-5 cor-body-lg text-foreground/85">{s.description}</p>

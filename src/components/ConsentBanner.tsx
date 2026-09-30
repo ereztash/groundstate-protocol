@@ -65,7 +65,7 @@ const ConsentBanner = () => {
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-relaxed text-foreground/80">
           אני משתמש בכלי ניתוח (Google Analytics, Microsoft Clarity) כדי לשפר את
-          האתר, הם נטענים רק באישורך.{" "}
+          האתר, הם נטענים רק לאחר אישור.{" "}
           <Link to="/privacy" className="text-link">
             מדיניות הפרטיות
           </Link>
@@ -77,14 +77,14 @@ const ConsentBanner = () => {
             onClick={() => decide(false)}
             className="cta-ghost inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
           >
-            דחה
+            דחייה
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
             className="cta-action inline-flex h-10 items-center justify-center rounded-md px-5 text-sm"
           >
-            אשר
+            אישור
           </button>
         </div>
       </div>

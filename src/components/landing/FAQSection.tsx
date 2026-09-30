@@ -17,7 +17,15 @@ function guaranteeItem(): QA | null {
   if (!g) return null;
   return {
     q: "יש אחריות?",
-    a: `${g.headline} ${g.signalsLabel}: ${g.signals.join("; ")}. ${g.signalsNote} ${g.excludedLabel}: ${g.excluded.join(" ")} ${g.documentation}`,
+    a: [
+      g.headline,
+      `${g.signalsLabel}: ${g.signals.join("; ")}.`,
+      g.signalsNote,
+      `${g.excludedLabel}: ${g.excluded.join(" ")}`,
+      g.documentation,
+    ]
+      .filter(Boolean)
+      .join(" "),
   };
 }
 

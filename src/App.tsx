@@ -10,6 +10,7 @@ import ConsentBanner from "./components/ConsentBanner";
 // secondary routes loaded only when navigated to, so they ship in separate
 // chunks.
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Methodology = lazy(() => import("./pages/Methodology"));
 const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
@@ -89,6 +90,7 @@ const App = () => (
             <Route path="/insights/:slug" element={<InsightArticle />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/accessibility" element={<Accessibility />} />
             {CASE_INTAKE_ENABLED && CaseIntake && (
               <Route path="/case-intake" element={<CaseIntake />} />
             )}
