@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
+import { CorMark, CorSeal } from "@/components/brand/CorMark";
 
 /**
  * The one site-wide footer, used by every page (replacing the divergent
- * per-page footers). Ink, the same surface as the landing page's one dark band,
- * so the page ends on a closed back cover. Colors are hard-coded (not theme tokens)
- * so it renders identically wherever it's dropped, regardless of an ancestor
- * band. Landing-section links are deep links (/#…) so they work from any page
+ * per-page footers). Charcoal, the brand's SYS surface, so the page ends on a
+ * closed back cover with the seal on it. Colors are hard-coded to the cor-brand
+ * palette (not theme tokens) so it renders identically wherever it's dropped,
+ * regardless of an ancestor band. Measured on charcoal: clinical 15.0:1,
+ * mist 7.3:1. Landing-section links are deep links (/#…) so they work from any page
  * (Landing scrolls to the hash on mount).
  */
 
@@ -22,13 +24,16 @@ const LINKS = [
 const SiteFooter = () => (
   <footer
     dir="rtl"
-    className="border-t border-white/10 bg-[#16140F] text-[hsl(39_41%_92%)]"
+    className="border-t border-[#3A3A52] bg-[#1C1C2E] text-[#F5F2ED]"
   >
     <div className="mx-auto max-w-6xl px-6 py-12">
       <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
         <div className="space-y-1.5">
-          <p className="font-heading text-lg font-black">ארז טל-שיר</p>
-          <p className="text-xs leading-relaxed text-white/55">
+          <p className="flex items-center gap-2.5 font-heading text-lg font-black">
+            ארז טל-שיר
+            <CorMark className="h-[14px] w-[38px]" />
+          </p>
+          <p className="text-xs leading-relaxed text-[#ABA9B8]">
             עובד סוציאלי טכנולוגי. יועץ עסקי לעצמאים.
           </p>
         </div>
@@ -41,7 +46,7 @@ const SiteFooter = () => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm text-white/70 transition-colors hover:text-white"
+              className="text-sm text-[#ABA9B8] transition-colors hover:text-[#F5F2ED]"
             >
               {l.label}
             </Link>
@@ -49,7 +54,8 @@ const SiteFooter = () => (
         </nav>
       </div>
 
-      <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/45">
+      <div className="mt-10 flex flex-col items-center gap-4 border-t border-[#3A3A52] pt-8 text-center text-xs text-[#ABA9B8]">
+        <CorSeal id="cor-seal-footer" className="h-16 w-16 text-[#7DB3AE]" />
         © ארז טל-שיר, COR-SYS 2026
       </div>
     </div>

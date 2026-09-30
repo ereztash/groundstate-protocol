@@ -13,10 +13,16 @@ import type { GuaranteeVariant } from "@/data/guarantee";
 const GuaranteeBlock = ({
   variant,
   compact = false,
+  framed = true,
   className = "",
 }: {
   variant: GuaranteeVariant;
   compact?: boolean;
+  /**
+   * Its own sheet (true, /protocol), or a clause inside a larger document
+   * (false, the landing page's proposal).
+   */
+  framed?: boolean;
   className?: string;
 }) => {
   const headline = variant.amount ? (
@@ -52,52 +58,50 @@ const GuaranteeBlock = ({
     );
   }
 
+  // Set as a clause of a proposal (2026-09-30): the guarantee is a signed
+  // commitment, so it reads as one, in the document's type, rather than as a
+  // badge with a shield icon.
   return (
-    <div dir="rtl" className={`cor-card-featured p-6 md:p-8 ${className}`}>
-      <div className="flex items-start gap-4">
-        <ShieldCheck
-          aria-hidden="true"
-          className="mt-1 h-7 w-7 shrink-0 text-accent"
-        />
-        <div>
-          <p className="cor-overline-he">האחריות</p>
-          <p className="cor-heading mt-2 text-foreground">{headline}</p>
+    <div
+      dir="rtl"
+      className={`${framed ? "ld-sheet p-6 md:p-8" : ""} ${className}`}
+    >
+      <p className="text-xs font-bold tracking-[0.08em] text-primary">
+        סעיף אחריות
+      </p>
+      <p className="mt-2 font-heading text-lg font-bold leading-snug text-foreground sm:text-xl">
+        {headline}
+      </p>
 
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
-            <div className="border-s-2 border-primary/40 ps-4">
-              <p className="text-[11px] font-semibold tracking-wide text-primary">
-                {variant.signalsLabel}
-              </p>
-              <ul className="mt-1.5 space-y-1">
-                {variant.signals.map((s) => (
-                  <li key={s} className="text-sm leading-relaxed text-foreground/85">
-                    {s}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-2 text-xs text-muted-foreground">
-                {variant.signalsNote}
-              </p>
-            </div>
+      <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div className="border-s-2 border-primary/40 ps-4">
+          <p className="text-xs font-bold tracking-[0.08em] text-primary">
+            {variant.signalsLabel}
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {variant.signals.map((s) => (
+              <li key={s} className="text-sm leading-relaxed text-foreground/85">
+                {s}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-muted-foreground">{variant.signalsNote}</p>
+        </div>
 
-            <div className="border-s-2 border-border ps-4">
-              <p className="text-[11px] font-semibold tracking-wide text-muted-foreground">
-                {variant.excludedLabel}
-              </p>
-              <ul className="mt-1.5 space-y-1">
-                {variant.excluded.map((s) => (
-                  <li key={s} className="text-sm leading-relaxed text-foreground/85">
-                    {s}
-                  </li>
-                ))}
-              </ul>
-              {variant.documentation && (
-                <p className="mt-3 text-xs text-muted-foreground">
-                  {variant.documentation}
-                </p>
-              )}
-            </div>
-          </div>
+        <div className="border-s-2 border-border ps-4">
+          <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
+            {variant.excludedLabel}
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {variant.excluded.map((s) => (
+              <li key={s} className="text-sm leading-relaxed text-foreground/85">
+                {s}
+              </li>
+            ))}
+          </ul>
+          {variant.documentation && (
+            <p className="mt-3 text-xs text-muted-foreground">{variant.documentation}</p>
+          )}
         </div>
       </div>
     </div>

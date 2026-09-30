@@ -76,7 +76,7 @@ const PRINCIPLES = [
   },
 ];
 
-const DARK = "bg-[#16140F] text-[hsl(var(--background))]";
+const DARK = "bg-[#1C1C2E] text-[hsl(var(--background))]";
 
 const Methodology = () => {
   useDocumentMeta({
@@ -115,7 +115,7 @@ const Methodology = () => {
           />
           <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
                 המתודולוגיה
               </p>
               <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
@@ -204,7 +204,7 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#E07A52]">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
                 למה פרוטוקול
               </p>
               <h2

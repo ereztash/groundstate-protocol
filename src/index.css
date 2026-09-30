@@ -6,71 +6,84 @@
 @tailwind utilities;
 
 @layer base {
-  /* "The last draft" palette (2026-09-29). The site sells documents that hold,
-     so it is typeset like one: paper, ink, a fountain-pen blue for structure
-     and links, and one red editing pencil that means "act" and nothing else.
-     Contrast, measured: ink on paper 15.2:1, muted on paper 6.3:1, pen on
-     paper 9.9:1, pencil on paper 5.1:1, sheet text on pencil 5.9:1. */
+  /* COR-SYS palette, «הנקודה» (2026-09-30). The source of truth is the
+     cor-brand book (brand.json); change it there first. Two grounds and one
+     signal: warm paper (COR) for the documents, charcoal (SYS) for the bands
+     that diagnose, teal for structure, and copper for the decision and nothing
+     else. No blue, no pure black or white.
+     Contrast, measured: charcoal on paper 13.8:1, muted on paper 5.9:1,
+     teal on paper 5.1:1 (desk 4.6:1), copper-ink on paper 5.3:1 (desk 4.7:1),
+     charcoal on the copper button 4.8:1. Copper itself (#B87333) is 3.1:1 on
+     paper and 3.5:1 on the sheet, so it is used for marks and for figures of
+     24px and up, never for body text. */
   :root {
-    /* Paper #F3EDE2 */
-    --background: 39 41% 92%;
-    /* Ink #1B1813 */
-    --foreground: 38 17% 9%;
+    /* Paper #EFE9DD */
+    --background: 40 36% 90%;
+    /* Charcoal #1C1C2E */
+    --foreground: 240 24% 15%;
 
-    /* Sheet #FFFCF6: the lighter stock a finished document is printed on. */
-    --card: 40 100% 98%;
-    --card-foreground: 38 17% 9%;
+    /* Sheet #F7F4EE: the stock a finished document is printed on. */
+    --card: 40 36% 95%;
+    --card-foreground: 240 24% 15%;
 
-    --popover: 40 100% 98%;
-    --popover-foreground: 38 17% 9%;
+    --popover: 40 36% 95%;
+    --popover-foreground: 240 24% 15%;
 
-    /* Fountain-pen blue #1E3A60 (links / structure) */
-    --primary: 215 52% 25%;
-    --primary-foreground: 40 100% 98%;
+    /* Teal #2A6B6B: structure, links, labels. Never emphasis. */
+    --primary: 180 44% 29%;
+    --primary-foreground: 40 36% 95%;
 
-    --secondary: 39 30% 87%;
-    --secondary-foreground: 38 17% 9%;
+    /* Desk #E5DDCD */
+    --secondary: 40 32% 85%;
+    --secondary-foreground: 240 24% 15%;
 
-    --muted: 39 30% 88%;
-    /* #5C554A */
-    --muted-foreground: 37 11% 33%;
+    --muted: 40 32% 85%;
+    /* #56566A */
+    --muted-foreground: 240 10% 38%;
 
-    /* Editing pencil #B23A12 (the one action colour) */
-    --accent: 15 82% 38%;
-    --accent-foreground: 40 100% 98%;
+    /* Copper as text: #8A5123, legible at any size on paper and desk. */
+    --accent: 27 60% 34%;
+    --accent-foreground: 40 36% 95%;
 
-    --destructive: 0 60% 45%;
-    --destructive-foreground: 0 0% 100%;
+    /* Copper #B87333, the signal: the point, the price, the marks. */
+    --signal: 29 57% 46%;
+    /* The one button: copper #BE7A39 with charcoal text. */
+    --cta: 29 54% 48%;
+    --cta-foreground: 240 24% 15%;
 
-    /* Rule #D9CFBE */
-    --border: 38 26% 80%;
-    --input: 38 26% 76%;
-    --ring: 15 82% 38%;
+    /* Tourniquet #8B2500: loss and urgency only. */
+    --destructive: 16 100% 27%;
+    --destructive-foreground: 40 36% 95%;
+
+    /* Rule #D6CDBC */
+    --border: 39 24% 79%;
+    --input: 39 22% 70%;
+    --ring: 180 44% 29%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 39 41% 92%;
-    --sidebar-foreground: 38 17% 9%;
-    --sidebar-primary: 215 52% 25%;
-    --sidebar-primary-foreground: 40 100% 98%;
-    --sidebar-accent: 39 30% 88%;
-    --sidebar-accent-foreground: 38 17% 9%;
-    --sidebar-border: 38 26% 80%;
-    --sidebar-ring: 15 82% 38%;
+    --sidebar-background: 40 36% 90%;
+    --sidebar-foreground: 240 24% 15%;
+    --sidebar-primary: 180 44% 29%;
+    --sidebar-primary-foreground: 40 36% 95%;
+    --sidebar-accent: 40 32% 85%;
+    --sidebar-accent-foreground: 240 24% 15%;
+    --sidebar-border: 39 24% 79%;
+    --sidebar-ring: 180 44% 29%;
 
-    --crisis: 0 70% 45%;
-    --crisis-foreground: 0 0% 100%;
-    --glow: 15 82% 38%;
+    --crisis: 16 100% 27%;
+    --crisis-foreground: 40 36% 95%;
+    --glow: 29 57% 46%;
 
-    /* CTA accent token (pencil), kept in sync with --accent for AA contrast. */
-    --cor-opportunity: 15 82% 38%;
-    --cor-opportunity-foreground: 40 100% 98%;
-    --cor-success: 142 45% 30%;
-    --cor-success-foreground: 0 0% 100%;
-    --cor-warning: 38 80% 36%;
-    --cor-warning-foreground: 0 0% 100%;
-    --cor-insight: 215 52% 25%;
-    --cor-insight-foreground: 0 0% 100%;
+    /* Older components' action token, kept on the button's copper. */
+    --cor-opportunity: 29 54% 48%;
+    --cor-opportunity-foreground: 240 24% 15%;
+    --cor-success: 180 44% 29%;
+    --cor-success-foreground: 40 36% 95%;
+    --cor-warning: 27 60% 34%;
+    --cor-warning-foreground: 40 36% 95%;
+    --cor-insight: 180 44% 29%;
+    --cor-insight-foreground: 40 36% 95%;
 
     --dur-fast: 150ms;
     --dur-normal: 220ms;
@@ -78,48 +91,49 @@
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-align: cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  /* Ink band palette. Applied by wrapping a section in `.dark`: every
-     token-based utility (bg-background, text-foreground, border-border, …)
-     inside then resolves to these values, so the same components render on a
-     dark surface with no per-component changes. The pen blue is lightened for
-     legibility on ink (10.0:1). So is the pencil: the light-theme pencil
-     measures 3.07:1 on ink, under AA for the small labels that use it, so on
-     ink it is #E07A52 (6.2:1) and a pencil button carries ink text instead of
-     sheet text (6.2:1). Art direction per section, not a user-facing theme
-     toggle. */
+  /* SYS: the charcoal bands (hero, day 31, evidence, footer). Applied by
+     wrapping a section in `.dark`, so every token utility inside resolves to
+     these values with no per-component change. Measured on charcoal: clinical
+     white 15.0:1, muted 7.3:1, light teal 7.1:1, light copper 6.8:1, charcoal
+     on the copper button 4.8:1. Art direction per section, not a user theme. */
   .dark {
-    /* Ink #16140F */
-    --background: 43 19% 7%;
-    --foreground: 39 41% 92%;
+    /* Charcoal #1C1C2E */
+    --background: 240 24% 15%;
+    /* Clinical white #F5F2ED */
+    --foreground: 37 29% 95%;
 
-    --card: 40 16% 11%;
-    --card-foreground: 39 41% 92%;
+    /* #25253A */
+    --card: 240 22% 19%;
+    --card-foreground: 37 29% 95%;
 
-    --popover: 40 16% 11%;
-    --popover-foreground: 39 41% 92%;
+    --popover: 240 22% 19%;
+    --popover-foreground: 37 29% 95%;
 
-    --primary: 216 55% 78%;
-    --primary-foreground: 43 19% 7%;
+    /* Light teal #7DB3AE */
+    --primary: 174 26% 60%;
+    --primary-foreground: 240 24% 15%;
 
-    --secondary: 40 12% 16%;
-    --secondary-foreground: 39 41% 92%;
+    --secondary: 240 20% 21%;
+    --secondary-foreground: 37 29% 95%;
 
-    --muted: 40 12% 16%;
-    /* #B8AE9C, 8.4:1 on ink */
-    --muted-foreground: 39 16% 67%;
+    --muted: 240 20% 21%;
+    /* #ABA9B8 */
+    --muted-foreground: 248 10% 69%;
 
-    /* #E07A52 */
-    --accent: 16 70% 60%;
-    --accent-foreground: 43 19% 7%;
+    /* Light copper #D39A62 */
+    --accent: 30 56% 61%;
+    --accent-foreground: 240 24% 15%;
 
-    --destructive: 0 62% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 16 70% 60%;
+    --destructive-foreground: 240 24% 15%;
 
-    --border: 40 10% 24%;
-    --input: 40 10% 26%;
-    --ring: 216 55% 78%;
+    /* #3A3A52 */
+    --border: 240 17% 27%;
+    --input: 240 17% 30%;
+    --ring: 174 26% 60%;
   }
 }
 
@@ -134,7 +148,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Assistant', sans-serif;
+    font-family: 'Heebo', sans-serif;
     font-feature-settings: 'kern';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -157,14 +171,14 @@
 
 @layer components {
   .cor-display {
-    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-family: 'Frank Ruhl Libre', 'Heebo', serif;
     font-size: clamp(2.125rem, 6.2vw, 4.25rem);
     font-weight: 900;
     line-height: 1.08;
     letter-spacing: -0.025em;
   }
   .cor-title {
-    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-family: 'Frank Ruhl Libre', 'Heebo', serif;
     font-size: clamp(1.75rem, 3.6vw, 2.625rem);
     font-weight: 900;
     line-height: 1.15;
@@ -214,7 +228,7 @@
   /* Form field numeric prefix (01., 02., ...). Structural label, not action. */
   .field-num {
     display: inline-block;
-    font-family: 'Assistant', monospace;
+    font-family: 'Heebo', monospace;
     font-size: 0.6875rem;
     font-weight: 500;
     letter-spacing: 0.06em;
@@ -241,7 +255,7 @@
      Teal carries "ordered structure", which is what these numbers mean. */
   .stage-numeral {
     display: inline-block;
-    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-family: 'Frank Ruhl Libre', 'Heebo', serif;
     font-size: clamp(2.5rem, 4.5vw, 3.25rem);
     font-weight: 500;
     line-height: 1;
@@ -264,7 +278,7 @@
     position: absolute;
     right: -0.05em;
     top: -0.45em;
-    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-family: 'Frank Ruhl Libre', 'Heebo', serif;
     font-size: 3.75rem;
     font-weight: 900;
     color: hsl(var(--accent) / 0.35);
@@ -488,7 +502,7 @@
   .animate-text-shrink { animation: text-shrink 2s ease-out forwards; }
 
   .font-display {
-    font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+    font-family: 'Frank Ruhl Libre', 'Heebo', serif;
     font-weight: 500;
     letter-spacing: -0.03em;
   }
@@ -584,14 +598,14 @@
   opacity: var(--n, 0);
 }
 .cor-trace__num {
-  font-family: 'Assistant', sans-serif;
+  font-family: 'Heebo', sans-serif;
   font-size: 12px;
   font-weight: 400;
   font-feature-settings: 'tnum' on;
   fill: hsl(var(--primary) / 0.5);
 }
 .cor-trace__verb {
-  font-family: 'Assistant', sans-serif;
+  font-family: 'Heebo', sans-serif;
   font-size: 13px;
   font-weight: 600;
   fill: hsl(var(--primary));
@@ -645,15 +659,16 @@
 .cor-reveal-group.is-shown .cor-reveal-item:nth-child(9) { --reveal-delay: 0.4s; }
 .cor-reveal-group.is-shown .cor-reveal-item:nth-child(n + 10) { --reveal-delay: 0.45s; }
 
-/* ── The last draft (landing, 2026-09-29) ─────────────────────────────────
-   The reader arrives on version fifteen of "who am I". The page shows the
-   drafts struck through in pencil and the one sheet that survives, and then
-   sells the four sheets she will leave with. Paper, ink, one pencil.
+/* ── Landing: documents on paper, diagnosis on charcoal ───────────────────
+   Rebuilt 2026-09-29, re-set in the COR-SYS brand 2026-09-30 (the cor-brand
+   book, «הנקודה»). The documents the reader leaves with sit on paper; the
+   bands that diagnose (hero, day 31, evidence) sit on charcoal; copper marks
+   the one decision in each frame.
 
    Motion is CSS only and finishes in under two seconds. Nothing the reader
    needs to read is ever animated from invisible: the headline, the price and
    every CTA paint in their final state, so the prerendered HTML is already
-   the page. Only the decorative drafts draw in. */
+   the page. Only the decorative signal field settles in. */
 
 /* Paper grain. A 160px feTurbulence tile at 6% alpha, inlined, no request. */
 .ld-paper {
@@ -686,45 +701,6 @@
   transform: rotate(var(--tilt, 0deg));
 }
 
-/* The pencil stroke through a draft. A hand-wobbled line drawn as a background
-   on the inline text, so it covers the words and not the empty width of the
-   slip, and box-decoration-break strikes every wrapped line on its own. It
-   grows from the right, the direction the line was written in. The colour is
-   the pencil token, spelled out because a data URI cannot read a variable. */
-.ld-struck {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 6 C 18 3, 34 8, 52 5 S 84 3, 100 6' fill='none' stroke='%23B23A12' stroke-width='2' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 58%;
-  background-size: 0% 0.75em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  animation: ld-strike-grow 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  animation-delay: var(--d, 0ms);
-}
-@keyframes ld-strike-grow {
-  to {
-    background-size: 100% 0.75em;
-  }
-}
-
-/* The surviving sheet slides onto the stack once the strikes are done. It is
-   decorative (the same sentence is not the page's claim), so an entrance from
-   partial opacity costs nothing a reader needs. */
-.ld-arrive {
-  animation: ld-arrive 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  animation-delay: var(--d, 0ms);
-}
-@keyframes ld-arrive {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0) rotate(-2.5deg);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) rotate(var(--tilt, 0deg));
-  }
-}
-
 /* Hand marks in the margin: circles, arrows, ticks. */
 .ld-mark {
   fill: none;
@@ -734,7 +710,9 @@
   stroke-linejoin: round;
 }
 
-/* The one button. Pencil fill, square-ish corners, a letterpress inset. */
+/* The one button. Copper fill with charcoal text (4.8:1 on both grounds),
+   square-ish corners, a letterpress inset. The same copper as the point: the
+   button is where the reader makes the decision the point stands for. */
 .ld-cta {
   display: inline-flex;
   align-items: center;
@@ -743,22 +721,22 @@
   min-height: 3.5rem;
   padding: 0 1.75rem;
   border-radius: 3px;
-  background: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background: hsl(var(--cta));
+  color: hsl(var(--cta-foreground));
   font-size: 1.0625rem;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
   box-shadow:
-    inset 0 -2px 0 hsl(0 0% 0% / 0.2),
-    0 14px 26px -16px hsl(var(--accent) / 0.75);
+    inset 0 -2px 0 hsl(240 24% 15% / 0.22),
+    0 14px 26px -16px hsl(var(--signal) / 0.8);
   transition:
     transform var(--dur-fast) var(--ease-out),
     background var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
 }
 .ld-cta:hover {
-  background: hsl(15 82% 33%);
+  background: hsl(29 57% 52%);
   transform: translateY(-1px);
 }
 .ld-cta:active {
@@ -769,13 +747,13 @@
   outline-offset: 3px;
 }
 .dark .ld-cta:hover {
-  background: hsl(16 70% 66%);
+  background: hsl(29 57% 52%);
 }
 .dark .ld-cta:focus-visible {
   outline-color: hsl(var(--foreground));
 }
 
-/* Secondary action: pen-blue text with a ruled underline. */
+/* Secondary action: teal text with a ruled underline. */
 .ld-link {
   color: hsl(var(--primary));
   font-weight: 700;
@@ -808,16 +786,19 @@
   display: inline-block;
   direction: ltr;
   unicode-bidi: isolate;
-  font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
   font-weight: 900;
   font-size: clamp(3.25rem, 9vw, 5rem);
   line-height: 1;
   letter-spacing: -0.03em;
+  /* Copper, the one figure on the page that is the decision itself. 3.5:1 on
+     the sheet at 52px and up (large text needs 3:1). */
+  color: hsl(var(--signal));
 }
 
 /* Large folio numeral on each document (1–4). */
 .ld-folio {
-  font-family: 'Frank Ruhl Libre', 'Assistant', serif;
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
   font-weight: 900;
   font-size: 3rem;
   line-height: 0.9;
@@ -835,14 +816,245 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ld-struck {
-    animation: none;
-    background-size: 100% 0.75em;
-  }
-  .ld-arrive {
-    animation: none;
-  }
   .ld-cta:hover {
     transform: none;
   }
+}
+
+/* ── The last draft, v2: layers and composition (2026-09-30) ──────────────
+   Four planes, back to front: the desk (a darker surface the documents lie
+   on), the sheets (stacked, so each document has physical depth), the marks
+   (stamp, seal, signature line), and the text. Sections alternate surface
+   so the page has rhythm instead of one repeated card grid. */
+
+/* The desk: where the four documents and the proposal lie. #E5DDCD.
+   Measured on it: charcoal 12.4:1, muted 5.3:1, teal 4.6:1, copper-ink 4.7:1. */
+.ld-desk {
+  background-color: hsl(40 32% 85%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* A white "document" band for the section that is itself a record. */
+.ld-band-sheet {
+  background: hsl(var(--card));
+}
+
+/* A stack of sheets: two pages peeking from under the top one. Pseudo-elements
+   sit behind the card inside its own stacking context, so they never cover a
+   neighbour. Pure decoration; nothing here is read. */
+.ld-stack {
+  position: relative;
+  isolation: isolate;
+}
+.ld-stack::before,
+.ld-stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 2px;
+}
+.ld-stack::before {
+  transform: translate(-5px, 6px) rotate(-1.1deg);
+  box-shadow: 0 10px 24px -18px hsl(var(--foreground) / 0.35);
+}
+.ld-stack::after {
+  transform: translate(4px, 11px) rotate(0.9deg);
+  opacity: 0.85;
+}
+
+/* Running head: a chapter number in the display face, the section label, and
+   a hairline to the edge of the column. Gives the page a printed structure. */
+.ld-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  color: hsl(var(--primary));
+}
+.ld-head__n {
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 900;
+  font-size: 1.125rem;
+  color: hsl(var(--accent));
+  font-feature-settings: 'lnum' on;
+}
+.ld-head__label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.ld-head__rule {
+  flex: 1;
+  height: 1px;
+  align-self: center;
+  background: currentColor;
+  opacity: 0.25;
+}
+/* The rule ends in the point: every section head carries the signature. */
+.ld-head__point {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  align-self: center;
+  border-radius: 9999px;
+  background: hsl(var(--signal));
+}
+
+/* A rubber stamp, pressed once. Structure teal, double border, off true. */
+.ld-stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.5rem 0.875rem;
+  border: 3px double hsl(var(--primary) / 0.8);
+  border-radius: 4px;
+  color: hsl(var(--primary));
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  transform: rotate(-6deg);
+}
+@supports (animation-timeline: view()) {
+  .ld-stamp {
+    animation: ld-press linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 70%;
+  }
+}
+@keyframes ld-press {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) scale(1.35);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-6deg) scale(1);
+  }
+}
+
+/* Proposal document: line items with dotted leaders, a total, a signature. */
+.ld-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.ld-line__leader {
+  flex: 1;
+  border-bottom: 1px dotted hsl(var(--foreground) / 0.3);
+  transform: translateY(-0.3em);
+}
+.ld-sign {
+  border-top: 1px solid hsl(var(--foreground) / 0.5);
+  padding-top: 0.375rem;
+}
+
+/* The copper underline on the diagnosis draws as it scrolls into view where
+   scroll-driven animations exist; everywhere else it is simply drawn. */
+.ld-underline {
+  background-image: linear-gradient(hsl(var(--signal)), hsl(var(--signal)));
+  background-repeat: no-repeat;
+  background-position: right 100%;
+  background-size: 100% 3px;
+  padding-bottom: 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@supports (animation-timeline: view()) {
+  .ld-underline {
+    animation: ld-underline-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 40% cover 45%;
+  }
+}
+@keyframes ld-underline-draw {
+  from {
+    background-size: 0% 3px;
+  }
+  to {
+    background-size: 100% 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-stamp,
+  .ld-underline {
+    animation: none;
+  }
+  .ld-stamp {
+    opacity: 1;
+  }
+}
+
+/* ── COR-SYS brand marks (cor-brand book, 2026-09-30) ─────────────────────
+   One grammar everywhere: strokes that align toward a copper point. The
+   point closes the main headline, ends every section head's rule, sits in
+   the mark beside the name, and is the focus of the hero's field. */
+
+/* The last full stop of a headline, in copper: <span class="cor-point">.</span> */
+.cor-point {
+  color: hsl(var(--signal));
+}
+
+/* The signal field (hero). Every stroke starts scattered and settles once,
+   pointing at the one copper point: many vectors, one purpose. Each line
+   carries its start angle (--a0), its resting angle toward the point (--a1)
+   and a delay (--d) that grows with distance from the point, so the order
+   spreads outward from it. The values are seeded, so the prerendered markup
+   and the hydrated markup are identical; with reduced motion the lines are
+   simply drawn at rest. */
+.cor-field line {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(var(--a1));
+}
+.cor-field__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cor-field line {
+    animation: cor-align 1.1s var(--ease-align) var(--d, 0ms) both;
+  }
+  .cor-field__ring {
+    animation: cor-ring 1.3s var(--ease-align) 0.8s both;
+  }
+}
+@keyframes cor-align {
+  from {
+    transform: rotate(var(--a0));
+    opacity: 0.2;
+  }
+  to {
+    transform: rotate(var(--a1));
+    opacity: 1;
+  }
+}
+@keyframes cor-ring {
+  from {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* The diagnostic screen: a structure-teal grid under the evidence band. */
+.cor-blueprint {
+  background-image:
+    linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+
+/* The seal, pressed on the proposal beside the signature. */
+.cor-seal {
+  color: hsl(var(--primary));
+  transform: rotate(-8deg);
 }

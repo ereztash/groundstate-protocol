@@ -3,6 +3,7 @@ import { CALENDLY_URL } from "@/lib/calendly";
 import { trackEvent } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
+import SectionHead from "./SectionHead";
 
 const BookingSection = lazy(() => import("./BookingSection"));
 const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
@@ -103,11 +104,11 @@ const BookSection = () => {
       id="book"
       dir="rtl"
       aria-labelledby="book-title"
-      className="ld-section scroll-mt-14 border-t border-foreground/10"
+      className="ld-section ld-desk scroll-mt-14"
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <p className="cor-overline-he">הצעד הבא</p>
+          <SectionHead n="08" label="הצעד הבא" />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
             שיחת התאמה. 20 דקות, ללא עלות.
           </h2>

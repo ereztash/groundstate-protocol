@@ -1,4 +1,5 @@
 import { outreachCount } from "@/data/sprint-stages";
+import SectionHead from "./SectionHead";
 
 /**
  * The scene after the sprint ends, and the one ink band on the landing page.
@@ -27,12 +28,12 @@ const Day31Section = () => (
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-16">
         <div>
-          <p className="cor-overline-he">אחרי</p>
+          <SectionHead n="03" label="אחרי" />
           <h2
             id="day-31-title"
             className="mt-4 font-heading text-[4.5rem] font-black leading-none tracking-tight sm:text-[6.5rem]"
           >
-            יום 31.
+            יום 31<span className="cor-point">.</span>
           </h2>
         </div>
 

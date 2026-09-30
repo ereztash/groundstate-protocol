@@ -8,10 +8,17 @@ import { activeGuarantee } from "@/data/guarantee";
  * commitment, so which variant ships is Erez's call; he chose the wording of
  * his signed proposal on 2026-09-29. See src/data/guarantee.ts.
  */
-const GuaranteeBand = ({ className }: { className?: string }) => {
+const GuaranteeBand = ({
+  className,
+  framed,
+}: {
+  className?: string;
+  /** Passed through to GuaranteeBlock: false sets it as a clause. */
+  framed?: boolean;
+}) => {
   const variant = activeGuarantee();
   if (!variant) return null;
-  return <GuaranteeBlock variant={variant} className={className} />;
+  return <GuaranteeBlock variant={variant} framed={framed} className={className} />;
 };
 
 export default GuaranteeBand;
