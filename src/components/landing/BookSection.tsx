@@ -110,7 +110,7 @@ const BookSection = () => {
         <div className="max-w-2xl">
           <SectionHead n="08" label="הצעד הבא" />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
-            שיחת התאמה. 20 דקות, ללא עלות.
+            שיחת התאמה. 30 דקות, ללא עלות.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground">
             אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי
@@ -124,7 +124,7 @@ const BookSection = () => {
         <div className="mt-10 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div className="order-2 lg:order-1">
             <p className="font-heading text-lg font-black text-foreground">
-              מה קורה בעשרים הדקות
+              מה קורה בשלושים הדקות
             </p>
             <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
               {STATIONS.map((s, i) => (

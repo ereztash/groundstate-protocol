@@ -233,7 +233,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                     id="diagnostic-form-title"
                     className="cor-title text-foreground"
                   >
-                    שיחת התאמה: 20 דקות, ללא עלות
+                    שיחת התאמה: 30 דקות, ללא עלות
                   </h2>
                   {/* Was "אני חוזר אליך תוך 24 שעות". The form does not impose a
                       wait: on success this section renders BookingSection, which is
@@ -555,7 +555,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                         worry: length, whether this is a pitch, and whether
                         anything is about to be charged. */}
                     <p className="text-center text-xs leading-relaxed text-muted-foreground">
-                      20 דקות. בלי מצגת. בלי כרטיס אשראי.
+                      30 דקות. בלי מצגת. בלי כרטיס אשראי.
                     </p>
                   </div>
                 </form>

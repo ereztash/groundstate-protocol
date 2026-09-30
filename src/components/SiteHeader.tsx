@@ -84,7 +84,7 @@ const SiteHeader = () => {
             onClick={onCta}
             className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
           >
-            שיחת התאמה, 20 דקות
+            שיחת התאמה, 30 דקות
           </Link>
           <button
             type="button"

@@ -132,7 +132,7 @@ const Methodology = () => {
                   to="/#book"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  לתיאום שיחת התאמה, 20 דקות, בלי לחץ
+                  לתיאום שיחת התאמה, 30 דקות, בלי לחץ
                 </Link>
               </div>
             </Reveal>
@@ -270,7 +270,7 @@ const Methodology = () => {
                 to="/#book"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                לתיאום שיחת התאמה, 20 דקות, בלי לחץ
+                לתיאום שיחת התאמה, 30 דקות, בלי לחץ
               </Link>
             </div>
           </Reveal>

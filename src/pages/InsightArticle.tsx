@@ -152,14 +152,14 @@ const InsightArticle = () => {
               annual cost estimate, the hero as a fit assessment; one call,
               one description. */}
           <p className="mt-3 text-sm leading-relaxed text-foreground">
-            שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
+            שיחה בת 30 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
             הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
           </p>
           <Link
             to="/#book"
             className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
           >
-            לתיאום שיחת התאמה, 20 דקות, בלי לחץ
+            לתיאום שיחת התאמה, 30 דקות, בלי לחץ
           </Link>
         </Reveal>
 
