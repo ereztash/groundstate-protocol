@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { activeGuarantee } from "@/data/guarantee";
 import { faq as items, surfacedObjections, type QA } from "@/data/faq";
+import SectionHead from "./SectionHead";
 
 /**
  * The guarantee answer only appears when a variant is live. Until then the
@@ -49,7 +50,7 @@ const FAQSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <p className="cor-overline-he">שאלות</p>
+      <SectionHead n="07" label="שאלות" />
       <h2 id="faq-title" className="cor-title mt-4 max-w-2xl text-foreground">
         מה שואלים לפני שקובעים.
       </h2>

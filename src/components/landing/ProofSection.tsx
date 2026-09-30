@@ -1,5 +1,6 @@
 import { testimonials, type Testimonial } from "@/lib/clients";
 import VideoTestimonial from "./VideoTestimonial";
+import SectionHead from "./SectionHead";
 
 /**
  * Three people who worked with Erez, in their own words.
@@ -74,7 +75,7 @@ const ProofSection = () => (
     className="ld-section"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <p className="cor-overline-he">בלשונם</p>
+      <SectionHead n="04" label="בלשונם" />
       <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">
         מה אמרו שלושה אנשים שעבדו איתי.
       </h2>

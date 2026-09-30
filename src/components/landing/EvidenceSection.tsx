@@ -2,8 +2,18 @@ import EvidenceTag from "@/components/EvidenceTag";
 import { claims } from "@/data/claims";
 import { EVIDENCE_MEANING } from "@/lib/evidence";
 import { preRegistration as pre } from "@/data/preRegistration";
+import SectionHead from "./SectionHead";
 
 const ROWS = [pre.window, pre.measures, pre.cohort, pre.reporting] as const;
+
+/**
+ * The two figures the composition sets large, read out of the data rather than
+ * re-typed: the threshold percentage and the end of the measurement window.
+ * If either sentence is reworded so the pattern no longer matches, the large
+ * figure simply does not render and the sentence still does.
+ */
+const THRESHOLD = pre.failureThreshold.value.match(/\d+%/)?.[0] ?? null;
+const WINDOW_END = pre.window.value.match(/\d{2}\/\d{4}/)?.[0] ?? null;
 
 /**
  * What has been checked, what has not, and the commitment to find out, on the
@@ -25,11 +35,11 @@ const EvidenceSection = () => (
     id="evidence"
     dir="rtl"
     aria-labelledby="evidence-title"
-    className="ld-section border-t border-foreground/10"
+    className="ld-section ld-band-sheet border-y border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="max-w-2xl">
-        <p className="cor-overline-he">מה נבדק, ומה עוד לא</p>
+        <SectionHead n="05" label="מה נבדק, ומה עוד לא" />
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
           מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
         </h2>
@@ -42,7 +52,7 @@ const EvidenceSection = () => (
 
       <div className="mt-10 grid gap-5 md:grid-cols-2">
         {claims.map((c) => (
-          <div key={c.id} className="ld-sheet flex flex-col p-6 sm:p-7">
+          <div key={c.id} className="flex flex-col border border-border bg-background/60 p-6 sm:p-7">
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
                 {c.label}
@@ -85,10 +95,24 @@ const EvidenceSection = () => (
         {/* The threshold stands apart at full weight: the one line a reader
             would most want softened, and the only one that costs anything to
             say. */}
-        <div className="ld-sheet self-start border-s-4 border-s-accent p-6 sm:p-7">
+        <div className="relative self-start border border-border border-s-4 border-s-accent bg-background p-6 pt-8 sm:p-7 sm:pt-9">
+          {WINDOW_END && (
+            <span className="ld-stamp absolute -top-5 end-5 bg-background text-[11px]" aria-hidden="true">
+              <span>נרשם מראש</span>
+              <span className="font-heading text-sm">עד {WINDOW_END}</span>
+            </span>
+          )}
           <p className="text-xs font-bold tracking-[0.08em] text-accent">
             {pre.failureThreshold.label}
           </p>
+          {THRESHOLD && (
+            <p
+              className="mt-2 font-heading text-[4.5rem] font-black leading-none text-foreground"
+              aria-hidden="true"
+            >
+              <span dir="ltr">{THRESHOLD}</span>
+            </p>
+          )}
           <p className="mt-3 font-heading text-xl font-black leading-snug text-foreground">
             {pre.failureThreshold.value}
           </p>

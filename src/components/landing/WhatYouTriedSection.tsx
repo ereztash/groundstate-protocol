@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import SectionHead from "./SectionHead";
 
 /**
  * The four symptoms, set as four notes pinned side by side, then the one
@@ -47,7 +48,7 @@ const WhatYouTriedSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <p className="cor-overline-he">למה הגעתם לכאן</p>
+      <SectionHead n="01" label="למה הגעתם לכאן" />
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
         מבריקים על הלקוחות שלכם. נתקעים על עצמכם.
       </h2>
@@ -67,7 +68,7 @@ const WhatYouTriedSection = () => (
         <p className="font-heading text-[1.625rem] font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
           ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
           אחד:{" "}
-          <span className="underline decoration-accent decoration-[3px] underline-offset-[0.28em]">
+          <span className="ld-underline">
             עוד לא תרגמתם את מה שאתם יודעים לשפה שהלקוח שלכם משלם עליה.
           </span>
         </p>
