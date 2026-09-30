@@ -59,20 +59,20 @@ const WhatYouTriedSection = () => (
             <span className="font-heading text-sm font-black text-accent" aria-hidden="true">
               {i + 1}.
             </span>
-            <p className="mt-2 leading-relaxed text-foreground/85">{note}</p>
+            <p className="mt-2 leading-relaxed text-foreground">{note}</p>
           </li>
         ))}
       </ul>
 
       <div className="mt-14 max-w-4xl">
-        <p className="font-heading text-[1.625rem] font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
+        <p className="font-heading text-2xl font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
           ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
           אחד:{" "}
           <span className="ld-underline">
             עוד לא תרגמתם את מה שאתם יודעים לשפה שהלקוח שלכם משלם עליה.
           </span>
         </p>
-        <p className="cor-body-lg mt-6 max-w-2xl text-foreground/80">
+        <p className="cor-body-lg mt-6 max-w-2xl text-foreground">
           וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא
           מבינים למה דווקא אתם, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
           מתרגם, הוא רק מייקר.

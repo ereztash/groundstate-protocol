@@ -7,7 +7,8 @@ import { CorMark, CorSeal } from "@/components/brand/CorMark";
  * closed back cover with the seal on it. Colors are hard-coded to the cor-brand
  * palette (not theme tokens) so it renders identically wherever it's dropped,
  * regardless of an ancestor band. Measured on charcoal: clinical 15.0:1,
- * mist 7.3:1. Landing-section links are deep links (/#…) so they work from any page
+ * mist #D2D0DB 11.0:1 (APCA Lc 77; the pilot found #ABA9B8, Lc 55, hard to read).
+ * Landing-section links are deep links (/#…) so they work from any page
  * (Landing scrolls to the hash on mount).
  */
 
@@ -33,7 +34,7 @@ const SiteFooter = () => (
             ארז טל-שיר
             <CorMark className="h-[14px] w-[38px]" />
           </p>
-          <p className="text-xs leading-relaxed text-[#ABA9B8]">
+          <p className="text-xs leading-relaxed text-[#D2D0DB]">
             עובד סוציאלי טכנולוגי. יועץ עסקי לעצמאים.
           </p>
         </div>
@@ -46,7 +47,7 @@ const SiteFooter = () => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm text-[#ABA9B8] transition-colors hover:text-[#F5F2ED]"
+              className="text-sm text-[#D2D0DB] transition-colors hover:text-[#F5F2ED]"
             >
               {l.label}
             </Link>
@@ -54,8 +55,8 @@ const SiteFooter = () => (
         </nav>
       </div>
 
-      <div className="mt-10 flex flex-col items-center gap-4 border-t border-[#3A3A52] pt-8 text-center text-xs text-[#ABA9B8]">
-        <CorSeal id="cor-seal-footer" className="h-16 w-16 text-[#7DB3AE]" />
+      <div className="mt-10 flex flex-col items-center gap-4 border-t border-[#3A3A52] pt-8 text-center text-xs text-[#D2D0DB]">
+        <CorSeal id="cor-seal-footer" className="h-16 w-16 text-[#B3D6D2]" />
         © ארז טל-שיר, COR-SYS 2026
       </div>
     </div>

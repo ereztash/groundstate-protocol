@@ -92,7 +92,7 @@ const BookSection = () => {
       className={`flex-1 rounded-sm px-4 py-3 text-sm font-bold transition-colors ${
         mode === value
           ? "bg-foreground text-background"
-          : "text-foreground/70 hover:text-foreground"
+          : "text-muted-foreground hover:text-foreground"
       }`}
     >
       {label}
@@ -112,7 +112,7 @@ const BookSection = () => {
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
             שיחת התאמה. 20 דקות, ללא עלות.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground/80">
+          <p className="cor-body-lg mt-5 text-foreground">
             אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי
             לבזבז לאף אחד את הזמן.
           </p>
@@ -132,7 +132,7 @@ const BookSection = () => {
                   <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
                     תחנה {i + 1}
                   </p>
-                  <p className="mt-1 leading-relaxed text-foreground/85">
+                  <p className="mt-1 leading-relaxed text-foreground">
                     <strong className="font-bold text-foreground">
                       {s.title}
                     </strong>{" "}
@@ -150,7 +150,7 @@ const BookSection = () => {
             <p className="text-xs font-bold tracking-[0.08em] text-primary">
               שאלה אחת להביא לשיחה
             </p>
-            <p className="mt-2 font-heading text-lg font-bold leading-snug text-foreground">
+            <p className="mt-2 text-lg font-bold leading-snug text-foreground">
               אם מישהו אחר נותן בדיוק את אותו שירות, למה שיבחרו בכם?
             </p>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -61,7 +61,7 @@ const OfferSection = () => {
           <h2 id="offer-title" className="cor-title mt-4 text-foreground">
             ארבעה שבועות. ארבעה מסמכים. כל אחד נבנה על הקודם.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground/80">
+          <p className="cor-body-lg mt-5 text-foreground">
             בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. מבנה שנבנה תחת
             עומס נשאר, ומבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ מכם את הניסוח,
             ולא נותן לכם אותו.
@@ -97,7 +97,7 @@ const OfferSection = () => {
                 <span className="sr-only">שבוע {i + 1}: </span>
                 {s.buyerTitle}
               </h3>
-              <p className="mt-2 leading-relaxed text-foreground/80">
+              <p className="mt-2 leading-relaxed text-foreground">
                 {s.deliverable}
               </p>
               <p className="mt-3 font-semibold leading-relaxed text-primary">
@@ -105,10 +105,10 @@ const OfferSection = () => {
               </p>
 
               <figure className="mt-auto pt-6">
-                <blockquote className="border-s-2 border-accent/70 ps-4 font-heading text-[15px] leading-snug text-foreground/85">
+                <blockquote className="border-s-2 border-accent/70 ps-4 text-base leading-snug text-foreground">
                   {s.artifact.sample}
                 </blockquote>
-                <figcaption className="mt-2 ps-4 text-[11px] text-muted-foreground">
+                <figcaption className="mt-2 ps-4 text-xs text-muted-foreground">
                   {s.artifact.docLabel} · {SAMPLE_SOURCE_LABEL[s.artifact.sampleSource]}
                 </figcaption>
               </figure>
@@ -132,7 +132,7 @@ const OfferSection = () => {
 
           <div className="mt-6 grid gap-10 md:grid-cols-[1.25fr_0.75fr] md:gap-14">
             <div>
-              <ul className="space-y-3 text-foreground/85">
+              <ul className="space-y-3 text-foreground">
                 {LINE_ITEMS.map((item) => (
                   <li key={item} className="ld-line">
                     <span>{item}</span>

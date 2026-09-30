@@ -4,7 +4,7 @@ export const CALENDLY_URL =
 export const CALENDLY_PAGE_SETTINGS = {
   backgroundColor: "F7F4EE",
   textColor: "1C1C2E",
-  primaryColor: "8A5123",
+  primaryColor: "1C1C2E",
   hideEventTypeDetails: false,
   hideLandingPageDetails: false,
   hideGdprBanner: false,

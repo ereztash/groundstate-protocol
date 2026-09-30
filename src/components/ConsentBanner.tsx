@@ -63,7 +63,7 @@ const ConsentBanner = () => {
       className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-relaxed text-foreground/80">
+        <p className="text-sm leading-relaxed text-foreground">
           אני משתמש בכלי ניתוח (Google Analytics, Microsoft Clarity) כדי לשפר את
           האתר, הם נטענים רק לאחר אישור.{" "}
           <Link to="/privacy" className="text-link">

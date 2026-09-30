@@ -92,7 +92,7 @@ const VideoTestimonial = () => {
         <div className="flex items-center gap-3 border-t border-border pt-4">
           <span
             aria-hidden="true"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground/[0.04] text-sm font-semibold text-foreground/70 ring-1 ring-border"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground/[0.04] text-sm font-semibold text-muted-foreground ring-1 ring-border"
           >
             גכ
           </span>

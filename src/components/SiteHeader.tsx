@@ -88,7 +88,7 @@ const SiteHeader = () => {
           </Link>
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground/75 transition-colors hover:text-foreground md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground md:hidden"
             aria-label={open ? "סגירת תפריט" : "פתיחת תפריט"}
             aria-expanded={open}
             aria-controls="site-nav-mobile"
@@ -117,7 +117,7 @@ const SiteHeader = () => {
                 <NavLink
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="block rounded-sm px-2 py-3 text-sm font-semibold text-foreground/75 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                  className="block rounded-sm px-2 py-3 text-sm font-semibold text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
                   activeClassName="text-foreground"
                 >
                   {item.label}

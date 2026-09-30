@@ -213,7 +213,7 @@ const About = () => {
                   )}
                   <p
                     className={`${
-                      step.title ? "mt-4 cor-body-lg text-foreground/80" : "cor-title text-foreground"
+                      step.title ? "mt-4 cor-body-lg text-foreground" : "cor-title text-foreground"
                     }`}
                   >
                     {step.body}
@@ -239,7 +239,7 @@ const About = () => {
             <p className="cor-heading text-foreground">
               רוצים לבדוק מאיפה נכון להתחיל?
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+            <p className="mt-3 text-sm leading-relaxed text-foreground">
               שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
               הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
             </p>

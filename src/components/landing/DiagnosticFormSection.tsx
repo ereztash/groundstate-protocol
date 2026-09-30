@@ -241,14 +241,14 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       there. The copy was selling a day of latency the product does
                       not have, and it is read before the decision to fill the form
                       at all. Describe what actually happens. */}
-                  <p className="cor-body-lg text-foreground/80">
+                  <p className="cor-body-lg text-foreground">
                     מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
                   </p>
                   <SpotsLeft className="text-sm text-muted-foreground" />
 
                   <ul
                     aria-label="מה תקבלו מהשיחה"
-                    className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground/85"
+                    className="mt-4 space-y-2 rounded-md border border-border/80 bg-background/50 p-4 text-sm text-foreground"
                   >
                     <li className="flex items-start gap-2.5">
                       <span aria-hidden="true" className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary" />
@@ -269,7 +269,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       only available choice was to leave. Naming both paths, and
                       naming the cost of the first one honestly, leaves the decision
                       with them rather than pushing. */}
-                  <p className="mt-5 text-sm leading-relaxed text-foreground/80">
+                  <p className="mt-5 text-sm leading-relaxed text-foreground">
                     יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
                     ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעו מאיזה
                     שלב להתחיל. ההחלטה שלכם בלבד.
@@ -390,7 +390,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                                 className={`flex cursor-pointer items-center gap-2.5 rounded-md border bg-card px-4 py-3 text-sm transition-colors ${
                                   field.value === opt.value
                                     ? "border-primary bg-primary/5 text-foreground"
-                                    : "border-border text-foreground/85 hover:border-foreground/40"
+                                    : "border-border text-foreground hover:border-foreground/40"
                                 }`}
                               >
                                 <input
@@ -437,7 +437,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                   className="space-y-7"
                   noValidate
                 >
-                  <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground/85">
+                  <p className="rounded-md border border-border bg-card p-4 text-sm leading-relaxed text-foreground">
                     תודה. עוד שדה אחד וסיימנו. הטלפון הוא כדי לחזור אליכם. לא נרשמים לניוזלטר, והפרטים לא נמסרים לאף גורם שיווקי.
                   </p>
 

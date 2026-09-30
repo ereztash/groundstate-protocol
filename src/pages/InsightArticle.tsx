@@ -93,7 +93,7 @@ const InsightArticle = () => {
           <p className="cor-overline-he">תובנה</p>
           <h1 className="cor-display mt-4 text-foreground">{article.title}</h1>
           {article.subtitle && (
-            <p className="cor-body-lg mt-4 text-foreground/70">{article.subtitle}</p>
+            <p className="cor-body-lg mt-4 text-muted-foreground">{article.subtitle}</p>
           )}
           <p className="mt-4 text-sm text-muted-foreground">
             <span>ארז טל-שיר</span>
@@ -108,7 +108,7 @@ const InsightArticle = () => {
           <div className="hairline my-8" />
 
           <div
-            className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-headings:tracking-tight prose-p:text-foreground/85 prose-p:leading-relaxed prose-strong:text-foreground prose-a:text-primary"
+            className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-headings:tracking-tight prose-p:text-foreground prose-p:leading-relaxed prose-strong:text-foreground prose-a:text-primary"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </Reveal>
@@ -151,7 +151,7 @@ const InsightArticle = () => {
               2026-09-29. This block described it as a "מפת סנכרון" with an
               annual cost estimate, the hero as a fit assessment; one call,
               one description. */}
-          <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+          <p className="mt-3 text-sm leading-relaxed text-foreground">
             שיחה בת 20 דקות, ללא עלות. בסופה הערכה מסודרת: מוקד החסימה, נקודת
             הפתיחה המומלצת, והאם קיימת התאמה לתוכנית.
           </p>

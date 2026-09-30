@@ -154,7 +154,7 @@ const Methodology = () => {
               <h2 id="gate-title" className="cor-title mt-2 text-foreground">
                 שלב 0, שיחת התאמה
               </h2>
-              <p className="cor-body-lg mt-4 text-foreground/80">
+              <p className="cor-body-lg mt-4 text-foreground">
                 עשרים דקות, ללא תשלום. שתי שאלות: יש לכם פרקטיקה פעילה עם לקוחות?
                 ויש בידול שכבר קיים אצלכם? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
                 לכם את זה ביושר.

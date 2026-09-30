@@ -15,6 +15,15 @@ export default {
       },
     },
     extend: {
+      // The cor-brand type scale. Pilot 30.9 counted 17 font sizes on the
+      // landing page; these fold the in-between steps into the book's.
+      fontSize: {
+        xs: ["0.875rem", { lineHeight: "1.35rem" }],
+        sm: ["0.875rem", { lineHeight: "1.4rem" }],
+        lg: ["1.1875rem", { lineHeight: "1.75rem" }],
+        xl: ["1.5rem", { lineHeight: "2rem" }],
+        "3xl": ["1.75rem", { lineHeight: "2.15rem" }],
+      },
       fontFamily: {
         sans: ["Heebo", "Assistant", "sans-serif"],
         heading: ["Frank Ruhl Libre", "Heebo", "serif"],

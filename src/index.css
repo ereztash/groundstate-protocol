@@ -105,8 +105,8 @@
     --secondary-foreground: 240 24% 15%;
 
     --muted: 40 32% 85%;
-    /* #56566A */
-    --muted-foreground: 240 10% 38%;
+    /* #45455A: APCA Lc 79 on paper, 85 on the sheet (was #56566A, Lc 72). */
+    --muted-foreground: 240 13% 31%;
 
     /* Copper as text: #8A5123, legible at any size on paper and desk. */
     --accent: 27 60% 34%;
@@ -114,9 +114,13 @@
 
     /* Copper #B87333, the signal: the point, the price, the marks. */
     --signal: 29 57% 46%;
-    /* The one button: copper #BE7A39 with charcoal text. */
-    --cta: 29 54% 48%;
-    --cta-foreground: 240 24% 15%;
+    /* The button is ink: charcoal with sheet text (APCA Lc 98, its edge
+       13.8:1 on paper). Pilot, 30.9: a mid-tone copper button carried dark
+       text at Lc 38 and blurred into the paper at 2.95:1, and both
+       respondents called it "orange-brown". Copper stays for the point and
+       the price only. */
+    --cta: 240 24% 15%;
+    --cta-foreground: 40 36% 95%;
 
     /* Tourniquet #8B2500: loss and urgency only. */
     --destructive: 16 100% 27%;
@@ -142,9 +146,9 @@
     --crisis-foreground: 40 36% 95%;
     --glow: 29 57% 46%;
 
-    /* Older components' action token, kept on the button's copper. */
-    --cor-opportunity: 29 54% 48%;
-    --cor-opportunity-foreground: 240 24% 15%;
+    /* Older components' action token, kept on the button's ink. */
+    --cor-opportunity: 240 24% 15%;
+    --cor-opportunity-foreground: 40 36% 95%;
     --cor-success: 180 44% 29%;
     --cor-success-foreground: 40 36% 95%;
     --cor-warning: 27 60% 34%;
@@ -179,16 +183,17 @@
     --popover: 240 22% 19%;
     --popover-foreground: 37 29% 95%;
 
-    /* Light teal #7DB3AE */
-    --primary: 174 26% 60%;
+    /* Light teal #B3D6D2: APCA Lc 76 on charcoal (was #7DB3AE, Lc 54). */
+    --primary: 173 30% 77%;
     --primary-foreground: 240 24% 15%;
 
     --secondary: 240 20% 21%;
     --secondary-foreground: 37 29% 95%;
 
     --muted: 240 20% 21%;
-    /* #ABA9B8 */
-    --muted-foreground: 248 10% 69%;
+    /* #D2D0DB: APCA Lc 77 on charcoal (was #ABA9B8, Lc 55). Hierarchy on
+       charcoal comes from size and weight; a dim grey there reads as hard. */
+    --muted-foreground: 251 13% 84%;
 
     /* Light copper #D39A62 */
     --accent: 30 56% 61%;
@@ -200,7 +205,10 @@
     /* #3A3A52 */
     --border: 240 17% 27%;
     --input: 240 17% 30%;
-    --ring: 174 26% 60%;
+    /* On charcoal the ink button inverts: sheet fill, charcoal text. */
+    --cta: 40 36% 95%;
+    --cta-foreground: 240 24% 15%;
+    --ring: 173 30% 77%;
   }
 }
 
@@ -266,7 +274,7 @@
     line-height: 1.7;
   }
   .cor-overline {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     color: hsl(var(--muted-foreground));
@@ -279,7 +287,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: hsl(var(--primary));
@@ -296,7 +304,7 @@
   .field-num {
     display: inline-block;
     font-family: 'Heebo', monospace;
-    font-size: 0.6875rem;
+    font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.06em;
     color: hsl(var(--primary));
@@ -354,85 +362,85 @@
   }
 
   .cta-warm {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(var(--cta));
+    color: hsl(var(--cta-foreground));
     font-weight: 600;
-    box-shadow: 0 6px 16px -8px hsl(var(--accent) / 0.45);
+    box-shadow: 0 6px 16px -8px hsl(var(--cta) / 0.45);
     transition: background var(--dur-fast) var(--ease-out),
                 transform var(--dur-fast) var(--ease-out),
                 box-shadow var(--dur-fast) var(--ease-out);
   }
   .cta-warm:hover {
-    background: hsl(var(--accent) / 0.92);
+    background: hsl(var(--cta) / 0.92);
     transform: translateY(-1px);
-    box-shadow: 0 10px 22px -10px hsl(var(--accent) / 0.55);
+    box-shadow: 0 10px 22px -10px hsl(var(--cta) / 0.55);
   }
   .cta-warm:active {
     transform: translateY(0);
-    box-shadow: 0 4px 10px -6px hsl(var(--accent) / 0.4);
+    box-shadow: 0 4px 10px -6px hsl(var(--cta) / 0.4);
   }
 
   /* Primary high-visibility CTA used in Hero. Larger shadow + glow for presence. */
   .cta-warm-lg {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(var(--cta));
+    color: hsl(var(--cta-foreground));
     font-weight: 700;
     letter-spacing: 0.005em;
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.18),
-      0 10px 30px -10px hsl(var(--accent) / 0.55),
-      0 0 0 4px hsl(var(--accent) / 0.08);
+      0 10px 30px -10px hsl(var(--cta) / 0.55),
+      0 0 0 4px hsl(var(--cta) / 0.08);
     transition: background var(--dur-fast) var(--ease-out),
                 transform var(--dur-fast) var(--ease-out),
                 box-shadow var(--dur-fast) var(--ease-out);
   }
   .cta-warm-lg:hover {
-    background: hsl(var(--accent) / 0.94);
+    background: hsl(var(--cta) / 0.94);
     transform: translateY(-1px);
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.2),
-      0 16px 36px -12px hsl(var(--accent) / 0.65),
-      0 0 0 6px hsl(var(--accent) / 0.1);
+      0 16px 36px -12px hsl(var(--cta) / 0.65),
+      0 0 0 6px hsl(var(--cta) / 0.1);
   }
   .cta-warm-lg:active {
     transform: translateY(0);
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.15),
-      0 6px 14px -8px hsl(var(--accent) / 0.45);
+      0 6px 14px -8px hsl(var(--cta) / 0.45);
   }
 
   /* Primary action button used on form submit, sticky mobile, full package. */
   .cta-action {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(var(--cta));
+    color: hsl(var(--cta-foreground));
     font-weight: 700;
     letter-spacing: 0.005em;
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.18),
-      0 8px 24px -10px hsl(var(--accent) / 0.5);
+      0 8px 24px -10px hsl(var(--cta) / 0.5);
     transition: background var(--dur-fast) var(--ease-out),
                 transform var(--dur-fast) var(--ease-out),
                 box-shadow var(--dur-fast) var(--ease-out);
   }
   .cta-action:hover {
-    background: hsl(var(--accent) / 0.94);
+    background: hsl(var(--cta) / 0.94);
     transform: translateY(-1px);
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.2),
-      0 14px 30px -10px hsl(var(--accent) / 0.6);
+      0 14px 30px -10px hsl(var(--cta) / 0.6);
   }
   .cta-action:active {
     transform: translateY(0);
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.15),
-      0 4px 10px -6px hsl(var(--accent) / 0.4);
+      0 4px 10px -6px hsl(var(--cta) / 0.4);
   }
   .cta-action:disabled,
   .cta-action[disabled] {
     opacity: 0.55;
     cursor: not-allowed;
     transform: none;
-    box-shadow: 0 4px 12px -8px hsl(var(--accent) / 0.3);
+    box-shadow: 0 4px 12px -8px hsl(var(--cta) / 0.3);
   }
 
   /* Outlined secondary action used in Header / InlineCTA / Sequence cards. */
@@ -666,14 +674,14 @@
 }
 .cor-trace__num {
   font-family: 'Heebo', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   font-feature-settings: 'tnum' on;
   fill: hsl(var(--primary) / 0.5);
 }
 .cor-trace__verb {
   font-family: 'Heebo', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   fill: hsl(var(--primary));
   opacity: calc(0.35 + var(--n, 0) * 0.65);
@@ -777,9 +785,9 @@
   stroke-linejoin: round;
 }
 
-/* The one button. Copper fill with charcoal text (4.8:1 on both grounds),
-   square-ish corners, a letterpress inset. The same copper as the point: the
-   button is where the reader makes the decision the point stands for. */
+/* The one button, in ink: charcoal on paper, sheet on charcoal (APCA Lc
+   96-98 either way). Square-ish corners, a letterpress inset. Copper is kept
+   for the point and the price; see the --cta token for why. */
 .ld-cta {
   display: inline-flex;
   align-items: center;
@@ -795,15 +803,15 @@
   line-height: 1.2;
   text-align: center;
   box-shadow:
-    inset 0 -2px 0 hsl(240 24% 15% / 0.22),
-    0 14px 26px -16px hsl(var(--signal) / 0.8);
+    inset 0 -2px 0 hsl(0 0% 0% / 0.25),
+    0 12px 24px -16px hsl(240 24% 15% / 0.55);
   transition:
     transform var(--dur-fast) var(--ease-out),
     background var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
 }
 .ld-cta:hover {
-  background: hsl(29 57% 52%);
+  background: hsl(var(--cta) / 0.88);
   transform: translateY(-1px);
 }
 .ld-cta:active {
@@ -814,7 +822,7 @@
   outline-offset: 3px;
 }
 .dark .ld-cta:hover {
-  background: hsl(29 57% 52%);
+  background: hsl(var(--cta) / 0.9);
 }
 .dark .ld-cta:focus-visible {
   outline-color: hsl(var(--foreground));
@@ -867,7 +875,7 @@
 .ld-folio {
   font-family: 'Frank Ruhl Libre', 'Heebo', serif;
   font-weight: 900;
-  font-size: 3rem;
+  font-size: 3.25rem;
   line-height: 0.9;
   color: hsl(var(--accent));
   font-feature-settings: 'lnum' on;
@@ -943,12 +951,12 @@
 .ld-head__n {
   font-family: 'Frank Ruhl Libre', 'Heebo', serif;
   font-weight: 900;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   color: hsl(var(--accent));
   font-feature-settings: 'lnum' on;
 }
 .ld-head__label {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   white-space: nowrap;
