@@ -54,16 +54,16 @@
     <meta property="og:image:alt" content="COR-SYS · ארז טל-שיר: עוד גרסה של ״מי אני״. אף אחת לא מחזיקה חודש." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ereztash.github.io/groundstate-protocol/og-image.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Fonts load async (media swap on load) so text paints immediately in the
-         fallback font instead of waiting on the Google Fonts stylesheet;
-         display=swap then swaps in the webfonts. noscript keeps the blocking
-         link for no-JS visitors. -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@400;500;600;700&display=swap" />
-    </noscript>
+    <!-- Fonts are self-hosted (public/fonts, @font-face in src/index.css) and
+         the three files the first screen needs are preloaded: both Hebrew
+         subsets and Heebo's Latin, which carries the digits. With Google Fonts
+         the files came from two more origins and arrived after first paint,
+         one subset at a time, and each arrival rewrapped the hero: Lighthouse
+         mobile measured CLS 0.21-0.28 on the brand pass. Same origin and
+         preloaded, they are usually in before the text paints. -->
+    <link rel="preload" href="/fonts/frank-ruhl-libre-hebrew.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/heebo-hebrew.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/heebo-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content="COR-SYS, 30 יום מהמסר אל הלקוחות">
     <meta name="twitter:title" content="COR-SYS, 30 יום מהמסר אל הלקוחות">
     <meta property="og:description" content="לעצמאים שיש להם ידע ולא יודעים איך להעביר אותו. 30 יום, 4 פגישות, מסר ברור, ו-5 פניות לאנשים אמיתיים.">

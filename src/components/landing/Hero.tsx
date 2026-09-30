@@ -32,8 +32,9 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  *
  * Charcoal, 2026-09-30: the hero is the first of the page's SYS bands, the
  * surface the brand keeps for diagnosis. The field sits in the page flow on a
- * phone (a band under the price) and bleeds off the left edge from md up,
- * behind the content in the section's own stacking context (`isolate`).
+ * phone (a band above the text) and bleeds off the left edge from md up,
+ * behind the content in the section's own stacking context (`isolate`). On a
+ * phone the band sits above the text, not under it: see the note at the field.
  */
 const Hero = () => {
   const { requestForm } = useDiagnosticForm();
@@ -49,20 +50,38 @@ const Hero = () => {
       dir="rtl"
       id="hero"
       aria-labelledby="hero-title"
-      className="dark isolate relative overflow-hidden bg-background pt-24 pb-14 text-foreground md:pt-32 md:pb-28"
+      className="dark isolate relative overflow-hidden bg-background pt-20 pb-14 text-foreground md:pt-32 md:pb-28"
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:gap-14">
         <div>
+          {/* First in the column on purpose. On a phone the field is a band in
+              the flow, and anything below the headline moves when the webfonts
+              swap in and the text rewraps: placed under the price it was the
+              page's one large layout shift (CLS 0.28 in Lighthouse mobile, 0.06
+              before it). Above the text nothing can push it. From md up it is
+              absolute to the section, so its place in the DOM does not matter. */}
+          <SignalField className="-mx-5 mb-6 block h-[150px] w-[calc(100%+2.5rem)] sm:-mx-6 sm:w-[calc(100%+3rem)] md:absolute md:inset-y-0 md:left-0 md:-z-10 md:mx-0 md:mb-0 md:h-full md:w-[46%]" />
+
           <p className="cor-overline-he">ליווי עסקי לעצמאים · 30 יום</p>
 
-          <h1 id="hero-title" className="cor-display mt-5 text-foreground">
+          {/* Three lines reserved on a phone, for the same reason as the
+              paragraph below: at 412–430px the headline is two lines in the
+              fallback serif and three in Frank Ruhl Libre (measured 73 ↔ 110px
+              while the fonts load). */}
+          <h1 id="hero-title" className="cor-display mt-5 min-h-[3lh] text-foreground sm:min-h-0">
             עוד גרסה של ״מי אני״. ועוד אחת. אף אחת לא מחזיקה חודש
             <span className="cor-point">.</span>
           </h1>
 
+          {/* Four lines reserved on a phone. Google Fonts ships Heebo's Hebrew
+              and Latin as separate files; when the Hebrew one lands first the
+              digits are still in the fallback face and this paragraph wraps to
+              four lines, then back to three, and the CTA below jumps twice
+              (measured at 390px: 87 → 116 → 87px). The reserved line absorbs
+              it. From sm up the paragraph is wide enough not to rewrap. */}
           <p
             id="hero-subtitle"
-            className="cor-body-lg mt-6 max-w-xl text-foreground/80"
+            className="cor-body-lg mt-6 min-h-[4lh] max-w-xl text-foreground/80 sm:min-h-0"
           >
             בארבע פגישות בחודש, מה שאתם כבר יודעים הופך לארבעה מסמכים: משפט
             אחד שמחזיק, הצעת ערך, מוצר עם מחיר, ו-{outreachCount} פניות לאנשים
@@ -101,8 +120,6 @@ const Hero = () => {
               <dd className="font-bold text-foreground">4 מסמכים שלכם</dd>
             </div>
           </dl>
-
-          <SignalField className="-mx-5 mt-8 block h-[180px] w-[calc(100%+2.5rem)] sm:-mx-6 sm:w-[calc(100%+3rem)] md:absolute md:inset-y-0 md:left-0 md:-z-10 md:mx-0 md:mt-0 md:h-full md:w-[46%]" />
 
           {/* Byline: who is behind the page, signed the way an author signs. */}
           <div className="mt-7 flex items-center gap-3">
