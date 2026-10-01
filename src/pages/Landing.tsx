@@ -5,7 +5,6 @@ import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OfferSection from "@/components/landing/OfferSection";
 import Day31Section from "@/components/landing/Day31Section";
 import ProofSection from "@/components/landing/ProofSection";
-import EvidenceSection from "@/components/landing/EvidenceSection";
 import FitSection from "@/components/landing/FitSection";
 import FAQSection from "@/components/landing/FAQSection";
 import BookSection from "@/components/landing/BookSection";
@@ -29,6 +28,10 @@ import { parseLeadSource } from "@/lib/web3forms";
  *   stage quiz: one offer now (OfferSection). Stages remain for sale, priced
  *   on /protocol.
  * - What the method has and has not proven: back on this page as
+ *   (v4, 2026-10-01: EvidenceSection moved to /protocol; the landing page now
+ *   links to it from the testimonials. The brand-test pilot found the method
+ *   and evidence block made the page heavy for a first visit, and graph
+ *   heuristic H4 puts the engine behind the door, not on it.)
  *   EvidenceSection, right after the testimonials, where the reader is
  *   weighing whether to believe them. The operator's site brief treats the
  *   published pre-registration as the site's one uncopyable asset.
@@ -105,7 +108,6 @@ const Landing = () => {
           <OfferSection />
           <Day31Section />
           <ProofSection />
-          <EvidenceSection />
           <FitSection />
           <FAQSection />
           <BookSection />

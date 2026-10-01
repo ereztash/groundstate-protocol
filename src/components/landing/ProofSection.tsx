@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { testimonials, type Testimonial } from "@/lib/clients";
 import VideoTestimonial from "./VideoTestimonial";
 import SectionHead from "./SectionHead";
@@ -90,6 +91,13 @@ const ProofSection = () => (
           ))}
         </div>
       </div>
+
+      <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
+        מה נבדק ומה עוד לא נבדק, כולל מה שהתחייבתי למדוד מראש:{" "}
+        <Link to="/protocol#evidence" className="ld-link">
+          בעמוד הפרוטוקול
+        </Link>
+      </p>
     </div>
   </section>
 );

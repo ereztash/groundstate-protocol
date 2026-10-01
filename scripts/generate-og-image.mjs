@@ -3,9 +3,6 @@
 // Playwright's chromium. Re-run after changing the brand:
 //   node scripts/generate-og-image.mjs
 //
-// The card is what LinkedIn shows when the link is shared, so it carries the
-// cor-brand signature («הנקודה»): charcoal ground, a field of strokes that all
-// point at one copper point, and the site's headline ending in that point.
 import { chromium } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -17,67 +14,36 @@ const PUBLIC = path.resolve(__dirname, "../public");
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@500;700&display=swap";
 
-// Same seeded field as src/components/landing/SignalField.tsx, laid out for
-// the card: the point low on the left, the strokes fading with distance.
-function field(w, h, px, py, seed) {
-  let a = seed >>> 0;
-  const rng = () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-  const cols = 11;
-  const rows = 9;
-  const gx = w / cols;
-  const gy = h / rows;
-  const far = Math.hypot(w - px, py);
-  let out = "";
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const x = gx * (c + 0.5) + (rng() - 0.5) * gx * 0.55;
-      const y = gy * (r + 0.5) + (rng() - 0.5) * gy * 0.55;
-      const dist = Math.hypot(px - x, py - y);
-      const near = Math.max(0, 1 - dist / far);
-      if (dist < 50 || near < 0.08) continue;
-      const len = 12 + near * 18;
-      const ang = (Math.atan2(py - y, px - x) * 180) / Math.PI;
-      const o = Math.min(1, 0.08 + near * near * 1.25).toFixed(2);
-      out += `<line x1="${(x - len / 2).toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x + len / 2).toFixed(1)}" y2="${y.toFixed(1)}" stroke-opacity="${o}" transform="rotate(${ang.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
-    }
-  }
-  return out;
-}
-
+// The card LinkedIn shows when the link is shared. v4 (2026-10-01): on paper,
+// like the site's first screen, with the offer-first headline. The charcoal
+// card with the signal field went with the charcoal hero, after the brand test
+// found the target group recognised that look and disliked it.
 const card = `<!doctype html>
 <html lang="he" dir="rtl"><head><meta charset="utf-8">
 <link rel="stylesheet" href="${FONTS}">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html,body { width:1200px; height:630px; }
-  body { background:#1C1C2E; color:#F5F2ED; font-family:'Heebo',sans-serif; position:relative; overflow:hidden; }
-  svg.field { position:absolute; left:0; top:0; width:560px; height:630px; }
-  .copy { position:absolute; right:84px; top:92px; width:600px; }
-  .over { font-size:22px; font-weight:700; letter-spacing:0.08em; color:#7DB3AE; }
-  h1 { margin-top:26px; font-family:'Frank Ruhl Libre',serif; font-weight:900; font-size:68px; line-height:1.12; letter-spacing:-0.01em; }
+  body { background:#EFE9DD; color:#1C1C2E; font-family:'Heebo',sans-serif; position:relative; overflow:hidden; }
+  .sheet { position:absolute; inset:48px 56px; background:#F7F4EE; border:1px solid #D6CDBC; border-radius:2px; box-shadow:0 22px 44px -28px rgba(28,28,46,.38); }
+  .copy { position:absolute; right:110px; top:110px; width:860px; }
+  .over { font-size:24px; font-weight:700; letter-spacing:0.06em; color:#2A6B6B; }
+  h1 { margin-top:24px; font-family:'Frank Ruhl Libre',serif; font-weight:900; font-size:72px; line-height:1.12; letter-spacing:-0.01em; }
   .pt { color:#B87333; }
-  .sub { margin-top:30px; font-size:25px; font-weight:500; color:#ABA9B8; }
-  .sign { position:absolute; right:84px; bottom:64px; display:flex; align-items:center; gap:14px; font-size:24px; font-weight:700; }
+  .sub { margin-top:28px; font-size:28px; font-weight:500; color:#45455A; }
+  .sign { position:absolute; right:110px; bottom:96px; display:flex; align-items:center; gap:14px; font-size:24px; font-weight:700; }
+  .price { position:absolute; left:110px; bottom:92px; font-family:'Frank Ruhl Libre',serif; font-weight:900; font-size:44px; color:#B87333; direction:ltr; }
 </style></head>
 <body>
-  <svg class="field" viewBox="0 0 560 630" aria-hidden="true">
-    <g stroke="#7DB3AE" stroke-width="2.2" stroke-linecap="round">${field(560, 630, 190, 420, 0xc0a5e5)}</g>
-    <circle cx="190" cy="420" r="30" fill="none" stroke="#7DB3AE" stroke-opacity="0.5" stroke-width="1.4"/>
-    <circle class="cor-point" cx="190" cy="420" r="10" fill="#B87333"/>
-  </svg>
+  <div class="sheet"></div>
   <div class="copy">
-    <div class="over">COR-SYS · ליווי עסקי לעצמאים</div>
-    <h1>עוד גרסה של ״מי אני״. ועוד אחת. אף אחת לא מחזיקה חודש<span class="pt">.</span></h1>
-    <div class="sub">30 יום. 4 פגישות. 4 מסמכים שנשארים אצלכם.</div>
+    <div class="over">COR-SYS · ליווי עסקי לעצמאים · 30 יום</div>
+    <h1>יודעים לעשות את העבודה. לא יודעים איך למכור אותה<span class="pt">.</span></h1>
+    <div class="sub">ארבע פגישות. מה שאתם כבר יודעים נארז כמוצר אחד עם מחיר.</div>
   </div>
   <div class="sign">ארז טל-שיר
     <svg viewBox="0 0 64 24" width="58" height="22" aria-hidden="true">
-      <g fill="none" stroke="#F5F2ED" stroke-width="2.4" stroke-linecap="round">
+      <g fill="none" stroke="#1C1C2E" stroke-width="2.4" stroke-linecap="round">
         <line x1="52" y1="12" x2="60" y2="12" transform="rotate(-62 56 12)"/>
         <line x1="40" y1="12" x2="48" y2="12" transform="rotate(34 44 12)"/>
         <line x1="28" y1="12" x2="36" y2="12" transform="rotate(-16 32 12)"/>
@@ -86,6 +52,7 @@ const card = `<!doctype html>
       <circle cx="7" cy="12" r="4.4" fill="#B87333"/>
     </svg>
   </div>
+  <div class="price">₪4,000</div>
 </body></html>`;
 
 const favicon = readFileSync(path.join(PUBLIC, "favicon.svg"), "utf8");

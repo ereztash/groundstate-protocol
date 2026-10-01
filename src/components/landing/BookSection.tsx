@@ -108,7 +108,7 @@ const BookSection = () => {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="08" label="הצעד הבא" />
+          <SectionHead n="07" label="הצעד הבא" />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
             שיחת התאמה. 30 דקות, ללא עלות.
           </h2>

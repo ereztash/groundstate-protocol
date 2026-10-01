@@ -61,6 +61,9 @@ export const testimonials: Testimonial[] = [
 export const videoTestimonial = {
   quote:
     "ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
+  /** Verbatim substring of `quote`, used beside the price in the hero. */
+  pullQuote:
+    "זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
   attribution: "גיא כהן",
   linkedin: "https://www.linkedin.com/in/guycohen-ai/",
 } as const;

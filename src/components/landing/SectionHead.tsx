@@ -5,11 +5,13 @@
  * numbers give the page an order the reader can feel without reading; they
  * and the point are decorative, so assistive tech gets the label alone.
  */
-const SectionHead = ({ n, label }: { n: string; label: string }) => (
+const SectionHead = ({ n, label }: { n?: string; label: string }) => (
   <p className="ld-head">
-    <span className="ld-head__n" aria-hidden="true">
-      {n}
-    </span>
+    {n && (
+      <span className="ld-head__n" aria-hidden="true">
+        {n}
+      </span>
+    )}
     <span className="ld-head__label">{label}</span>
     <span className="ld-head__rule" aria-hidden="true" />
     <span className="ld-head__point" aria-hidden="true" />

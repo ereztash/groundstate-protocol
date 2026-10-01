@@ -52,6 +52,10 @@ const WhatYouTriedSection = () => (
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
         מבריקים על הלקוחות שלכם. נתקעים על עצמכם.
       </h2>
+      <p className="cor-body-lg mt-5 max-w-2xl text-foreground">
+        בדרך כלל זה מגיע אחרי שעזבתם עבודה, יצאתם לחל״ת, או כשההכנסה מהעסק
+        עוד לא יציבה.
+      </p>
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {NOTES.map((note, i) => (
