@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { trackCtaClick } from "@/lib/analytics";
 import { getConsent } from "@/lib/consent";
 import { whatsappUrl, type Lang } from "@/lib/contact";
@@ -18,9 +19,12 @@ const LABEL: Record<Lang, string> = {
  * It waits for the consent banner to be answered, like the sticky bar, because
  * the banner owns the bottom of the screen until then. Ink, not WhatsApp
  * green: the glyph is recognisable on its own, and the page keeps one colour
- * accent.
+ * accent. On the English home page it speaks English and opens the chat with
+ * an English first message.
  */
-const WhatsAppFloat = ({ lang = "he" }: { lang?: Lang }) => {
+const WhatsAppFloat = () => {
+  const { pathname } = useLocation();
+  const lang: Lang = /^\/en(\/|$)/.test(pathname) ? "en" : "he";
   const [consentPending, setConsentPending] = useState(true);
 
   useEffect(() => {

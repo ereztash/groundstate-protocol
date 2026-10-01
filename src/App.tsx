@@ -17,6 +17,7 @@ const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const About = lazy(() => import("./pages/About"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const LandingEn = lazy(() => import("./pages/LandingEn"));
 /**
  * Internal capture tool, holding client case detail.
  *
@@ -98,6 +99,7 @@ const App = () => (
             hydration fail (React #418) and re-render the page from scratch. */}
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/en" element={lazyRoute(LandingEn)} />
           <Route path="/protocol" element={lazyRoute(Methodology)} />
           <Route path="/insights" element={lazyRoute(InsightsIndex)} />
           <Route path="/insights/:slug" element={lazyRoute(InsightArticle)} />

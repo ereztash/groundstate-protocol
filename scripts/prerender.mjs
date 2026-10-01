@@ -34,7 +34,7 @@ const insightRoutes = existsSync(INSIGHTS_DIR)
       .map((f) => `/insights/${f.replace(/\.md$/, "")}`)
   : [];
 
-const ROUTES = ["/", "/protocol", "/insights", ...insightRoutes, "/about", "/privacy", "/accessibility"];
+const ROUTES = ["/", "/en", "/protocol", "/insights", ...insightRoutes, "/about", "/privacy", "/accessibility"];
 
 // The deploy base (must match the base vite built with). "/" (root) → no prefix;
 // "/groundstate-protocol/" (Pages project site) → "/groundstate-protocol".

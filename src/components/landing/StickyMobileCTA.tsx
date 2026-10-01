@@ -1,8 +1,8 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 import { getConsent } from "@/lib/consent";
-import { useDiagnosticForm } from "./DiagnosticFormProvider";
-import { whatsappUrl } from "@/lib/contact";
+import { useOptionalDiagnosticForm } from "./DiagnosticFormProvider";
+import { whatsappUrl, type Lang } from "@/lib/contact";
 import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 
 /**
@@ -19,8 +19,15 @@ import { WhatsAppIcon } from "@/components/brand/SocialIcons";
  * While hidden it leaves the tab order: an aria-hidden container with a
  * focusable control inside is what Lighthouse flagged on the previous page.
  */
-const StickyMobileCTA = () => {
-  const { requestForm } = useDiagnosticForm();
+const LABELS = {
+  he: { cta: "לתיאום שיחת התאמה · 30 דקות", whatsapp: "כתבו לי בוואטסאפ" },
+  en: { cta: "Book a fit call · 30 min", whatsapp: "Message me on WhatsApp" },
+} as const;
+
+/** `lang="en"` is the English home page's bar: no form provider there, so the
+ *  button is a plain link to that page's #book. */
+const StickyMobileCTA = ({ lang = "he" }: { lang?: Lang }) => {
+  const form = useOptionalDiagnosticForm();
   const [pastHero, setPastHero] = useState(false);
   const [atBook, setAtBook] = useState(false);
   const [consentPending, setConsentPending] = useState(true);
@@ -53,14 +60,15 @@ const StickyMobileCTA = () => {
   const visible = pastHero && !atBook && !consentPending;
 
   const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    trackCtaClick("sticky_mobile");
+    trackCtaClick(lang === "en" ? "en_sticky_mobile" : "sticky_mobile");
+    if (!form) return;
     e.preventDefault();
-    requestForm("sticky");
+    form.requestForm("sticky");
   };
 
   return (
     <div
-      dir="rtl"
+      dir={lang === "en" ? "ltr" : "rtl"}
       aria-hidden={!visible}
       data-shown={visible ? "" : undefined}
       className="ld-sticky fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
@@ -75,15 +83,15 @@ const StickyMobileCTA = () => {
           tabIndex={visible ? 0 : -1}
           className="ld-cta flex-1"
         >
-          לתיאום שיחת התאמה · 30 דקות
+          {LABELS[lang].cta}
         </a>
         <a
-          href={whatsappUrl()}
+          href={whatsappUrl(lang)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackCtaClick("whatsapp_sticky")}
           tabIndex={visible ? 0 : -1}
-          aria-label="כתבו לי בוואטסאפ"
+          aria-label={LABELS[lang].whatsapp}
           className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[3px] border border-foreground/25 bg-card text-foreground"
         >
           <WhatsAppIcon className="h-6 w-6" />
