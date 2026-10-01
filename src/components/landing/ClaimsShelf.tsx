@@ -46,7 +46,7 @@ const ClaimsShelf = () => {
                 className="flex h-full flex-col rounded-xl border border-border bg-card p-6"
               >
                 <header className="flex items-center justify-between gap-3 border-b border-border pb-3">
-                  <span className="text-xs font-semibold tracking-[0.16em] text-muted-foreground">
+                  <span className="text-xs font-semibold text-muted-foreground">
                     {claim.label}
                   </span>
                   <EvidenceTag level={claim.level} />

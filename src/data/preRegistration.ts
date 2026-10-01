@@ -15,7 +15,7 @@
  */
 export const preRegistration = {
   window: {
-    label: "חלון המדידה",
+    label: "מתי בודקים",
     value: "מפרסום ההתחייבות ועד 05/2027",
   },
   measures: {
@@ -32,7 +32,7 @@ export const preRegistration = {
   },
   reporting: {
     label: "פרסום",
-    value: "דוח פתוח בתוך 12 חודשים, גם אם התוצאה שלילית",
+    value: "אפרסם את התוצאות תוך 12 חודשים, גם אם הן לא טובות",
   },
   /**
    * Stated in full, including the consequence. Softening either half would

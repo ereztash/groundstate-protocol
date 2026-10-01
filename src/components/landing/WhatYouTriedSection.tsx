@@ -23,7 +23,7 @@ const NOTES: ReactNode[] = [
   <>
     כשמישהו חדש שואל{" "}
     <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, קשה
-    לכם להגיד לו מה הוא קונה ומה הוא יוצא מזה.
+    לכם להגיד לו מה יוצא לו מזה.
   </>,
   <>
     כל כמה שבועות אתם נכנסים ללינקדאין ומשנים את הכותרת. כבר הצטברו{" "}
@@ -69,15 +69,6 @@ const WhatYouTriedSection = () => (
         ))}
       </ul>
 
-      <div className="mt-14 max-w-4xl">
-        <p className="font-heading text-2xl font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
-          אני חושב שלארבעת הדברים האלה יש סיבה אחת.{" "}
-          <span className="ld-underline">
-            עוד לא לקחתם את מה שאתם יודעים ומסגרתם אותו למשהו שמישהו ישלם עליו
-            כסף.
-          </span>
-        </p>
-      </div>
     </div>
   </section>
 );

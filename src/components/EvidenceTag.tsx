@@ -33,9 +33,8 @@ const EvidenceTag = ({
     title={EVIDENCE_MEANING[level]}
     className={`inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-xs font-semibold tracking-wide ${STYLE[level]} ${className}`}
   >
-    <span className="sr-only">כמה זה בדוק: </span>
+    <span className="sr-only">מקור: </span>
     {EVIDENCE_LABEL[level]}
-    <span className="sr-only">, {EVIDENCE_MEANING[level]}</span>
   </span>
 );
 

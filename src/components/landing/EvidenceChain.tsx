@@ -47,7 +47,7 @@ const CaseChain = ({ record }: { record: CaseRecord }) => {
       className="rounded-xl border border-border bg-card p-6 md:p-8"
     >
       <header className="flex flex-wrap items-center gap-3 border-b border-border pb-4">
-        <span className="text-xs font-semibold tracking-[0.2em] text-muted-foreground">
+        <span className="text-xs font-semibold text-muted-foreground">
           {record.subject_label}
         </span>
         <OutcomeBadge outcome={record.outcome} />

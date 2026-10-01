@@ -23,7 +23,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "אתם מנסחים את המשפט שוב, בעצמכם ובמילים שלכם. כל עוד זה הניסוח שלי, עוד לא סיימנו.",
+  "01": "אתם מנסחים את המשפט שוב, בעצמכם ובמילים שלכם.",
   "02": "אפשר לחזור על הצעת הערך שלכם במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
@@ -53,13 +53,13 @@ const INPUTS: Record<string, string> = {
   "04": "תיאור המוצר עם התמחור משלב 3.",
 };
 
-// Compact per-stage transformation, rendered right-to-left with left-pointing
-// arrows — forward is leftward in RTL, same convention CoherenceVisual uses.
+// One plain line per stage. Not a chain: four "from X we make Y" lines in a row
+// read as generated (1.10 blind audit, round 4).
 const TRANSFORMATIONS: Record<string, string> = {
-  "01": "חמישה סיפורים מהעבודה ← מה שחוזר בהם ← המשפט שלכם",
-  "02": "תגובות לקוחות ← מילון כאב ← הצעת ערך",
-  "03": "הצעת ערך ← מבנה מוצר ← תיאור עם תמחור",
-  "04": `תיאור מוצר ← מיפוי מקבלי החלטות ← ${outreachCount} פניות מתועדות`,
+  "01": "מחפשים בחמישה סיפורים מהעבודה שלכם את מה שחוזר, ומזה יוצא המשפט",
+  "02": "את ההצעה כותבים מתוך מה שהלקוחות שלכם אומרים",
+  "03": "בונים מוצר ושמים עליו מחיר",
+  "04": `שולחים אותו ל-${outreachCount} אנשים שבחרתם`,
 };
 
 const PRINCIPLES = [
@@ -68,7 +68,7 @@ const PRINCIPLES = [
     body: "מהניסיון שלי, הדבר הכי גרוע שאני יכול לעשות זה להגיד לכם מה הייחודיות שלכם, כי זה משהו שאחר כך קשה לקחת עליו בעלות.",
   },
   {
-    title: "כל שלב נשען על הקודם",
+    title: "הסדר חשוב",
     body: "בשביל שנוכל להגיע למחיר, אני רוצה לוודא קודם שיש הצעה ברורה, וההצעה נבנית מהסיפור שלכם.",
   },
   {
@@ -116,13 +116,11 @@ const Methodology = () => {
           />
           <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
+              <p className="text-xs font-semibold text-[#D39A62]">
                 המתודולוגיה
               </p>
               <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
-                כשכל החלקים
-                <br />
-                מספרים את אותו סיפור
+                הכל צריך להיכנס בתוך מבנה
               </h1>
               <p className="cor-body-lg mt-5 max-w-md text-[hsl(var(--background))]/75">
                 החלקים הם מי שאתם, מה שאתם מציעים, המוצר והפנייה ללקוח. מה שאני רואה זה שכשהם לא מתחברים, הפוסטים וההצעות הולכים לכל מיני כיוונים.
@@ -155,7 +153,7 @@ const Methodology = () => {
                 שלב 0, שיחת התאמה
               </h2>
               <p className="cor-body-lg mt-4 text-foreground">
-                שלושים דקות, ללא תשלום. אני שואל שתי שאלות. יש לכם כבר לקוחות? ויש משהו שאתם עושים אחרת, גם אם עוד לא ניסחתם אותו? בלי השניים האלה אין לנו ממה לעבוד, ואני אגיד לכם את זה בכנות.
+                שלושים דקות, ללא תשלום. אני שואל שתי שאלות. יש לכם כבר לקוחות? ויש משהו שאתם עושים אחרת, גם אם עוד לא ניסחתם אותו? אם התשובה לאחת מהן היא לא, אגיד לכם את זה כבר בשיחה.
               </p>
             </Reveal>
           </div>
@@ -202,7 +200,7 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
+              <p className="text-xs font-semibold text-[#D39A62]">
                 למה פרוטוקול
               </p>
               <h2

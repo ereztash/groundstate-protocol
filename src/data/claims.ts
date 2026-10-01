@@ -32,7 +32,7 @@ export const claims: readonly Claim[] = [
     id: "structural",
     label: "מה נבדק",
     statement:
-      "אני מנסה לחפש דפוסים שחוזרים על עצמם. את אותו מהלך מצאתי אצל אנשים מכמה תחומים שונים, ואפשר לזהות אותו שוב.",
+      "עברתי את אותו רצף עם אנשים מתחומים שונים מאוד, והשלבים חזרו אצלם באותו סדר.",
     // Was "anchored", which this site defines as "a ledger or CRM row exists".
     // Checked 2026-09-29: the research note behind it is still marked low
     // trust, waiting on its source-integrity check, and no corroboration row

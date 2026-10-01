@@ -129,7 +129,7 @@ const StageStepper = ({
             </div>
             <div className="border-r-2 border-accent/40 pr-3">
               <p className="text-xs font-semibold tracking-wide text-accent">
-                איך יודעים שסיימנו
+                מתי עוברים הלאה
               </p>
               <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {exitCriteria[s.number]}

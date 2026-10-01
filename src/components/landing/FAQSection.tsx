@@ -17,15 +17,9 @@ function guaranteeItem(): QA | null {
   if (!g) return null;
   return {
     q: "מה אם זה לא עבד?",
-    a: [
-      g.headline,
-      `${g.signalsLabel}: ${g.signals.join("; ")}.`,
-      g.signalsNote,
-      `${g.excludedLabel}: ${g.excluded.join(" ")}`,
-      g.documentation,
-    ]
-      .filter(Boolean)
-      .join(" "),
+    // The full clause is printed once, under the price; repeating it here was
+    // the third copy on the page (1.10 audit).
+    a: "אני מחזיר את התשלום במלואו. התנאים המדויקים כתובים בהצעה, מתחת למחיר.",
   };
 }
 

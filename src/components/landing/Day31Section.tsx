@@ -36,7 +36,7 @@ const Day31Section = () => (
             id="day-31-title"
             className="mt-4 font-heading text-[3.25rem] font-black leading-none tracking-tight sm:text-[5rem]"
           >
-            ביום ה-31<span className="cor-point">.</span>
+            מה קורה אחרי חודש<span className="cor-point">.</span>
           </h2>
         </div>
 
@@ -45,14 +45,8 @@ const Day31Section = () => (
             מישהו שואל במה אתם עוסקים, ויש לכם משפט אחד שאתם יכולים להגיד לו בלי להסביר קודם את כל הפילוסופיה.
           </p>
           <p>
-            הוא שואל כמה זה עולה. המספר כתוב אצלכם במסמך, אז הוא יוצא כמו שהוא.
-            בלי לבדוק את הפנים שלו קודם.
-          </p>
-          <p>ו-{outreachCount} הפניות כבר בחוץ, כל אחת לאדם מסוים.</p>
-
-          <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">
-             אין כאן הבטחה שזה יקרה. מה שקורה אחר כך תלוי גם
-            בשוק, וגם באנשים שבחרתם לפנות אליהם.
+            הוא שואל כמה זה עולה, ואתם אומרים את המספר שכתוב אצלכם במסמך. עד
+            אז כבר שלחתם {outreachCount} פניות, כל אחת לאדם מסוים.
           </p>
         </div>
       </div>

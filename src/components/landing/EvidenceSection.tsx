@@ -1,6 +1,5 @@
 import EvidenceTag from "@/components/EvidenceTag";
 import { claims } from "@/data/claims";
-import { EVIDENCE_MEANING } from "@/lib/evidence";
 import { preRegistration as pre } from "@/data/preRegistration";
 import SectionHead from "./SectionHead";
 
@@ -47,10 +46,10 @@ const EvidenceSection = () => (
       <div className="max-w-2xl">
         <SectionHead label="מה נבדק, ומה עוד לא" />
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
-          מה התחייבתי למדוד, לפני שידעתי את התוצאה.
+          מה אני בודק.
         </h2>
         <p className="cor-body-lg mt-5 text-foreground">
-          אני עוד לא יודע להגיד לכם חד-משמעית שזה עובד. לכן כתבתי כאן מראש מה אני מודד, כדי שבעוד שנה תוכלו לבדוק אם צדקתי. אפרסם מה יצא, גם אם השיטה לא עבדה.
+          אני עוד לא יכול להגיד לכם בוודאות שזה עובד, אז כתבתי כאן מראש מה אני בודק. בעוד שנה אפרסם מה יצא, גם אם זה לא עבד.
         </p>
       </div>
 
@@ -66,9 +65,6 @@ const EvidenceSection = () => (
             <p className="mt-3 leading-relaxed text-foreground">{c.statement}</p>
             <p className="mt-auto border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">
               {c.entitlement}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {EVIDENCE_MEANING[c.level]}
             </p>
           </div>
         ))}
@@ -102,7 +98,7 @@ const EvidenceSection = () => (
         <div className="relative self-start border border-border border-s-4 border-s-signal bg-card p-6 pt-8 sm:p-7 sm:pt-9">
           {WINDOW_END && (
             <span className="ld-stamp absolute -top-5 end-5 bg-card text-xs" aria-hidden="true">
-              <span>נרשם מראש</span>
+              <span>נכתב מראש</span>
               <span className="font-heading text-sm">עד {WINDOW_END}</span>
             </span>
           )}

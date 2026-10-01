@@ -193,12 +193,6 @@ function Why() {
             </li>
           ))}
         </ul>
-        <div className="mt-14 max-w-4xl">
-          <p className="font-heading text-2xl font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
-            {why.diagnosis}
-            <span className="ld-underline">{why.diagnosisMark}</span>
-          </p>
-        </div>
       </div>
     </section>
   );
@@ -226,7 +220,6 @@ function Offer() {
                 {s.title}
               </h3>
               <p className="mt-2 leading-relaxed text-foreground">{s.deliverable}</p>
-              <p className="mt-3 font-semibold leading-relaxed text-primary">{s.benefit}</p>
             </li>
           ))}
         </ol>
@@ -312,7 +305,6 @@ function Day31() {
             {day31.lines.map((l) => (
               <p key={l}>{l}</p>
             ))}
-            <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">{day31.caveat}</p>
           </div>
         </div>
       </div>
@@ -446,7 +438,7 @@ function Faq() {
             ))}
           </div>
           <Accordion type="single" collapsible className="w-full border-t border-border">
-            {[...faqEn.rest, { q: "What if it doesn't work?", a: `${offer.clause} ${offer.countsNote} ${offer.notGuaranteedLabel}: ${offer.notGuaranteed}` }].map(({ q, a }, i) => (
+            {[...faqEn.rest, { q: "What if it doesn't work?", a: "I refund the payment in full. The exact terms are in the proposal, under the price." }].map(({ q, a }, i) => (
               <AccordionItem key={q} value={`item-${i}`} className="border-b border-border">
                 <AccordionTrigger className="gap-4 py-5 text-start text-base font-bold text-foreground hover:no-underline">{q}</AccordionTrigger>
                 <AccordionContent className="pb-5 pt-1 leading-relaxed text-muted-foreground">{a}</AccordionContent>
@@ -505,11 +497,11 @@ function Book() {
           <div className="order-2 lg:order-1">
             <p className="font-heading text-lg font-black text-foreground">{book.stepsTitle}</p>
             <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
-              {book.steps.map(([title, body], i) => (
-                <li key={title}>
+              {book.steps.map((step, i) => (
+                <li key={step}>
                   <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">{book.stop} {i + 1}</p>
                   <p className="mt-1 leading-relaxed text-foreground">
-                    <strong className="font-bold text-foreground">{title}</strong> {body}
+                    {step}
                   </p>
                 </li>
               ))}
@@ -517,7 +509,6 @@ function Book() {
             <div className="mt-8 ld-plain p-5">
               <p className="text-xs font-bold tracking-[0.08em] text-primary">{book.questionLabel}</p>
               <p className="mt-2 text-lg font-bold leading-snug text-foreground">{book.question}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{book.questionNote}</p>
             </div>
             <p className="mt-8 text-sm text-muted-foreground">{offer.spots}</p>
           </div>

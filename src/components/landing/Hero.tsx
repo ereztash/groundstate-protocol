@@ -69,8 +69,8 @@ const Hero = () => {
             id="hero-subtitle"
             className="cor-body-lg mt-6 max-w-xl font-medium text-foreground"
           >
-            בארבע פגישות בחודש אנחנו הופכים את מה שאתם כבר יודעים למוצר אחד
-            עם מחיר, ואתם שולחים אותו ל-{outreachCount} אנשים ספציפיים.
+            בארבע פגישות בחודש אנחנו בונים מוצר אחד עם מחיר, ואתם שולחים אותו
+            ל-{outreachCount} אנשים שאתם מכירים אישית.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">

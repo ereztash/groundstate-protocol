@@ -29,16 +29,10 @@ const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
  * sign that someone answers it.
  */
 const STATIONS = [
-  { title: "פתיחה.", body: "מה התקיעה ומה ניסית עד עכשיו." },
-  {
-    title: "חילוץ נקודה אחת.",
-    body: "משהו ספציפי שעשיתם פעם ואתם גאים בו.",
-  },
-  { title: "שיקוף.", body: "אני אומר בקול מה שאני שומע, ומתקנים ביחד." },
-  {
-    title: "החלטה.",
-    body: "אם זה מתאים, ומאיפה מתחילים. אם לא, גם זו תשובה ברורה.",
-  },
+  "מתחילים במה שתקוע, ובמה שכבר ניסיתם.",
+  "מחפשים משהו מסוים שעשיתם פעם ואתם גאים בו.",
+  "אני אומר בקול מה שאני שומע, ומתקנים ביחד.",
+  "בודקים אם זה מתאים, ומאיפה מתחילים.",
 ];
 
 type Mode = "calendar" | "form";
@@ -130,16 +124,11 @@ const BookSection = () => {
             </p>
             <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
               {STATIONS.map((s, i) => (
-                <li key={s.title}>
+                <li key={s}>
                   <p className="text-xs font-bold text-muted-foreground">
                     תחנה {i + 1}
                   </p>
-                  <p className="mt-1 leading-relaxed text-foreground">
-                    <strong className="font-bold text-foreground">
-                      {s.title}
-                    </strong>{" "}
-                    {s.body}
-                  </p>
+                  <p className="mt-1 leading-relaxed text-foreground">{s}</p>
                 </li>
               ))}
             </ol>
@@ -154,9 +143,6 @@ const BookSection = () => {
             </p>
             <p className="mt-2 text-lg font-bold leading-snug text-foreground">
               אם מישהו אחר נותן בדיוק את אותו שירות, למה שיבחרו בכם?
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              אם התשובה לוקחת יותר ממשפט, בשביל זה השיחה.
             </p>
           </div>
 

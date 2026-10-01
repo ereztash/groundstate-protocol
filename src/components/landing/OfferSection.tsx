@@ -58,10 +58,10 @@ const OfferSection = () => {
         <div className="max-w-2xl">
           <SectionHead label="מה נשאר אצלכם" />
           <h2 id="offer-title" className="cor-title mt-4 text-foreground">
-            ארבע פגישות, וכל פגישה מבוססת על הקודמת.
+            ארבע פגישות, אחת בכל שבוע.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground">
-            בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. אני נזהר מלהכניס לכם מילים לפה.
+            בסוף כל שבוע יש מסמך שאפשר להשתמש בו. אני נזהר מלהכניס לכם מילים לפה.
           </p>
         </div>
 
@@ -91,9 +91,6 @@ const OfferSection = () => {
               </h3>
               <p className="mt-2 leading-relaxed text-foreground">
                 {s.deliverable}
-              </p>
-              <p className="mt-3 font-semibold leading-relaxed text-primary">
-                {s.benefit}
               </p>
 
             </li>
@@ -146,7 +143,7 @@ const OfferSection = () => {
                 לתיאום שיחת התאמה
               </a>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                בשיחה בודקים אם יש התאמה ומאיפה מתחילים. אם אין, אומרים את זה.
+                בשיחה בודקים אם יש התאמה ומאיפה מתחילים.
               </p>
             </div>
           </div>
