@@ -1,6 +1,27 @@
 export const CALENDLY_URL =
   "https://calendly.com/erez2812345/new-meeting";
 
+/** Charcoal settings for the reader's dark mode: raised charcoal, clinical white, light teal. */
+const CALENDLY_PAGE_SETTINGS_DARK = {
+  backgroundColor: "25253A",
+  textColor: "F5F2ED",
+  primaryColor: "B3D6D2",
+} as const;
+
+/**
+ * The embed's colours for the theme the reader has on when the calendar
+ * mounts. The calendar mounts lazily, near its section, so this is read late
+ * enough to see the choice; a switch after that applies on the next visit.
+ */
+export function calendlyPageSettings() {
+  const dark =
+    typeof document !== "undefined" &&
+    document.documentElement.classList.contains("dark");
+  return dark
+    ? { ...CALENDLY_PAGE_SETTINGS, ...CALENDLY_PAGE_SETTINGS_DARK }
+    : CALENDLY_PAGE_SETTINGS;
+}
+
 export const CALENDLY_PAGE_SETTINGS = {
   backgroundColor: "F7F4EE",
   textColor: "1C1C2E",

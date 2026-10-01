@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
-import { CALENDLY_URL, CALENDLY_PAGE_SETTINGS, visitChannel } from "@/lib/calendly";
+import { CALENDLY_URL, calendlyPageSettings, visitChannel } from "@/lib/calendly";
 import { trackEvent } from "@/lib/analytics";
 import type { LeadSource } from "@/lib/web3forms";
 
@@ -43,7 +43,7 @@ const BookingSection = ({
       <div dir="ltr" className="overflow-hidden rounded-sm border border-border bg-card">
         <InlineWidget
           url={CALENDLY_URL}
-          pageSettings={CALENDLY_PAGE_SETTINGS}
+          pageSettings={calendlyPageSettings()}
           // Calendly stores UTM on the booking itself, so the operator can see
           // which CTA produced a meeting without any analytics consent.
           utm={{

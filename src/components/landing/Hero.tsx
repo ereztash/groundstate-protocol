@@ -2,6 +2,8 @@ import type { MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 import { outreachCount, program } from "@/data/sprint-stages";
 import { videoTestimonial } from "@/lib/clients";
+import { LINKEDIN_FOLLOWERS, LINKEDIN_URL, whatsappUrl } from "@/lib/contact";
+import { LinkedInIcon } from "@/components/brand/SocialIcons";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
@@ -27,6 +29,12 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * - Next to the price, the two things a cold reader lacks: the signed guarantee
  *   in one sentence, and one client's verdict in her own words (a value claim
  *   is only credible in the client's language, per the VoC node).
+ *
+ * - Two outside channels (2026-10-01): WhatsApp in the line under the CTA,
+ *   because it is the channel Israeli small-business readers expect (four of
+ *   eight competitor pages float it), and the LinkedIn following under the
+ *   byline, because a stranger's question is whether other people already
+ *   read this man. The calendar stays the first path.
  *
  * Unchanged from earlier versions, for the reasons recorded there: nothing
  * animates from invisible, the CTA is a real link to #book, and the price is on
@@ -70,12 +78,23 @@ const Hero = () => {
               href="#book"
               onClick={onCta}
               aria-describedby="hero-cta-note"
-              className="ld-cta w-full sm:w-auto"
+              className="ld-cta w-full shrink-0 sm:w-auto sm:whitespace-nowrap"
             >
               לתיאום שיחת התאמה
             </a>
             <p id="hero-cta-note" className="text-sm text-muted-foreground">
-              30 דקות, ללא עלות. בוחרים מועד ביומן.
+              30 דקות, ללא עלות. בוחרים מועד ביומן, או{" "}
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCtaClick("whatsapp_hero")}
+                className="ld-link"
+              >
+                כותבים לי בוואטסאפ
+                <span className="sr-only"> (נפתח בוואטסאפ)</span>
+              </a>
+              .
             </p>
           </div>
 
@@ -137,12 +156,23 @@ const Hero = () => {
               decoding="async"
               className="h-16 w-16 shrink-0 rounded-full border border-border object-cover"
             />
-            <p className="text-sm leading-snug">
-              <span className="block font-bold text-foreground">ארז טל-שיר</span>
-              <span className="text-muted-foreground">
+            <div className="text-sm leading-snug">
+              <p className="font-bold text-foreground">ארז טל-שיר</p>
+              <p className="text-muted-foreground">
                 עובד סוציאלי טכנולוגי, יועץ עסקי לעצמאים
-              </span>
-            </p>
+              </p>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCtaClick("linkedin_hero")}
+                className="mt-1.5 inline-flex items-center gap-1.5 font-semibold text-foreground underline decoration-foreground/25 underline-offset-4 hover:decoration-primary"
+              >
+                <LinkedInIcon className="h-3.5 w-3.5 shrink-0 text-primary" />
+                {LINKEDIN_FOLLOWERS.he}
+                <span className="sr-only"> (נפתח בלינקדאין)</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

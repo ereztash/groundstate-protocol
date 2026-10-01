@@ -209,6 +209,21 @@
     --cta: 40 36% 95%;
     --cta-foreground: 240 24% 15%;
     --ring: 173 30% 77%;
+
+    /* The older components' tokens, given their charcoal values so a whole
+       page can be dark, not only a band (the reader's dark mode, 2026-10-01).
+       Same pairs as above: light teal for structure, light copper for
+       warning, the sheet-on-charcoal inversion for the action colour. */
+    --crisis: 16 70% 60%;
+    --crisis-foreground: 240 24% 15%;
+    --cor-opportunity: 40 36% 95%;
+    --cor-opportunity-foreground: 240 24% 15%;
+    --cor-success: 173 30% 77%;
+    --cor-success-foreground: 240 24% 15%;
+    --cor-warning: 30 56% 61%;
+    --cor-warning-foreground: 240 24% 15%;
+    --cor-insight: 173 30% 77%;
+    --cor-insight-foreground: 240 24% 15%;
   }
 }
 
@@ -765,6 +780,40 @@
     0 1px 0 hsl(var(--foreground) / 0.04),
     0 22px 44px -28px hsl(var(--foreground) / 0.38);
 }
+/* On charcoal the foreground is light, and a light drop shadow reads as a
+   glow. A sheet on a dark desk casts a dark shadow. */
+.dark .ld-sheet {
+  box-shadow:
+    0 1px 0 hsl(0 0% 100% / 0.04),
+    0 22px 44px -28px hsl(0 0% 0% / 0.7);
+}
+
+/* The dark-mode switch shows the moon on paper and the sun on charcoal,
+   chosen from the class on <html> so the first paint is already right. */
+.cor-theme-sun {
+  display: none;
+}
+.dark .cor-theme-sun {
+  display: block;
+}
+.dark .cor-theme-moon {
+  display: none;
+}
+
+/* The floating WhatsApp button lies on the page like the other ink. */
+.cor-wa-float {
+  box-shadow:
+    inset 0 -2px 0 hsl(0 0% 0% / 0.25),
+    0 12px 24px -12px hsl(240 24% 15% / 0.55);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.cor-wa-float:hover {
+  transform: translateY(-1px);
+}
+.cor-wa-float:focus-visible {
+  outline: 3px solid hsl(var(--primary));
+  outline-offset: 3px;
+}
 
 /* A draft that did not survive: thinner stock, dashed edge, slightly lifted
    off true. Set per element with --tilt. */
@@ -904,6 +953,12 @@
 
 /* The desk: where the four documents and the proposal lie. #E5DDCD.
    Measured on it: charcoal 12.4:1, muted 5.3:1, teal 4.6:1, copper-ink 4.7:1. */
+/* In the reader's dark mode the desk is the charcoal itself, and the sheets
+   lie on it in raised charcoal (#25253A). The palette has no darker step; a
+   new one would be a colour the brand book does not carry. */
+.dark .ld-desk {
+  background-color: hsl(var(--background));
+}
 .ld-desk {
   background-color: hsl(40 32% 85%);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");

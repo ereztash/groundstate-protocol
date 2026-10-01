@@ -4,6 +4,9 @@ import { NavLink } from "@/components/NavLink";
 import { trackCtaClick } from "@/lib/analytics";
 import { useOptionalDiagnosticForm } from "@/components/landing/DiagnosticFormProvider";
 import { CorMark } from "@/components/brand/CorMark";
+import { WhatsAppIcon } from "@/components/brand/SocialIcons";
+import ThemeToggle from "@/components/ThemeToggle";
+import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
 
 /**
  * The one site-wide top bar, used by every page (replacing the per-page
@@ -16,6 +19,10 @@ import { CorMark } from "@/components/brand/CorMark";
  * in-page; everywhere else it deep-links to /#book (Landing scrolls to the hash
  * on mount). Nav collapses into an accessible disclosure menu on
  * mobile; the CTA stays visible at every width.
+ *
+ * The reader's dark-mode switch sits beside the CTA on wide screens. On a
+ * phone there is no room for it in the bar (logo, CTA and menu already fill
+ * 360px), so it lives in the menu, with WhatsApp (2026-10-01).
  */
 
 const NAV = [
@@ -77,6 +84,7 @@ const SiteHeader = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle className="hidden h-9 w-9 justify-center md:inline-flex" />
           {/* Off-landing this is a real navigation, so the source rides the
               query string — Landing reads it into the provider on mount. */}
           <Link
@@ -125,6 +133,20 @@ const SiteHeader = () => {
               </li>
             ))}
           </ul>
+          <div className="flex items-center justify-between gap-4 border-t border-foreground/10 px-2 py-3">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCtaClick("whatsapp_menu")}
+              className="inline-flex items-center gap-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <WhatsAppIcon className="h-[18px] w-[18px]" />
+              וואטסאפ <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+              <span className="sr-only"> (נפתח בוואטסאפ)</span>
+            </a>
+            <ThemeToggle withLabel className="py-1" />
+          </div>
         </nav>
       )}
     </header>

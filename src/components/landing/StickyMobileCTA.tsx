@@ -2,6 +2,8 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { trackCtaClick } from "@/lib/analytics";
 import { getConsent } from "@/lib/consent";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
+import { whatsappUrl } from "@/lib/contact";
+import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 
 /**
  * Phone-only bar that carries the CTA once the hero's has scrolled away.
@@ -63,14 +65,30 @@ const StickyMobileCTA = () => {
       data-shown={visible ? "" : undefined}
       className="ld-sticky fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
     >
-      <a
-        href="#book"
-        onClick={onClick}
-        tabIndex={visible ? 0 : -1}
-        className="ld-cta mx-auto flex w-full max-w-xl"
-      >
-        לתיאום שיחת התאמה · 30 דקות
-      </a>
+      {/* WhatsApp sits beside the booking button (2026-10-01): on a phone
+          this bar is where the floating WhatsApp button would go, so the two
+          share it instead of stacking. */}
+      <div className="mx-auto flex w-full max-w-xl gap-2">
+        <a
+          href="#book"
+          onClick={onClick}
+          tabIndex={visible ? 0 : -1}
+          className="ld-cta flex-1"
+        >
+          לתיאום שיחת התאמה · 30 דקות
+        </a>
+        <a
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackCtaClick("whatsapp_sticky")}
+          tabIndex={visible ? 0 : -1}
+          aria-label="כתבו לי בוואטסאפ"
+          className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[3px] border border-foreground/25 bg-card text-foreground"
+        >
+          <WhatsAppIcon className="h-6 w-6" />
+        </a>
+      </div>
     </div>
   );
 };
