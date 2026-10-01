@@ -32,7 +32,7 @@ const STATIONS = [
   { title: "פתיחה.", body: "מה התקיעה ומה ניסית עד עכשיו." },
   {
     title: "חילוץ נקודה אחת.",
-    body: "משהו ספציפי שעשיתם פעם ואתם גאים בו. שם יושב הבידול.",
+    body: "משהו ספציפי שעשיתם פעם ואתם גאים בו.",
   },
   { title: "שיקוף.", body: "אני אומר בקול מה שאני שומע, ומתקנים ביחד." },
   {
@@ -114,14 +114,10 @@ const BookSection = () => {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="07" label="הצעד הבא" />
+          <SectionHead label="הצעד הבא" />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
             שיחת התאמה. 30 דקות, ללא עלות.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground">
-            אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי
-            לבזבז לאף אחד את הזמן.
-          </p>
         </div>
 
         {/* On a phone the calendar comes straight after the heading: a
@@ -135,7 +131,7 @@ const BookSection = () => {
             <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
               {STATIONS.map((s, i) => (
                 <li key={s.title}>
-                  <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
+                  <p className="text-xs font-bold text-muted-foreground">
                     תחנה {i + 1}
                   </p>
                   <p className="mt-1 leading-relaxed text-foreground">
@@ -152,8 +148,8 @@ const BookSection = () => {
               sharp, owned answer means the reader does not need the programme;
               a long or generic one is what the call is for. It also sets the
               call's genre before it starts: a fit check, not free advice. */}
-          <div className="mt-8 ld-sheet p-5">
-            <p className="text-xs font-bold tracking-[0.08em] text-primary">
+          <div className="mt-8 ld-plain p-5">
+            <p className="text-xs font-bold text-primary">
               שאלה אחת להביא לשיחה
             </p>
             <p className="mt-2 text-lg font-bold leading-snug text-foreground">

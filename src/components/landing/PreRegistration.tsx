@@ -35,7 +35,7 @@ const PreRegistration = () => {
             id="pre-registration-title"
             className="cor-title mt-2 text-foreground"
           >
-            מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
+            מה התחייבתי למדוד, לפני שידעתי את התוצאה.
           </h2>
           <p className="cor-body-lg mt-4 text-foreground">
             זו התחייבות לפרסם מה קרה, כולל המקרה שבו השיטה לא עבדה. ההתחייבות

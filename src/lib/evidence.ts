@@ -20,7 +20,7 @@ export type EvidenceLevel =
 
 export const EVIDENCE_LABEL: Record<EvidenceLevel, string> = {
   anchored: "מעוגן",
-  operator: "עדות-מפעיל",
+  operator: "דיווח שלי",
   pending: "טרם",
 };
 
@@ -31,7 +31,7 @@ export const EVIDENCE_LABEL: Record<EvidenceLevel, string> = {
  */
 export const EVIDENCE_MEANING: Record<EvidenceLevel, string> = {
   anchored: "קיימת שורת פנקס או CRM",
-  operator: "דיווח שלי, לא הוצלב מול מקור שני",
+  operator: "עוד לא בדקתי את זה מול מקור נוסף",
   pending: "לא נמדד",
 };
 

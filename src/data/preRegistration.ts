@@ -21,7 +21,7 @@ export const preRegistration = {
   measures: {
     label: "מה נמדד",
     items: [
-      "אות התעניינות מתועד, כן או לא",
+      "תגובה כתובה שמראה עניין, כן או לא",
       "עסקה שנסגרה, כן או לא, וסכום",
       "שינוי בחשיפות לינקדאין",
     ],
@@ -39,8 +39,8 @@ export const preRegistration = {
    * remove the only part that costs anything to publish.
    */
   failureThreshold: {
-    label: "סף הכישלון, נרשם מראש",
+    label: "מתי אגיד שזה לא עבד",
     value:
-      "אם פחות מ-60% מהלקוחות מגיעים לאות התעניינות מתועד, המתודה מקבלת גרסה חדשה.",
+      "אם פחות מ-60% מהלקוחות יקבלו תגובה כתובה שמראה עניין, אשנה את השיטה.",
   },
 } as const;

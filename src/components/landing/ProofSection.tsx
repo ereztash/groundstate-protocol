@@ -31,7 +31,7 @@ function QuoteCard({ t }: { t: Testimonial }) {
   );
 
   return (
-    <figure className="ld-sheet flex flex-col p-6 sm:p-7">
+    <figure className="ld-plain flex flex-col p-6 sm:p-7">
       <blockquote>{body}</blockquote>
       <figcaption className="mt-auto flex items-center gap-3 border-t border-border pt-5">
         {t.photo ? (
@@ -76,13 +76,13 @@ const ProofSection = () => (
     className="ld-section"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <SectionHead n="04" label="בלשונם" />
+      <SectionHead label="המלצות" />
       <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">
         מה אמרו שלושה אנשים שעבדו איתי.
       </h2>
 
       <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
-        <div className="ld-sheet p-6 sm:p-8">
+        <div className="ld-plain p-6 sm:p-8">
           <VideoTestimonial />
         </div>
         <div className="grid gap-6">
@@ -93,7 +93,7 @@ const ProofSection = () => (
       </div>
 
       <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
-        מה נבדק ומה עוד לא נבדק, כולל מה שהתחייבתי למדוד מראש:{" "}
+        מה כבר בדקתי ומה עוד לא,{" "}
         <Link to="/protocol#evidence" className="ld-link">
           בעמוד הפרוטוקול
         </Link>

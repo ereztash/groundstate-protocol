@@ -59,11 +59,18 @@ export const testimonials: Testimonial[] = [
  * src/lib/noDashes.test.ts.
  */
 export const videoTestimonial = {
+  /**
+   * What Guy says in the video, word for word from its captions
+   * (public/media/testimonial-guy.he.vtt), from "ארז הוא בן אדם" on. Until
+   * 2026-10-01 this was a smoothed paraphrase ("ארז לא רק נותן פתרון — הוא
+   * מנחה אותך…") that the site audit's readers took for chatbot copy. Spoken
+   * words carry no dash, so the caption's dash is a comma here.
+   */
   quote:
-    "ארז לא רק נותן פתרון — הוא מנחה אותך לחשוב עמוק יותר מי אתה ומה עברת, ומזהה את זה מהר מאוד. זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
+    "ארז הוא בן אדם שלא רק יגיד לכם מה הפתרון, הוא ינחה אתכם לחשוב עמוק יותר מי אתם ומה עברתם בחיים האלה, והוא גם יזהה את זה מאוד מהר. הוא יגרום לכם לתת הצעת ערך שגם תדבר אליכם וגם תדבר לקהל שאתם רוצים לפנות אליו. לי זה עזר המון למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
   /** Verbatim substring of `quote`, used beside the price in the hero. */
   pullQuote:
-    "זה עזר לי למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
+    "לי זה עזר המון למקד את הצעת הערך שלי, ואני מרגיש את זה באחוזי ההמרה כמעט כל יום.",
   attribution: "גיא כהן",
   linkedin: "https://www.linkedin.com/in/guycohen-ai/",
 } as const;

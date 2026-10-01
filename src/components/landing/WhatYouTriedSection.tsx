@@ -21,9 +21,9 @@ import SectionHead from "./SectionHead";
  */
 const NOTES: ReactNode[] = [
   <>
-    אתם יודעים בדיוק מה אתם עושים בשביל לקוחות. כשמישהו חדש שואל{" "}
-    <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, התשובה
-    עוד לא ברורה, גם לכם.
+    כשמישהו חדש שואל{" "}
+    <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, קשה
+    לכם להגיד לו מה הוא קונה ומה הוא יוצא מזה.
   </>,
   <>
     כל כמה שבועות אתם נכנסים ללינקדאין ומשנים את הכותרת. כבר הצטברו{" "}
@@ -36,8 +36,9 @@ const NOTES: ReactNode[] = [
     לכם מהפה.
   </>,
   <>
-    נתתם חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלכם הוא הידע שלכם,{" "}
-    <strong className="font-bold text-foreground">נתתם אותו במתנה</strong>.
+    נתתם{" "}
+    <strong className="font-bold text-foreground">חצי שעת ייעוץ</strong> לבן-דוד
+    של חבר.
   </>,
 ];
 
@@ -48,9 +49,9 @@ const WhatYouTriedSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <SectionHead n="01" label="למה הגעתם לכאן" />
+      <SectionHead label="למה הגעתם לכאן" />
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        מבריקים על הלקוחות שלכם. נתקעים על עצמכם.
+        הסנדלר הולך יחף, גם אצלכם וגם אצלי.
       </h2>
       <p className="cor-body-lg mt-5 max-w-2xl text-foreground">
         בדרך כלל זה מגיע אחרי שעזבתם עבודה, יצאתם לחל״ת, או כשההכנסה מהעסק
@@ -70,16 +71,11 @@ const WhatYouTriedSection = () => (
 
       <div className="mt-14 max-w-4xl">
         <p className="font-heading text-2xl font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
-          ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
-          אחד:{" "}
+          אני חושב שלארבעת הדברים האלה יש סיבה אחת.{" "}
           <span className="ld-underline">
-            עוד לא תרגמתם את מה שאתם יודעים לשפה שהלקוח שלכם משלם עליה.
+            עוד לא לקחתם את מה שאתם יודעים ומסגרתם אותו למשהו שמישהו ישלם עליו
+            כסף.
           </span>
-        </p>
-        <p className="cor-body-lg mt-6 max-w-2xl text-foreground">
-          וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא
-          מבינים למה דווקא אתם, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
-          מתרגם, הוא רק מייקר.
         </p>
       </div>
     </div>

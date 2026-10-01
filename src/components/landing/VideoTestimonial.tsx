@@ -90,12 +90,6 @@ const VideoTestimonial = () => {
         </blockquote>
 
         <div className="flex items-center gap-3 border-t border-border pt-4">
-          <span
-            aria-hidden="true"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground/[0.04] text-sm font-semibold text-muted-foreground ring-1 ring-border"
-          >
-            גכ
-          </span>
           <div className="space-y-0.5">
             <a
               href="https://www.linkedin.com/in/guycohen-ai/"
@@ -114,7 +108,7 @@ const VideoTestimonial = () => {
               <span className="sr-only">(נפתח בלינקדאין)</span>
             </a>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              יועץ AI לעצמאים · מוביל קהילה של 1,500+
+              יועץ AI לעצמאים, מוביל קהילה של 1,500+
             </p>
           </div>
         </div>

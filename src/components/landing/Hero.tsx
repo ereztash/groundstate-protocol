@@ -58,10 +58,10 @@ const Hero = () => {
     >
       <div className="mx-auto grid max-w-6xl items-start gap-10 px-5 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-14">
         <div>
-          <p className="cor-overline-he !text-base">ליווי עסקי לעצמאים · 30 יום</p>
+          <p className="cor-overline-he !text-base">ליווי עסקי לעצמאים, 30 יום</p>
 
           <h1 id="hero-title" className="cor-display mt-5 text-foreground">
-            יודעים לעשות את העבודה. לא יודעים איך למכור אותה
+            אתם יודעים את העבודה, והקושי הוא למכור אותה
             <span className="cor-point">.</span>
           </h1>
 
@@ -69,8 +69,8 @@ const Hero = () => {
             id="hero-subtitle"
             className="cor-body-lg mt-6 max-w-xl font-medium text-foreground"
           >
-            בארבע פגישות בחודש, מה שאתם כבר יודעים נארז כמוצר אחד עם מחיר,
-            ויוצא ל-{outreachCount} אנשים ששמם ידוע לכם.
+            בארבע פגישות בחודש אנחנו הופכים את מה שאתם כבר יודעים למוצר אחד
+            עם מחיר, ואתם שולחים אותו ל-{outreachCount} אנשים ספציפיים.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
@@ -107,7 +107,7 @@ const Hero = () => {
               </dd>
               <dd className="text-muted-foreground">
                 {program.installmentsLabel}
-                <span className="hidden sm:inline"> · </span>
+                <span className="hidden sm:inline">, </span>
                 <span className="block sm:inline">{program.vatLabel}</span>
               </dd>
             </div>
@@ -123,10 +123,10 @@ const Hero = () => {
             the face of the person they would be paying. */}
         <div role="group" aria-label="ערבות והמלצה" className="ld-sheet grid gap-6 p-6 sm:p-7 md:mt-10">
           <div>
-            <p className="text-xs font-bold tracking-[0.08em] text-primary">ערבות חתומה</p>
+            <p className="text-xs font-bold text-primary">התחייבות בכתב</p>
             <p className="mt-2 leading-relaxed text-foreground">
-              אם בסוף מפגש 4 אין בידיכם יחידת מכר (מוצר, משך זמן ומחיר קבוע)
-              ו-{outreachCount} פניות שיצאו איתה בפועל לקהל היעד שהגדרנו, אני
+              אם בסוף מפגש 4 אין לכם מוצר אחד עם משך זמן ומחיר קבוע,
+              ו-{outreachCount} פניות שיצאו איתו בפועל לקהל היעד שהגדרנו, אני
               מחזיר את התשלום במלואו.{" "}
               <a href="#price" className="ld-link">לנוסח המלא</a>
             </p>

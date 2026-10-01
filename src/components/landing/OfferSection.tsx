@@ -1,7 +1,6 @@
 import type { MouseEvent } from "react";
 import { program, stages } from "@/data/sprint-stages";
 import GuaranteeBand from "@/components/GuaranteeBand";
-import { SAMPLE_SOURCE_LABEL } from "@/lib/evidence";
 import { trackCtaClick } from "@/lib/analytics";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
@@ -36,7 +35,7 @@ const LINE_ITEMS = [
   "4 פגישות של 60 דקות, במשך 30 יום",
   "ליווי בין הפגישות",
   "4 מסמכים שנשארים אצלכם",
-  "הרצה מונחית של הפנייה הראשונה",
+  "עוברים ביחד על הפנייה הראשונה",
 ];
 
 const OfferSection = () => {
@@ -57,13 +56,12 @@ const OfferSection = () => {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="02" label="מה נשאר אצלכם" />
+          <SectionHead label="מה נשאר אצלכם" />
           <h2 id="offer-title" className="cor-title mt-4 text-foreground">
-            ארבעה שבועות. ארבעה מסמכים. כל אחד נבנה על הקודם.
+            ארבע פגישות, וכל פגישה מבוססת על הקודמת.
           </h2>
           <p className="cor-body-lg mt-5 text-foreground">
-            בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. הניסוח יוצא מכם,
-            ולכן הוא נשאר שלכם.
+            בסוף כל שבוע יש מסמך שאפשר להשתמש בו מחר בבוקר. אני נזהר מלהכניס לכם מילים לפה.
           </p>
         </div>
 
@@ -81,16 +79,11 @@ const OfferSection = () => {
           {stages.map((s, i) => (
             <li
               key={s.number}
-              className="ld-sheet ld-stack flex w-[84%] shrink-0 snap-center flex-col p-6 sm:w-[70%] sm:p-7 md:w-auto"
+              className="ld-plain flex w-[84%] shrink-0 snap-center flex-col p-6 sm:w-[70%] sm:p-7 md:w-auto"
             >
-              <div className="flex items-start justify-between gap-4">
-                <span className="ld-folio" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <span className="pt-1 text-xs font-bold tracking-[0.08em] text-muted-foreground">
-                  שבוע {i + 1} · {s.name}
-                </span>
-              </div>
+              <p className="text-xs font-bold text-muted-foreground">
+                שבוע {i + 1}, {s.name}
+              </p>
 
               <h3 className="mt-4 font-heading text-2xl font-black leading-tight text-foreground">
                 <span className="sr-only">שבוע {i + 1}: </span>
@@ -103,14 +96,6 @@ const OfferSection = () => {
                 {s.benefit}
               </p>
 
-              <figure className="mt-auto pt-6">
-                <blockquote className="border-s-2 border-accent/70 ps-4 text-base leading-snug text-foreground">
-                  {s.artifact.sample}
-                </blockquote>
-                <figcaption className="mt-2 ps-4 text-xs text-muted-foreground">
-                  {s.artifact.docLabel} · {SAMPLE_SOURCE_LABEL[s.artifact.sampleSource]}
-                </figcaption>
-              </figure>
             </li>
           ))}
         </ol>
@@ -124,8 +109,8 @@ const OfferSection = () => {
             <h3 className="font-heading text-xl font-black text-foreground sm:text-2xl">
               הצעה: {program.name}
             </h3>
-            <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
-              COR-SYS · ארז טל-שיר
+            <p className="text-xs font-bold text-muted-foreground">
+              ארז טל-שיר
             </p>
           </div>
 

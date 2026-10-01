@@ -20,8 +20,8 @@ import { WhatsAppIcon } from "@/components/brand/SocialIcons";
  * focusable control inside is what Lighthouse flagged on the previous page.
  */
 const LABELS = {
-  he: { cta: "לתיאום שיחת התאמה · 30 דקות", whatsapp: "כתבו לי בוואטסאפ" },
-  en: { cta: "Book a fit call · 30 min", whatsapp: "Message me on WhatsApp" },
+  he: { cta: "לתיאום שיחת התאמה, 30 דקות", whatsapp: "כתבו לי בוואטסאפ" },
+  en: { cta: "Book a fit call, 30 min", whatsapp: "Message me on WhatsApp" },
 } as const;
 
 /** `lang="en"` is the English home page's bar: no form provider there, so the

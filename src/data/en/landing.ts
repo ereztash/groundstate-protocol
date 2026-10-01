@@ -23,9 +23,9 @@ export const PRICE = {
 } as const;
 
 export const hero = {
-  overline: "Business mentoring for freelancers · 30 days",
-  title: "You know how to do the work. You don't know how to sell it",
-  subtitle: `In four meetings over a month, what you already know is packaged as one product with a price, and goes out to ${outreachCount} people you know by name.`,
+  overline: "Business mentoring for freelancers, 30 days",
+  title: "You know the work, and the hard part is selling it",
+  subtitle: `In four meetings over a month we turn what you already know into one product with a price, and you send it to ${outreachCount} specific people.`,
   cta: "Book a fit call",
   // The meeting language is the one line with no Hebrew original: an English
   // page has to say it. Confirmed by Erez before merge.
@@ -34,11 +34,11 @@ export const hero = {
   priceTerm: "The whole program",
   meetingsTerm: "Meetings",
   meetingsValue: "4, one a week",
-  guaranteeLabel: "Signed guarantee",
-  guarantee: `If by the end of meeting 4 you don't have a sales unit (a product, a duration and a fixed price) and ${outreachCount} outreach messages actually sent with it to the target audience we defined, I refund the payment in full.`,
+  guaranteeLabel: "My commitment, in writing",
+  guarantee: `If by the end of meeting 4 you don't have one product with a duration and a fixed price, and ${outreachCount} outreach messages actually sent with it to the target audience we defined, I refund the payment in full.`,
   guaranteeLink: "Full wording",
   quote:
-    "It helped me sharpen my value proposition, and I feel it in my conversion rates almost every day.",
+    "For me it helped a lot to sharpen my value proposition, and I feel it in my conversion rates almost every day.",
   translated: "Translated from Hebrew",
   name: "Erez Tal-Shir",
   role: "Social worker and technologist, business consultant for freelancers",
@@ -48,46 +48,45 @@ export const hero = {
 
 export const why = {
   label: "Why you're here",
-  title: "Brilliant about your clients. Stuck on yourself.",
+  title: "The cobbler's children have no shoes, and that goes for me too.",
   trigger:
     "It usually comes after you've left a job, gone on unpaid leave, or while the income from the business isn't steady yet.",
   notes: [
-    ["You know exactly what you do for clients. When someone new asks ", "what you sell", ", the answer still isn't clear, even to you."],
+    ["When someone new asks ", "what you sell", ", it's hard to tell them what they're buying and what they get out of it."],
     ["Every few weeks you open LinkedIn and change your headline. There are already ", "15 versions", " of “who I am”, and each one, a month later, is “not quite right”."],
     ["You wrote a number down before the call. When it was time to say it out loud, you hesitated, and ", "a lower number", " came out."],
     ["You gave half an hour of advice to a friend's cousin. When your product is your knowledge, ", "you gave it away", "."],
   ] as const,
-  diagnosis: "These four look like four separate problems. They are four faces of one thing: ",
-  diagnosisMark: "you haven't yet translated what you know into the language your client pays for.",
-  cost: "And every month it stays that way has a price: deals that close below their value, clients who don't see why it should be you, and another version of “who I am” that won't hold. Time alone doesn't translate. It only makes it cost more.",
+  diagnosis: "I think these four things have one cause. ",
+  diagnosisMark: "You haven't yet taken what you know and framed it as something someone will pay for.",
 } as const;
 
 export const offer = {
   label: "What you leave with",
-  title: "Four weeks. Four documents. Each one built on the last.",
-  intro: "At the end of every week there is a document you can use the next morning. The wording comes from you, so it stays yours.",
+  title: "Four meetings, each one built on the last.",
+  intro: "At the end of every week there is a document you can use the next morning. I'm careful not to put words in your mouth.",
   swipe: "Four documents, swipe between them →",
   week: "Week",
   sampleNote: "Example, not a client",
   stages: [
     {
-      name: "Unique narrative",
+      name: "Narrative",
       title: "One sentence that still holds in six months",
-      deliverable: "A narrative document of one to two pages, with 3 to 5 ready wordings.",
-      benefit: "So you stop changing your headline every three weeks, and say the same sentence six months from now.",
+      deliverable: "A narrative document of one or two pages, with 3 to 5 ready wordings.",
+      benefit: "So you stop changing your headline every three weeks.",
       sample: "I help consultants turn 20 years of experience into one sentence they say without hesitating.",
       doc: "Narrative document",
     },
     {
-      name: "Unique value proposition",
+      name: "Value proposition",
       title: "The words your clients already use",
-      deliverable: "A core sentence and a pain dictionary, ready to send.",
-      benefit: "So you stop guessing which pain gets a client interested, and write in words they have already said.",
+      deliverable: "A sentence ready to send, and a list of your clients' pains.",
+      benefit: "The more you speak your client's language, the less effort it takes to explain what you do.",
       sample: "What a client says: “my wording is stuck”. What I hear: “the offer isn't sharp.”",
       doc: "Value proposition",
     },
     {
-      name: "Unique product",
+      name: "Product",
       title: "A product with a price you can say out loud",
       deliverable: "A product description with pricing and its rationale, ready to send.",
       benefit: "So the client understands what they are buying before they ask what it costs.",
@@ -95,10 +94,10 @@ export const offer = {
       doc: "Product description",
     },
     {
-      name: "Proactive client acquisition",
-      title: `${outreachCount} messages to people you know by name`,
-      deliverable: `${outreachCount} outreach messages written and logged, and a guided run of the first one in the room. A buying-signals log to track the replies.`,
-      benefit: "So the documents leave your computer and reach people you know by name, instead of staying a plan.",
+      name: "Outreach",
+      title: `${outreachCount} messages to decision makers in your market`,
+      deliverable: `${outreachCount} written, logged outreach messages. We go through the first one together in the meeting, and you log the replies.`,
+      benefit: "So the documents leave your computer and reach the people you chose.",
       sample: "Subject: I saw what you wrote about the Q2 crunch. One question.",
       doc: `${outreachCount} logged outreach messages`,
     },
@@ -108,7 +107,7 @@ export const offer = {
     "4 meetings of 60 minutes, over 30 days",
     "Support between meetings",
     "4 documents that stay with you",
-    "A guided run of the first outreach message",
+    "Going through the first message together",
   ],
   included: "Included",
   total: "Total",
@@ -129,22 +128,22 @@ export const offer = {
 
 export const day31 = {
   label: "After",
-  title: "Day 31",
+  title: "On day 31",
   lines: [
-    "Someone asks what you do. You have one sentence. You say it, and you don't add a disclaimer after it.",
+    "Someone asks what you do, and you have one sentence you can say without first explaining your whole philosophy.",
     "They ask what it costs. The number is written in your document, so it comes out as it is. Without checking their face first.",
-    `And the ${outreachCount} messages are already out, each one to a person you know by name.`,
+    `And the ${outreachCount} messages are already out, each one to a specific person.`,
   ],
-  caveat: "This is what the four documents are meant to make possible: a description of what has to be in your hands for it to be possible. There is no promise here that it will happen. What happens next also depends on the market, and on the people you chose to approach.",
+  caveat: "There is no promise here that it will happen. What happens next also depends on the market, and on the people you chose to approach.",
 } as const;
 
 export const proof = {
-  label: "In their words",
+  label: "Testimonials",
   title: "What three people who worked with me said.",
   translated: "Translated from Hebrew.",
   more: "Read the full testimonial",
   less: "Close",
-  evidence: "What has been checked and what hasn't, including what I committed in advance to measure:",
+  evidence: "What I've checked and what I haven't,",
   evidenceLink: "on the protocol page (in Hebrew)",
   opensLinkedIn: " (opens LinkedIn)",
 } as const;
@@ -153,8 +152,8 @@ export const proof = {
 export const testimonialsEn: Record<string, { name: string; quote: string; pullQuote?: string; outcome?: string }> = {
   "גיא כהן": {
     name: "Guy Cohen",
-    quote: "Erez doesn't just hand you a solution. He guides you to think more deeply about who you are and what you've been through, and he spots it very quickly. It helped me sharpen my value proposition, and I feel it in my conversion rates almost every day.",
-    outcome: "AI consultant for freelancers · leads a community of 1,500+",
+    quote: "Erez is a person who won't just tell you what the solution is, he'll guide you to think more deeply about who you are and what you've been through in this life, and he'll spot it very quickly. He'll get you to offer a value proposition that speaks both to you and to the audience you want to reach. For me it helped a lot to sharpen my value proposition, and I feel it in my conversion rates almost every day.",
+    outcome: "AI consultant for freelancers, leads a community of 1,500+",
   },
   "נועם אורן": {
     name: "Noam Oren",
@@ -170,24 +169,24 @@ export const testimonialsEn: Record<string, { name: string; quote: string; pullQ
 
 export const fit = {
   label: "Fit",
-  title: "This isn't for everyone, and that's fine.",
-  forTitle: "It's for you if",
+  title: "Who it fits, and who it fits less.",
+  forTitle: "It fits you if",
   for: [
-    "Something changed recently: you left a job, went on unpaid leave, or your income isn't steady yet, and the question of what you sell became urgent.",
+    "You left a job, went on unpaid leave or your income isn't steady yet, and now the question of what you sell is pressing.",
     "You already have clients, and they're happy. The hard part is explaining to someone who hasn't worked with you why it should be you.",
-    "You combine two worlds, and can't say the combination in one sentence.",
+    "You combine two worlds, and can't explain the combination in one sentence.",
     "You're ready for a meeting a week and a short task between meetings, for a month.",
   ],
-  notForTitle: "It's not for you if",
+  notForTitle: "It fits you less if",
   notFor: [
     "You mainly serve corporations, not freelancers.",
     "You already have 30+ active clients and want to filter.",
-    "You're used to working by feel rather than by structure. This will feel annoying.",
-    "You're looking for emotional warm-up before action. I'm not the right person for that.",
+    "You're used to working by feel, and working by structure will annoy you.",
+    "You mainly want someone to hold your hand, and that's less my thing.",
   ],
   whoLabel: "Who you'll be talking to",
-  whoTitle: "I had knowledge too. And I didn't know how to get it across.",
-  whoBody: "For years I held only the human side, story and narrative. When I entered the business world, I found that I know things others don't, and also that I had no idea how to explain it to a client. I found that structure is the other half of the same shape.",
+  whoTitle: "I do this because I've been exactly there.",
+  whoBody: "I had knowledge and experience from many fields, and I didn't understand how to turn all of it into one thing someone would pay for. I spent a long time trying to figure it out, and that's where the process I use today came from.",
   whoLink: "More about me (in Hebrew)",
 } as const;
 
@@ -197,11 +196,11 @@ export const faqEn = {
   surfaced: [
     {
       q: "Can't I just use GPT?",
-      a: "You've tried “help me sharpen how I describe myself”, and a month later it's “not quite right” again. GPT hands you back yourself with more words: it knows what you told it. I draw out what you didn't tell it, the difference between you and a thousand others who do the same thing.",
+      a: "You've tried “help me sharpen how I describe myself”, and a month later it's “not quite right” again. GPT hands you back yourself with more words.",
     },
     {
       q: "What's the difference between you and a business consultant or a business coach?",
-      a: "Maybe you've already worked with someone who “knew the field less and was more general”. A consultant gives advice. A coach asks questions. I draw out a narrative, word a value proposition, build a product, and run the outreach with you. At the end of each stage there's a document you can use the next morning.",
+      a: "Maybe you've already worked with someone who “knew the field less and was more general”. With me the order is fixed. First we find what is special about you, then we build a product with a price from it, and then we go out with the outreach. At the end of each stage you keep a document.",
     },
   ],
   rest: [
@@ -227,7 +226,7 @@ export const faqEn = {
     },
     {
       q: "What does stage 4 include in practice?",
-      a: "Mapping five specific decision makers in your market, a separate message for each of them, and a guided run of the first one in the room. The buying-signals log is built to record what keeps coming back in the replies.",
+      a: "Mapping five specific decision makers in your market, a separate message for each of them, and we go through the first one together in the meeting. You log the replies, to see what keeps coming back.",
     },
     {
       q: "How much does the program cost?",
@@ -239,12 +238,11 @@ export const faqEn = {
 export const book = {
   label: "Next step",
   title: "A fit call. 30 minutes, free.",
-  intro: "If it's not the right time, or I'm not the right person, we'll say so honestly without wasting anyone's time.",
   stepsTitle: "What happens in the thirty minutes",
   stop: "Stop",
   steps: [
     ["Opening.", "What's stuck, and what you've tried so far."],
-    ["Drawing out one point.", "Something specific you once did and are proud of. That's where the differentiation sits."],
+    ["Drawing out one point.", "Something specific you once did and are proud of."],
     ["Reflection.", "I say out loud what I hear, and we correct it together."],
     ["Decision.", "Whether it fits, and where to start. If not, that's a clear answer too."],
   ] as const,
@@ -254,7 +252,7 @@ export const book = {
   whatsappLead: "Rather write?",
   loading: "The calendar is loading.",
   openCalendar: "Open the calendar in a new window",
-  sticky: "Book a fit call · 30 min",
+  sticky: "Book a fit call, 30 min",
 } as const;
 
 export const meta = {

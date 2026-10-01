@@ -107,7 +107,7 @@ function Hero() {
               <dt className="whitespace-nowrap text-muted-foreground">{hero.priceTerm}</dt>
               <dd className="cor-price font-heading text-2xl font-black text-foreground">{PRICE.label}</dd>
               <dd className="whitespace-nowrap text-muted-foreground">{PRICE.installments}</dd>
-              <dd className="whitespace-nowrap text-muted-foreground">· {PRICE.vat}</dd>
+              <dd className="whitespace-nowrap text-muted-foreground">{PRICE.vat}</dd>
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">{hero.meetingsTerm}</dt>
@@ -138,7 +138,7 @@ function Hero() {
                 {testimonialsEn[videoTestimonial.attribution].name}
                 <span className="sr-only">{proof.opensLinkedIn}</span>
               </a>
-              {" · "}
+              {", "}
               {hero.translated}
             </figcaption>
           </figure>
@@ -178,7 +178,7 @@ function Why() {
   return (
     <section aria-labelledby="why-title" className="ld-section border-t border-foreground/10">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
-        <SectionHead n="01" label={why.label} />
+        <SectionHead label={why.label} />
         <h2 id="why-title" className="cor-title mt-4 max-w-2xl text-foreground">{why.title}</h2>
         <p className="cor-body-lg mt-5 max-w-2xl text-foreground">{why.trigger}</p>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -198,7 +198,6 @@ function Why() {
             {why.diagnosis}
             <span className="ld-underline">{why.diagnosisMark}</span>
           </p>
-          <p className="cor-body-lg mt-6 max-w-2xl text-foreground">{why.cost}</p>
         </div>
       </div>
     </section>
@@ -210,7 +209,7 @@ function Offer() {
     <section id="offer" aria-labelledby="offer-title" className="ld-section ld-desk">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="02" label={offer.label} />
+          <SectionHead label={offer.label} />
           <h2 id="offer-title" className="cor-title mt-4 text-foreground">{offer.title}</h2>
           <p className="cor-body-lg mt-5 text-foreground">{offer.intro}</p>
         </div>
@@ -218,23 +217,16 @@ function Offer() {
         <p className="mt-10 text-sm text-muted-foreground md:hidden" aria-hidden="true">{offer.swipe}</p>
         <ol className="relative -mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:mx-0 md:mt-12 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
           {offer.stages.map((s, i) => (
-            <li key={s.name} className="ld-sheet ld-stack flex w-[84%] shrink-0 snap-center flex-col p-6 sm:w-[70%] sm:p-7 md:w-auto">
-              <div className="flex items-start justify-between gap-4">
-                <span className="ld-folio" aria-hidden="true">{i + 1}</span>
-                <span className="pt-1 text-xs font-bold tracking-[0.08em] text-muted-foreground">
-                  {offer.week} {i + 1} · {s.name}
-                </span>
-              </div>
+            <li key={s.name} className="ld-plain flex w-[84%] shrink-0 snap-center flex-col p-6 sm:w-[70%] sm:p-7 md:w-auto">
+              <p className="text-xs font-bold text-muted-foreground">
+                {offer.week} {i + 1}, {s.name}
+              </p>
               <h3 className="mt-4 font-heading text-2xl font-black leading-tight text-foreground">
                 <span className="sr-only">{offer.week} {i + 1}: </span>
                 {s.title}
               </h3>
               <p className="mt-2 leading-relaxed text-foreground">{s.deliverable}</p>
               <p className="mt-3 font-semibold leading-relaxed text-primary">{s.benefit}</p>
-              <figure className="mt-auto pt-6">
-                <blockquote className="border-s-2 border-accent/70 ps-4 text-base leading-snug text-foreground">{s.sample}</blockquote>
-                <figcaption className="mt-2 ps-4 text-xs text-muted-foreground">{s.doc} · {offer.sampleNote}</figcaption>
-              </figure>
             </li>
           ))}
         </ol>
@@ -242,7 +234,7 @@ function Offer() {
         <div id="price" className="ld-sheet ld-stack mt-8 p-6 sm:p-10 md:mt-12">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-foreground/15 pb-4">
             <h3 className="font-heading text-xl font-black text-foreground sm:text-2xl">{offer.proposal}</h3>
-            <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">COR-SYS · {hero.name}</p>
+            <p className="text-xs font-bold text-muted-foreground">{hero.name}</p>
           </div>
 
           <div className="mt-6 grid gap-10 md:grid-cols-[1.25fr_0.75fr] md:gap-14">
@@ -310,7 +302,7 @@ function Day31() {
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-16">
           <div>
-            <SectionHead n="03" label={day31.label} />
+            <SectionHead label={day31.label} />
             <h2 id="day-31-title" className="mt-4 font-heading text-[3.25rem] font-black leading-none tracking-tight sm:text-[5rem]">
               {day31.title}
               <span className="cor-point">.</span>
@@ -337,7 +329,7 @@ function Proof() {
   return (
     <section id="proof" aria-labelledby="proof-title" className="ld-section">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
-        <SectionHead n="04" label={proof.label} />
+        <SectionHead label={proof.label} />
         <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">{proof.title}</h2>
         <p className="mt-3 text-sm text-muted-foreground">{proof.translated}</p>
 
@@ -345,7 +337,7 @@ function Proof() {
           {cards.map((c) => {
             const t = testimonialsEn[c.he];
             return (
-              <figure key={c.he} className="ld-sheet flex flex-col p-6 sm:p-7">
+              <figure key={c.he} className="ld-plain flex flex-col p-6 sm:p-7">
                 <blockquote>
                   {t.pullQuote ? (
                     <>
@@ -393,7 +385,7 @@ function Fit() {
   return (
     <section id="fit" aria-labelledby="fit-title" className="ld-section border-t border-foreground/10">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
-        <SectionHead n="05" label={fit.label} />
+        <SectionHead label={fit.label} />
         <h2 id="fit-title" className="cor-title mt-4 max-w-2xl text-foreground">{fit.title}</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <div className="ld-sheet p-6 sm:p-8">
@@ -442,7 +434,7 @@ function Faq() {
   return (
     <section id="faq" aria-labelledby="faq-title" className="ld-section border-t border-foreground/10">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
-        <SectionHead n="06" label={faqEn.label} />
+        <SectionHead label={faqEn.label} />
         <h2 id="faq-title" className="cor-title mt-4 max-w-2xl text-foreground">{faqEn.title}</h2>
         <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-14">
           <div className="space-y-8">
@@ -454,7 +446,7 @@ function Faq() {
             ))}
           </div>
           <Accordion type="single" collapsible className="w-full border-t border-border">
-            {[...faqEn.rest, { q: "Is there a guarantee?", a: `${offer.clause} ${offer.countsNote} ${offer.notGuaranteedLabel}: ${offer.notGuaranteed}` }].map(({ q, a }, i) => (
+            {[...faqEn.rest, { q: "What if it doesn't work?", a: `${offer.clause} ${offer.countsNote} ${offer.notGuaranteedLabel}: ${offer.notGuaranteed}` }].map(({ q, a }, i) => (
               <AccordionItem key={q} value={`item-${i}`} className="border-b border-border">
                 <AccordionTrigger className="gap-4 py-5 text-start text-base font-bold text-foreground hover:no-underline">{q}</AccordionTrigger>
                 <AccordionContent className="pb-5 pt-1 leading-relaxed text-muted-foreground">{a}</AccordionContent>
@@ -506,9 +498,8 @@ function Book() {
     <section id="book" aria-labelledby="book-title" className="ld-section ld-desk scroll-mt-14">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="07" label={book.label} />
+          <SectionHead label={book.label} />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">{book.title}</h2>
-          <p className="cor-body-lg mt-5 text-foreground">{book.intro}</p>
         </div>
         <div className="mt-10 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div className="order-2 lg:order-1">
@@ -523,7 +514,7 @@ function Book() {
                 </li>
               ))}
             </ol>
-            <div className="mt-8 ld-sheet p-5">
+            <div className="mt-8 ld-plain p-5">
               <p className="text-xs font-bold tracking-[0.08em] text-primary">{book.questionLabel}</p>
               <p className="mt-2 text-lg font-bold leading-snug text-foreground">{book.question}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{book.questionNote}</p>

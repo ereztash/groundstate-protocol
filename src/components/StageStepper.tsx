@@ -113,7 +113,7 @@ const StageStepper = ({
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
             <div className="border-r-2 border-border pr-3">
               <p className="text-xs font-semibold tracking-wide text-muted-foreground">
-                קלט
+                מה מביאים
               </p>
               <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {inputs[s.number]}
@@ -129,7 +129,7 @@ const StageStepper = ({
             </div>
             <div className="border-r-2 border-accent/40 pr-3">
               <p className="text-xs font-semibold tracking-wide text-accent">
-                הסימן שסיימנו
+                איך יודעים שסיימנו
               </p>
               <p className="mt-1 text-sm leading-relaxed text-foreground">
                 {exitCriteria[s.number]}

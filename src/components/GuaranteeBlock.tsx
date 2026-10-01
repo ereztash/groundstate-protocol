@@ -66,8 +66,8 @@ const GuaranteeBlock = ({
       dir="rtl"
       className={`${framed ? "ld-sheet p-6 md:p-8" : ""} ${className}`}
     >
-      <p className="text-xs font-bold tracking-[0.08em] text-primary">
-        סעיף אחריות
+      <p className="text-xs font-bold text-primary">
+        התחייבות להחזר
       </p>
       <p className="mt-2 text-lg font-bold leading-snug text-foreground sm:text-xl">
         {headline}
@@ -75,7 +75,7 @@ const GuaranteeBlock = ({
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2">
         <div className="border-s-2 border-primary/40 ps-4">
-          <p className="text-xs font-bold tracking-[0.08em] text-primary">
+          <p className="text-xs font-bold text-primary">
             {variant.signalsLabel}
           </p>
           <ul className="mt-2 space-y-1.5">
@@ -89,7 +89,7 @@ const GuaranteeBlock = ({
         </div>
 
         <div className="border-s-2 border-border ps-4">
-          <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
+          <p className="text-xs font-bold text-muted-foreground">
             {variant.excludedLabel}
           </p>
           <ul className="mt-2 space-y-1.5">

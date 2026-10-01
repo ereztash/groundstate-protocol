@@ -20,17 +20,17 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * The origin paragraph is OriginStorySection's, cut to its first beat.
  */
 const FOR = [
-  "משהו השתנה לאחרונה: עזבתם עבודה, יצאתם לחל״ת, או שההכנסה עוד לא יציבה, והשאלה מה אתם מוכרים הפכה דחופה.",
+  "עזבתם עבודה, יצאתם לחל״ת או שההכנסה עוד לא יציבה, ועכשיו השאלה מה אתם מוכרים בוערת.",
   "יש לכם כבר לקוחות, והם מרוצים. הקושי הוא להסביר למי שעוד לא עבד איתכם למה דווקא אתם.",
-  "אתם משלבים שני עולמות, ולא מצליחים להגיד את הצירוף במשפט אחד.",
+  "אתם משלבים שני עולמות, ולא מצליחים להסביר את השילוב במשפט אחד.",
   "אתם מוכנים לפגישה בשבוע ולמשימה קצרה בין הפגישות, במשך חודש.",
 ];
 
 const NOT_FOR = [
   "אתם נותנים שירות בעיקר לתאגידים, לא לעצמאים.",
   "יש לכם כבר 30+ לקוחות פעילים ואתם רוצים לסנן.",
-  "אתם רגילים לעבוד על תחושה ולא על מבנה, זה ירגיש מעצבן.",
-  "אתם מחפשים חימום רגשי לפני פעולה, אני לא הכתובת.",
+  "אתם רגילים לעבוד לפי תחושה, ועבודה לפי מבנה תעצבן אתכם.",
+  "אתם מחפשים בעיקר מישהו שיחזיק לכם את היד, ואני פחות מתחבר לזה.",
 ];
 
 const FitSection = () => (
@@ -41,22 +41,19 @@ const FitSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <SectionHead n="05" label="התאמה" />
+      <SectionHead label="התאמה" />
       <h2 id="fit-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        זה לא מתאים לכולם, וזה בסדר.
+        למי זה מתאים, ולמי פחות.
       </h2>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2">
-        <div className="ld-sheet p-6 sm:p-8">
+        <div className="ld-plain p-6 sm:p-8">
           <h3 className="font-heading text-xl font-black text-foreground">
-            זה בשבילכם אם
+            מתאים לכם אם
           </h3>
           <ul className="mt-5 space-y-4">
             {FOR.map((line) => (
               <li key={line} className="flex gap-3 leading-relaxed text-foreground">
-                <svg viewBox="0 0 28 20" aria-hidden="true" className="mt-1.5 h-3.5 w-5 shrink-0">
-                  <path className="ld-mark" d="M2 11 L10 18 L26 2" />
-                </svg>
                 <span>{line}</span>
               </li>
             ))}
@@ -65,14 +62,11 @@ const FitSection = () => (
 
         <div className="ld-draft p-6 sm:p-8">
           <h3 className="font-heading text-xl font-black text-foreground">
-            זה לא בשבילכם אם
+            פחות מתאים לכם אם
           </h3>
           <ul className="mt-5 space-y-4">
             {NOT_FOR.map((line) => (
               <li key={line} className="flex gap-3 leading-relaxed text-muted-foreground">
-                <svg viewBox="0 0 20 20" aria-hidden="true" className="mt-1.5 h-3.5 w-3.5 shrink-0">
-                  <path className="ld-mark" d="M3 3 L17 17 M17 3 L3 17" />
-                </svg>
                 <span>{line}</span>
               </li>
             ))}
@@ -94,12 +88,10 @@ const FitSection = () => (
         <div className="max-w-2xl">
           <p className="cor-overline-he">מי מולכם בשיחה</p>
           <p className="mt-4 font-heading text-2xl font-black leading-snug text-foreground sm:text-3xl">
-            גם לי היה ידע. ולא ידעתי איך להעביר אותו.
+            אני עושה את זה כי הייתי בדיוק שם.
           </p>
           <p className="cor-body-lg mt-4 text-foreground">
-            שנים החזקתי רק את הצד האנושי, סיפור ונרטיב. כשנכנסתי לעולם העסקי,
-            גיליתי שאני יודע דברים שאחרים לא יודעים, וגם שאין לי שום מושג איך
-            להסביר את זה ללקוח. מצאתי שהמבנה הוא החצי השני של אותה צורה.
+            היה לי ידע וניסיון מתחומים מגוונים, ולא הבנתי איך אני גוזר את כולם למשהו אחד שמגיע לו כסף. ניסיתי המון זמן להבין את זה, ומשם יצא התהליך שאני עושה היום.
           </p>
           <Link to="/about" className="ld-link mt-4 inline-block">
             עוד עליי

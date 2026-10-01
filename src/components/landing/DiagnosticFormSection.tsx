@@ -242,7 +242,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       not have, and it is read before the decision to fill the form
                       at all. Describe what actually happens. */}
                   <p className="cor-body-lg text-foreground">
-                    מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד. אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי לבזבז לאף אחד את הזמן.
+                    מיד אחרי הטופס נפתח היומן ואתם בוחרים מועד.
                   </p>
                   <SpotsLeft className="text-sm text-muted-foreground" />
 

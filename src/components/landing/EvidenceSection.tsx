@@ -47,12 +47,10 @@ const EvidenceSection = () => (
       <div className="max-w-2xl">
         <SectionHead label="מה נבדק, ומה עוד לא" />
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
-          מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
+          מה התחייבתי למדוד, לפני שידעתי את התוצאה.
         </h2>
         <p className="cor-body-lg mt-5 text-foreground">
-          זה כאן כדי שבעוד שנה תוכלו לבדוק אם מה שכתוב בעמוד הזה החזיק. זו
-          התחייבות לפרסם מה קרה, כולל המקרה שבו השיטה לא עבדה, והיא אינה הוכחה
-          שהיא עובדת.
+          אני עוד לא יודע להגיד לכם חד-משמעית שזה עובד. לכן כתבתי כאן מראש מה אני מודד, כדי שבעוד שנה תוכלו לבדוק אם צדקתי. אפרסם מה יצא, גם אם השיטה לא עבדה.
         </p>
       </div>
 
@@ -60,7 +58,7 @@ const EvidenceSection = () => (
         {claims.map((c) => (
           <div key={c.id} className="flex flex-col border border-border bg-card/85 p-6 sm:p-7">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
+              <p className="text-xs font-bold text-muted-foreground">
                 {c.label}
               </p>
               <EvidenceTag level={c.level} />
@@ -80,7 +78,7 @@ const EvidenceSection = () => (
         <dl className="divide-y divide-border border-y border-border">
           {ROWS.map((row) => (
             <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-6">
-              <dt className="text-xs font-bold tracking-[0.08em] text-primary">
+              <dt className="text-xs font-bold text-primary">
                 {row.label}
               </dt>
               <dd className="leading-relaxed text-foreground">
@@ -108,7 +106,7 @@ const EvidenceSection = () => (
               <span className="font-heading text-sm">עד {WINDOW_END}</span>
             </span>
           )}
-          <p className="text-xs font-bold tracking-[0.08em] text-accent">
+          <p className="text-xs font-bold text-accent">
             {pre.failureThreshold.label}
           </p>
           {THRESHOLD && (

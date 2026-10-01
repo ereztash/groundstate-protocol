@@ -31,29 +31,27 @@ const Day31Section = () => (
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-16">
         <div>
-          <SectionHead n="03" label="אחרי" />
+          <SectionHead label="אחרי" />
           <h2
             id="day-31-title"
             className="mt-4 font-heading text-[3.25rem] font-black leading-none tracking-tight sm:text-[5rem]"
           >
-            יום 31<span className="cor-point">.</span>
+            ביום ה-31<span className="cor-point">.</span>
           </h2>
         </div>
 
         <div className="max-w-2xl space-y-6 text-2xl leading-[1.5]">
           <p>
-            מישהו שואל במה אתם עוסקים. יש לכם משפט אחד. אתם אומרים אותו, ולא
-            מוסיפים אחריו הסתייגות.
+            מישהו שואל במה אתם עוסקים, ויש לכם משפט אחד שאתם יכולים להגיד לו בלי להסביר קודם את כל הפילוסופיה.
           </p>
           <p>
             הוא שואל כמה זה עולה. המספר כתוב אצלכם במסמך, אז הוא יוצא כמו שהוא.
             בלי לבדוק את הפנים שלו קודם.
           </p>
-          <p>ו-{outreachCount} הפניות כבר בחוץ, כל אחת לאדם ששמו ידוע לכם.</p>
+          <p>ו-{outreachCount} הפניות כבר בחוץ, כל אחת לאדם מסוים.</p>
 
           <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">
-            זה מה שארבעת המסמכים נועדו לאפשר: תיאור של מה שצריך להיות בידכם כדי
-            שזה יהיה אפשרי. אין כאן הבטחה שזה יקרה. מה שקורה אחר כך תלוי גם
+             אין כאן הבטחה שזה יקרה. מה שקורה אחר כך תלוי גם
             בשוק, וגם באנשים שבחרתם לפנות אליהם.
           </p>
         </div>
