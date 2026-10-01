@@ -54,8 +54,8 @@ const WhatYouTriedSection = () => (
         הסנדלר הולך יחף, גם אצלכם וגם אצלי.
       </h2>
       <p className="cor-body-lg mt-5 max-w-2xl text-foreground">
-        בדרך כלל זה מגיע אחרי שעזבתם עבודה, יצאתם לחל״ת, או כשההכנסה מהעסק
-        עוד לא יציבה.
+        זה קורה בדרך כלל כשעזבתם עבודה, יצאתם לחל״ת או שהעסק עוד לא מכניס
+        מספיק.
       </p>
 
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

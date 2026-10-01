@@ -49,7 +49,7 @@ const EvidenceSection = () => (
           מה אני בודק.
         </h2>
         <p className="cor-body-lg mt-5 text-foreground">
-          אני עוד לא יכול להגיד לכם בוודאות שזה עובד, אז כתבתי כאן מראש מה אני בודק. בעוד שנה אפרסם מה יצא, גם אם זה לא עבד.
+          אני עוד לא יכול להגיד לכם בוודאות שזה עובד, אז כתבתי כאן מראש מה אני בודק.
         </p>
       </div>
 
@@ -98,7 +98,7 @@ const EvidenceSection = () => (
         <div className="relative self-start border border-border border-s-4 border-s-signal bg-card p-6 pt-8 sm:p-7 sm:pt-9">
           {WINDOW_END && (
             <span className="ld-stamp absolute -top-5 end-5 bg-card text-xs" aria-hidden="true">
-              <span>נכתב מראש</span>
+              <span>בודקים</span>
               <span className="font-heading text-sm">עד {WINDOW_END}</span>
             </span>
           )}

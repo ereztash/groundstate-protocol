@@ -50,7 +50,7 @@ export const why = {
   label: "Why you're here",
   title: "The cobbler's children have no shoes, and that goes for me too.",
   trigger:
-    "It usually comes after you've left a job, gone on unpaid leave, or while the income from the business isn't steady yet.",
+    "It usually happens when you've left a job, gone on unpaid leave or the business isn't bringing in enough yet.",
   notes: [
     ["When someone new asks ", "what you sell", ", it's hard to tell them what they get out of it."],
     ["Every few weeks you open LinkedIn and change your headline. There are already ", "15 versions", " of “who I am”, and each one, a month later, is “not quite right”."],
@@ -62,7 +62,7 @@ export const why = {
 export const offer = {
   label: "What you leave with",
   title: "Four meetings, one a week.",
-  intro: "At the end of every week there is a document you can use. I'm careful not to put words in your mouth.",
+  intro: "At the end of every week you leave with a finished document, and the wording in it is yours. I'm careful not to put words in your mouth.",
   swipe: "Four documents, swipe between them →",
   week: "Week",
   sampleNote: "Example, not a client",
@@ -129,7 +129,7 @@ export const day31 = {
   title: "What happens after a month",
   lines: [
     "Someone asks what you do, and you have one sentence you can say without first explaining your whole philosophy.",
-    `They ask what it costs, and you say the number written in your document. By then you've already sent ${outreachCount} messages, each one to a specific person.`,
+    `When they ask what it costs, you answer with the number written in your document. By then you've already sent ${outreachCount} messages to people you chose.`,
   ],
 } as const;
 
@@ -168,7 +168,7 @@ export const fit = {
   title: "Who it fits",
   forTitle: "It fits you if",
   for: [
-    "You left a job, went on unpaid leave or your income isn't steady yet, and now the question of what you sell is pressing.",
+    "You're early on as a freelancer, and you badly need to work out what you actually sell.",
     "You already have happy clients, but it's hard to explain to someone who hasn't worked with you why they should pick you.",
     "You combine two worlds, and can't explain the combination in one sentence.",
     "You're ready for a meeting a week and a short task between meetings, for a month.",

@@ -93,7 +93,7 @@ const ProofSection = () => (
       </div>
 
       <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
-        מה כבר בדקתי ומה עוד לא,{" "}
+        מה אני יודע ומה עוד לא,{" "}
         <Link to="/protocol#evidence" className="ld-link">
           בעמוד הפרוטוקול
         </Link>
