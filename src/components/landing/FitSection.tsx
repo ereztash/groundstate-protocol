@@ -41,7 +41,7 @@ const FitSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <SectionHead n="06" label="התאמה" />
+      <SectionHead n="05" label="התאמה" />
       <h2 id="fit-title" className="cor-title mt-4 max-w-2xl text-foreground">
         זה לא מתאים לכולם, וזה בסדר.
       </h2>

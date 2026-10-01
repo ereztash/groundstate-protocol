@@ -1074,51 +1074,6 @@
   color: hsl(var(--signal));
 }
 
-/* The signal field (hero). Every stroke starts scattered and settles once,
-   pointing at the one copper point: many vectors, one purpose. Each line
-   carries its start angle (--a0), its resting angle toward the point (--a1)
-   and a delay (--d) that grows with distance from the point, so the order
-   spreads outward from it. The values are seeded, so the prerendered markup
-   and the hydrated markup are identical; with reduced motion the lines are
-   simply drawn at rest. */
-.cor-field line {
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: rotate(var(--a1));
-}
-.cor-field__ring {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .cor-field line {
-    animation: cor-align 1.1s var(--ease-align) var(--d, 0ms) both;
-  }
-  .cor-field__ring {
-    animation: cor-ring 1.3s var(--ease-align) 0.8s both;
-  }
-}
-@keyframes cor-align {
-  from {
-    transform: rotate(var(--a0));
-    opacity: 0.2;
-  }
-  to {
-    transform: rotate(var(--a1));
-    opacity: 1;
-  }
-}
-@keyframes cor-ring {
-  from {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 /* The diagnostic screen: a structure-teal grid under the evidence band. */
 .cor-blueprint {
   background-image:

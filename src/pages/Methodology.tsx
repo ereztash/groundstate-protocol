@@ -6,6 +6,7 @@ import StageFieldTrace from "@/components/experiential/StageFieldTrace";
 import QuantifiedProof from "@/components/QuantifiedProof";
 import ProofStrip from "@/components/ProofStrip";
 import GuaranteeBand from "@/components/GuaranteeBand";
+import EvidenceSection from "@/components/landing/EvidenceSection";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { outreachCount } from "@/data/sprint-stages";
@@ -245,6 +246,10 @@ const Methodology = () => {
         </section>
 
         {/* Risk reversal — the guarantee, right before the decision. */}
+        {/* Moved here from the landing page in v4 (2026-10-01): what has been
+            checked, what has not, and the pre-registration, in full. */}
+        <EvidenceSection />
+
         <section dir="rtl" className="pb-4 md:pb-8" aria-labelledby="guarantee-title">
           <div className="mx-auto max-w-3xl px-6">
             <h2 id="guarantee-title" className="sr-only">

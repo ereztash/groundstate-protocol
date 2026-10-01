@@ -45,7 +45,7 @@ const EvidenceSection = () => (
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <div className="max-w-2xl">
-        <SectionHead n="05" label="מה נבדק, ומה עוד לא" />
+        <SectionHead label="מה נבדק, ומה עוד לא" />
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
           מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
         </h2>
