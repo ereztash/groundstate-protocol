@@ -271,7 +271,7 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
                       with them rather than pushing. */}
                   <p className="mt-5 text-sm leading-relaxed text-foreground">
                     יש שתי דרכים מכאן. הראשונה, להמשיך לנסח את זה לבד בערבים,
-                    ולהחליף כותרת שוב בעוד חודש. השנייה, עשרים דקות שבסופן תדעו מאיזה
+                    ולהחליף כותרת שוב בעוד חודש. השנייה, שלושים דקות שבסופן תדעו מאיזה
                     שלב להתחיל. ההחלטה שלכם בלבד.
                   </p>
 
