@@ -6,7 +6,7 @@ import { useOptionalDiagnosticForm } from "@/components/landing/DiagnosticFormPr
 import { CorMark } from "@/components/brand/CorMark";
 import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 import ThemeToggle from "@/components/ThemeToggle";
-import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
+import { WHATSAPP_DISPLAY, whatsappUrl, type Lang } from "@/lib/contact";
 
 /**
  * The one site-wide top bar, used by every page (replacing the per-page
@@ -23,6 +23,10 @@ import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
  * The reader's dark-mode switch sits beside the CTA on wide screens. On a
  * phone there is no room for it in the bar (logo, CTA and menu already fill
  * 360px), so it lives in the menu, with WhatsApp (2026-10-01).
+ *
+ * `lang="en"` is the English home page's header: no nav (every other page is
+ * Hebrew), the CTA scrolls to that page's own #book, and the language link
+ * points back to Hebrew. The Hebrew header links to English the same way.
  */
 
 const NAV = [
@@ -31,7 +35,32 @@ const NAV = [
   { to: "/about", label: "אודות" },
 ];
 
-const SiteHeader = () => {
+const T = {
+  he: {
+    home: "COR-SYS, לעמוד הבית",
+    homeTo: "/",
+    cta: "שיחת התאמה, 30 דקות",
+    open: "פתיחת תפריט",
+    close: "סגירת תפריט",
+    whatsapp: "וואטסאפ",
+    opensWhatsapp: " (נפתח בוואטסאפ)",
+    other: { to: "/en", label: "English", lang: "en" },
+  },
+  en: {
+    home: "COR-SYS, home",
+    homeTo: "/en",
+    cta: "Fit call, 30 min",
+    open: "Open menu",
+    close: "Close menu",
+    whatsapp: "WhatsApp",
+    opensWhatsapp: " (opens WhatsApp)",
+    other: { to: "/", label: "עברית", lang: "he" },
+  },
+} as const;
+
+const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
+  const t = T[lang];
+  const nav = lang === "he" ? NAV : [];
   const { pathname } = useLocation();
   const isLanding = pathname === "/";
   const [open, setOpen] = useState(false);
@@ -58,20 +87,20 @@ const SiteHeader = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
       <div
-        dir="rtl"
+        dir={lang === "en" ? "ltr" : "rtl"}
         className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6"
       >
         <Link
-          to="/"
+          to={t.homeTo}
           className="flex items-center gap-2.5 font-heading text-lg font-black tracking-tight text-foreground outline-none"
-          aria-label="COR-SYS, לעמוד הבית"
+          aria-label={t.home}
         >
           COR-SYS
           <CorMark className="h-4 w-[43px]" />
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -84,20 +113,38 @@ const SiteHeader = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle className="hidden h-9 w-9 justify-center md:inline-flex" />
-          {/* Off-landing this is a real navigation, so the source rides the
-              query string — Landing reads it into the provider on mount. */}
           <Link
-            to="/?src=header#book"
-            onClick={onCta}
-            className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
+            to={t.other.to}
+            lang={t.other.lang}
+            hrefLang={t.other.lang}
+            className="hidden px-1 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground md:inline"
           >
-            שיחת התאמה, 30 דקות
+            {t.other.label}
           </Link>
+          <ThemeToggle lang={lang} className="hidden h-9 w-9 justify-center md:inline-flex" />
+          {lang === "en" ? (
+            <a
+              href="#book"
+              onClick={() => trackCtaClick("en_header_book")}
+              className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
+            >
+              {t.cta}
+            </a>
+          ) : (
+            /* Off-landing this is a real navigation, so the source rides the
+               query string — Landing reads it into the provider on mount. */
+            <Link
+              to="/?src=header#book"
+              onClick={onCta}
+              className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
+            >
+              {t.cta}
+            </Link>
+          )}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground md:hidden"
-            aria-label={open ? "סגירת תפריט" : "פתיחת תפריט"}
+            aria-label={open ? t.close : t.open}
             aria-expanded={open}
             aria-controls="site-nav-mobile"
             onClick={() => setOpen((v) => !v)}
@@ -116,11 +163,11 @@ const SiteHeader = () => {
       {open && (
         <nav
           id="site-nav-mobile"
-          dir="rtl"
+          dir={lang === "en" ? "ltr" : "rtl"}
           className="border-t border-foreground/10 bg-background px-5 py-2 md:hidden"
         >
           <ul className="flex flex-col">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
@@ -132,20 +179,31 @@ const SiteHeader = () => {
                 </NavLink>
               </li>
             ))}
+            <li>
+              <Link
+                to={t.other.to}
+                lang={t.other.lang}
+                hrefLang={t.other.lang}
+                onClick={() => setOpen(false)}
+                className="block rounded-sm px-2 py-3 text-sm font-semibold text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
+              >
+                {t.other.label}
+              </Link>
+            </li>
           </ul>
           <div className="flex items-center justify-between gap-4 border-t border-foreground/10 px-2 py-3">
             <a
-              href={whatsappUrl()}
+              href={whatsappUrl(lang)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackCtaClick("whatsapp_menu")}
               className="inline-flex items-center gap-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
             >
               <WhatsAppIcon className="h-[18px] w-[18px]" />
-              וואטסאפ <span dir="ltr">{WHATSAPP_DISPLAY}</span>
-              <span className="sr-only"> (נפתח בוואטסאפ)</span>
+              {t.whatsapp} <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+              <span className="sr-only">{t.opensWhatsapp}</span>
             </a>
-            <ThemeToggle withLabel className="py-1" />
+            <ThemeToggle lang={lang} withLabel className="py-1" />
           </div>
         </nav>
       )}

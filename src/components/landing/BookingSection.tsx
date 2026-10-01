@@ -7,15 +7,18 @@ import type { LeadSource } from "@/lib/web3forms";
 type BookingSectionProps = {
   visible?: boolean;
   /** Where the calendar is shown: the page's booking block, or after the form. */
-  surface?: "book_section" | "post_form";
+  surface?: "book_section" | "book_section_en" | "post_form";
   /** The CTA that brought the visitor here, carried to Calendly as UTM. */
   source?: LeadSource | null;
+  /** The English home page's calendar block says its one line in English. */
+  lang?: "he" | "en";
 };
 
 const BookingSection = ({
   visible = false,
   surface = "post_form",
   source = null,
+  lang = "he",
 }: BookingSectionProps) => {
   // Fire when the booking widget first becomes visible. Calendly is third
   // party and can fail, so "the visitor actually saw the calendar" is its own
@@ -39,7 +42,7 @@ const BookingSection = ({
   if (!visible) return null;
 
   return (
-    <div dir="rtl" className="space-y-3">
+    <div dir={lang === "en" ? "ltr" : "rtl"} className="space-y-3">
       <div dir="ltr" className="overflow-hidden rounded-sm border border-border bg-card">
         <InlineWidget
           url={CALENDLY_URL}
@@ -56,13 +59,23 @@ const BookingSection = ({
         />
       </div>
 
-      <p className="text-center text-xs text-muted-foreground">
-        הלוח לא נטען? אפשר לפתוח אותו ישירות ב
-        <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="text-link mx-1">
-          Calendly
-        </a>
-        .
-      </p>
+      {lang === "en" ? (
+        <p className="text-center text-xs text-muted-foreground">
+          Calendar not loading? Open it directly in
+          <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="text-link mx-1">
+            Calendly
+          </a>
+          .
+        </p>
+      ) : (
+        <p className="text-center text-xs text-muted-foreground">
+          הלוח לא נטען? אפשר לפתוח אותו ישירות ב
+          <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="text-link mx-1">
+            Calendly
+          </a>
+          .
+        </p>
+      )}
     </div>
   );
 };
