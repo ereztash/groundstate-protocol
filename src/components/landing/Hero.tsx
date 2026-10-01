@@ -98,7 +98,7 @@ const Hero = () => {
         {/* What a stranger needs before paying someone they do not know: a
             guarantee they can hold him to, a person who already paid him, and
             the face of the person they would be paying. */}
-        <aside aria-label="ערבות והמלצה" className="ld-sheet grid gap-6 p-6 sm:p-7 md:mt-10">
+        <div role="group" aria-label="ערבות והמלצה" className="ld-sheet grid gap-6 p-6 sm:p-7 md:mt-10">
           <div>
             <p className="text-xs font-bold tracking-[0.08em] text-primary">ערבות חתומה</p>
             <p className="mt-2 leading-relaxed text-foreground">
@@ -144,7 +144,7 @@ const Hero = () => {
               </span>
             </p>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
   );
