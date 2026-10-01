@@ -107,6 +107,7 @@ function Hero() {
               <dt className="whitespace-nowrap text-muted-foreground">{hero.priceTerm}</dt>
               <dd className="cor-price font-heading text-2xl font-black text-foreground">{PRICE.label}</dd>
               <dd className="whitespace-nowrap text-muted-foreground">{PRICE.installments}</dd>
+              <dd className="whitespace-nowrap text-muted-foreground">· {PRICE.vat}</dd>
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">{hero.meetingsTerm}</dt>
@@ -260,6 +261,7 @@ function Offer() {
                 <span className="text-end">
                   <span className="ld-price">{PRICE.label}</span>
                   <span className="mt-1 block text-sm text-muted-foreground">{PRICE.installments}</span>
+                  <span className="block text-sm text-muted-foreground">The price is {PRICE.vat}</span>
                 </span>
               </div>
               <p className="mt-5 text-sm text-muted-foreground">{offer.spots}</p>

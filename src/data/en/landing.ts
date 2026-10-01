@@ -18,6 +18,8 @@ import { outreachCount, program } from "@/data/sprint-stages";
 export const PRICE = {
   label: program.priceLabel,
   installments: "in two payments of ₪2,000",
+  /** Erez is an exempt dealer: the price is final (see program.vatLabel). */
+  vat: "final, no VAT",
 } as const;
 
 export const hero = {
@@ -229,7 +231,7 @@ export const faqEn = {
     },
     {
       q: "How much does the program cost?",
-      a: `${program.priceLabel} for the whole program, in two payments of ₪2,000. Four meetings and support between them. The stages aren't sold separately.`,
+      a: `${program.priceLabel} for the whole program, in two payments of ₪2,000. The price is final, with no VAT. Four meetings and support between them. The stages aren't sold separately.`,
     },
   ],
 } as const;
