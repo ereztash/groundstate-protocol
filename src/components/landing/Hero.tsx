@@ -105,7 +105,11 @@ const Hero = () => {
               <dd className="cor-price font-heading text-2xl font-black text-foreground">
                 {program.priceLabel}
               </dd>
-              <dd className="text-muted-foreground">{program.installmentsLabel}</dd>
+              <dd className="text-muted-foreground">
+                {program.installmentsLabel}
+                <span className="hidden sm:inline"> · </span>
+                <span className="block sm:inline">{program.vatLabel}</span>
+              </dd>
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-muted-foreground">פגישות</dt>

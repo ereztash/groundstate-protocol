@@ -207,6 +207,13 @@ export const program = {
   priceNis: 4000,
   priceLabel: "₪4,000",
   installmentsLabel: "בשני תשלומים של ₪2,000",
+  /**
+   * Erez is an exempt dealer (עוסק פטור, 2026-10-01), so the price is final.
+   * Said out loud because the market quotes "+ מע״מ": of 21 competitor pages
+   * that show a price, 12 mention VAT, and most full programmes add it, so
+   * their ₪6,500 reaches the buyer as about ₪7,670.
+   */
+  vatLabel: "סופי, ללא מע״מ",
   name: "התוכנית המלאה",
   deliverable: "ארבעת השלבים ברצף, עם ליווי בין הפגישות.",
   ctaLabel: "לשיחת התאמה על התוכנית",

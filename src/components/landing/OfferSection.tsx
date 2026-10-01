@@ -148,6 +148,9 @@ const OfferSection = () => {
                   <span className="mt-1 block text-sm text-muted-foreground">
                     {program.installmentsLabel}
                   </span>
+                  <span className="block text-sm text-muted-foreground">
+                    המחיר {program.vatLabel}
+                  </span>
                 </span>
               </div>
               <SpotsLeft className="mt-5 text-sm text-muted-foreground" />

@@ -97,6 +97,6 @@ export const faq: readonly QA[] = [
   },
   {
     q: "כמה עולה התוכנית?",
-    a: `${program.priceLabel} לתוכנית כולה, ${program.installmentsLabel}. ארבעה מפגשים וליווי בין הפגישות. השלבים לא נמכרים בנפרד.`,
+    a: `${program.priceLabel} לתוכנית כולה, ${program.installmentsLabel}. המחיר ${program.vatLabel}. ארבעה מפגשים וליווי בין הפגישות. השלבים לא נמכרים בנפרד.`,
   },
 ];
