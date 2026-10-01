@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { CorMark, CorSeal } from "@/components/brand/CorMark";
+import { LinkedInIcon, WhatsAppIcon } from "@/components/brand/SocialIcons";
+import { LINKEDIN_URL, WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
 
 /**
  * The one site-wide footer, used by every page (replacing the divergent
@@ -36,6 +38,28 @@ const SiteFooter = () => (
           </p>
           <p className="text-xs leading-relaxed text-[#D2D0DB]">
             עובד סוציאלי טכנולוגי. יועץ עסקי לעצמאים.
+          </p>
+          <p className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2 text-sm">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[#D2D0DB] transition-colors hover:text-[#F5F2ED]"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+              <span className="sr-only"> (וואטסאפ, נפתח בחלון חדש)</span>
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[#D2D0DB] transition-colors hover:text-[#F5F2ED]"
+            >
+              <LinkedInIcon className="h-4 w-4" />
+              לינקדאין
+              <span className="sr-only"> (נפתח בחלון חדש)</span>
+            </a>
           </p>
         </div>
 

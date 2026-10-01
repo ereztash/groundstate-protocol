@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, statSync } from "node:fs";
-import { join, extname } from "node:path";
+import { join, extname, sep } from "node:path";
 import { walk, stripComments } from "./copyScan";
 
 /**
@@ -33,7 +33,8 @@ import { walk, stripComments } from "./copyScan";
  * is homographic with the third-person feminine future (תקבל, תבחרי).
  */
 
-const ROOT = process.cwd();
+// Paths are compared with "/" on every OS; see noDashes.test.ts.
+const ROOT = process.cwd().split(sep).join("/");
 const SCAN = [
   join(ROOT, "src"),
   join(ROOT, "content"),
@@ -122,7 +123,9 @@ function displayedCopy(path: string): string | null {
 describe("displayed copy addresses the reader in the plural", () => {
   const files = SCAN.flatMap((p) =>
     statSync(p).isDirectory() ? walk(p) : [p]
-  ).filter(
+  )
+    .map((f) => f.split(sep).join("/"))
+    .filter(
     (f) =>
       !f.endsWith(SELF) &&
       !f.includes("/src/components/ui/") &&

@@ -38,7 +38,13 @@ describe("SiteHeader", () => {
     const panel = document.getElementById("site-nav-mobile");
     expect(panel).not.toBeNull();
     // The three links are inside the opened panel too.
-    expect(within(panel as HTMLElement).getAllByRole("link").length).toBe(3);
+    // The three nav links, then WhatsApp (2026-10-01).
+    const panelLinks = within(panel as HTMLElement).getAllByRole("link");
+    expect(panelLinks.length).toBe(4);
+    expect(panelLinks[3].getAttribute("href")).toMatch(/^https:\/\/wa\.me\/972524545963\?text=/);
+    // The dark-mode switch is in the menu on phones, as a toggle button.
+    const themeToggle = within(panel as HTMLElement).getByRole("button", { name: "מצב כהה" });
+    expect(themeToggle.getAttribute("aria-pressed")).toBe("false");
 
     fireEvent.click(toggle);
     expect(toggle.getAttribute("aria-expanded")).toBe("false");

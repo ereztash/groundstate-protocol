@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#EFE9DD" />
+    <!-- The reader's dark mode (src/lib/theme.ts), applied before the first
+         paint so a returning dark reader never sees a light flash. Light is
+         the default for everyone; only an explicit stored choice turns it on.
+         Same key as theme.ts. -->
+    <script>(function(){try{if(localStorage.getItem("cor-theme")!=="dark")return;var r=document.documentElement;r.classList.add("dark");r.style.colorScheme="dark";document.querySelector('meta[name="theme-color"]').setAttribute("content","#1C1C2E")}catch(e){}})()</script>
     <!-- SVG first for browsers that take it (one file, crisp at every size);
          the .ico carries 16/32/256 rasters for those that do not. Both replaced
          the Lovable heart that had been shipping as this site's tab icon. -->
@@ -23,6 +28,10 @@
         -webkit-font-smoothing: antialiased;
       }
       #root { min-height: 100vh; }
+      html.dark body {
+        background: #1C1C2E;
+        color: #F5F2ED;
+      }
     </style>
 
     <!-- The tab and search-result title leads with the words a stranger would

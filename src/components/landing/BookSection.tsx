@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { CALENDLY_URL } from "@/lib/calendly";
-import { trackEvent } from "@/lib/analytics";
+import { trackCtaClick, trackEvent } from "@/lib/analytics";
+import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
+import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
@@ -21,6 +23,10 @@ const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
  * The Calendly embed is a third-party iframe of several hundred kB, so it is
  * mounted only as the section approaches the viewport. Until then, and for
  * anyone without JS, the placeholder carries a plain link to the same calendar.
+ *
+ * Under the two tabs, WhatsApp with the number written out (2026-10-01): the
+ * channel Israeli readers reach for first, and a visible number is itself a
+ * sign that someone answers it.
  */
 const STATIONS = [
   { title: "פתיחה.", body: "מה התקיעה ומה ניסית עד עכשיו." },
@@ -170,6 +176,20 @@ const BookSection = () => {
               {tab("calendar", "לבחור מועד ביומן")}
               {tab("form", "שארז יחזור אליי")}
             </div>
+            <p className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+              <WhatsAppIcon className="h-4 w-4 shrink-0 text-foreground" />
+              מעדיפים לכתוב?
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCtaClick("whatsapp_book")}
+                className="ld-link"
+              >
+                וואטסאפ <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+                <span className="sr-only"> (נפתח בוואטסאפ)</span>
+              </a>
+            </p>
 
             {mode === "calendar" ? (
               near ? (

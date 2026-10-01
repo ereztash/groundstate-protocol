@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { join, extname } from "node:path";
+import { join, extname, sep } from "node:path";
 import { walk, stripComments } from "./copyScan";
 
 /**
@@ -13,7 +13,10 @@ import { walk, stripComments } from "./copyScan";
  * and deleting the quote would delete the reason.
  */
 
-const ROOT = process.cwd();
+// Paths are compared with "/" on every OS. On Windows the walk returns "\\"
+// separators, so the quote-file exemption never matched there and the suite
+// failed on verbatim testimony that is exempt by design.
+const ROOT = process.cwd().split(sep).join("/");
 /**
  * public/llms.txt and index.html joined the scan on 2026-09-29. Both are read
  * by machines on the site's behalf (AI engines, search snippets), and llms.txt
@@ -42,11 +45,9 @@ const QUOTE_FILES = ["src/lib/clients.ts"];
 // needed the same comment handling.
 
 describe("no em or en dashes in displayed copy", () => {
-  const files = [...SCAN.flatMap((d) => walk(d)), ...EXTRA_FILES].filter(
-    (f) =>
-      !f.endsWith(SELF) &&
-      !QUOTE_FILES.some((q) => f.endsWith(q.replace(/\//g, "/")))
-  );
+  const files = [...SCAN.flatMap((d) => walk(d)), ...EXTRA_FILES]
+    .map((f) => f.split(sep).join("/"))
+    .filter((f) => !f.endsWith(SELF) && !QUOTE_FILES.some((q) => f.endsWith(q)));
 
   it("scans a non-trivial number of files", () => {
     // Guards against the walk silently returning nothing and the suite passing

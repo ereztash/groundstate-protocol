@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ConsentBanner from "./components/ConsentBanner";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 // Landing is the entry route on every visit, so it stays eager — lazy()
 // would add a Suspense flash on the first paint. Privacy and NotFound are
@@ -116,6 +117,7 @@ const App = () => (
             because it links to /privacy. Shows once (until a choice is
             stored), then inits analytics + Clarity only on accept. */}
         <ConsentBanner />
+        <WhatsAppFloat />
       </BrowserRouter>
     </TooltipProvider>
   </ErrorBoundary>
