@@ -6,6 +6,7 @@ import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
+import CopyNumber from "./CopyNumber";
 
 const BookingSection = lazy(() => import("./BookingSection"));
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
@@ -171,6 +172,7 @@ const BookSection = () => {
                 וואטסאפ <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
                 <span className="sr-only"> (נפתח בוואטסאפ)</span>
               </a>
+              <CopyNumber value={WHATSAPP_DISPLAY} />
             </p>
 
             <div key={mode} className={switched ? "ld-in" : undefined}>

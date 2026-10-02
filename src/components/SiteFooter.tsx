@@ -66,6 +66,14 @@ const SiteFooter = ({ lang = "he" }: { lang?: Lang }) => {
       className="border-t border-[#3A3A52] bg-[#1C1C2E] text-[#F5F2ED]"
     >
       <div className="mx-auto max-w-6xl px-6 py-12">
+        {lang === "he" && (
+          <p className="mb-10 border-b border-[#3A3A52] pb-8 text-lg leading-relaxed">
+            שיחת התאמה, 30 דקות, ללא עלות.{" "}
+            <a href="/#book" className="whitespace-nowrap font-bold underline decoration-[#F5F2ED]/40 underline-offset-4 hover:decoration-[#F5F2ED]">
+              לבחור מועד
+            </a>
+          </p>
+        )}
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="space-y-1.5">
             <p className="flex items-center gap-2.5 font-heading text-lg font-black">

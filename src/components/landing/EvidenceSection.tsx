@@ -118,6 +118,23 @@ const EvidenceSection = () => (
           </p>
         </div>
       </div>
+
+      <div className="mt-12 max-w-3xl">
+        <h3 className="font-heading text-xl font-black text-foreground">מה תיקנתי בדרך</h3>
+        <ol className="mt-4 text-sm leading-relaxed">
+          {[
+            ["22.07.2026", "פרסמתי כאן את שני המספרים הראשונים."],
+            ["30.07.2026", "תיקנתי את ה-₪5,500: ההכנסה נרשמה בין מפגש 3 למפגש 4, לא אחרי הרצף. באותו יום פרסמתי מראש מה אני בודק, ומתי אגיד שזה לא עבד."],
+            ["31.07.2026", "תיקנתי את יחס הערך לפי 3 עד 10, הטווח שנמצא ברישומים. הורדתי הבטחה על הפגישה הרביעית, כי בתמלולים ראיתי שהיא לא מתקיימת."],
+            ["30.09.2026", "העברתי את הטענה על המבנה ל״דיווח שלי״, עד שאבדוק את המקור שלה."],
+          ].map(([d, t]) => (
+            <li key={d} className="grid grid-cols-[6.5rem_1fr] gap-4 border-t border-foreground/15 py-3">
+              <span className="font-semibold tabular-nums text-muted-foreground">{d}</span>
+              <span className="text-foreground">{t}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 );

@@ -135,6 +135,9 @@ const OfferSection = () => {
                   </span>
                 </span>
               </div>
+              <p className="mt-3 text-sm text-foreground">
+                ואם זה לא עבד? החזר מלא, לפי ההתחייבות שמתחת.
+              </p>
               <SpotsLeft className="mt-5 text-sm text-muted-foreground" />
             </div>
 
