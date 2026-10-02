@@ -57,6 +57,8 @@ function CalendarPlaceholder() {
 const BookSection = () => {
   const { source } = useDiagnosticForm();
   const [mode, setMode] = useState<Mode>("calendar");
+  // Set on the first switch only, so the block does not animate on page load.
+  const [switched, setSwitched] = useState(false);
   const [near, setNear] = useState(false);
   const anchor = useRef<HTMLDivElement>(null);
 
@@ -82,6 +84,7 @@ const BookSection = () => {
 
   const choose = (next: Mode) => {
     setMode(next);
+    setSwitched(true);
     trackEvent("book_mode", { mode: next });
   };
 
@@ -90,10 +93,10 @@ const BookSection = () => {
       type="button"
       aria-pressed={mode === value}
       onClick={() => choose(value)}
-      className={`flex-1 rounded-sm px-4 py-3 text-sm font-bold transition-colors ${
+      className={`flex-1 rounded-sm px-4 py-3 text-sm font-bold transition-[color] duration-[220ms] ${
         mode === value
           ? "bg-foreground text-background"
-          : "text-muted-foreground hover:text-foreground"
+          : "text-muted-foreground hover:bg-foreground/[0.05] hover:text-foreground"
       }`}
     >
       {label}
@@ -170,45 +173,47 @@ const BookSection = () => {
               </a>
             </p>
 
-            {mode === "calendar" && (
-              <div className="mb-3 flex items-center gap-3">
-                <img
-                  src={portrait}
-                  alt=""
-                  width={48}
-                  height={48}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-12 w-12 shrink-0 rounded-full border border-border object-cover"
-                />
-                <div className="leading-snug">
-                  <p className="font-bold text-foreground">שיחת התאמה עם ארז טל-שיר</p>
-                  <p className="text-sm text-muted-foreground">
-                    30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {mode === "calendar" ? (
-              near ? (
-                <Suspense fallback={<CalendarPlaceholder />}>
-                  <BookingSection
-                    visible
-                    surface="book_section"
-                    source={source}
+            <div key={mode} className={switched ? "ld-in" : undefined}>
+              {mode === "calendar" && (
+                <div className="mb-3 flex items-center gap-3">
+                  <img
+                    src={portrait}
+                    alt=""
+                    width={48}
+                    height={48}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-12 w-12 shrink-0 rounded-full border border-border object-cover"
                   />
-                </Suspense>
+                  <div className="leading-snug">
+                    <p className="font-bold text-foreground">שיחת התאמה עם ארז טל-שיר</p>
+                    <p className="text-sm text-muted-foreground">
+                      30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {mode === "calendar" ? (
+                near ? (
+                  <Suspense fallback={<CalendarPlaceholder />}>
+                    <BookingSection
+                      visible
+                      surface="book_section"
+                      source={source}
+                    />
+                  </Suspense>
+                ) : (
+                  <CalendarPlaceholder />
+                )
               ) : (
-                <CalendarPlaceholder />
-              )
-            ) : (
-              <Suspense
-                fallback={<div className="h-[640px]" aria-hidden="true" />}
-              >
-                <DiagnosticFormSection embedded />
-              </Suspense>
-            )}
+                <Suspense
+                  fallback={<div className="h-[640px]" aria-hidden="true" />}
+                >
+                  <DiagnosticFormSection embedded />
+                </Suspense>
+              )}
+            </div>
           </div>
         </div>
       </div>

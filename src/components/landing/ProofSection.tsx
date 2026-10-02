@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { testimonials, type Testimonial } from "@/lib/clients";
 import VideoTestimonial from "./VideoTestimonial";
+import FullQuote from "./FullQuote";
 import SectionHead from "./SectionHead";
 
 /**
@@ -18,20 +19,14 @@ function QuoteCard({ t }: { t: Testimonial }) {
       <p className="font-heading text-xl font-bold leading-snug text-foreground">
         ״{t.pullQuote}״
       </p>
-      <details className="group mt-3">
-        <summary className="ld-link cursor-pointer list-none text-sm">
-          <span className="group-open:hidden">להמלצה המלאה</span>
-          <span className="hidden group-open:inline">לסגור</span>
-        </summary>
-        <p className="mt-3 leading-relaxed text-foreground">{t.quote}</p>
-      </details>
+      <FullQuote quote={t.quote} more="להמלצה המלאה" less="לסגור" />
     </>
   ) : (
     <p className="leading-relaxed text-foreground">{t.quote}</p>
   );
 
   return (
-    <figure className="ld-plain flex flex-col p-6 sm:p-7">
+    <figure className="ld-plain ld-edge flex flex-col p-6 sm:p-7">
       <blockquote>{body}</blockquote>
       <figcaption className="mt-auto flex items-center gap-3 border-t border-border pt-5">
         {t.photo ? (
@@ -82,7 +77,7 @@ const ProofSection = () => (
       </h2>
 
       <div className="mt-12 grid gap-6 lg:gap-8">
-        <div className="ld-plain p-6 sm:p-8 lg:px-12">
+        <div className="ld-plain ld-edge p-6 sm:p-8 lg:px-12">
           <VideoTestimonial />
         </div>
         <div className="grid items-start gap-6 md:grid-cols-2 lg:gap-8">

@@ -104,7 +104,7 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
             <NavLink
               key={item.to}
               to={item.to}
-              className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+              className="ld-nav text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
               activeClassName="text-foreground"
             >
               {item.label}
@@ -164,7 +164,7 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
         <nav
           id="site-nav-mobile"
           dir={lang === "en" ? "ltr" : "rtl"}
-          className="border-t border-foreground/10 bg-background px-5 py-2 md:hidden"
+          className="ld-in border-t border-foreground/10 bg-background px-5 py-2 md:hidden"
         >
           <ul className="flex flex-col">
             {nav.map((item) => (

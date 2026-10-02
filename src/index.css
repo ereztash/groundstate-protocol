@@ -550,45 +550,6 @@
 }
 
 @layer utilities {
-  @keyframes slow-fade-in {
-    0% { opacity: 0; transform: translateY(8px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes subtle-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-  @keyframes breathe {
-    0% { transform: scale(0.4); opacity: 0.4; }
-    21% { transform: scale(1); opacity: 0.85; }
-    58% { transform: scale(1); opacity: 0.85; }
-    100% { transform: scale(0.4); opacity: 0.4; }
-  }
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.0); }
-    50% { box-shadow: 0 0 0 8px hsl(var(--accent) / 0.06); }
-  }
-  @keyframes text-shrink {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0.3; transform: scale(0.85); }
-  }
-  @keyframes breath-in {
-    0% { transform: scale(0.55); opacity: 0.5; }
-    100% { transform: scale(1); opacity: 0.9; }
-  }
-  @keyframes breath-hold {
-    0%, 100% { transform: scale(1); opacity: 0.9; }
-  }
-  @keyframes breath-out {
-    0% { transform: scale(1); opacity: 0.9; }
-    100% { transform: scale(0.55); opacity: 0.5; }
-  }
-
-  .animate-slow-fade-in { animation: slow-fade-in 0.7s ease-out forwards; }
-  .animate-subtle-pulse { animation: subtle-pulse 2.5s ease-in-out infinite; }
-  .animate-breathe { animation: breathe 19s ease-in-out infinite; }
-  .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-  .animate-text-shrink { animation: text-shrink 2s ease-out forwards; }
 
   .font-display {
     font-family: 'Frank Ruhl Libre', 'Heebo', serif;
@@ -930,6 +891,80 @@
 }
 .ld-link:hover {
   text-decoration-color: hsl(var(--primary));
+}
+
+/* Motion (2.10). The brand has one: something settles into place and stops.
+   Content that appears (a tab panel, the menu, the full testimonial) settles
+   6px; hover draws a teal structure line and stops. No lift, no shadow: the
+   1.10 audit read lifted shadowed cards as template. Each piece was kept only
+   after a blind A/B (2.10); a sliding tab pill, a drawn nav bar and a link
+   underline that moves were dropped there. Reduced motion is handled
+   globally (base layer). */
+@keyframes ld-settle {
+  from { opacity: 0; transform: translateY(6px); }
+}
+.ld-in {
+  animation: ld-settle var(--dur-slow) var(--ease-align);
+}
+.ld-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease-align);
+}
+.ld-reveal > div {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-align);
+}
+.ld-reveal[data-open] {
+  grid-template-rows: 1fr;
+}
+.ld-reveal[data-open] > div {
+  opacity: 1;
+}
+.ld-edge,
+.ld-week {
+  position: relative;
+}
+.ld-edge::before,
+.ld-week::before {
+  content: "";
+  position: absolute;
+  background: hsl(var(--primary));
+  transition: transform var(--dur-slow) var(--ease-align);
+}
+.ld-edge::before,
+.ld-week::before {
+  inset-block: -1px;
+  inset-inline-start: -1px;
+  width: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.ld-week::before {
+  inset-inline-start: -2px;
+}
+.ld-nav {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.5em;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ld-edge:hover::before,
+  .ld-week:hover::before {
+    transform: scaleY(1);
+  }
+  .ld-nav {
+    transition: color var(--dur-fast) var(--ease-out),
+      text-decoration-color var(--dur-normal) var(--ease-align),
+      text-underline-offset var(--dur-normal) var(--ease-align);
+  }
+  .ld-nav:hover {
+    text-decoration-color: hsl(var(--primary));
+    text-underline-offset: 0.3em;
+  }
 }
 .ld-link:focus-visible {
   outline: 2px solid hsl(var(--primary));
