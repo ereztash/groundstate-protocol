@@ -35,6 +35,8 @@ const EvidenceTag = ({
   >
     <span className="sr-only">מקור: </span>
     {EVIDENCE_LABEL[level]}
+    {/* Restored 2.10: round 4 dropped this, against the comment above. */}
+    <span className="sr-only">, {EVIDENCE_MEANING[level]}</span>
   </span>
 );
 

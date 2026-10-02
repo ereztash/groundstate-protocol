@@ -305,6 +305,7 @@ function Day31() {
             {day31.lines.map((l) => (
               <p key={l}>{l}</p>
             ))}
+            <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">{day31.caveat}</p>
           </div>
         </div>
       </div>

@@ -131,6 +131,7 @@ export const day31 = {
     "Someone asks what you do, and you have one sentence you can say without first explaining your whole philosophy.",
     `When they ask what it costs, you answer with the number written in your document. By then you've already sent ${outreachCount} messages to people you chose.`,
   ],
+  caveat: "I can't promise it will happen; it also depends on who you approach.",
 } as const;
 
 export const proof = {

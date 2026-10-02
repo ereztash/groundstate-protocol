@@ -48,6 +48,13 @@ const Day31Section = () => (
             כשהוא שואל כמה זה עולה, אתם עונים במספר שכתוב אצלכם במסמך. עד אז
             כבר שלחתם {outreachCount} פניות לאנשים שבחרתם.
           </p>
+
+          {/* Restored 2.10 after round 5 dropped it for sounding like a reflex hedge:
+              see the header, this line is what keeps the scene from being a forecast.
+              One sentence now, in Erez's own "לא יכול להבטיח" (E05394). */}
+          <p className="border-t border-border pt-6 font-sans text-sm leading-relaxed text-muted-foreground">
+            אני לא יכול להבטיח שזה יקרה, זה תלוי גם במי שתפנו אליו.
+          </p>
         </div>
       </div>
     </div>
