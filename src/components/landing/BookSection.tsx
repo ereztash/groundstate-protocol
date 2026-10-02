@@ -6,6 +6,7 @@ import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
+import CopyNumber from "./CopyNumber";
 
 const BookingSection = lazy(() => import("./BookingSection"));
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
@@ -171,6 +172,7 @@ const BookSection = () => {
                 וואטסאפ <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
                 <span className="sr-only"> (נפתח בוואטסאפ)</span>
               </a>
+              <CopyNumber value={WHATSAPP_DISPLAY} />
             </p>
 
             <div key={mode} className={switched ? "ld-in" : undefined}>
@@ -189,6 +191,9 @@ const BookSection = () => {
                     <p className="font-bold text-foreground">שיחת התאמה עם ארז טל-שיר</p>
                     <p className="text-sm text-muted-foreground">
                       30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
+                    </p>
+                    <p className="mt-1 text-sm text-foreground">
+                      בשיחה אני שואל שתי שאלות: יש לכם כבר לקוחות? ויש משהו שאתם עושים אחרת, גם אם עוד לא ניסחתם אותו?
                     </p>
                   </div>
                 </div>

@@ -68,6 +68,25 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
   // but only the landing page mounts the form provider.
   const form = useOptionalDiagnosticForm();
 
+  // Phones: leaves on scroll down, returns on scroll up (kept by blind A/B, 2.10).
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      // Phones only: there the bottom bar carries the booking button.
+      if (!window.matchMedia("(max-width: 767px)").matches) {
+        setHidden(false);
+        return;
+      }
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 8) return;
+      setHidden(y > last && y > 120);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
     setOpen(false);
@@ -85,7 +104,11 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-40 border-b border-foreground/10 bg-background/95 backdrop-blur-md transition-transform duration-[320ms] ${
+        hidden && !open ? "-translate-y-full" : ""
+      }`}
+    >
       <div
         dir={lang === "en" ? "ltr" : "rtl"}
         className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6"
