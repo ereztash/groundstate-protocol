@@ -23,7 +23,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
  */
 
 const EXIT_CRITERIA: Record<string, string> = {
-  "01": "אתם מנסחים בעצמכם, במילים שלכם, את משפט הייעוד. הסימן: ניסוח חדש שיצא מכם, לא חזרה על ניסוח שלי.",
+  "01": "אתם מנסחים את המשפט שוב, בעצמכם ובמילים שלכם.",
   "02": "אפשר לחזור על הצעת הערך שלכם במשפט אחד שלא דורש חינוך-שוק, וההצעה כוללת מדד שניתן להמיר לכסף או לזמן.",
   // Was: "מספר יוצא. לא אני נוקב בו — אתה. אני נותן השוואה חיצונית
   // בת-הצלבה, ואתה מחשב." That described a specific pricing mechanism — the
@@ -41,7 +41,7 @@ const EXIT_CRITERIA: Record<string, string> = {
   // The replacement is what the graph records as actually happening (`S-ACQ`:
   // "הרצה מונחית בחדר") plus the goal `S2 ספרינט-הסנכרון` already holds: the
   // system removes the dependence on willpower to send, not the send itself.
-  "04": "הרצה מונחית של הפנייה הראשונה בחדר, וההכנה הכתובה שמאפשרת לה לצאת. היעד הוא שהמערכת מסירה את התלות בכוח הרצון לשלוח, ולא השליחה עצמה.",
+  "04": "עוברים ביחד על הפנייה הראשונה בפגישה, עם ההכנה הכתובה שמאפשרת לה לצאת.",
 };
 
 // What goes into each stage — always the previous stage's output, which is
@@ -53,27 +53,27 @@ const INPUTS: Record<string, string> = {
   "04": "תיאור המוצר עם התמחור משלב 3.",
 };
 
-// Compact per-stage transformation, rendered right-to-left with left-pointing
-// arrows — forward is leftward in RTL, same convention CoherenceVisual uses.
+// One plain line per stage. Not a chain: four "from X we make Y" lines in a row
+// read as generated (1.10 blind audit, round 4).
 const TRANSFORMATIONS: Record<string, string> = {
-  "01": "חמישה סיפורים מקצועיים ← תבנית חוזרת ← משפט ייעוד",
-  "02": "תגובות לקוחות ← מילון כאב ← הצעת ערך",
-  "03": "הצעת ערך ← מבנה מוצר ← תיאור עם תמחור",
-  "04": `תיאור מוצר ← מיפוי מקבלי החלטות ← ${outreachCount} פניות מתועדות`,
+  "01": "מחפשים בחמישה סיפורים מהעבודה שלכם את מה שחוזר, ומזה יוצא המשפט",
+  "02": "את ההצעה כותבים מתוך מה שהלקוחות שלכם אומרים",
+  "03": "בונים מוצר ושמים עליו מחיר",
+  "04": `שולחים אותו ל-${outreachCount} אנשים שבחרתם`,
 };
 
 const PRINCIPLES = [
   {
-    title: "בעלות מרוויחים, לא מקבלים",
-    body: "מבנה שנבנה תחת עומס נשאר. מבנה שמוגש מבחוץ מתפוגג. לכן אני מחלץ מכם את הניסוח, ולא נותן לכם אותו.",
+    title: "אני מבקש מכם לנסח",
+    body: "מהניסיון שלי, הדבר הכי גרוע שאני יכול לעשות זה להגיד לכם מה הייחודיות שלכם, כי זה משהו שאחר כך קשה לקחת עליו בעלות.",
   },
   {
-    title: "סדר קבוע. כל שלב בונה את הבא",
-    body: "אי-אפשר לתרגם ערך שעוד לא הובלט, ואי-אפשר להבליט נרטיב שעוד לא חולץ.",
+    title: "הסדר חשוב",
+    body: "בשביל שנוכל להגיע למחיר, אני רוצה לוודא קודם שיש הצעה ברורה, וההצעה נבנית מהסיפור שלכם.",
   },
   {
-    title: "מבנה קודם לתוכן",
-    body: "לא עצה. בסוף כל שלב יש תוצר בכתב שאפשר להשתמש בו מחר בבוקר.",
+    title: "מה יש לכם ביד",
+    body: "בסוף כל שלב יש תוצר בכתב שאפשר להשתמש בו כבר למחרת.",
   },
 ];
 
@@ -116,24 +116,21 @@ const Methodology = () => {
           />
           <div className="relative mx-auto grid max-w-5xl items-center gap-10 px-6 md:grid-cols-2 md:gap-12">
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
+              <p className="text-xs font-semibold text-[#D39A62]">
                 המתודולוגיה
               </p>
               <h1 className="cor-display mt-4 text-[hsl(var(--background))]">
-                וקטורים מפוזרים,
-                <br />
-                מתלכדים לכיוון אחד
+                הכל צריך להיכנס בתוך מבנה
               </h1>
               <p className="cor-body-lg mt-5 max-w-md text-[hsl(var(--background))]/75">
-                זהות, ערך, מוצר ומכירה מיושרים לכיוון אחד. כשהם מיושרים, האנרגיה
-                הנדרשת לתנועה קטנה. זה ה־SYS ב־COR-SYS: לא עצה, מבנה.
+                החלקים הם מי שאתם, מה שאתם מציעים, המוצר והפנייה ללקוח. מה שאני רואה זה שכשהם לא מתחברים, הפוסטים וההצעות הולכים לכל מיני כיוונים.
               </p>
               <div className="mt-8">
                 <Link
                   to="/#book"
                   className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
                 >
-                  לתיאום שיחת התאמה, 30 דקות, בלי לחץ
+                  לתיאום שיחת התאמה, 30 דקות, ללא תשלום
                 </Link>
               </div>
             </Reveal>
@@ -156,9 +153,7 @@ const Methodology = () => {
                 שלב 0, שיחת התאמה
               </h2>
               <p className="cor-body-lg mt-4 text-foreground">
-                עשרים דקות, ללא תשלום. שתי שאלות: יש לכם פרקטיקה פעילה עם לקוחות?
-                ויש בידול שכבר קיים אצלכם? בלי השניים האלה, אין ממה לחלץ, ואני אגיד
-                לכם את זה ביושר.
+                שלושים דקות, ללא תשלום. אני שואל שתי שאלות. יש לכם כבר לקוחות? ויש משהו שאתם עושים אחרת, גם אם עוד לא ניסחתם אותו? אם התשובה לאחת מהן היא לא, אגיד לכם את זה כבר בשיחה.
               </p>
             </Reveal>
           </div>
@@ -170,10 +165,10 @@ const Methodology = () => {
             <Reveal className="mb-8 max-w-2xl">
               <p className="cor-overline-he">הרצף</p>
               <h2 id="stages-title" className="cor-title mt-2 text-foreground">
-                ארבעה שלבים. סדר קבוע.
+                ארבעה שלבים, תמיד באותו סדר
               </h2>
               <p className="mt-3 text-sm text-muted-foreground">
-                כל אחד בונה את הבא. גללו כדי לראות את הרצף נבנה.
+                גללו למטה ותראו איך זה נבנה.
               </p>
             </Reveal>
 
@@ -186,7 +181,7 @@ const Methodology = () => {
 
             <Reveal delay={0.05}>
               <p className="mb-6 text-sm text-muted-foreground">
-                לחצו בין השלבים לפירוט המלא, קלט, תוצר, וסימן הסיום.
+                לחצו על כל שלב כדי לראות את הפירוט שלו.
               </p>
               <StageStepper
                 exitCriteria={EXIT_CRITERIA}
@@ -205,14 +200,14 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D39A62]">
+              <p className="text-xs font-semibold text-[#D39A62]">
                 למה פרוטוקול
               </p>
               <h2
                 id="why-title"
                 className="cor-title mt-2 text-[hsl(var(--background))]"
               >
-                למה מבנה, ולא אינטואיציה
+                למה אני עובד ככה
               </h2>
             </Reveal>
 
@@ -275,7 +270,7 @@ const Methodology = () => {
                 to="/#book"
                 className="cta-warm-lg inline-flex h-12 items-center justify-center rounded-md px-6 text-sm"
               >
-                לתיאום שיחת התאמה, 30 דקות, בלי לחץ
+                לתיאום שיחת התאמה, 30 דקות, ללא תשלום
               </Link>
             </div>
           </Reveal>

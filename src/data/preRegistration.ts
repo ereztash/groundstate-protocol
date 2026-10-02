@@ -15,13 +15,13 @@
  */
 export const preRegistration = {
   window: {
-    label: "חלון המדידה",
+    label: "מתי בודקים",
     value: "מפרסום ההתחייבות ועד 05/2027",
   },
   measures: {
     label: "מה נמדד",
     items: [
-      "אות התעניינות מתועד, כן או לא",
+      "תגובה כתובה שמראה עניין, כן או לא",
       "עסקה שנסגרה, כן או לא, וסכום",
       "שינוי בחשיפות לינקדאין",
     ],
@@ -32,15 +32,15 @@ export const preRegistration = {
   },
   reporting: {
     label: "פרסום",
-    value: "דוח פתוח בתוך 12 חודשים, גם אם התוצאה שלילית",
+    value: "אפרסם את התוצאות תוך 12 חודשים, גם אם הן לא טובות",
   },
   /**
    * Stated in full, including the consequence. Softening either half would
    * remove the only part that costs anything to publish.
    */
   failureThreshold: {
-    label: "סף הכישלון, נרשם מראש",
+    label: "מתי אגיד שזה לא עבד",
     value:
-      "אם פחות מ-60% מהלקוחות מגיעים לאות התעניינות מתועד, המתודה מקבלת גרסה חדשה.",
+      "אם פחות מ-60% מהלקוחות יקבלו תגובה כתובה שמראה עניין, אשנה את השיטה.",
   },
 } as const;

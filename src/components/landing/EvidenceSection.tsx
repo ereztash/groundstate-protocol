@@ -1,6 +1,5 @@
 import EvidenceTag from "@/components/EvidenceTag";
 import { claims } from "@/data/claims";
-import { EVIDENCE_MEANING } from "@/lib/evidence";
 import { preRegistration as pre } from "@/data/preRegistration";
 import SectionHead from "./SectionHead";
 
@@ -47,12 +46,10 @@ const EvidenceSection = () => (
       <div className="max-w-2xl">
         <SectionHead label="מה נבדק, ומה עוד לא" />
         <h2 id="evidence-title" className="cor-title mt-4 text-foreground">
-          מה התחייבתי למדוד, לפני שאני יודע את התוצאה.
+          מה אני בודק.
         </h2>
         <p className="cor-body-lg mt-5 text-foreground">
-          זה כאן כדי שבעוד שנה תוכלו לבדוק אם מה שכתוב בעמוד הזה החזיק. זו
-          התחייבות לפרסם מה קרה, כולל המקרה שבו השיטה לא עבדה, והיא אינה הוכחה
-          שהיא עובדת.
+          אני עוד לא יכול להגיד לכם בוודאות שזה עובד, אז כתבתי כאן מראש מה אני בודק.
         </p>
       </div>
 
@@ -60,7 +57,7 @@ const EvidenceSection = () => (
         {claims.map((c) => (
           <div key={c.id} className="flex flex-col border border-border bg-card/85 p-6 sm:p-7">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
+              <p className="text-xs font-bold text-muted-foreground">
                 {c.label}
               </p>
               <EvidenceTag level={c.level} />
@@ -68,9 +65,6 @@ const EvidenceSection = () => (
             <p className="mt-3 leading-relaxed text-foreground">{c.statement}</p>
             <p className="mt-auto border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">
               {c.entitlement}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {EVIDENCE_MEANING[c.level]}
             </p>
           </div>
         ))}
@@ -80,7 +74,7 @@ const EvidenceSection = () => (
         <dl className="divide-y divide-border border-y border-border">
           {ROWS.map((row) => (
             <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:gap-6">
-              <dt className="text-xs font-bold tracking-[0.08em] text-primary">
+              <dt className="text-xs font-bold text-primary">
                 {row.label}
               </dt>
               <dd className="leading-relaxed text-foreground">
@@ -104,11 +98,11 @@ const EvidenceSection = () => (
         <div className="relative self-start border border-border border-s-4 border-s-signal bg-card p-6 pt-8 sm:p-7 sm:pt-9">
           {WINDOW_END && (
             <span className="ld-stamp absolute -top-5 end-5 bg-card text-xs" aria-hidden="true">
-              <span>נרשם מראש</span>
+              <span>בודקים</span>
               <span className="font-heading text-sm">עד {WINDOW_END}</span>
             </span>
           )}
-          <p className="text-xs font-bold tracking-[0.08em] text-accent">
+          <p className="text-xs font-bold text-accent">
             {pre.failureThreshold.label}
           </p>
           {THRESHOLD && (

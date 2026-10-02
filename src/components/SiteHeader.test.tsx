@@ -38,10 +38,12 @@ describe("SiteHeader", () => {
     const panel = document.getElementById("site-nav-mobile");
     expect(panel).not.toBeNull();
     // The three links are inside the opened panel too.
-    // The three nav links, then WhatsApp (2026-10-01).
+    // The three nav links, the English page, then WhatsApp (2026-10-01).
     const panelLinks = within(panel as HTMLElement).getAllByRole("link");
-    expect(panelLinks.length).toBe(4);
-    expect(panelLinks[3].getAttribute("href")).toMatch(/^https:\/\/wa\.me\/972524545963\?text=/);
+    expect(panelLinks.length).toBe(5);
+    expect(panelLinks[3].getAttribute("href")).toMatch(/\/en$/);
+    expect(panelLinks[3].getAttribute("lang")).toBe("en");
+    expect(panelLinks[4].getAttribute("href")).toMatch(/^https:\/\/wa\.me\/972524545963\?text=/);
     // The dark-mode switch is in the menu on phones, as a toggle button.
     const themeToggle = within(panel as HTMLElement).getByRole("button", { name: "מצב כהה" });
     expect(themeToggle.getAttribute("aria-pressed")).toBe("false");
@@ -49,6 +51,19 @@ describe("SiteHeader", () => {
     fireEvent.click(toggle);
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
     expect(document.getElementById("site-nav-mobile")).toBeNull();
+  });
+
+  it("in English: no nav, a link back to Hebrew, the CTA on the page's own #book", () => {
+    const { getByRole, queryByRole } = render(
+      <MemoryRouter initialEntries={["/en"]}>
+        <SiteHeader lang="en" />
+      </MemoryRouter>
+    );
+    expect(queryByRole("link", { name: "הפרוטוקול" })).toBeNull();
+    const back = getByRole("link", { name: "עברית" });
+    expect(back.getAttribute("lang")).toBe("he");
+    expect(getByRole("link", { name: "Fit call, 30 min" }).getAttribute("href")).toBe("#book");
+    expect(getByRole("button", { name: "Dark mode" })).toBeTruthy();
   });
 
   it("has no detectable a11y violations (axe)", async () => {

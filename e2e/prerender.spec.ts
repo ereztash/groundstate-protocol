@@ -22,7 +22,8 @@ const ROUTES = [
   // Tracks the hero H1, which is the deepest thing on the landing page that
   // only exists if React mounted and rendered. Was "תרגום מומחיות מקצועית",
   // the previous headline; update this string whenever that headline changes.
-  { path: "", depth: 0, mustContain: "לא יודעים איך למכור אותה" },
+  { path: "", depth: 0, mustContain: "והקושי הוא למכור אותה" },
+  { path: "en", depth: 1, mustContain: "the hard part is selling it" },
   { path: "protocol", depth: 1, mustContain: "ארבעה שלבים" },
   { path: "about", depth: 1, mustContain: "COR-SYS" },
   { path: "privacy", depth: 1, mustContain: "פרטיות" },

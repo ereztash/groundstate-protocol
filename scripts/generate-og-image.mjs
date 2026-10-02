@@ -37,9 +37,9 @@ const card = `<!doctype html>
 <body>
   <div class="sheet"></div>
   <div class="copy">
-    <div class="over">COR-SYS · ליווי עסקי לעצמאים · 30 יום</div>
-    <h1>יודעים לעשות את העבודה. לא יודעים איך למכור אותה<span class="pt">.</span></h1>
-    <div class="sub">ארבע פגישות. מה שאתם כבר יודעים נארז כמוצר אחד עם מחיר.</div>
+    <div class="over">ליווי עסקי לעצמאים, 30 יום</div>
+    <h1>אתם יודעים את העבודה, והקושי הוא למכור אותה<span class="pt">.</span></h1>
+    <div class="sub">בארבע פגישות בונים מוצר אחד עם מחיר.</div>
   </div>
   <div class="sign">ארז טל-שיר
     <svg viewBox="0 0 64 24" width="58" height="22" aria-hidden="true">

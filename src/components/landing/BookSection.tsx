@@ -8,6 +8,7 @@ import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
 
 const BookingSection = lazy(() => import("./BookingSection"));
+const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
 
 /**
@@ -29,16 +30,10 @@ const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
  * sign that someone answers it.
  */
 const STATIONS = [
-  { title: "פתיחה.", body: "מה התקיעה ומה ניסית עד עכשיו." },
-  {
-    title: "חילוץ נקודה אחת.",
-    body: "משהו ספציפי שעשיתם פעם ואתם גאים בו. שם יושב הבידול.",
-  },
-  { title: "שיקוף.", body: "אני אומר בקול מה שאני שומע, ומתקנים ביחד." },
-  {
-    title: "החלטה.",
-    body: "אם זה מתאים, ומאיפה מתחילים. אם לא, גם זו תשובה ברורה.",
-  },
+  "מתחילים במה שתקוע, ובמה שכבר ניסיתם.",
+  "מחפשים משהו מסוים שעשיתם פעם ואתם גאים בו.",
+  "אני אומר בקול מה שאני שומע, ומתקנים ביחד.",
+  "בודקים אם זה מתאים, ומאיפה מתחילים.",
 ];
 
 type Mode = "calendar" | "form";
@@ -114,14 +109,10 @@ const BookSection = () => {
     >
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <SectionHead n="07" label="הצעד הבא" />
+          <SectionHead label="הצעד הבא" />
           <h2 id="book-title" className="cor-title mt-4 text-foreground">
             שיחת התאמה. 30 דקות, ללא עלות.
           </h2>
-          <p className="cor-body-lg mt-5 text-foreground">
-            אם זה לא הזמן הנכון, או אני לא האדם הנכון, נגיד את זה ביושר בלי
-            לבזבז לאף אחד את הזמן.
-          </p>
         </div>
 
         {/* On a phone the calendar comes straight after the heading: a
@@ -132,19 +123,10 @@ const BookSection = () => {
             <p className="font-heading text-lg font-black text-foreground">
               מה קורה בשלושים הדקות
             </p>
-            <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
-              {STATIONS.map((s, i) => (
-                <li key={s.title}>
-                  <p className="text-xs font-bold tracking-[0.08em] text-muted-foreground">
-                    תחנה {i + 1}
-                  </p>
-                  <p className="mt-1 leading-relaxed text-foreground">
-                    <strong className="font-bold text-foreground">
-                      {s.title}
-                    </strong>{" "}
-                    {s.body}
-                  </p>
-                </li>
+            {/* One line per step, in order; no "תחנה N" label over each (2.10). */}
+            <ol className="mt-4 list-inside list-decimal space-y-3 leading-relaxed text-foreground marker:font-bold marker:text-muted-foreground">
+              {STATIONS.map((s) => (
+                <li key={s}>{s}</li>
               ))}
             </ol>
 
@@ -152,15 +134,12 @@ const BookSection = () => {
               sharp, owned answer means the reader does not need the programme;
               a long or generic one is what the call is for. It also sets the
               call's genre before it starts: a fit check, not free advice. */}
-          <div className="mt-8 ld-sheet p-5">
-            <p className="text-xs font-bold tracking-[0.08em] text-primary">
+          <div className="mt-8 ld-plain p-5">
+            <p className="text-xs font-bold text-primary">
               שאלה אחת להביא לשיחה
             </p>
             <p className="mt-2 text-lg font-bold leading-snug text-foreground">
               אם מישהו אחר נותן בדיוק את אותו שירות, למה שיבחרו בכם?
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              אם התשובה לוקחת יותר ממשפט, בשביל זה השיחה.
             </p>
           </div>
 
@@ -186,10 +165,30 @@ const BookSection = () => {
                 onClick={() => trackCtaClick("whatsapp_book")}
                 className="ld-link"
               >
-                וואטסאפ <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+                וואטסאפ <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
                 <span className="sr-only"> (נפתח בוואטסאפ)</span>
               </a>
             </p>
+
+            {mode === "calendar" && (
+              <div className="mb-3 flex items-center gap-3">
+                <img
+                  src={portrait}
+                  alt=""
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-12 w-12 shrink-0 rounded-full border border-border object-cover"
+                />
+                <div className="leading-snug">
+                  <p className="font-bold text-foreground">שיחת התאמה עם ארז טל-שיר</p>
+                  <p className="text-sm text-muted-foreground">
+                    30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {mode === "calendar" ? (
               near ? (

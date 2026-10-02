@@ -33,8 +33,9 @@ const EvidenceTag = ({
     title={EVIDENCE_MEANING[level]}
     className={`inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-xs font-semibold tracking-wide ${STYLE[level]} ${className}`}
   >
-    <span className="sr-only">רמת ראיה: </span>
+    <span className="sr-only">מקור: </span>
     {EVIDENCE_LABEL[level]}
+    {/* Restored 2.10: round 4 dropped this, against the comment above. */}
     <span className="sr-only">, {EVIDENCE_MEANING[level]}</span>
   </span>
 );

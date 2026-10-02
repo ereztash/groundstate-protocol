@@ -13,6 +13,7 @@ import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { DiagnosticFormProvider } from "@/components/landing/DiagnosticFormProvider";
 import { trackScrollDepth } from "@/lib/analytics";
 import { parseLeadSource } from "@/lib/web3forms";
+import { useHomeLanguage } from "@/hooks/useHomeLanguage";
 
 /**
  * The landing page, rebuilt 2026-09-29 ("the last draft").
@@ -42,6 +43,9 @@ import { parseLeadSource } from "@/lib/web3forms";
  *   phone keeps a sticky CTA between the hero and the calendar.
  */
 const Landing = () => {
+  // hreflang to the English home page (2026-10-01), and Hebrew restored if
+  // the reader arrives here from it.
+  useHomeLanguage("he");
   const reachedRef = useRef<Set<number>>(new Set());
 
   // Visitors arriving from another page's CTA carry ?src=. Read once, on the

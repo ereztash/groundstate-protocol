@@ -1,9 +1,10 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import SectionHead from "./SectionHead";
 
 /**
- * The four symptoms, set as four notes pinned side by side, then the one
- * diagnosis they share in the display face.
+ * The four symptoms, as a plain list between hairlines. They were four tilted
+ * draft cards numbered 1-4; the 1.10 visual audit read the even card row and
+ * the decorative numbers as template, and the order is not information.
  *
  * Chosen and ordered by the operator's client-language research, which ranks
  * pain patterns by how many clients raised them: "knows the work, not what she
@@ -21,9 +22,9 @@ import SectionHead from "./SectionHead";
  */
 const NOTES: ReactNode[] = [
   <>
-    אתם יודעים בדיוק מה אתם עושים בשביל לקוחות. כשמישהו חדש שואל{" "}
-    <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, התשובה
-    עוד לא ברורה, גם לכם.
+    כשמישהו חדש שואל{" "}
+    <strong className="font-bold text-foreground">מה אתם מוכרים</strong>, קשה
+    לכם להגיד לו מה יוצא לו מזה.
   </>,
   <>
     כל כמה שבועות אתם נכנסים ללינקדאין ומשנים את הכותרת. כבר הצטברו{" "}
@@ -36,8 +37,9 @@ const NOTES: ReactNode[] = [
     לכם מהפה.
   </>,
   <>
-    נתתם חצי שעת ייעוץ לבן-דוד של חבר. כשהמוצר שלכם הוא הידע שלכם,{" "}
-    <strong className="font-bold text-foreground">נתתם אותו במתנה</strong>.
+    נתתם{" "}
+    <strong className="font-bold text-foreground">חצי שעת ייעוץ</strong> לבן-דוד
+    של חבר.
   </>,
 ];
 
@@ -48,40 +50,23 @@ const WhatYouTriedSection = () => (
     className="ld-section border-t border-foreground/10"
   >
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-      <SectionHead n="01" label="למה הגעתם לכאן" />
+      <SectionHead label="למה הגעתם לכאן" />
       <h2 id="what-you-tried-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        מבריקים על הלקוחות שלכם. נתקעים על עצמכם.
+        הסנדלר הולך יחף, גם אצלכם וגם אצלי.
       </h2>
       <p className="cor-body-lg mt-5 max-w-2xl text-foreground">
-        בדרך כלל זה מגיע אחרי שעזבתם עבודה, יצאתם לחל״ת, או כשההכנסה מהעסק
-        עוד לא יציבה.
+        זה קורה בדרך כלל כשעזבתם עבודה, יצאתם לחל״ת או שהעסק עוד לא מכניס
+        מספיק.
       </p>
 
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid max-w-5xl gap-x-14 md:grid-cols-2">
         {NOTES.map((note, i) => (
-          <li key={i} className="ld-draft px-5 py-5" style={{ "--tilt": i % 2 ? "0.5deg" : "-0.5deg" } as CSSProperties}>
-            <span className="font-heading text-sm font-black text-accent" aria-hidden="true">
-              {i + 1}.
-            </span>
-            <p className="mt-2 leading-relaxed text-foreground">{note}</p>
+          <li key={i} className="border-t border-foreground/15 py-5 text-lg leading-relaxed text-foreground">
+            {note}
           </li>
         ))}
       </ul>
 
-      <div className="mt-14 max-w-4xl">
-        <p className="font-heading text-2xl font-black leading-[1.25] text-foreground sm:text-[2.125rem]">
-          ארבעת הדברים האלה נראים כמו ארבע בעיות נפרדות. הם ארבע פנים של דבר
-          אחד:{" "}
-          <span className="ld-underline">
-            עוד לא תרגמתם את מה שאתם יודעים לשפה שהלקוח שלכם משלם עליה.
-          </span>
-        </p>
-        <p className="cor-body-lg mt-6 max-w-2xl text-foreground">
-          וכל חודש שזה נשאר ככה גובה מחיר: עסקאות שנסגרות מתחת לערך, לקוחות שלא
-          מבינים למה דווקא אתם, ועוד גרסה של ״מי אני״ שלא תחזיק. הזמן לבדו לא
-          מתרגם, הוא רק מייקר.
-        </p>
-      </div>
     </div>
   </section>
 );

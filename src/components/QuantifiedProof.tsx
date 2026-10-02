@@ -32,7 +32,7 @@ const STATS: Stat[] = [
     // corroborated is the 2026-07-22 reconciliation: "value/fee ratio: כל 4
     // בתוך 3x-10x, 0 מדוגלים". Wider and weaker, and the one that is measured.
     value: "×3 עד 10",
-    label: "הערך שנפתח ביחס למחיר, אצל 4 הלקוחות שהשלימו את הרצף עם ערך מדיד. n=4",
+    label: "פי כמה היה שווה להם מה שקיבלו, לעומת מה ששילמו. מדדתי את זה אצל 4 לקוחות שסיימו את הרצף.",
     level: "operator",
   },
   {
@@ -43,7 +43,7 @@ const STATS: Stat[] = [
     // the reader is entitled to know before weighing a single reported case.
     value: "₪5,500",
     label:
-      "הכנסה שנרשמה אצל לקוח אחד, בין מפגש 3 למפגש 4. הצלבה מול CRM טרם הושלמה. n=1",
+      "הכנסה שנרשמה אצל לקוח אחד, בין מפגש 3 למפגש 4.",
     level: "operator",
   },
 ];
@@ -71,8 +71,7 @@ const QuantifiedProof = ({ className }: { className?: string }) => {
         ))}
       </dl>
       <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-        שני המספרים הם דיווח שלי, ולא הוצלבו מול מקור שני. אני מעדיף לספר מעט
-        ומסויג, מאשר הרבה ולא בדוק.
+        את המספרים האלה ספרתי בעצמי מהרישומים שלי, ואף אחד מבחוץ עוד לא בדק אותם.
       </p>
     </div>
   );
