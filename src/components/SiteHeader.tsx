@@ -126,7 +126,7 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
             <a
               href="#book"
               onClick={() => trackCtaClick("en_header_book")}
-              className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
+              className="ld-cta cor-head-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
             >
               {t.cta}
             </a>
@@ -136,7 +136,7 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
             <Link
               to="/?src=header#book"
               onClick={onCta}
-              className="ld-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
+              className="ld-cta cor-head-cta !min-h-0 h-9 !px-3.5 !text-sm md:!px-4"
             >
               {t.cta}
             </Link>
@@ -200,7 +200,7 @@ const SiteHeader = ({ lang = "he" }: { lang?: Lang }) => {
               className="inline-flex items-center gap-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
             >
               <WhatsAppIcon className="h-[18px] w-[18px]" />
-              {t.whatsapp} <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+              {t.whatsapp} <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
               <span className="sr-only">{t.opensWhatsapp}</span>
             </a>
             <ThemeToggle lang={lang} withLabel className="py-1" />

@@ -81,11 +81,11 @@ const ProofSection = () => (
         מה אמרו שלושה אנשים שעבדו איתי.
       </h2>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
-        <div className="ld-plain p-6 sm:p-8">
+      <div className="mt-12 grid gap-6 lg:gap-8">
+        <div className="ld-plain p-6 sm:p-8 lg:px-12">
           <VideoTestimonial />
         </div>
-        <div className="grid gap-6">
+        <div className="grid items-start gap-6 md:grid-cols-2 lg:gap-8">
           {testimonials.map((t) => (
             <QuoteCard key={t.attribution} t={t} />
           ))}

@@ -1,9 +1,10 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import SectionHead from "./SectionHead";
 
 /**
- * The four symptoms, set as four notes pinned side by side, then the one
- * diagnosis they share in the display face.
+ * The four symptoms, as a plain list between hairlines. They were four tilted
+ * draft cards numbered 1-4; the 1.10 visual audit read the even card row and
+ * the decorative numbers as template, and the order is not information.
  *
  * Chosen and ordered by the operator's client-language research, which ranks
  * pain patterns by how many clients raised them: "knows the work, not what she
@@ -58,13 +59,10 @@ const WhatYouTriedSection = () => (
         מספיק.
       </p>
 
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid max-w-5xl gap-x-14 md:grid-cols-2">
         {NOTES.map((note, i) => (
-          <li key={i} className="ld-draft px-5 py-5" style={{ "--tilt": i % 2 ? "0.5deg" : "-0.5deg" } as CSSProperties}>
-            <span className="font-heading text-sm font-black text-accent" aria-hidden="true">
-              {i + 1}.
-            </span>
-            <p className="mt-2 leading-relaxed text-foreground">{note}</p>
+          <li key={i} className="border-t border-foreground/15 py-5 text-lg leading-relaxed text-foreground">
+            {note}
           </li>
         ))}
       </ul>

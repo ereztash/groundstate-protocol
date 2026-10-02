@@ -26,7 +26,9 @@ export const CALENDLY_PAGE_SETTINGS = {
   backgroundColor: "F7F4EE",
   textColor: "1C1C2E",
   primaryColor: "1C1C2E",
-  hideEventTypeDetails: false,
+  // The page's own Hebrew card names the meeting (2.10); Calendly's header said
+  // "New Meeting" in English above the calendar.
+  hideEventTypeDetails: true,
   hideLandingPageDetails: false,
   hideGdprBanner: false,
 } as const;

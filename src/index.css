@@ -823,6 +823,39 @@
   border-radius: 2px;
 }
 
+/* Offer weeks on wider screens: four rows on one teal line, not a 2x2 grid of
+   cards (2.10). Phones keep the row of sheets to swipe. */
+@media (min-width: 768px) {
+  .ld-weeks {
+    border-inline-start: 2px solid hsl(var(--primary) / 0.45);
+  }
+  .ld-week {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    column-gap: 2rem;
+    background: none;
+    border: 0;
+    border-top: 1px solid hsl(var(--border));
+    border-radius: 0;
+    padding: 1.75rem 0;
+    padding-inline-start: 2rem;
+  }
+  .ld-week:first-child {
+    border-top: 0;
+  }
+  .ld-week > :first-child {
+    grid-row: span 2;
+    padding-top: 0.4rem;
+  }
+  .ld-week > :not(:first-child) {
+    grid-column: 2;
+    margin-top: 0;
+  }
+  .ld-week > p:last-child {
+    margin-top: 0.5rem;
+  }
+}
+
 /* A draft that did not survive: thinner stock, dashed edge, slightly lifted
    off true. Set per element with --tilt. */
 .ld-draft {
@@ -945,6 +978,13 @@
 }
 .ld-sticky[data-shown] {
   transform: translateY(0);
+}
+/* One booking button on a phone screen at a time: the header's steps aside
+   while the bar is up (2.10; the audit read the pair as template). */
+@media (max-width: 767px) {
+  body:has(.ld-sticky[data-shown]) .cor-head-cta {
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

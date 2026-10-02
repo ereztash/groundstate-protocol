@@ -1,9 +1,5 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { trackCtaClick } from "@/lib/analytics";
+import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
 import { activeGuarantee } from "@/data/guarantee";
 import { faq as items, surfacedObjections, type QA } from "@/data/faq";
 import SectionHead from "./SectionHead";
@@ -49,30 +45,31 @@ const FAQSection = () => (
         מה שואלים לפני שקובעים.
       </h2>
 
-      <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-14">
-        <div className="space-y-8">
-          {surfaced.map(({ q, a }) => (
-            <div key={q}>
-              <h3 className="font-heading text-xl font-black leading-snug text-foreground">
-                {q}
-              </h3>
-              <p className="mt-3 leading-relaxed text-foreground">{a}</p>
-            </div>
-          ))}
-        </div>
-
-        <Accordion type="single" collapsible className="w-full border-t border-border">
-          {rest.map(({ q, a }, i) => (
-            <AccordionItem key={q} value={`item-${i}`} className="border-b border-border">
-              <AccordionTrigger className="gap-4 py-5 text-right text-base font-bold text-foreground hover:no-underline">
-                {q}
-              </AccordionTrigger>
-              <AccordionContent className="pb-5 pt-1 leading-relaxed text-muted-foreground">
-                {a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      {/* One column, every answer open (2.10). The two-column accordion read as
+          a stock block in the 1.10 audit, and a closed answer only reaches the
+          readers who already cared enough to open it. */}
+      <div className="mt-12 max-w-3xl">
+        {[...surfaced, ...rest].map(({ q, a }) => (
+          <div key={q} className="border-t border-foreground/15 py-6">
+            <h3 className="font-heading text-xl font-black leading-snug text-foreground">
+              {q}
+            </h3>
+            <p className="mt-2 leading-relaxed text-foreground">{a}</p>
+          </div>
+        ))}
+        <p className="border-t border-foreground/15 pt-6 text-foreground">
+          שאלה שלא מופיעה כאן?{" "}
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackCtaClick("whatsapp_faq")}
+            className="ld-link"
+          >
+            כתבו לי בוואטסאפ, <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
+            <span className="sr-only"> (נפתח בוואטסאפ)</span>
+          </a>
+        </p>
       </div>
     </div>
   </section>

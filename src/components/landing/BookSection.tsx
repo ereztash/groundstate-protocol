@@ -8,6 +8,7 @@ import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
 
 const BookingSection = lazy(() => import("./BookingSection"));
+const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 const DiagnosticFormSection = lazy(() => import("./DiagnosticFormSection"));
 
 /**
@@ -168,10 +169,30 @@ const BookSection = () => {
                 onClick={() => trackCtaClick("whatsapp_book")}
                 className="ld-link"
               >
-                וואטסאפ <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+                וואטסאפ <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
                 <span className="sr-only"> (נפתח בוואטסאפ)</span>
               </a>
             </p>
+
+            {mode === "calendar" && (
+              <div className="mb-3 flex items-center gap-3">
+                <img
+                  src={portrait}
+                  alt=""
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-12 w-12 shrink-0 rounded-full border border-border object-cover"
+                />
+                <div className="leading-snug">
+                  <p className="font-bold text-foreground">שיחת התאמה עם ארז טל-שיר</p>
+                  <p className="text-sm text-muted-foreground">
+                    30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {mode === "calendar" ? (
               near ? (

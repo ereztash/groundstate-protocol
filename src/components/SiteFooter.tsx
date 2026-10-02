@@ -81,7 +81,7 @@ const SiteFooter = ({ lang = "he" }: { lang?: Lang }) => {
                 className="inline-flex items-center gap-2 text-[#D2D0DB] transition-colors hover:text-[#F5F2ED]"
               >
                 <WhatsAppIcon className="h-4 w-4" />
-                <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+                <span dir="ltr" className="whitespace-nowrap">{WHATSAPP_DISPLAY}</span>
                 <span className="sr-only">{t.opensWhatsapp}</span>
               </a>
               <a
