@@ -46,15 +46,18 @@ const FitSection = () => (
         למי זה מתאים
       </h2>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        <div className="ld-plain p-6 sm:p-8">
+      {/* The "for" list sits on the page; only the "not for" list keeps its
+          faded, dashed sheet (2.10). Twin cards read as a stock block, but two
+          blind A/B rounds showed the contrast is what makes the filter work. */}
+      <div className="mt-12 grid items-start gap-10 md:grid-cols-2 md:gap-14">
+        <div>
           <h3 className="font-heading text-xl font-black text-foreground">
             מתאים לכם אם
           </h3>
-          <ul className="mt-5 space-y-4">
+          <ul className="mt-4">
             {FOR.map((line) => (
-              <li key={line} className="flex gap-3 leading-relaxed text-foreground">
-                <span>{line}</span>
+              <li key={line} className="border-t border-foreground/15 py-4 leading-relaxed text-foreground">
+                {line}
               </li>
             ))}
           </ul>

@@ -123,14 +123,10 @@ const BookSection = () => {
             <p className="font-heading text-lg font-black text-foreground">
               מה קורה בשלושים הדקות
             </p>
-            <ol className="mt-5 space-y-5 border-s border-foreground/15 ps-5">
-              {STATIONS.map((s, i) => (
-                <li key={s}>
-                  <p className="text-xs font-bold text-muted-foreground">
-                    תחנה {i + 1}
-                  </p>
-                  <p className="mt-1 leading-relaxed text-foreground">{s}</p>
-                </li>
+            {/* One line per step, in order; no "תחנה N" label over each (2.10). */}
+            <ol className="mt-4 list-inside list-decimal space-y-3 leading-relaxed text-foreground marker:font-bold marker:text-muted-foreground">
+              {STATIONS.map((s) => (
+                <li key={s}>{s}</li>
               ))}
             </ol>
 
