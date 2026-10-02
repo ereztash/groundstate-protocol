@@ -4,6 +4,7 @@ import { Link, useHref } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SectionHead from "@/components/landing/SectionHead";
+import FullQuote from "@/components/landing/FullQuote";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { CorSeal } from "@/components/brand/CorMark";
 import { LinkedInIcon, WhatsAppIcon } from "@/components/brand/SocialIcons";
@@ -209,7 +210,7 @@ function Offer() {
         </div>
 
         <p className="mt-10 text-sm text-muted-foreground md:hidden" aria-hidden="true">{offer.swipe}</p>
-        <ol className="relative -mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:mx-0 md:mt-12 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
+        <ol tabIndex={0} aria-label="The four weeks" className="relative -mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:mx-0 md:mt-12 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
           {offer.stages.map((s, i) => (
             <li key={s.name} className="ld-plain flex w-[84%] shrink-0 snap-center flex-col p-6 sm:w-[70%] sm:p-7 md:w-auto">
               <p className="text-xs font-bold text-muted-foreground">
@@ -330,18 +331,12 @@ function Proof() {
           {cards.map((c) => {
             const t = testimonialsEn[c.he];
             return (
-              <figure key={c.he} className="ld-plain flex flex-col p-6 sm:p-7">
+              <figure key={c.he} className="ld-plain ld-edge flex flex-col p-6 sm:p-7">
                 <blockquote>
                   {t.pullQuote ? (
                     <>
                       <p className="font-heading text-xl font-bold leading-snug text-foreground">&ldquo;{t.pullQuote}&rdquo;</p>
-                      <details className="group mt-3">
-                        <summary className="ld-link cursor-pointer list-none text-sm">
-                          <span className="group-open:hidden">{proof.more}</span>
-                          <span className="hidden group-open:inline">{proof.less}</span>
-                        </summary>
-                        <p className="mt-3 leading-relaxed text-foreground">{t.quote}</p>
-                      </details>
+                      <FullQuote quote={t.quote} more={proof.more} less={proof.less} />
                     </>
                   ) : (
                     <p className="leading-relaxed text-foreground">{t.quote}</p>

@@ -75,7 +75,7 @@ const OfferSection = () => {
         <p className="mt-10 text-sm text-muted-foreground md:hidden" aria-hidden="true">
           ארבעה מסמכים, החליקו ביניהם ←
         </p>
-        <ol className="relative -mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:mx-0 md:mt-12 md:block md:overflow-visible md:px-0 md:pb-0 ld-weeks [&::-webkit-scrollbar]:hidden">
+        <ol tabIndex={0} aria-label="ארבעת השבועות" className="relative -mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:mx-0 md:mt-12 md:block md:overflow-visible md:px-0 md:pb-0 ld-weeks [&::-webkit-scrollbar]:hidden">
           {stages.map((s, i) => (
             <li
               key={s.number}

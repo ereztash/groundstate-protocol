@@ -80,7 +80,7 @@ const StageStepper = ({
             >
               <span
                 className={`text-2xl font-light tabular-nums ${
-                  selected ? "text-accent" : "text-primary/70"
+                  selected ? "text-accent" : "text-primary"
                 }`}
               >
                 {s.number}
@@ -100,7 +100,7 @@ const StageStepper = ({
           id={`stage-panel-${s.number}`}
           aria-labelledby={`stage-tab-${s.number}`}
           hidden={i !== active}
-          className="mt-8 rounded-xl border border-border bg-card p-6 md:p-8"
+          className="ld-in mt-8 rounded-xl border border-border bg-card p-6 md:p-8"
         >
           {/* The stage price that sat opposite the name came out on
               2026-09-29, when the programme became one unit. */}
@@ -139,7 +139,7 @@ const StageStepper = ({
 
           {/* Compact input → mechanism → output chain, so the transformation
               is scannable without reading all three fields above. */}
-          <p className="mt-6 border-t border-border pt-4 text-center font-mono text-xs leading-relaxed text-primary/75 sm:text-sm">
+          <p className="mt-6 border-t border-border pt-4 text-center font-mono text-xs leading-relaxed text-primary sm:text-sm">
             {transformations[s.number]}
           </p>
         </div>

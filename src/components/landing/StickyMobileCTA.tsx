@@ -67,7 +67,8 @@ const StickyMobileCTA = ({ lang = "he" }: { lang?: Lang }) => {
   };
 
   return (
-    <div
+    <aside
+      aria-label={LABELS[lang].cta}
       dir={lang === "en" ? "ltr" : "rtl"}
       aria-hidden={!visible}
       data-shown={visible ? "" : undefined}
@@ -97,7 +98,7 @@ const StickyMobileCTA = ({ lang = "he" }: { lang?: Lang }) => {
           <WhatsAppIcon className="h-6 w-6" />
         </a>
       </div>
-    </div>
+    </aside>
   );
 };
 
