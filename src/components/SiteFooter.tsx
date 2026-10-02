@@ -105,6 +105,24 @@ const SiteFooter = ({ lang = "he" }: { lang?: Lang }) => {
             </p>
           </div>
 
+          {lang === "he" && (
+            <figure className="hidden items-center gap-3 md:flex">
+              <img
+                src={`${import.meta.env.BASE_URL}media/wa-qr.svg`}
+                alt="קוד QR שפותח שיחת וואטסאפ איתי"
+                width={72}
+                height={72}
+                loading="lazy"
+                className="h-[72px] w-[72px] rounded-sm"
+              />
+              <figcaption className="text-xs leading-relaxed text-[#D2D0DB]">
+                סרקו מהטלפון
+                <br />
+                ותמשיכו בוואטסאפ
+              </figcaption>
+            </figure>
+          )}
+
           <nav
             aria-label={t.nav}
             className="grid grid-cols-2 gap-x-10 gap-y-2.5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-7"

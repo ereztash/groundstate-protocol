@@ -192,6 +192,9 @@ const BookSection = () => {
                     <p className="text-sm text-muted-foreground">
                       30 דקות, ללא עלות. בוחרים יום ושעה, והאישור מגיע במייל.
                     </p>
+                    <p className="mt-1 text-sm text-foreground">
+                      בשיחה אני שואל שתי שאלות: יש לכם כבר לקוחות? ויש משהו שאתם עושים אחרת, גם אם עוד לא ניסחתם אותו?
+                    </p>
                   </div>
                 </div>
               )}
