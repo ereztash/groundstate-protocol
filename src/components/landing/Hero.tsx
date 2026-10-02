@@ -7,6 +7,7 @@ import { LinkedInIcon } from "@/components/brand/SocialIcons";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
+const guyPoster = `${import.meta.env.BASE_URL}media/testimonial-guy-poster.webp`;
 
 /**
  * The hero, v4 (2026-10-01): the offer first, on paper.
@@ -132,7 +133,12 @@ const Hero = () => {
             </p>
           </div>
 
-          <figure className="border-t border-border pt-5">
+          <figure className="flex items-start gap-4 border-t border-border pt-5">
+            <a href="#proof" className="group relative block w-16 shrink-0 overflow-hidden rounded-sm border border-border" aria-label="לסרטון של גיא, 37 שניות">
+              <img src={guyPoster} alt="" width={64} height={115} decoding="async" className="h-[115px] w-16 object-cover" />
+              <span className="absolute inset-x-0 bottom-0 bg-foreground/70 py-0.5 text-center text-[11px] font-bold text-background">0:37</span>
+            </a>
+            <div>
             <blockquote className="text-lg font-medium leading-snug text-foreground">
               ״{videoTestimonial.pullQuote}״
             </blockquote>
@@ -147,6 +153,7 @@ const Hero = () => {
                 <span className="sr-only"> (נפתח בלינקדאין)</span>
               </a>
             </figcaption>
+            </div>
           </figure>
 
           {/* Byline: who is behind the page, signed the way an author signs. */}

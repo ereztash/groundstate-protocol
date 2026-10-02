@@ -28,7 +28,7 @@ describe("Hero accessibility", () => {
 
   it("portrait image has a meaningful, non-empty alt", () => {
     const { container } = renderHero();
-    const img = container.querySelector("img");
+    const img = container.querySelector('img[src*="portrait"]');
     expect(img).not.toBeNull();
     const alt = img!.getAttribute("alt") ?? "";
     expect(alt.trim().length).toBeGreaterThan(10);
