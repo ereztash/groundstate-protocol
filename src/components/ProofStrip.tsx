@@ -9,7 +9,7 @@ const ProofStrip = ({ className }: { className?: string }) => {
   return (
     <div dir="rtl" className={className}>
       <p className="cor-overline-he">עבדו איתי</p>
-      <ul className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-3">
+      <ul className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
         {approvedClients.map((c) => (
           <li key={c.name} className="border-t border-border pt-3">
             <a

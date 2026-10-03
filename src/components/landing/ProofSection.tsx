@@ -5,7 +5,7 @@ import FullQuote from "./FullQuote";
 import SectionHead from "./SectionHead";
 
 /**
- * Three people who worked with Erez, in their own words.
+ * Four people who worked with Erez, in their own words.
  *
  * Every sentence comes from src/lib/clients.ts and is rendered verbatim; the
  * long one opens on its verbatim pull quote and expands to the full text, as
@@ -73,14 +73,14 @@ const ProofSection = () => (
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <SectionHead label="המלצות" />
       <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        מה אמרו שלושה אנשים שעבדו איתי.
+        מה אמרו ארבעה אנשים שעבדו איתי.
       </h2>
 
       <div className="mt-12 grid gap-6 lg:gap-8">
         <div className="ld-plain ld-edge p-6 sm:p-8 lg:px-12">
           <VideoTestimonial />
         </div>
-        <div className="grid items-start gap-6 md:grid-cols-2 lg:gap-8">
+        <div className="grid items-start gap-6 lg:grid-cols-3 lg:gap-8">
           {testimonials.map((t) => (
             <QuoteCard key={t.attribution} t={t} />
           ))}
