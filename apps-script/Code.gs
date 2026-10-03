@@ -47,6 +47,17 @@ const CONFIG_SHEET = "Config";
 // Email to notify on every new lead. Set to "" to disable notifications.
 const NOTIFY_EMAIL = "Erez2812345@gmail.com";
 
+// The confirmation the lead gets right after submitting (Erez's decision of
+// 3.10.2026: a site lead is answered the same business day). Fixed text, the
+// same for everyone apart from the first name: no AI and nothing from what the
+// lead wrote. Set to false to stop it without touching anything else.
+const SEND_LEAD_CONFIRMATION = true;
+const CALENDLY_URL = "https://calendly.com/erez2812345/new-meeting";
+
+// The endpoint is public, so anyone could type someone else's address into the
+// form. The cap keeps that from turning this script into a mail cannon.
+const MAX_CONFIRMATIONS_PER_DAY = 20;
+
 // Cap on notification emails per day. The form endpoint is public, so a flood
 // of submissions must not exhaust the daily MailApp quota and silence real
 // alerts. Leads are still written to the sheet regardless of this cap.
@@ -272,9 +283,85 @@ function notify(row) {
       "  תשובות: " + cell(row.wizardAnswers) + "\n" +
       "  במילותיו: " + cell(row.wizardOpenText) + "\n\n" +
       "נשלח: " + cell(row.submittedAt);
-    MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
+    // Reply-To is the lead, so "Reply" on this alert answers them and Erez's
+    // watcher (gate G-LC-3) can see the answer. The subject must stay as it is:
+    // the watcher matches "ליד חדש" and "COR-SYS" in it.
+    var options = isEmail(row.email) ? { replyTo: String(row.email).trim() } : {};
+    MailApp.sendEmail(NOTIFY_EMAIL, subject, body, options);
   } catch (err) {
     console.error("notify failed: " + err);
+  }
+}
+
+function isEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/**
+ * The promise, in words. Same rule as src/lib/replyPromise.ts on the site's
+ * thank-you screen; change both together. Sunday to Thursday before 17:00
+ * Israel time: the same day. Otherwise: the next business day. Holidays are
+ * not known here.
+ */
+function replyWhen(now) {
+  var tz = "Asia/Jerusalem";
+  var day = Number(Utilities.formatDate(now, tz, "u")); // 1 = Monday ... 7 = Sunday
+  var hour = Number(Utilities.formatDate(now, tz, "H"));
+  var businessDay = day === 7 || day <= 4;
+  return businessDay && hour < 17 ? "עד סוף יום העבודה" : "ביום העבודה הבא";
+}
+
+/** One fixed confirmation to the lead. Never lets a mail failure block the write. */
+function confirmToLead(row) {
+  if (!SEND_LEAD_CONFIRMATION || !isEmail(row.email)) return;
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var dayKey = "confirmCount_" + Utilities.formatDate(
+      new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd");
+    var sentToday = Number(props.getProperty(dayKey) || "0");
+    if (sentToday >= MAX_CONFIRMATIONS_PER_DAY) return;
+    props.setProperty(dayKey, String(sentToday + 1));
+
+    var first = String(row.fullName || "").trim().split(/\s+/)[0].slice(0, 40);
+    var hello = first ? "היי " + first + "," : "היי,";
+    var promise = "אחזור " + replyWhen(new Date()) + ".";
+    var text = [
+      hello,
+      "",
+      "תודה, הפנייה הגיעה אליי.",
+      promise,
+      "",
+      "אם נוח לקבוע כבר עכשיו, אפשר לבחור מועד לשיחת התאמה כאן:",
+      CALENDLY_URL,
+      "",
+      "ארז טל-שיר.",
+    ].join("\n");
+    var html =
+      '<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#1c1c2e">' +
+      "<p>" + escapeHtml(hello) + "</p>" +
+      "<p>תודה, הפנייה הגיעה אליי.<br>" + promise + "</p>" +
+      "<p>אם נוח לקבוע כבר עכשיו, אפשר לבחור מועד לשיחת התאמה כאן:<br>" +
+      '<a href="' + CALENDLY_URL + '">' + CALENDLY_URL + "</a></p>" +
+      '<p>ארז טל-שיר<span style="color:#b87332">.</span></p>' +
+      "</div>";
+    MailApp.sendEmail({
+      to: String(row.email).trim(),
+      subject: "הפנייה התקבלה",
+      body: text,
+      htmlBody: html,
+      name: "ארז טל-שיר",
+      replyTo: NOTIFY_EMAIL,
+    });
+  } catch (err) {
+    console.error("confirmToLead failed: " + err);
   }
 }
 
@@ -327,6 +414,7 @@ function doPost(e) {
     sheet.appendRow(HEADERS.map(function (key) { return cell(row[key]); }));
 
     notify(row);
+    confirmToLead(row);
 
     return jsonOut({ success: true });
   } catch (err) {

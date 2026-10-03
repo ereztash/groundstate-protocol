@@ -46,7 +46,7 @@ const Privacy = () => {
 
         <h1 className="cor-title mt-6 text-foreground">מדיניות פרטיות</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          עודכן לאחרונה: ספטמבר 2026
+          עודכן לאחרונה: אוקטובר 2026
         </p>
 
         <div className="mt-10 space-y-9 text-base leading-relaxed text-foreground">
@@ -115,8 +115,9 @@ const Privacy = () => {
             </h2>
             <p>
               פרטי הטופס נשלחים דרך Google Apps Script, נשמרים בגיליון Google
-              Sheets פרטי שבשליטתי, ומגיעים אליי גם כהתראה במייל. תיאום הפגישה
-              נעשה ב-Calendly.
+              Sheets פרטי שבשליטתי, ומגיעים אליי גם כהתראה במייל. אם השארתם
+              כתובת מייל, תקבלו אליה אישור קבלה אחד, אוטומטי, עם המועד שבו אחזור
+              אליכם וקישור לקביעת שיחה. תיאום הפגישה נעשה ב-Calendly.
             </p>
             <ul className="list-none space-y-1.5">
               <li>
