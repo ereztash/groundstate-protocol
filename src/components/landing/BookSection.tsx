@@ -173,6 +173,7 @@ const BookSection = () => {
                 <span className="sr-only"> (נפתח בוואטסאפ)</span>
               </a>
               <CopyNumber value={WHATSAPP_DISPLAY} />
+              <span className="w-full">אני זמין בימים א׳ עד ה׳, בין 9:00 ל-19:00.</span>
             </p>
 
             <div key={mode} className={switched ? "ld-in" : undefined}>

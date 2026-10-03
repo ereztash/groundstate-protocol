@@ -49,6 +49,15 @@ export const testimonials: Testimonial[] = [
     linkedin: "https://www.linkedin.com/in/samuel-di-porto-83151a369/",
     photo: `${import.meta.env.BASE_URL}clients/samuel-di-porto.webp`,
   },
+  {
+    // What May wrote to Erez after their work (May to June 2026), as quoted
+    // in his post of 26.6 with her permission. She approved it for the site on
+    // 3.10.2026: full name and LinkedIn link, no photo.
+    quote:
+      "פעלתי בשני מישורים במקביל והיה לי קשה לחבר ביניהם ולהסביר בצורה ברורה מה אני באמת מציעה. עזרת לי למצוא את החוט המקשר בין כל מה שאני עושה, לחדד את האסטרטגיה להמשך, ובעיקר להבין איך לתאר את הערך שאני מביאה במדויק. דחפת אותי להעז לתמחר את עצמי לפי מה שאני באמת מאמינה שאני שווה. ויותר מהכול, עזרת לי לחזק את האמון שלי בעצמי.",
+    attribution: "מאי מור",
+    linkedin: "https://www.linkedin.com/in/may-mor-06721820/",
+  },
 ];
 
 /**
@@ -84,7 +93,7 @@ export type ClientCredit = {
 
 /**
  * Compact attributions for proof strips on any page. Order = video first
- * (גיא כהן), then the two text testimonials — matching the landing.
+ * (גיא כהן), then the text testimonials — matching the landing.
  */
 export const approvedClients: ClientCredit[] = [
   {
@@ -100,5 +109,9 @@ export const approvedClients: ClientCredit[] = [
   {
     name: "סמואל די פורטו",
     linkedin: "https://www.linkedin.com/in/samuel-di-porto-83151a369/",
+  },
+  {
+    name: "מאי מור",
+    linkedin: "https://www.linkedin.com/in/may-mor-06721820/",
   },
 ];

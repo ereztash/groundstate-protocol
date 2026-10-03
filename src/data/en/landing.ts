@@ -136,7 +136,7 @@ export const day31 = {
 
 export const proof = {
   label: "Testimonials",
-  title: "What three people who worked with me said.",
+  title: "What four people who worked with me said.",
   translated: "Translated from Hebrew.",
   more: "Read the full testimonial",
   less: "Close",
@@ -161,6 +161,10 @@ export const testimonialsEn: Record<string, { name: string; quote: string; pullQ
     name: "Samuel Di Porto",
     pullQuote: "I warmly recommend him to anyone who wants results and not just promises",
     quote: "I came to Erez after a long and especially exhausting period of searching, and he simply changed my perspective. Instead of “shooting in every direction” with hundreds of CVs, he helped me focus on what I'm really strong at and turn it into a working tool in the field. Erez goes into the smallest details, and his method is built on his very impressive practical and academic experience. He knew how to identify exactly where my strengths were and where I needed to improve, and gave me confidence in the way I present myself. He helped me “target” the jobs I was aiming for, and in particular the people I needed to connect with to reach them. But what really warmed my heart, beyond the professionalism: he is first of all a person who talks to you at eye level, a kind man who tries to help in every way he can, who supports reservists and moves us forward on our very complicated way back home, and who never looks at the clock when he talks to you. I warmly recommend him to anyone who wants results and not just promises, and above all to anyone who wants to talk to a human being and not to a wallet waiting for your money.",
+  },
+  "מאי מור": {
+    name: "May Mor",
+    quote: "I was working on two fronts at once, and it was hard for me to connect them and to explain clearly what I really offer. You helped me find the thread that connects everything I do, sharpen the strategy going forward, and above all understand how to describe the value I bring precisely. You pushed me to dare to price myself by what I truly believe I'm worth. And more than anything, you helped me strengthen my confidence in myself.",
   },
 };
 

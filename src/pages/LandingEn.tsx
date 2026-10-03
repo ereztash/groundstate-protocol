@@ -327,7 +327,7 @@ function Proof() {
         <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">{proof.title}</h2>
         <p className="mt-3 text-sm text-muted-foreground">{proof.translated}</p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {cards.map((c) => {
             const t = testimonialsEn[c.he];
             return (
