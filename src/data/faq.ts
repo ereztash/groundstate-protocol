@@ -81,6 +81,12 @@ export const faq: readonly QA[] = [
     a: "ארבע פגישות בארבעה שבועות. בין הפגישות יש משימות קצרות. אם השבוע הזה עמוס מדי, נדחה את הפגישה לשבוע הבא. לוח הזמנים גמיש, רק הסדר חשוב.",
   },
   {
+    // Erez's answer, 3.10.2026. The page said "אנחנו בונים" and "משימה קצרה"
+    // and never who holds the pen; an outside audit read that as unstated.
+    q: "מי כותב את המסמכים?",
+    a: "אחרי כל פגישה אני כותב את המסמך, מהמילים שאמרתם בה. אתם מתקנים ומאשרים. את הפניות אתם שולחים בעצמכם.",
+  },
+  {
     q: "מה כולל שלב 4 בפועל?",
     // "שליחה של הפנייה הראשונה בתוך הפגישה" was removed here for the same
     // reason it was removed from the stage-4 exit criterion: the graph marks
@@ -94,6 +100,12 @@ export const faq: readonly QA[] = [
     // The closing "המחיר הוא ₪1,900" went with the per-stage prices on
     // 2026-09-29. The price has its own question below.
     a: "מיפוי של חמישה מקבלי החלטות ספציפיים בשוק שלכם, ניסוח פנייה נפרד לכל אחד מהם, ועל הפנייה הראשונה אנחנו עוברים ביחד בפגישה. את התגובות רושמים ביומן, כדי לראות מה חוזר בהן.",
+  },
+  {
+    // Erez's answer, 3.10.2026. Day31Section describes the end of the month,
+    // not what comes after it.
+    q: "מה קורה כשהחודש נגמר?",
+    a: "התוכנית נגמרת במפגש 4, והמסמכים נשארים אצלכם. אם צריך המשך, אני שולח הצעה נפרדת, עם תוצר ומחיר משלה.",
   },
   {
     q: "כמה עולה התוכנית?",
