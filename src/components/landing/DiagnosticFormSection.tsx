@@ -24,6 +24,7 @@ import {
   submitForm,
   type DiagnosticPayload,
 } from "@/lib/web3forms";
+import { replyWhen } from "@/lib/replyPromise";
 import { trackEvent, trackFormStart, trackFormSubmit } from "@/lib/analytics";
 import { formatWizardAnswers, loadWizardState } from "@/lib/wizardState";
 import { captureJourney } from "@/lib/journeyCapture";
@@ -576,6 +577,9 @@ const DiagnosticFormSection = ({ embedded = false }: { embedded?: boolean }) => 
             >
               תודה. בואו נקבע את הפגישה.
             </h2>
+            <p className="text-foreground">
+              אחזור אליכם {replyWhen()}. אם נוח לכם, אפשר לקבוע כבר עכשיו:
+            </p>
             <Suspense fallback={<div className="h-[720px]" aria-hidden="true" />}>
               <BookingSection visible />
             </Suspense>
