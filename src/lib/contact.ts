@@ -27,10 +27,11 @@ export function whatsappUrl(lang: Lang = "he"): string {
 export const LINKEDIN_URL = "https://www.linkedin.com/in/erez-tal-shir/";
 
 /**
- * 7,538 followers on 2026-10-01, as Erez reported it. Stated as a floor so the
- * line stays true while the number grows and nobody has to remember to edit it.
+ * "יותר מ-8,500" on 2026-11-17, as Erez reported it (was 7,538 on 2026-10-01).
+ * Stated as a floor so the line stays true while the number grows and nobody
+ * has to remember to edit it.
  */
 export const LINKEDIN_FOLLOWERS: Record<Lang, string> = {
-  he: "מעל 7,500 עוקבים בלינקדאין",
-  en: "7,500+ followers on LinkedIn",
+  he: "מעל 8,500 עוקבים בלינקדאין",
+  en: "8,500+ followers on LinkedIn",
 };
