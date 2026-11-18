@@ -73,7 +73,7 @@ const ProofSection = () => (
     <div className="mx-auto max-w-6xl px-5 sm:px-6">
       <SectionHead label="המלצות" />
       <h2 id="proof-title" className="cor-title mt-4 max-w-2xl text-foreground">
-        מה אמרו ארבעה אנשים שעבדו איתי.
+        מה אמרו שבעה אנשים שעבדו איתי.
       </h2>
 
       <div className="mt-12 grid gap-6 lg:gap-8">
