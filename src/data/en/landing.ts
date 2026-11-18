@@ -136,7 +136,7 @@ export const day31 = {
 
 export const proof = {
   label: "Testimonials",
-  title: "What four people who worked with me said.",
+  title: "What seven people who worked with me said.",
   translated: "Translated from Hebrew.",
   more: "Read the full testimonial",
   less: "Close",
@@ -165,6 +165,24 @@ export const testimonialsEn: Record<string, { name: string; quote: string; pullQ
   "מאי מור": {
     name: "May Mor",
     quote: "I was working on two fronts at once, and it was hard for me to connect them and to explain clearly what I really offer. You helped me find the thread that connects everything I do, sharpen the strategy going forward, and above all understand how to describe the value I bring precisely. You pushed me to dare to price myself by what I truly believe I'm worth. And more than anything, you helped me strengthen my confidence in myself.",
+  },
+  "חרות דרור": {
+    name: "Cherut Dror",
+    pullQuote: "He knows how to take a whole world of abilities, ideas, and insights and distill it into one clear, focused, precise service that can be explained and communicated outward in simple words.",
+    quote: "I went through a business mentoring process with Erez, aiming to sharpen the service I offer and reach more clients. The mentoring was meaningful for me, precise, and different from anything I had known until then. One of the most impressive things about working with Erez is his ability to listen deeply, to pick up what lies between the lines, and to reflect it back in a way that helps put order into insights, thoughts, and personal and professional experiences. Through conversations about past events, Erez helped me identify and distill the unique value I bring professionally to my clients: what sets me apart from others who offer a similar service. He knows how to take a whole world of abilities, ideas, and insights and distill it into one clear, focused, precise service that can be explained and communicated outward in simple words. He helps you focus on what really makes you unique, instead of spreading yourself across countless services and abilities. Another thing that mattered to me especially is that Erez didn't try to produce a marketing message for me that sounds good on paper. He made sure the message was truly mine, in my own words, one I can stand behind and feel whole with. Beyond the professionalism, communicating and working with him is very pleasant. He is attentive and flexible, he adapts the process to the person in front of him, and the mentoring is run with full transparency. I warmly recommend Erez's mentoring, especially to anyone who feels they have a lot of expertise to offer but can't manage to turn it into sales.",
+    outcome: "CRM and AI consultant (Microsoft Dynamics 365)",
+  },
+  "שחר פיק": {
+    name: "Shachar Pick",
+    pullQuote: "What impressed us most was his ability to identify the stories and strengths we already had, and to help us bring them out in a clear and practical way, without trying to dress us in messages that don't fit us.",
+    quote: "We worked with Erez on sharpening our differentiation and marketing, and from the very first moment it was clear he doesn't work by a fixed template. He knew how to understand who was sitting across from him, read the dynamic between us, and adapt the way he works and communicates so it would be right for us. More than once he changed his original plan mid-process, just so the work would be more precise for us and not the other way around. What impressed us most was his ability to identify the stories and strengths we already had, and to help us bring them out in a clear and practical way, without trying to dress us in messages that don't fit us. Beyond the professionalism, we felt there was a person in front of us who really listens, is flexible when needed, and is committed to making the process fit the client rather than making the client fit the process. We warmly recommend him to anyone looking to sharpen their business message in an authentic and precise way.",
+    outcome: "COO and Co-Founder at Pick.AI",
+  },
+  "אינה קוגן": {
+    name: "Inna Kogan",
+    pullQuote: "I warmly recommend him to anyone looking for business advice built on listening, precision, and a broad view.",
+    quote: "I had an excellent conversation with Erez about various business issues. It was a focused, broad, and precise conversation, in which he knew how to ask the right questions, truly listen, and respond in a sharp and pleasant way. What stood out to me was his ability to look at issues from several angles, connect different fields of knowledge, and distill what matters within the complexity. Erez brings orderly business thinking, genuine curiosity, and a very pleasant way of communicating. I warmly recommend him to anyone looking for business advice built on listening, precision, and a broad view.",
+    outcome: "Owner, Studio Bika",
   },
 };
 
