@@ -104,3 +104,42 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  indexnow:
+    # After each deploy, tell the IndexNow engines (Bing, and through it the
+    # search in ChatGPT and Copilot; also Yandex, Seznam, Naver) which URLs
+    # the site has, so a changed page is crawled in days instead of weeks.
+    # Google does not take IndexNow; it reads the sitemap through Search
+    # Console. The key file sits in public/, so its location covers every URL
+    # under /groundstate-protocol/. A failed ping never fails the deploy.
+    name: Ping IndexNow
+    needs: deploy
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    env:
+      SITE: https://ereztash.github.io/groundstate-protocol
+      KEY: 14e641f987b6e7a3d5eeca29eb06f6b0
+    steps:
+      - name: Wait for the key file to be live
+        run: |
+          for i in $(seq 1 20); do
+            if [ "$(curl -fsS "$SITE/$KEY.txt" || true)" = "$KEY" ]; then echo "key live"; exit 0; fi
+            sleep 15
+          done
+          echo "key file not live after 5 minutes"; exit 1
+
+      - name: Submit the sitemap URLs
+        run: |
+          urls=$(curl -fsS "$SITE/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//')
+          [ -n "$urls" ] || { echo "no URLs in the sitemap"; exit 1; }
+          list=$(printf '%s\n' $urls | jq -R . | jq -s .)
+          body=$(jq -n --arg host "ereztash.github.io" --arg key "$KEY" \
+            --arg loc "$SITE/$KEY.txt" --argjson urls "$list" \
+            '{host: $host, key: $key, keyLocation: $loc, urlList: $urls}')
+          code=$(curl -sS -o /tmp/indexnow.txt -w '%{http_code}' -X POST \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data "$body" https://api.indexnow.org/indexnow)
+          echo "IndexNow answered $code for $(printf '%s\n' $urls | wc -l) URLs"
+          cat /tmp/indexnow.txt || true
+          # 200 = received, 202 = received while the key is checked
+          [ "$code" = "200" ] || [ "$code" = "202" ]
