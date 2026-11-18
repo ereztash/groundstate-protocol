@@ -18,7 +18,7 @@ jobs:
     # been sitting on main unseen. Its own job rather than a step in Lint, so a
     # lint failure does not hide the type result.
     name: Types (tsc)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -29,7 +29,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -40,7 +40,7 @@ jobs:
 
   unit:
     name: Unit tests (Vitest)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
@@ -54,7 +54,7 @@ jobs:
     # that catches the kind of runtime crash a green `bun run build` can
     # still hide (see commit 75dc540 — manualChunks forwardRef bug).
     name: E2E smoke (Playwright)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
