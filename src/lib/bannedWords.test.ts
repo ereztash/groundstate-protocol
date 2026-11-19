@@ -29,7 +29,7 @@ const QUOTE_FILES = ["src/lib/clients.ts"];
 const rel = (f: string) => relative(ROOT, f).split(sep).join("/");
 
 const BANNED: { word: string; pattern: RegExp }[] = [
-  { word: "גמגם / גמגום", pattern: /גמגמ|גמגום|לגמגם/ },
+  { word: "גמגם / גמגום", pattern: /ג[יו]?מג[ו]?[מם]/ },
   { word: "מדהים", pattern: /(?<![א-ת])מדהימ?(ה|ים|ות)?(?![א-ת])/ },
   { word: "מהפכני", pattern: /מהפכני/ },
   { word: "משנה חיים", pattern: /משנה[\s-]+חיים/ },
