@@ -4,6 +4,8 @@ import { outreachCount, program } from "@/data/sprint-stages";
 import { videoTestimonial } from "@/lib/clients";
 import { LINKEDIN_FOLLOWERS, LINKEDIN_URL, whatsappUrl } from "@/lib/contact";
 import { LinkedInIcon } from "@/components/brand/SocialIcons";
+import Price from "@/components/Price";
+import { isPromo90Live, promo90 } from "@/data/promo90";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
@@ -59,6 +61,21 @@ const Hero = () => {
     >
       <div className="mx-auto grid max-w-6xl items-start gap-10 px-5 sm:px-6 md:grid-cols-[1.15fr_0.85fr] md:gap-14">
         <div>
+          {/* The Black Friday offer (2026-11-22), for the visitor the ad sent
+              here: it has to be on the first screen, in the ad's words. Gone
+              after 30.11 by itself, see src/data/promo90.ts. */}
+          {isPromo90Live() && (
+            <a
+              href="#offer-90"
+              onClick={() => trackCtaClick("hero_offer90")}
+              className="mb-6 block border-s-4 border-primary bg-primary/5 px-4 py-3 text-sm leading-snug text-foreground sm:text-base"
+            >
+              <span className="font-bold">{promo90.occasion}:</span>{" "}
+              {promo90.name}, <Price>{promo90.priceLabel}</Price>{" "}
+              {promo90.priceNote}.{" "}
+              <span className="ld-link font-semibold">לפרטים</span>
+            </a>
+          )}
           <p className="cor-overline-he !text-base">ליווי עסקי לעצמאים, 30 יום</p>
 
           <h1 id="hero-title" className="cor-display mt-5 text-foreground">

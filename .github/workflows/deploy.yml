@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # The Black Friday 90-day offer ends with 30.11.2026 at midnight, Israel
+  # time (src/data/promo90.ts). Visitors lose it on load at midnight; this
+  # rebuild, ten minutes later, drops it from the prerendered HTML that
+  # crawlers and no-JS readers get. Remove together with promo90.
+  schedule:
+    - cron: "10 22 30 11 *"
 
 permissions:
   contents: read
