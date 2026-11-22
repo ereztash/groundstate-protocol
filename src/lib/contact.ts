@@ -20,8 +20,15 @@ const WHATSAPP_OPENER: Record<Lang, string> = {
   en: "Hi Erez, I found your site and would like to hear about a fit call.",
 };
 
-export function whatsappUrl(lang: Lang = "he"): string {
-  return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(WHATSAPP_OPENER[lang])}`;
+/**
+ * The opener for the 90-day offer (2026-11-22). It keeps "הגעתי מהאתר", which
+ * is how a chat that started on the site is found in Erez's WhatsApp.
+ */
+const WHATSAPP_OPENER_90 = "היי ארז, הגעתי מהאתר ואשמח לשמוע על הליווי ל-90 יום.";
+
+export function whatsappUrl(lang: Lang = "he", topic?: "offer90"): string {
+  const text = topic === "offer90" && lang === "he" ? WHATSAPP_OPENER_90 : WHATSAPP_OPENER[lang];
+  return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(text)}`;
 }
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/erez-tal-shir/";

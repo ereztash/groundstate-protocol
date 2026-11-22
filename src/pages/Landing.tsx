@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/landing/Hero";
 import WhatYouTriedSection from "@/components/landing/WhatYouTriedSection";
 import OfferSection from "@/components/landing/OfferSection";
+import Promo90Section from "@/components/landing/Promo90Section";
 import Day31Section from "@/components/landing/Day31Section";
 import ProofSection from "@/components/landing/ProofSection";
 import FitSection from "@/components/landing/FitSection";
@@ -110,6 +111,7 @@ const Landing = () => {
           <Hero />
           <WhatYouTriedSection />
           <OfferSection />
+          <Promo90Section />
           <Day31Section />
           <ProofSection />
           <FitSection />
