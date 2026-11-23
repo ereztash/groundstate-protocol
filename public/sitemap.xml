@@ -46,6 +46,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://ereztash.github.io/groundstate-protocol/insights/how-to-price-a-service/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://ereztash.github.io/groundstate-protocol/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
