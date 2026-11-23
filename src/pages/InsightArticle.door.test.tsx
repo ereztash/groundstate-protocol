@@ -32,7 +32,7 @@ describe("door pages, rendered", () => {
     expect(container.textContent).not.toMatch(PAY);
     expect(getByRole("link", { name: /לכתוב בוואטסאפ/ }).getAttribute("href")).toContain("wa.me");
     // criterion 12: the answer is the result Erez promises, not only a method
-    expect(container.textContent).toContain("בליווי של 30 יום בונים יחד את המשפט, את המחיר ואת הפנייה הראשונה");
+    expect(container.textContent).toContain("בליווי של 30 יום אנחנו בונים יחד את המשפט, את המחיר ואת הפנייה הראשונה");
   });
 
   it("an ordinary article keeps the call box", () => {
