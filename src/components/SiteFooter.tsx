@@ -58,7 +58,12 @@ const T = {
   },
 } as const;
 
-const SiteFooter = ({ lang = "he" }: { lang?: Lang }) => {
+/**
+ * `callLine={false}` drops the free-call line above the footer. A door page
+ * (2026-11-23) closes on one small step and carries no word on payment, since
+ * the fear of paying for help is its own barrier in the map of the sprint buyer.
+ */
+const SiteFooter = ({ lang = "he", callLine = true }: { lang?: Lang; callLine?: boolean }) => {
   const t = T[lang];
   return (
     <footer
@@ -66,7 +71,7 @@ const SiteFooter = ({ lang = "he" }: { lang?: Lang }) => {
       className="border-t border-[#3A3A52] bg-[#1C1C2E] text-[#F5F2ED]"
     >
       <div className="mx-auto max-w-6xl px-6 py-12">
-        {lang === "he" && (
+        {lang === "he" && callLine && (
           <p className="mb-10 border-b border-[#3A3A52] pb-8 text-lg leading-relaxed">
             שיחת התאמה, 30 דקות, ללא עלות.{" "}
             <a href="/#book" className="whitespace-nowrap font-bold underline decoration-[#F5F2ED]/40 underline-offset-4 hover:decoration-[#F5F2ED]">
