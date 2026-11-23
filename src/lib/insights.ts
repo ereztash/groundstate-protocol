@@ -15,6 +15,12 @@ export type Insight = {
   date: string;
   /** Raw markdown body (frontmatter stripped). */
   body: string;
+  /**
+   * The page's closing step. Unset: the site's call box. "sentence": a door
+   * page (2026-11-23), which opens on the reader's problem and closes on one
+   * small step, sending today's sentence on WhatsApp, with no word on price.
+   */
+  step?: "sentence";
 };
 
 const raws = import.meta.glob("../../content/insights/*.md", {
@@ -60,6 +66,7 @@ export const insights: Insight[] = Object.entries(raws)
       subtitle: data.subtitle,
       date: data.date || "",
       body,
+      step: data.step === "sentence" ? ("sentence" as const) : undefined,
     };
   })
   // Newest first. An article with no date is treated as most-recent (it was

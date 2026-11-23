@@ -14,6 +14,13 @@ describe("contact", () => {
     expect(new URL(whatsappUrl("en")).searchParams.get("text")).toContain("fit call");
   });
 
+  it("opens a door page's chat ready for the reader's sentence, still found by its first words", () => {
+    const text = new URL(whatsappUrl("he", "sentence")).searchParams.get("text")!;
+    expect(text.startsWith("היי ארז, הגעתי מהאתר")).toBe(true);
+    expect(text).toContain("המשפט שלי");
+    expect(new URL(whatsappUrl("en", "sentence")).searchParams.get("text")).toContain("fit call");
+  });
+
   it("links the public LinkedIn profile", () => {
     expect(LINKEDIN_URL).toBe("https://www.linkedin.com/in/erez-tal-shir/");
   });

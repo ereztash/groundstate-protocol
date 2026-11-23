@@ -6,6 +6,9 @@ import SiteFooter from "@/components/SiteFooter";
 import ProofStrip from "@/components/ProofStrip";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { getInsight, insights, formatDate } from "@/lib/insights";
+import { whatsappUrl } from "@/lib/contact";
+import { trackCtaClick } from "@/lib/analytics";
+import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 
 const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
 
@@ -113,6 +116,32 @@ const InsightArticle = () => {
           />
         </Reveal>
 
+        {/* A door page (2026-11-23) closes on its one small step, right after
+            the text, while the reader still recognises themselves in it. The
+            call box below is not shown there: the map of the sprint buyer found
+            the brake sits before the first message, and the fear of paying for
+            help is its own barrier, so the step is a sentence, not a call. */}
+        {article.step === "sentence" && (
+          <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
+            <p className="cor-heading text-foreground">
+              כתבו לי את המשפט שלכם, כמו שהוא היום
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-foreground">
+              אחזיר לכם מה אני שומע בו, ומה חסר כדי שלקוח יגיד "זה בשבילי".
+            </p>
+            <a
+              href={whatsappUrl("he", "sentence")}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCtaClick(`whatsapp_door_${article.slug}`)}
+              className="cta-warm-lg mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md px-6 text-sm"
+            >
+              <WhatsAppIcon className="h-5 w-5 shrink-0" />
+              לכתוב בוואטסאפ
+            </a>
+          </Reveal>
+        )}
+
         {/* Keep readers who aren't conversion-ready inside the library: up to
             two other articles (newest first) before the CTA dead-ends them. */}
         {insights.filter((i) => i.slug !== article.slug).length > 0 && (
@@ -143,6 +172,7 @@ const InsightArticle = () => {
         )}
 
         {/* Single CTA — the whole site funnels to the fit call. */}
+        {article.step !== "sentence" && (
         <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
           <p className="cor-heading text-foreground">
             רוצים לבדוק מאיפה נכון להתחיל?
@@ -162,6 +192,7 @@ const InsightArticle = () => {
             לתיאום שיחת התאמה, 30 דקות, ללא תשלום
           </Link>
         </Reveal>
+        )}
 
         <ProofStrip className="mt-14" />
       </main>
