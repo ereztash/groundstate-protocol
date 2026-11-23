@@ -123,7 +123,11 @@ const InsightArticle = () => {
             help is its own barrier, so the step is a sentence, not a call. */}
         {article.step === "sentence" && (
           <Reveal className="mt-14 rounded-xl border border-accent/25 bg-card/60 p-6 text-center md:p-8">
-            <p className="cor-heading text-foreground">
+            {/* The answer is the result Erez promises (criterion 12), said once and with no price. */}
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              בליווי של 30 יום בונים יחד את המשפט, את המחיר ואת הפנייה הראשונה.
+            </p>
+            <p className="cor-heading mt-3 text-foreground">
               כתבו לי את המשפט שלכם, כמו שהוא היום
             </p>
             <p className="mt-3 text-sm leading-relaxed text-foreground">
