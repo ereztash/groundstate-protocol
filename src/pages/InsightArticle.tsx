@@ -197,7 +197,7 @@ const InsightArticle = () => {
         <ProofStrip className="mt-14" />
       </main>
 
-      <SiteFooter />
+      <SiteFooter callLine={article.step !== "sentence"} />
     </div>
   );
 };
