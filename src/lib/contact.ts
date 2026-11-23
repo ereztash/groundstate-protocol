@@ -26,8 +26,22 @@ const WHATSAPP_OPENER: Record<Lang, string> = {
  */
 const WHATSAPP_OPENER_90 = "היי ארז, הגעתי מהאתר ואשמח לשמוע על הליווי ל-90 יום.";
 
-export function whatsappUrl(lang: Lang = "he", topic?: "offer90"): string {
-  const text = topic === "offer90" && lang === "he" ? WHATSAPP_OPENER_90 : WHATSAPP_OPENER[lang];
+/**
+ * The opener for a door page (2026-11-23). The page's one small step is to send
+ * the sentence you use today, so the chat opens ready for it, after the words
+ * "הגעתי מהאתר" that find the chat in Erez's WhatsApp.
+ */
+const WHATSAPP_OPENER_SENTENCE = "היי ארז, הגעתי מהאתר. זה המשפט שלי היום: ";
+
+export function whatsappUrl(lang: Lang = "he", topic?: "offer90" | "sentence"): string {
+  const text =
+    lang !== "he"
+      ? WHATSAPP_OPENER[lang]
+      : topic === "offer90"
+        ? WHATSAPP_OPENER_90
+        : topic === "sentence"
+          ? WHATSAPP_OPENER_SENTENCE
+          : WHATSAPP_OPENER.he;
   return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(text)}`;
 }
 
