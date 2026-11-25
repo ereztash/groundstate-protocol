@@ -363,6 +363,96 @@
   }
 }
 
+/* ── The transcript sheet: two moments out of the sessions ─────────────── */
+
+/* The moments and the section under them are one thought, so the gap between
+   them is the next section's own top padding and no more. */
+.bd-talk-band {
+  padding-bottom: 0;
+}
+.bd-talk {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bd-moment + .bd-moment {
+  border-top: 1px solid hsl(var(--foreground) / 0.12);
+}
+/* One turn: who spoke in the margin, what was said beside it. */
+.bd-turn {
+  --line: 1.75rem;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  margin: 0;
+}
+.bd-turn__who {
+  padding-block: 0.5rem;
+  border-inline-end: 1.5px solid hsl(var(--primary) / 0.4);
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: var(--line);
+  color: hsl(var(--primary));
+}
+.bd-turn__what {
+  padding: 0.5rem 1rem;
+  font-size: 1.0625rem;
+  line-height: var(--line);
+  color: hsl(var(--foreground));
+}
+.bd-moment > .bd-turn:first-child > * {
+  padding-top: 1.5rem;
+}
+.bd-moment > .bd-turn:last-child > * {
+  padding-bottom: 1.5rem;
+}
+/* The client's line is the one the page is showing, so it is set larger. */
+.bd-turn[data-who="client"] {
+  --line: 2rem;
+}
+.bd-turn[data-who="client"] .bd-turn__what {
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.25vw, 1.5rem);
+}
+/* Lines of the transcript that were passed over. */
+.bd-turn[data-who="gap"] {
+  --line: 1.25rem;
+}
+.bd-turn[data-who="gap"] .bd-turn__who {
+  border-inline-end-style: dashed;
+}
+.bd-turn[data-who="gap"] .bd-turn__what {
+  font-size: 0.8125rem;
+  color: hsl(var(--muted-foreground));
+}
+/* A name struck out with a marker, the way a real transcript is redacted. */
+.bd-redact {
+  display: inline-block;
+  width: 1.75rem;
+  height: 0.6875rem;
+  border-radius: 1px;
+  background: hsl(var(--foreground));
+  vertical-align: middle;
+}
+@media (forced-colors: active) {
+  .bd-redact {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}
+@media (min-width: 640px) {
+  .bd-turn {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+  }
+  .bd-turn__what {
+    padding-inline: 1.5rem 1.75rem;
+  }
+  .bd-redact {
+    width: 2.5rem;
+  }
+}
+
 /* ── Print: the sheet alone, on the paper in the printer ───────────────── */
 
 @media print {

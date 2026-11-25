@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
 import Bidul from "./Bidul";
+import { sessionMoments } from "@/lib/clients";
 
 const renderPage = () =>
   render(
@@ -58,6 +59,17 @@ describe("Bidul, the five-question sheet", () => {
     expect(container.textContent).not.toMatch(PAY);
     fillAll();
     expect(container.textContent).not.toMatch(PAY);
+  });
+
+  it("shows the session moments word for word, with no name and no link", () => {
+    renderPage();
+    const heading = screen.getByRole("heading", { level: 2, name: "כך זה נשמע בתוך השיחה." });
+    const section = heading.closest("section")!;
+    for (const turn of sessionMoments.flat()) {
+      expect(section.textContent).toContain(turn.text);
+    }
+    expect(section.textContent).toContain("לקוח, השם מושחר");
+    expect(section.querySelector("a")).toBeNull();
   });
 
   it("does not move on from an empty answer, and says why", () => {
