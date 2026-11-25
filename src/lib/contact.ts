@@ -45,6 +45,54 @@ export function whatsappUrl(lang: Lang = "he", topic?: "offer90" | "sentence"): 
   return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(text)}`;
 }
 
+/**
+ * The first line of the message a /bidul worksheet sends. The prediction
+ * locked on the page (ACQ-N26) counts chats that open with exactly this, so
+ * changing it breaks the count. It carries no word of the person's own.
+ */
+export const WHATSAPP_OPENER_SHEET =
+  "היי ארז, הגעתי מהאתר. מילאתי את דף חמש השאלות.";
+
+export type SheetLine = { label: string; text: string };
+
+/** Per-answer and whole-message limits for the WhatsApp link, in characters. */
+const SHEET_ANSWER_MAX = 260;
+const SHEET_TEXT_MAX = 1700;
+
+function clip(text: string, max: number): string {
+  const flat = text.replace(/\s+/g, " ").trim();
+  return flat.length <= max ? flat : `${flat.slice(0, max - 1).trimEnd()}…`;
+}
+
+/**
+ * The worksheet as plain text: the person's sentence, then their answers,
+ * numbered. `max` clips each answer; the copy button passes none and gets the
+ * whole text.
+ */
+export function sheetText(sentence: string, lines: SheetLine[], max?: number): string {
+  const cut = (t: string) => (max ? clip(t, max) : t.trim());
+  const body = lines
+    .filter((l) => l.text.trim() !== "")
+    .map((l, i) => `${i + 1}. ${l.label}\n${cut(l.text)}`);
+  const head = sentence.trim() === "" ? [] : [cut(sentence)];
+  return [...head, ...body].join("\n\n");
+}
+
+/**
+ * A wa.me link that opens a chat with the worksheet already written in it.
+ * Hebrew costs six characters a letter once encoded, and a link that long is
+ * cut short by some phones, so answers are clipped here and only here.
+ */
+export function whatsappSheetUrl(sentence: string, lines: SheetLine[]): string {
+  const whole = `${WHATSAPP_OPENER_SHEET}\n\n${sheetText(sentence, lines, SHEET_ANSWER_MAX)}`;
+  // The whole message is cut without flattening its line breaks.
+  const text =
+    whole.length <= SHEET_TEXT_MAX
+      ? whole
+      : `${whole.slice(0, SHEET_TEXT_MAX - 1).trimEnd()}…`;
+  return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(text)}`;
+}
+
 export const LINKEDIN_URL = "https://www.linkedin.com/in/erez-tal-shir/";
 
 /**

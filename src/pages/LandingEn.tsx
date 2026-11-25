@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties } from "react";
 import { CALENDLY_URL } from "@/lib/calendly";
-import { Link, useHref } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SectionHead from "@/components/landing/SectionHead";
@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { usePublicUrl } from "@/hooks/usePublicUrl";
 import { useHomeLanguage } from "@/hooks/useHomeLanguage";
 import { trackCtaClick } from "@/lib/analytics";
 import { testimonials, videoTestimonial } from "@/lib/clients";
@@ -34,17 +35,6 @@ import {
 } from "@/data/en/landing";
 
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
-
-/**
- * public/ files, from one level down. The CI and e2e build use a relative base,
- * so BASE_URL is "./" and "./portrait.webp" would resolve against /en/ (404);
- * the deploy build's absolute base is unaffected. Resolve "./" against the
- * router's root instead, which is right in both.
- */
-function usePublicUrl() {
-  const root = useHref("/").replace(/\/?$/, "/");
-  return (url: string) => (url.startsWith("./") ? root + url.slice(2) : url);
-}
 
 // The Calendly embed is several hundred kB; as on the Hebrew page, it loads
 // only as its section approaches the viewport.

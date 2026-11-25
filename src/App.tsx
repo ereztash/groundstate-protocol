@@ -16,6 +16,7 @@ const Methodology = lazy(() => import("./pages/Methodology"));
 const InsightsIndex = lazy(() => import("./pages/InsightsIndex"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const About = lazy(() => import("./pages/About"));
+const Bidul = lazy(() => import("./pages/Bidul"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LandingEn = lazy(() => import("./pages/LandingEn"));
 /**
@@ -104,6 +105,7 @@ const App = () => (
           <Route path="/insights" element={lazyRoute(InsightsIndex)} />
           <Route path="/insights/:slug" element={lazyRoute(InsightArticle)} />
           <Route path="/about" element={lazyRoute(About)} />
+          <Route path="/bidul" element={lazyRoute(Bidul)} />
           <Route path="/privacy" element={lazyRoute(Privacy)} />
           <Route path="/accessibility" element={lazyRoute(Accessibility)} />
           {CASE_INTAKE_ENABLED && CaseIntake && (

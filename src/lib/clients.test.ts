@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { testimonials } from "./clients";
+import { testimonials, worksheetVoices } from "./clients";
 
 /**
  * The pull-quote rule.
@@ -31,6 +31,23 @@ describe("client testimonials", () => {
       // A pull quote as long as the original hides nothing and just adds a
       // control that does nothing when pressed.
       expect(t.pullQuote!.length).toBeLessThan(t.quote.length);
+    });
+  }
+});
+
+/**
+ * The same rule for the worksheet page, which shows single sentences instead
+ * of whole recommendations. A sentence there has no "read more" beside it, so
+ * the only thing keeping it honest is that it is cut from the source and not
+ * retyped.
+ */
+describe("worksheet voices", () => {
+  for (const [key, voice] of Object.entries(worksheetVoices)) {
+    it(`${key} is verbatim from ${voice.attribution}'s recommendation`, () => {
+      const source = testimonials.find((t) => t.attribution === voice.attribution);
+      expect(source, `no testimonial for ${voice.attribution}`).toBeDefined();
+      expect(source!.quote.includes(voice.text)).toBe(true);
+      expect(source!.linkedin).toBe(voice.linkedin);
     });
   }
 });

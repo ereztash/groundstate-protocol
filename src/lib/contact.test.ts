@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { LINKEDIN_URL, WHATSAPP_DISPLAY, whatsappUrl } from "./contact";
+import {
+  LINKEDIN_URL,
+  WHATSAPP_DISPLAY,
+  sheetText,
+  whatsappSheetUrl,
+  whatsappUrl,
+} from "./contact";
 
 describe("contact", () => {
   it("dials the same number the page shows", () => {
@@ -23,5 +29,39 @@ describe("contact", () => {
 
   it("links the public LinkedIn profile", () => {
     expect(LINKEDIN_URL).toBe("https://www.linkedin.com/in/erez-tal-shir/");
+  });
+});
+
+describe("whatsappSheetUrl", () => {
+  const lines = [
+    { label: "מה שכתוב היום", text: "ליווי עסקי לעצמאים" },
+    { label: "מקרה אחד", text: "" },
+  ];
+  const text = (sentence: string, l = lines) =>
+    new URL(whatsappSheetUrl(sentence, l)).searchParams.get("text") ?? "";
+
+  it("opens with the line the locked prediction counts", () => {
+    expect(text("בוחרים בי כי אני מחזירה תשובה באותו יום")).toMatch(
+      /^היי ארז, הגעתי מהאתר\. מילאתי את דף חמש השאלות\./
+    );
+  });
+
+  it("carries the sentence and the answers, and skips an empty one", () => {
+    const t = text("בוחרים בי כי אני מחזירה תשובה באותו יום");
+    expect(t).toContain("בוחרים בי כי אני מחזירה תשובה באותו יום");
+    expect(t).toContain("1. מה שכתוב היום\nליווי עסקי לעצמאים");
+    expect(t).not.toContain("מקרה אחד");
+  });
+
+  it("clips a long answer so the link still opens on a phone", () => {
+    const long = [{ label: "מקרה אחד", text: "מילה ".repeat(900) }];
+    const t = text("", long);
+    expect(t.length).toBeLessThan(600);
+    expect(t.endsWith("…")).toBe(true);
+  });
+
+  it("gives the copy button the whole text", () => {
+    const whole = "מילה ".repeat(200).trim();
+    expect(sheetText("", [{ label: "מקרה אחד", text: whole }])).toContain(whole);
   });
 });
