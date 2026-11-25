@@ -1,0 +1,395 @@
+/* /bidul, the five-question worksheet.
+
+   Imported by the page, so it ships with the page's own chunk and adds
+   nothing to the stylesheet that blocks the landing page's first paint.
+
+   One idea carries the look: the reader is writing on paper. A sheet lies on
+   the desk, a margin rule runs down it with the numbers outside the rule, and
+   the field is ruled lines with no box around them. The only motion is the
+   brand's one: five strokes in the corner of the sheet come into line, one for
+   each answer, and stop. */
+
+/* The header is fixed, so an anchor or a focused field would land under it. */
+.bd-anchor {
+  scroll-margin-top: 5.5rem;
+}
+
+/* A general word: the wavy line a proofreader draws under a word to query it.
+   Copper ink, the colour the site keeps for hand marks. */
+.bd-general {
+  background: transparent;
+  color: inherit;
+  text-decoration: underline wavy hsl(var(--accent));
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.3em;
+  text-decoration-skip-ink: none;
+}
+
+/* Hero: the words a competitor would also write, large, on a draft. */
+.bd-draft-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  color: hsl(var(--foreground) / 0.82);
+}
+
+/* ── The sheet ─────────────────────────────────────────────────────────── */
+
+.bd-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bd-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  border-top: 1px solid hsl(var(--foreground) / 0.12);
+  scroll-margin-top: 6.5rem;
+}
+@media (min-width: 640px) {
+  .bd-row {
+    grid-template-columns: 4rem minmax(0, 1fr);
+  }
+}
+/* The margin: the number sits outside the rule, the writing inside it. The
+   rule is the structure tone, and it runs unbroken from row to row. */
+.bd-row__n {
+  padding-top: 1.125rem;
+  border-inline-end: 1.5px solid hsl(var(--primary) / 0.4);
+  text-align: center;
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: hsl(var(--accent));
+  font-feature-settings: 'lnum' on;
+}
+.bd-row[data-state="ahead"] .bd-row__n {
+  color: hsl(var(--foreground) / 0.45);
+}
+.bd-row__body {
+  padding: 1rem 1rem 1.25rem;
+}
+@media (min-width: 640px) {
+  .bd-row__body {
+    padding: 1.125rem 1.75rem 1.5rem 1.5rem;
+  }
+}
+
+/* A kept answer: its label, the answer, and the link that reopens it. On a
+   phone the link sits on the label's line, so the answer keeps the whole
+   width of the sheet; from a tablet up it stands beside the answer. Its hit
+   area reaches past the label's line without pushing the rows apart. */
+.bd-row__body[data-kept] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1rem;
+  align-items: center;
+}
+.bd-row__body[data-kept] > :first-child {
+  grid-area: 1 / 1;
+}
+.bd-row__body[data-kept] > .bd-answer {
+  grid-area: 2 / 1 / auto / -1;
+  margin-top: 0.25rem;
+}
+.bd-row__body[data-kept] > .bd-textbtn {
+  grid-area: 1 / 2;
+  margin-block: -0.75rem;
+}
+@media (min-width: 640px) {
+  .bd-row__body[data-kept] > .bd-answer {
+    grid-area: 2 / 1;
+  }
+  .bd-row__body[data-kept] > .bd-textbtn {
+    grid-area: 2 / 2;
+    align-self: start;
+    margin-block: 0;
+  }
+}
+
+/* The question, in the display face: it is the heading of its row. */
+.bd-q {
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.25vw, 1.5rem);
+  line-height: 1.35;
+  color: hsl(var(--foreground));
+}
+
+/* The field: ruled lines, no box. Each line of text sits on a rule because
+   the rule repeats at the line height, and `local` scrolls it with the text.
+   17px, so a phone does not zoom the page when the field takes focus.
+   The space above is set here: this file loads after the utilities, so a
+   margin utility on the field would lose to it. */
+.bd-field {
+  display: block;
+  width: 100%;
+  min-height: 8rem;
+  margin: 1.25rem 0 0;
+  padding: 0 0.125rem;
+  border: 0;
+  border-radius: 0;
+  resize: none;
+  overflow: hidden;
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2rem - 1px),
+    hsl(var(--primary) / 0.7) calc(2rem - 1px),
+    hsl(var(--primary) / 0.7) 2rem
+  );
+  background-attachment: local;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  line-height: 2rem;
+  color: hsl(var(--foreground));
+}
+.bd-field[data-lines="2"] {
+  min-height: 4rem;
+}
+/* Focus is drawn on the paper itself: the rules go from pencil to ink, full
+   strength and heavier, across the whole field. A box around the field would
+   turn the paper back into a form. */
+.bd-field:focus {
+  outline: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2rem - 2px),
+    hsl(var(--primary)) calc(2rem - 2px),
+    hsl(var(--primary)) 2rem
+  );
+}
+/* The words the sheet starts the sentence with sit right on the first line. */
+.bd-lead + .bd-field {
+  margin-top: 0.25rem;
+}
+/* Forced colours drop background images, so the rules would vanish. */
+@media (forced-colors: active) {
+  .bd-field {
+    border: 1px solid;
+  }
+  .bd-field:focus {
+    outline: 2px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* A text button: the secondary action, at a size a thumb can hit. */
+.bd-textbtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.25rem;
+  background: none;
+  border: 0;
+  color: hsl(var(--primary));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: hsl(var(--primary) / 0.45);
+  cursor: pointer;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+.bd-textbtn:hover {
+  text-decoration-color: hsl(var(--primary));
+}
+.bd-textbtn:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Choosing which general word to ask about. A real radio sits over the chip,
+   so the keyboard and a screen reader get the native control. */
+.bd-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid hsl(var(--foreground) / 0.32);
+  border-radius: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.bd-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.bd-chip[data-on] {
+  background: hsl(var(--cta));
+  border-color: hsl(var(--cta));
+  color: hsl(var(--cta-foreground));
+}
+.bd-chip:focus-within {
+  outline: 3px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* The five strokes. Each one turns into line when its question is answered,
+   about its own centre, and stops there. */
+.bd-strokes line {
+  transition: transform 520ms var(--ease-align);
+}
+
+/* The sentence, where the sheet ends: a heavier rule above it, as above a
+   total. */
+.bd-sum {
+  border-top: 2px solid hsl(var(--foreground) / 0.7);
+}
+
+/* A blank the reader has not filled yet. */
+.bd-blank {
+  display: inline-block;
+  width: min(11rem, 40%);
+  border-bottom: 2px solid hsl(var(--foreground) / 0.45);
+  transform: translateY(-0.12em);
+}
+
+/* ── Layout that only this page has ────────────────────────────────────────
+   Written here, and not as utility classes, so it ships with the page's own
+   chunk. A utility used by one lazy page still lands in the stylesheet that
+   blocks the landing page's first paint. */
+
+.bd-draft {
+  padding: 1.5rem 1.5rem 2.5rem;
+}
+/* The client's sheet lies over the draft, a step in from its edge. */
+.bd-over {
+  position: relative;
+  margin-top: -1.5rem;
+  margin-inline-start: 1.25rem;
+}
+.bd-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+/* The sheet's name and where the reader is on it. Each stays on one line;
+   on a narrow phone the second drops under the first. */
+.bd-sheet-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.125rem 0.875rem;
+}
+.bd-sheet-title > * {
+  white-space: nowrap;
+}
+.bd-sheet-foot {
+  border-top: 1px solid hsl(var(--foreground) / 0.15);
+  padding: 1rem 1.25rem;
+}
+.bd-result-head {
+  border-top: 1px solid hsl(var(--foreground) / 0.15);
+  padding: 1.5rem 1.25rem 2rem;
+}
+.bd-result-title {
+  overflow-wrap: break-word;
+  outline: none;
+}
+.bd-strokes {
+  flex-shrink: 0;
+  width: 4.6rem;
+  height: 1.25rem;
+}
+/* What the reader wrote, on the same 2rem line the field is ruled at. */
+.bd-answer {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 2rem;
+  color: hsl(var(--foreground));
+}
+/* The words the sheet starts the reader's sentence with. */
+.bd-lead {
+  font-family: 'Frank Ruhl Libre', 'Heebo', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  color: hsl(var(--foreground));
+}
+.bd-lead[data-ahead] {
+  color: hsl(var(--foreground) / 0.6);
+}
+/* A live line keeps its height, so the button under it does not jump. */
+.bd-note {
+  min-height: 1.5rem;
+}
+.bd-portrait {
+  width: 10rem;
+  height: 10rem;
+}
+@media (min-width: 640px) {
+  .bd-over {
+    margin-inline-start: 2rem;
+  }
+  .bd-sheet-head {
+    padding: 1.25rem 1.75rem;
+  }
+  .bd-sheet-foot {
+    padding-inline: 1.75rem;
+  }
+  .bd-result-head {
+    padding: 2rem 1.75rem 2.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .bd-cols-a {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+  .bd-cols-b {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+/* ── Print: the sheet alone, on the paper in the printer ───────────────── */
+
+@media print {
+  html.bd-doc #root > :not(.bd-page),
+  html.bd-doc .bd-page > :not(main),
+  html.bd-doc .bd-noprint {
+    display: none !important;
+  }
+  html.bd-doc,
+  html.bd-doc body,
+  html.bd-doc .bd-page,
+  html.bd-doc .bd-desk {
+    background: none !important;
+  }
+  html.bd-doc .bd-desk {
+    padding: 0 !important;
+  }
+  html.bd-doc .bd-print {
+    max-width: none;
+    border: 0;
+    box-shadow: none;
+  }
+  html.bd-doc .bd-print::before,
+  html.bd-doc .bd-print::after {
+    display: none;
+  }
+  html.bd-doc .bd-row {
+    break-inside: avoid;
+  }
+}

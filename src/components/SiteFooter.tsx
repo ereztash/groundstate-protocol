@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { CorMark, CorSeal } from "@/components/brand/CorMark";
+import { usePublicUrl } from "@/hooks/usePublicUrl";
 import { LinkedInIcon, WhatsAppIcon } from "@/components/brand/SocialIcons";
 import { LINKEDIN_URL, WHATSAPP_DISPLAY, whatsappUrl, type Lang } from "@/lib/contact";
 
@@ -65,6 +66,7 @@ const T = {
  */
 const SiteFooter = ({ lang = "he", callLine = true }: { lang?: Lang; callLine?: boolean }) => {
   const t = T[lang];
+  const pub = usePublicUrl();
   return (
     <footer
       dir={lang === "en" ? "ltr" : "rtl"}
@@ -113,7 +115,7 @@ const SiteFooter = ({ lang = "he", callLine = true }: { lang?: Lang; callLine?: 
           {lang === "he" && (
             <figure className="hidden items-center gap-3 md:flex">
               <img
-                src={`${import.meta.env.BASE_URL}media/wa-qr.svg`}
+                src={pub(`${import.meta.env.BASE_URL}media/wa-qr.svg`)}
                 alt="קוד QR שפותח שיחת וואטסאפ איתי"
                 width={72}
                 height={72}

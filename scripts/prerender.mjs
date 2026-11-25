@@ -34,7 +34,7 @@ const insightRoutes = existsSync(INSIGHTS_DIR)
       .map((f) => `/insights/${f.replace(/\.md$/, "")}`)
   : [];
 
-const ROUTES = ["/", "/en", "/protocol", "/insights", ...insightRoutes, "/about", "/privacy", "/accessibility"];
+const ROUTES = ["/", "/en", "/protocol", "/insights", ...insightRoutes, "/about", "/bidul", "/privacy", "/accessibility"];
 
 // The deploy base (must match the base vite built with). "/" (root) → no prefix;
 // "/groundstate-protocol/" (Pages project site) → "/groundstate-protocol".
@@ -220,6 +220,21 @@ for (const route of ROUTES) {
       "g"
     ),
     ""
+  );
+  // A lazy page that imports its own CSS file (/bidul) gets the same treatment
+  // from the loader: a <link rel="stylesheet"> injected at runtime, serialised
+  // with the capture server's origin when the base is relative. This one is
+  // kept, not stripped: the prerendered markup of that page needs the sheet for
+  // its first paint, before the chunk that would inject it again has loaded.
+  // Re-pointed to "./assets/...", which the depth rewrite below then carries to
+  // the route's own level. Absolute-base builds emit a root-relative href and
+  // are untouched.
+  html = html.replace(
+    new RegExp(
+      `(<link[^>]*rel="stylesheet"[^>]*href=")http://127\\.0\\.0\\.1:${port}/`,
+      "g"
+    ),
+    "$1./"
   );
   // index.html carries the landing page's JSON-LD (offers, reviews, video, FAQ),
   // so every captured route inherited it, /privacy included. Google treats

@@ -114,6 +114,42 @@ export const videoTestimonial = {
   linkedin: "https://www.linkedin.com/in/guycohen-ai/",
 } as const;
 
+export type ClientExcerpt = {
+  /** An unbroken run of the person's public recommendation, verbatim. */
+  text: string;
+  attribution: string;
+  credential?: string;
+  linkedin: string;
+};
+
+/**
+ * Sentences for /bidul, the five-questions worksheet: what it was like to be
+ * asked, in the words of people who were. Each is an unbroken run out of a
+ * recommendation already shown on the landing page, so the rule at the top of
+ * this file holds and no new person is named. clients.test.ts fails if one of
+ * them drifts from its source by a single character.
+ */
+export const worksheetVoices = {
+  ownWords: {
+    text: "ארז לא ניסה לייצר עבורי מסר שיווקי שנשמע טוב על הנייר, אלא הקפיד שהמסר יהיה באמת שלי, במילים שלי, כזה שאני יכולה לעמוד מאחוריו ולהרגיש איתו שלמה.",
+    attribution: "חרות דרור",
+    credential: "יועצת CRM ו-AI (Microsoft Dynamics 365)",
+    linkedin: "https://www.linkedin.com/in/cherut-dror-315a34197/",
+  },
+  alreadyThere: {
+    text: "מה שהרשים אותנו במיוחד הוא היכולת שלו לזהות את הסיפורים והחוזקות שכבר היו קיימים אצלנו, ולעזור לנו להוציא אותם החוצה בצורה ברורה ומעשית, בלי לנסות להלביש עלינו מסרים שלא מתאימים לנו.",
+    attribution: "שחר פיק",
+    credential: "סמנכ״ל תפעול ושותף מייסד ב-Pick.AI",
+    linkedin: "https://www.linkedin.com/in/shachar-pick/",
+  },
+  betweenLines: {
+    text: "אחד הדברים המרשימים ביותר בעבודה עם ארז הוא היכולת שלו להקשיב לעומק, לזהות את הדברים שנמצאים בין השורות ולשקף אותם בחזרה בצורה שעוזרת לעשות סדר בתובנות, במחשבות ובחוויות האישיות והמקצועיות.",
+    attribution: "חרות דרור",
+    credential: "יועצת CRM ו-AI (Microsoft Dynamics 365)",
+    linkedin: "https://www.linkedin.com/in/cherut-dror-315a34197/",
+  },
+} satisfies Record<string, ClientExcerpt>;
+
 export type ClientCredit = {
   name: string;
   /** Short credential line, when one is public. */
