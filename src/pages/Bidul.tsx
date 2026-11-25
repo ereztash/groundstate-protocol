@@ -16,7 +16,12 @@ import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { usePublicUrl } from "@/hooks/usePublicUrl";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
-import { worksheetVoices, type ClientExcerpt } from "@/lib/clients";
+import {
+  sessionMoments,
+  worksheetVoices,
+  type ClientExcerpt,
+  type SessionTurn,
+} from "@/lib/clients";
 import {
   sheetText,
   whatsappSheetUrl,
@@ -301,6 +306,35 @@ const Voice = ({ voice, className }: { voice: ClientExcerpt; className?: string 
       {voice.credential && <span>, {voice.credential}</span>}
     </figcaption>
   </figure>
+);
+
+/**
+ * One turn of a session moment, set as a line of a transcript: who spoke in
+ * the margin, what was said beside it. A client's name is a struck-out bar.
+ */
+const Turn = ({ turn }: { turn: SessionTurn }) => (
+  <>
+    {turn.later && (
+      <p className="bd-turn" data-who="gap">
+        <span className="bd-turn__who" aria-hidden="true" />
+        <span className="bd-turn__what">כמה שורות אחר כך</span>
+      </p>
+    )}
+    <p className="bd-turn" data-who={turn.who}>
+      <span className="bd-turn__who">
+        {turn.who === "erez" ? (
+          "ארז"
+        ) : (
+          <>
+            <span className="bd-redact" aria-hidden="true" />
+            <span className="sr-only">לקוח, השם מושחר</span>
+          </>
+        )}
+        <span className="sr-only">: </span>
+      </span>
+      <span className="bd-turn__what">{turn.text}</span>
+    </p>
+  </>
 );
 
 const Bidul = () => {
@@ -894,6 +928,32 @@ const Bidul = () => {
           </div>
         </section>
 
+        {/* How it sounds inside a session: two moments off the transcripts,
+            with nobody named. */}
+        <section aria-labelledby="talk-title" className="bd-noprint bd-talk-band ld-section">
+          <div className="mx-auto grid max-w-6xl items-start gap-10 px-5 sm:px-6 bd-cols-b md:gap-14">
+            <div>
+              <SectionHead label="מתוך השיחות" />
+              <h2 id="talk-title" className="cor-title mt-6 text-foreground">
+                כך זה נשמע בתוך השיחה.
+              </h2>
+              <p className="cor-body-lg mt-5 max-w-xl text-foreground">
+                אלה שני רגעים מתוך התמלולים שלי, מילה במילה, ואת השמות
+                השחרתי.
+              </p>
+            </div>
+            <ul className="ld-sheet bd-talk">
+              {sessionMoments.map((turns) => (
+                <li key={turns[0].text} className="bd-moment">
+                  {turns.map((turn) => (
+                    <Turn key={turn.text} turn={turn} />
+                  ))}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* What the sheet cannot do, said plainly, and the step that does it. */}
         <section aria-labelledby="between-title" className="bd-noprint ld-section">
           <div className="mx-auto grid max-w-6xl items-start gap-10 px-5 sm:px-6 bd-cols-a md:gap-14">
@@ -955,7 +1015,7 @@ const Bidul = () => {
               </div>
 
               <p className="mt-8 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-muted-foreground">
-                בליווי של 30 יום אנחנו בונים יחד את המשפט, את המחיר ואת הפנייה
+                בליווי של 30 יום אנחנו בונים יחד את המשפט, את התמחור ואת הפנייה
                 הראשונה.
               </p>
             </div>

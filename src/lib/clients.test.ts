@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { testimonials, worksheetVoices } from "./clients";
+import { approvedClients, sessionMoments, testimonials, worksheetVoices } from "./clients";
 
 /**
  * The pull-quote rule.
@@ -50,4 +50,37 @@ describe("worksheet voices", () => {
       expect(source!.linkedin).toBe(voice.linkedin);
     });
   }
+});
+
+/**
+ * The session moments are the one place client words appear with no name
+ * beside them, and the transcripts they were cut from are not in this
+ * repository. So this cannot check them against a source. It checks what must
+ * not be added: a name, a link, a date, or a field that could hold one.
+ */
+describe("session moments", () => {
+  const firstNames = approvedClients.map((c) => c.name.split(" ")[0]);
+
+  it("has moments to check", () => {
+    expect(sessionMoments.length).toBeGreaterThan(0);
+  });
+
+  sessionMoments.forEach((turns, i) => {
+    it(`moment ${i + 1} has a client's line and one of Erez's`, () => {
+      const who = turns.map((t) => t.who);
+      expect(who).toContain("client");
+      expect(who).toContain("erez");
+    });
+
+    it(`moment ${i + 1} names nobody and points nowhere`, () => {
+      for (const turn of turns) {
+        const extra = Object.keys(turn).filter((k) => !["who", "text", "later"].includes(k));
+        expect(extra).toEqual([]);
+        expect(turn.text).not.toMatch(/https?:|\d/);
+        for (const name of firstNames) {
+          expect(turn.text.includes(name), `"${name}" appears in a session moment`).toBe(false);
+        }
+      }
+    });
+  });
 });

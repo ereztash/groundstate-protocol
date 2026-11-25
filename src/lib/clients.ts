@@ -5,6 +5,8 @@
  * video testimonials) and are approved for reuse across the whole site. Do NOT
  * add clients here who are not already public on the landing page — other names
  * that appear in internal material require separate, explicit consent.
+ *
+ * One exception, and it names nobody: `sessionMoments`, further down.
  */
 
 export type Testimonial = {
@@ -149,6 +151,43 @@ export const worksheetVoices = {
     linkedin: "https://www.linkedin.com/in/cherut-dror-315a34197/",
   },
 } satisfies Record<string, ClientExcerpt>;
+
+export type SessionTurn = {
+  /** Erez's own line, or a client's. A client's line never carries a name. */
+  who: "erez" | "client";
+  /** An unbroken run of one speaker, as the session transcript has it. */
+  text: string;
+  /** Lines of the transcript were passed over between the turn before and this one. */
+  later?: boolean;
+};
+
+/**
+ * Moments from inside the sessions, for /bidul. They are shown with no name:
+ * no attribution, credential, link or date, and nothing beside them that
+ * points to who was speaking. Putting a name on one needs that person's
+ * consent first, and then it belongs with the testimonials above.
+ *
+ * Each `text` is an unbroken run of one speaker out of the session transcript,
+ * word for word. The transcripts are not in this repository, so clients.test.ts
+ * can only check what was not added: a name, a link, a date.
+ */
+export const sessionMoments: SessionTurn[][] = [
+  [
+    {
+      who: "erez",
+      text: "תפסיק להגיד שככה נכון לעשות, כי אני חושב ששם מסתתר, אה, בידול שאנחנו צריכים רגע לאתר אותו.",
+    },
+    {
+      who: "client",
+      later: true,
+      text: "כאילו אני סוג של עושה את זה obvious, אבל זה לא obvious לכולם.",
+    },
+  ],
+  [
+    { who: "client", text: "זה מדייק את ההיסטוריה שלי לערך הייחודי שלי." },
+    { who: "erez", text: "המשפט הזה בעיניי הוא שווה, שווה הכול." },
+  ],
+];
 
 export type ClientCredit = {
   name: string;
