@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ConsentBanner from "./components/ConsentBanner";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { countPage } from "./lib/counter";
 
 // Landing is the entry route on every visit, so it stays eager — lazy()
 // would add a Suspense flash on the first paint. Privacy and NotFound are
@@ -58,6 +59,18 @@ const ScrollToTop = () => {
   return null;
 };
 
+/**
+ * One count per page, for every visitor, with no cookie (lib/counter.ts). The
+ * hash is left out: /#book is the same page as /.
+ */
+const CountPage = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    countPage();
+  }, [pathname]);
+  return null;
+};
+
 // vite.config.ts builds with a RELATIVE base ("./") so one artifact works at a
 // domain root and at a project sub-path. That makes import.meta.env.BASE_URL
 // "./", which is not a valid router basename. Derive the real absolute mount
@@ -92,6 +105,7 @@ const App = () => (
           subpath like /groundstate-protocol/ on GitHub Pages. */}
       <BrowserRouter basename={routerBasename}>
         <ScrollToTop />
+        <CountPage />
         {/* Each lazy route carries its own Suspense boundary; the landing page
             has none above it. That is what lets main.tsx hydrate the
             prerendered landing page: hydration expects ReactDOMServer's

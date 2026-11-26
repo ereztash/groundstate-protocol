@@ -16,11 +16,13 @@ const LABEL: Record<Lang, string> = {
  * direction). Phones get WhatsApp inside the sticky booking bar on the landing
  * page and in the header menu everywhere else, so nothing floats over the bar.
  *
- * It waits for the consent banner to be answered, like the sticky bar, because
- * the banner owns the bottom of the screen until then. Ink, not WhatsApp
- * green: the glyph is recognisable on its own, and the page keeps one colour
- * accent. On the English home page it speaks English and opens the chat with
- * an English first message.
+ * Until 26.11.2026 it waited for the consent banner to be answered, so the
+ * visitors who never answer it, most of them, never saw it. Now it shows from
+ * the start and sits above the banner (bottom-24 clears the banner's one row on
+ * wide screens) until a choice is made, then drops to the corner. Ink, not
+ * WhatsApp green: the glyph is recognisable on its own, and the page keeps one
+ * colour accent. On the English home page it speaks English and opens the chat
+ * with an English first message.
  */
 const WhatsAppFloat = () => {
   const { pathname } = useLocation();
@@ -34,12 +36,13 @@ const WhatsAppFloat = () => {
     return () => window.removeEventListener("cor:consent-decided", onConsent);
   }, []);
 
-  if (consentPending) return null;
-
   // Its own small landmark: content outside every landmark is skipped by
   // screen-reader region navigation (axe "region").
   return (
-    <aside aria-label="WhatsApp" className="fixed bottom-6 end-6 z-40 hidden md:block">
+    <aside
+      aria-label="WhatsApp"
+      className={`fixed end-6 z-40 hidden md:block ${consentPending ? "bottom-24" : "bottom-6"}`}
+    >
       <a
         href={whatsappUrl(lang)}
         target="_blank"
