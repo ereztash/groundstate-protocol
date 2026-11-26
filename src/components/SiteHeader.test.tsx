@@ -12,10 +12,11 @@ const renderAt = (path: string) =>
   );
 
 describe("SiteHeader", () => {
-  it("renders brand, the three nav links, and the CTA", () => {
+  it("renders brand, the four nav links, and the CTA", () => {
     const { getByLabelText, getAllByRole, getByRole } = renderAt("/about");
     expect(getByLabelText(/COR-SYS/)).toBeInTheDocument();
     const links = getAllByRole("link").map((a) => a.getAttribute("href") || "");
+    expect(links.some((h) => h.endsWith("/bidul"))).toBe(true);
     expect(links.some((h) => h.endsWith("/protocol"))).toBe(true);
     expect(links.some((h) => h.endsWith("/insights"))).toBe(true);
     expect(links.some((h) => h.endsWith("/about"))).toBe(true);
@@ -37,13 +38,14 @@ describe("SiteHeader", () => {
     expect(toggle.getAttribute("aria-expanded")).toBe("true");
     const panel = document.getElementById("site-nav-mobile");
     expect(panel).not.toBeNull();
-    // The three links are inside the opened panel too.
-    // The three nav links, the English page, then WhatsApp (2026-10-01).
+    // The four nav links (the five questions first, 2026-11-26), the English
+    // page, then WhatsApp (2026-10-01).
     const panelLinks = within(panel as HTMLElement).getAllByRole("link");
-    expect(panelLinks.length).toBe(5);
-    expect(panelLinks[3].getAttribute("href")).toMatch(/\/en$/);
-    expect(panelLinks[3].getAttribute("lang")).toBe("en");
-    expect(panelLinks[4].getAttribute("href")).toMatch(/^https:\/\/wa\.me\/972524545963\?text=/);
+    expect(panelLinks.length).toBe(6);
+    expect(panelLinks[0].getAttribute("href")).toMatch(/\/bidul$/);
+    expect(panelLinks[4].getAttribute("href")).toMatch(/\/en$/);
+    expect(panelLinks[4].getAttribute("lang")).toBe("en");
+    expect(panelLinks[5].getAttribute("href")).toMatch(/^https:\/\/wa\.me\/972524545963\?text=/);
     // The dark-mode switch is in the menu on phones, as a toggle button.
     const themeToggle = within(panel as HTMLElement).getByRole("button", { name: "מצב כהה" });
     expect(themeToggle.getAttribute("aria-pressed")).toBe("false");
