@@ -16,6 +16,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { usePublicUrl } from "@/hooks/usePublicUrl";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
 import {
+  routeExamples,
   sessionMoments,
   worksheetVoices,
   type ClientExcerpt,
@@ -56,6 +57,13 @@ import "./bidul.css";
  * the page says so. That is the part a conversation completes, and it is the
  * page's one step: send the sheet in WhatsApp.
  *
+ * Before anything is written, the reader picks one of two ways (2026-11-26,
+ * Erez: show what they gain before they invest): one question, the comparison
+ * asked about a single client, or all five. Each way shows what it asks, what
+ * comes out of it, and a real answer from a session, word for word with no
+ * name. The one question is the fourth of the five, so its answer waits there
+ * if the reader goes on to the rest.
+ *
  * No word on payment anywhere on the page, footer included, the same rule the
  * door pages keep. No model and no backend: the general-word check is a fixed
  * list (src/lib/generalWords.ts) and the page tells the reader that.
@@ -73,10 +81,24 @@ const COUNT = 4;
 const SENTENCE = COUNT;
 const TOTAL = COUNT + 1;
 const LIMIT = 600;
-/** v1 held five answers in another order; it is not read back into this one. */
+/**
+ * v1 held five answers in another order; it is not read back into this one.
+ * The two ways came later inside v2, so a v2 sheet saved before them is read
+ * back as the long way when anything was written in it.
+ */
 const KEY = "cor.bidul.v2";
+/** The question the short way asks is this one of the four. */
+const ONE = 3;
+
+/** Not chosen yet, the one question, or all five. */
+type Route = "" | "one" | "five";
 
 type State = {
+  route: Route;
+  /** The answer on the short way. */
+  quick: string;
+  /** ISO time the short way's sheet was taken out, empty until then. */
+  quickAt: string;
   /** 0 to 3 is a question, 4 is the sentence. */
   step: number;
   answers: string[];
@@ -86,6 +108,9 @@ type State = {
 };
 
 const EMPTY: State = {
+  route: "",
+  quick: "",
+  quickAt: "",
   step: 0,
   answers: ["", "", "", ""],
   sentence: "",
@@ -94,6 +119,11 @@ const EMPTY: State = {
 
 type Action =
   | { type: "restore"; state: State }
+  | { type: "choose"; route: Route }
+  | { type: "quick"; text: string }
+  | { type: "quickFinish"; at: string }
+  | { type: "quickEdit" }
+  | { type: "toFive" }
   | { type: "write"; index: number; text: string }
   | { type: "sentence"; text: string }
   | { type: "next" }
@@ -106,6 +136,22 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "restore":
       return action.state;
+    case "choose":
+      return { ...state, route: action.route };
+    case "quick":
+      return { ...state, quick: action.text };
+    case "quickFinish":
+      return { ...state, quickAt: action.at };
+    case "quickEdit":
+      return { ...state, quickAt: "" };
+    case "toFive": {
+      // The short answer waits in its place among the five, unless that
+      // place already holds one.
+      const answers = state.answers.map((a, i) =>
+        i === ONE && a.trim() === "" ? state.quick : a
+      );
+      return { ...state, route: "five", answers };
+    }
     case "write":
       return {
         ...state,
@@ -148,11 +194,24 @@ function readSaved(): State | null {
       typeof v.step === "number" && v.step >= 0 && v.step <= SENTENCE
         ? Math.floor(v.step)
         : 0;
+    const answers = v.answers.map((a) => text(a));
+    const sentence = text(v.sentence);
+    const doneAt = text(v.doneAt, 40);
+    const wrote = answers.some((a) => a.trim() !== "") || sentence.trim() !== "" || doneAt !== "";
+    const route: Route =
+      v.route === "one" || v.route === "five" || v.route === ""
+        ? v.route
+        : wrote
+          ? "five"
+          : "";
     return {
+      route,
+      quick: text(v.quick),
+      quickAt: text(v.quickAt, 40),
       step,
-      answers: v.answers.map((a) => text(a)),
-      sentence: text(v.sentence),
-      doneAt: text(v.doneAt, 40),
+      answers,
+      sentence,
+      doneAt,
     };
   } catch {
     return null;
@@ -191,6 +250,17 @@ const SENTENCE_Q: Question = {
   why: "אפשר להשתמש במילים שכבר כתבתם למעלה. אפשר גם להשאיר ריק ולחזור מחר.",
 };
 
+/**
+ * The short way's one question: the fourth, with the client it is asked about
+ * folded into it, since nothing before it has named one. Asked about a single
+ * case, it is the form after which a sentence in the person's own words came
+ * right away (the approved tree of states, state 4; n=1, so a hypothesis).
+ */
+const ONE_Q: Question = {
+  ask: "חשבו על לקוח אחד ועל דבר אחד שעשיתם בשבילו. אם איש מקצוע אחר היה מטפל באותו לקוח ובאותה בעיה, מה היה שונה אצל הלקוח?",
+  why: "כתבו את זה מהצד של הלקוח, מה היה קורה אצלו. כדאי לפתוח משהו אמיתי ששלחתם לו, הצעה, מצגת או הודעה.",
+};
+
 /** The short name of each row, on the sheet and in the message that carries it. */
 const LABELS = [
   "מה שכתוב היום",
@@ -225,44 +295,46 @@ function fit(el: HTMLTextAreaElement | null) {
 }
 
 /**
- * Five strokes, read from the right like the page, one for each of the four
- * questions and one for the sentence. Each one stands off true
- * until its question is answered, then turns into line and stops: the brand's
- * one motion, and the sheet's progress mark. Ink only. The copper point is
- * kept for the headline, and for the reader's sentence once it exists.
+ * One stroke for each row of the sheet, read from the right like the page:
+ * five on the long way (four questions and the sentence), one on the short.
+ * Each one stands off true until its row is answered, then turns into line
+ * and stops: the brand's one motion, and the sheet's progress mark. Ink only.
+ * The copper point is kept for the headline, and for the reader's sentence
+ * once it exists.
  */
-const STROKES = [
-  { cx: 76, a: -62 },
-  { cx: 60, a: 34 },
-  { cx: 44, a: -16 },
-  { cx: 28, a: 48 },
-  { cx: 12, a: -30 },
-] as const;
+const ANGLES = [-62, 34, -16, 48, -30] as const;
 
-const Strokes = ({ settled, className }: { settled: boolean[]; className?: string }) => (
-  <svg
-    viewBox="0 0 88 24"
-    className={`bd-strokes ${className ?? ""}`}
-    aria-hidden="true"
-    focusable="false"
-  >
-    <g fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
-      {STROKES.map((s, i) => (
-        <line
-          key={s.cx}
-          x1={s.cx - 5}
-          y1={12}
-          x2={s.cx + 5}
-          y2={12}
-          style={{
-            transform: `rotate(${settled[i] ? 0 : s.a}deg)`,
-            transformOrigin: `${s.cx}px 12px`,
-          }}
-        />
-      ))}
-    </g>
-  </svg>
-);
+const Strokes = ({ settled, className }: { settled: boolean[]; className?: string }) => {
+  const width = settled.length * 16 + 8;
+  return (
+    <svg
+      viewBox={`0 0 ${width} 24`}
+      className={`bd-strokes ${className ?? ""}`}
+      style={{ width: `${(width / 88) * 4.6}rem` }}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
+        {settled.map((on, i) => {
+          const cx = width - 12 - i * 16;
+          return (
+            <line
+              key={i}
+              x1={cx - 5}
+              y1={12}
+              x2={cx + 5}
+              y2={12}
+              style={{
+                transform: `rotate(${on ? 0 : ANGLES[i % ANGLES.length]}deg)`,
+                transformOrigin: `${cx}px 12px`,
+              }}
+            />
+          );
+        })}
+      </g>
+    </svg>
+  );
+};
 
 /** The reader's text, with the general words from the fixed list marked. */
 const Marked = ({ text }: { text: string }) => (
@@ -350,6 +422,7 @@ const Bidul = () => {
 
   const fieldRef = useRef<HTMLTextAreaElement>(null);
   const resultRef = useRef<HTMLHeadingElement>(null);
+  const chooseRef = useRef<HTMLHeadingElement>(null);
   const sheetRef = useRef<HTMLElement>(null);
   const moveFocus = useRef(false);
 
@@ -373,53 +446,89 @@ const Bidul = () => {
     }
   }, [ready, state]);
 
+  const choosing = state.route === "";
+  const onOne = state.route === "one";
   const done = state.doneAt !== "";
+  const quickDone = state.quickAt !== "";
+  /** The sheet on screen has been taken out, on whichever way. */
+  const sheetDone = onOne ? quickDone : done;
 
-  // Focus follows the reader: to the next field, or to the finished sheet.
+  // Focus follows the reader: to the next field, to the finished sheet, or
+  // back to the choice.
   useEffect(() => {
     if (!moveFocus.current) return;
     moveFocus.current = false;
-    if (done) resultRef.current?.focus();
+    if (choosing) chooseRef.current?.focus();
+    else if (sheetDone) resultRef.current?.focus();
     else fieldRef.current?.focus();
-  }, [state.step, done]);
+  }, [state.step, state.route, choosing, sheetDone]);
 
   useEffect(() => {
     fit(fieldRef.current);
-  }, [state.step, done, ready]);
+  }, [state.step, state.route, sheetDone, ready]);
 
-  const onSentence = state.step === SENTENCE;
-  const current = onSentence ? state.sentence : state.answers[state.step];
-  const started = state.answers.some((a) => a.trim() !== "") || state.sentence.trim() !== "";
+  const onSentence = !onOne && state.step === SENTENCE;
+  const current = onOne
+    ? state.quick
+    : onSentence
+      ? state.sentence
+      : state.answers[state.step];
+  const startedFive =
+    state.answers.some((a) => a.trim() !== "") || state.sentence.trim() !== "";
+  const started = onOne ? state.quick.trim() !== "" : startedFive;
   const tail = tailOf(state.sentence);
-  const settled = [
-    ...state.answers.map((a, i) => a.trim() !== "" && (done || state.step !== i)),
-    done && tail !== "",
-  ];
+  const settled = onOne
+    ? [quickDone && state.quick.trim() !== ""]
+    : [
+        ...state.answers.map((a, i) => a.trim() !== "" && (done || state.step !== i)),
+        done && tail !== "",
+      ];
 
   // A general word in what is being written is quoted back, live. It never
   // blocks. The first answer is left alone, since it is meant to be what
   // already exists.
-  const caught = state.step === 0 ? [] : uniqueGeneralWords(current);
+  const caught = !onOne && state.step === 0 ? [] : uniqueGeneralWords(current);
   const note = nudge
     ? "כתבו כמה מילים, ואז נמשיך."
     : caught.length > 0
       ? `כתבתם "${caught[0]}". גם מישהו אחר מהתחום היה כותב את זה. מה זה אומר אצלכם, בדוגמה אחת?`
       : "";
 
-  // The sentence is the reader's alone: no lead of ours in front of it.
-  const fullSentence = tail;
-  const lines: SheetLine[] = state.answers.map((text, i) => ({
-    label: LABELS[i],
-    text,
-  }));
+  // The sentence is the reader's alone: no lead of ours in front of it. The
+  // short way has no sentence, only its one row.
+  const fullSentence = onOne ? "" : tail;
+  const lines: SheetLine[] = onOne
+    ? [{ label: LABELS[ONE], text: state.quick }]
+    : state.answers.map((text, i) => ({
+        label: LABELS[i],
+        text,
+      }));
+  // The same counted opening line on both ways (ACQ-N26), so a chat from
+  // either one is counted.
   const waHref = whatsappSheetUrl(fullSentence, lines);
   const selfHref = () =>
     whatsappSelfUrl(fullSentence, lines, window.location.href.split("#")[0]);
   const anyMarked =
-    uniqueGeneralWords([tail, ...state.answers].join("\n")).length > 0;
+    uniqueGeneralWords([fullSentence, ...lines.map((l) => l.text)].join("\n")).length > 0;
 
-  // The first question may be skipped; the next three need a few words.
-  const mayPass = onSentence || state.step === 0;
+  // The first question may be skipped; the rest, and the short way's one
+  // question, need a few words.
+  const mayPass = !onOne && (onSentence || state.step === 0);
+
+  const onChoose = (route: Route) => {
+    setNudge(false);
+    setAskClear(false);
+    moveFocus.current = true;
+    if (route) trackEvent("bidul_route", { route });
+    dispatch({ type: "choose", route });
+  };
+
+  const onToFive = () => {
+    setCopied("");
+    moveFocus.current = true;
+    trackEvent("bidul_route", { route: "five", from: "one" });
+    dispatch({ type: "toFive" });
+  };
 
   const onNext = () => {
     if (!mayPass && current.trim() === "") {
@@ -429,7 +538,10 @@ const Bidul = () => {
     }
     setNudge(false);
     moveFocus.current = true;
-    if (onSentence) {
+    if (onOne) {
+      trackEvent("bidul_one_complete");
+      dispatch({ type: "quickFinish", at: new Date().toISOString() });
+    } else if (onSentence) {
       trackEvent("bidul_complete", { with_sentence: tail !== "" });
       dispatch({ type: "finish", at: new Date().toISOString() });
     } else {
@@ -440,7 +552,8 @@ const Bidul = () => {
 
   const onType = (text: string) => {
     if (nudge) setNudge(false);
-    if (onSentence) dispatch({ type: "sentence", text });
+    if (onOne) dispatch({ type: "quick", text });
+    else if (onSentence) dispatch({ type: "sentence", text });
     else dispatch({ type: "write", index: state.step, text });
     fit(fieldRef.current);
   };
@@ -461,7 +574,7 @@ const Bidul = () => {
   const onReopen = () => {
     setCopied("");
     moveFocus.current = true;
-    dispatch({ type: "reopen" });
+    dispatch(onOne ? { type: "quickEdit" } : { type: "reopen" });
   };
 
   const onStart = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -469,7 +582,8 @@ const Bidul = () => {
     trackCtaClick("bidul_start");
     // Focus inside the tap, so a phone raises its keyboard; then bring the
     // sheet under the fixed header.
-    if (done) resultRef.current?.focus({ preventScroll: true });
+    if (choosing) chooseRef.current?.focus({ preventScroll: true });
+    else if (sheetDone) resultRef.current?.focus({ preventScroll: true });
     else fieldRef.current?.focus({ preventScroll: true });
     sheetRef.current?.scrollIntoView?.({ block: "start" });
   };
@@ -493,18 +607,20 @@ const Bidul = () => {
     setAskClear(false);
     setNudge(false);
     setCopied("");
-    dispatch({ type: "reset" });
+    // Starting over goes back to the choice of the two ways.
     moveFocus.current = true;
-    // The step may not change (already on the first question), so the focus
-    // effect would not run; move it here as well.
-    fieldRef.current?.focus();
+    dispatch({ type: "reset" });
   };
 
-  const startLabel = done
-    ? "לדף שלכם"
-    : started
-      ? "להמשיך מאיפה שעצרתם"
-      : "להתחיל בשאלה הראשונה";
+  const startLabel = choosing
+    ? "לבחור שאלה אחת או חמש"
+    : sheetDone
+      ? "לדף שלכם"
+      : started
+        ? "להמשיך מאיפה שעצרתם"
+        : onOne
+          ? "לשאלה"
+          : "להתחיל בשאלה הראשונה";
 
   const progress = done ? "" : `שאלה ${state.step + 1} מתוך ${TOTAL}`;
 
@@ -560,6 +676,130 @@ const Bidul = () => {
     </div>
   );
 
+  /** Under the open sheet, on either way: speaking instead of typing, where
+      the writing is kept, the way back to the choice, and starting over. */
+  const notes = (
+    <div className="bd-noprint mt-7 text-sm leading-relaxed text-foreground">
+      <p>אפשר גם לדבר במקום להקליד, עם המיקרופון שבמקלדת של הטלפון.</p>
+      <p className="mt-2">
+        מה שאתם כותבים נשמר רק בדפדפן הזה, כדי שתוכלו לחזור אליו.
+        הוא לא נשלח לשום מקום עד שתבחרו לשלוח.
+      </p>
+      {!started && (
+        <button type="button" className="bd-textbtn mt-1" onClick={() => onChoose("")}>
+          לבחור מסלול אחר
+        </button>
+      )}
+      {started && !askClear && (
+        <button
+          type="button"
+          className="bd-textbtn mt-1"
+          onClick={() => setAskClear(true)}
+        >
+          למחוק הכול ולהתחיל מחדש
+        </button>
+      )}
+      {askClear && (
+        <p className="mt-1 flex flex-wrap items-center gap-x-5">
+          <span className="font-semibold">למחוק את כל מה שכתבתם?</span>
+          <button type="button" className="bd-textbtn" onClick={onClear}>
+            כן, למחוק
+          </button>
+          <button
+            type="button"
+            className="bd-textbtn"
+            onClick={() => setAskClear(false)}
+          >
+            להשאיר
+          </button>
+        </p>
+      )}
+    </div>
+  );
+
+  /** Under a finished sheet: the foot that says what the marks are and are
+      not, and the one question to put to a reader. */
+  const sheetFoot = (what: "sentence" | "answer") => (
+    <div className="bd-sheet-foot text-sm leading-relaxed text-muted-foreground">
+      <p>
+        {anyMarked
+          ? "הקו הגלי מסמן מילים מרשימה קבועה של מילים כלליות. הדף לא מבין את הטקסט, והוא יכול לפספס מילה או לסמן בטעות."
+          : what === "sentence"
+            ? "הדף לא מצא כאן מילה מהרשימה הקבועה של מילים כלליות. הוא לא מבין את הטקסט, כך שזה עוד לא אומר שהמשפט חד."
+            : "הדף לא מצא כאן מילה מהרשימה הקבועה של מילים כלליות. הוא לא מבין את הטקסט, כך שזה עוד לא אומר שהתשובה חדה."}
+      </p>
+      <p className="mt-2 text-foreground">
+        {what === "sentence"
+          ? "לפני שאתם משתמשים במשפט, הקריאו אותו לאדם אחד שמכיר את העבודה שלכם, ושאלו אותו מה הוא שמע."
+          : "לפני שאתם משתמשים בתשובה, הקריאו אותה לאדם אחד שמכיר את העבודה שלכם, ושאלו אותו מה הוא שמע."}
+      </p>
+      <p className="mt-2 font-semibold text-foreground">חמש השאלות, ארז טל-שיר</p>
+    </div>
+  );
+
+  /** The step to Erez, the copy, print and edit links, and the status line. */
+  const sendRow = (
+    <>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackCtaClick(onOne ? "whatsapp_bidul_one" : "whatsapp_bidul_sheet")}
+          className="ld-cta w-full shrink-0 sm:w-auto"
+        >
+          <WhatsAppIcon className="h-5 w-5 shrink-0" />
+          לשלוח את הדף לארז בוואטסאפ
+          <span className="sr-only"> (נפתח בוואטסאפ)</span>
+        </a>
+        <p className="text-sm leading-relaxed text-foreground">
+          הדף נפתח אצלכם בוואטסאפ כהודעה מוכנה, ואתם שולחים.
+        </p>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-x-5">
+        <button type="button" className="bd-textbtn" onClick={onCopy}>
+          להעתיק את הדף
+        </button>
+        <button type="button" className="bd-textbtn" onClick={onPrint}>
+          להדפיס או לשמור כקובץ
+        </button>
+        <button type="button" className="bd-textbtn" onClick={onReopen}>
+          {onOne ? "לערוך את התשובה" : "לערוך תשובות"}
+        </button>
+      </div>
+      <p role="status" aria-live="polite" className="bd-note text-sm font-semibold text-foreground">
+        {copied === "ok"
+          ? "הדף הועתק."
+          : copied === "fail"
+            ? "ההעתקה לא עבדה בדפדפן הזה. אפשר לסמן את הטקסט בדף ולהעתיק."
+            : ""}
+      </p>
+    </>
+  );
+
+  /* The break a page cannot give: the sheet goes to the reader's own chat,
+     with the way back to it. A function, since the link reads the address
+     and is only built once a sheet is out. */
+  const selfBlock = () => (
+    <div className="mt-6 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-foreground">
+      <p>
+        אצל ארבעה משבעת האנשים שליוויתי בבידול, המשפט הכי ברור
+        הגיע רק בפגישה השנייה, אחרי הפסקה. הדף שמור בדפדפן הזה,
+        ואפשר לשלוח אותו לעצמכם ולחזור אליו מחר.
+      </p>
+      <a
+        href={selfHref()}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackCtaClick("whatsapp_bidul_self")}
+        className="bd-textbtn mt-1"
+      >
+        לשלוח את הדף לעצמי בוואטסאפ
+        <span className="sr-only"> (נפתח בוואטסאפ)</span>
+      </a>
+    </div>
+  );
+
   return (
     <div className="bd-page ld-paper min-h-screen overflow-x-clip text-foreground">
       <a href="#bidul-main" className="skip-to-content">
@@ -595,7 +835,7 @@ const Bidul = () => {
                 </p>
               </div>
 
-              <p className="cor-overline-he mt-7 !text-base">בידול עסקי לעצמאים, כעשר דקות</p>
+              <p className="cor-overline-he mt-7 !text-base">בידול עסקי לעצמאים, שאלה אחת או חמש</p>
 
               <h1 id="bidul-title" className="cor-display mt-5 text-foreground">
                 אני שואל חמש שאלות, ואתם כותבים למה בוחרים דווקא בכם
@@ -605,8 +845,8 @@ const Bidul = () => {
               <p className="cor-body-lg mt-6 max-w-xl font-medium text-foreground">
                 אלה השאלות שאני שואל עצמאים כשאנחנו מחפשים את הבידול שלהם.
                 עוברים על לקוח אחד ועל דבר אחד שעשיתם בשבילו, ורק בסוף כותבים
-                משפט. זה לוקח כעשר דקות, ואני לא כותב בדף אף מילה, כך שכל מה
-                שיהיה בו יצא מכם.
+                משפט. חמש השאלות לוקחות כעשר דקות, ואפשר גם לענות רק על אחת.
+                אני לא כותב בדף אף מילה, כך שכל מה שיהיה בו יצא מכם.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
@@ -659,8 +899,182 @@ const Bidul = () => {
           data-clarity-mask="true"
           className="bd-anchor bd-desk ld-desk ld-section"
         >
-          <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            {!done && (
+          <div className={`mx-auto px-4 sm:px-6 ${choosing ? "max-w-5xl" : "max-w-3xl"}`}>
+            {/* Before anything is written: two ways, each with what it asks,
+                a real answer from a session, and what comes out of it. */}
+            {choosing && (
+              <div className="ld-in">
+                <h2
+                  id="sheet-title"
+                  ref={chooseRef}
+                  tabIndex={-1}
+                  className="cor-title text-foreground"
+                >
+                  אפשר לענות על שאלה אחת, ואפשר על כל החמש.
+                </h2>
+                <p className="cor-body-lg mt-4 max-w-2xl text-foreground">
+                  ליד כל מסלול כתוב מה שואלים ומה יוצא, ויש תשובה אמיתית מתוך
+                  פגישת בידול, מילה במילה ובלי שם.
+                </p>
+
+                <ul className="bd-routes mt-8">
+                  <li className="ld-sheet bd-route">
+                    <p className="text-xs font-bold text-primary">מסלול קצר, שאלה אחת</p>
+                    <h3 className="bd-q mt-1.5">
+                      אם יש לכם זמן לשאלה אחת, זו השאלה שהייתי בוחר.
+                    </h3>
+                    <p className="bd-route__ask">{ONE_Q.ask}</p>
+
+                    <div className="bd-eg">
+                      <p className="bd-eg__label">כך נשמעה תשובה לשאלה כזו, בפגישת בידול ראשונה</p>
+                      {routeExamples.one.map((turn) => (
+                        <Turn key={turn.text} turn={turn} />
+                      ))}
+                    </div>
+
+                    <p className="bd-route__label">מה יוצא</p>
+                    <p className="bd-route__out mt-1 text-sm leading-relaxed text-foreground">
+                      דף של שורה אחת עם התשובה שלכם, ששולחים לעצמכם או לי
+                      בוואטסאפ. אפשר להמשיך ממנו לחמש השאלות, והתשובה כבר
+                      תחכה שם.
+                    </p>
+                    <button
+                      type="button"
+                      className="ld-cta bd-route__go w-full sm:w-auto"
+                      onClick={() => onChoose("one")}
+                    >
+                      לענות על שאלה אחת
+                    </button>
+                  </li>
+
+                  <li className="ld-sheet bd-route">
+                    <p className="text-xs font-bold text-primary">מסלול ארוך, חמש השאלות</p>
+                    <h3 className="bd-q mt-1.5">
+                      זה הסדר שאני עובר עליו עם עצמאים בפגישת בידול, כעשר דקות.
+                    </h3>
+                    <ol className="bd-route__steps">
+                      {[...LABELS, "המשפט, במילים שלכם"].map((label, i) => (
+                        <li key={label}>
+                          {label}
+                          {i === 0 && <span className="text-muted-foreground">, אפשר לדלג</span>}
+                        </li>
+                      ))}
+                    </ol>
+
+                    <div className="bd-eg">
+                      <p className="bd-eg__label">
+                        באותה פגישה, כמה שורות לפני כן, על מה שנעשה בשביל אותו לקוח
+                      </p>
+                      {routeExamples.five.map((turn) => (
+                        <Turn key={turn.text} turn={turn} />
+                      ))}
+                    </div>
+
+                    <p className="bd-route__label">מה יוצא</p>
+                    <p className="bd-route__out mt-1 text-sm leading-relaxed text-foreground">
+                      דף עם תאריך. המשפט שלכם בראש הדף, ארבע התשובות מתחתיו,
+                      והמילים הכלליות מסומנות. אפשר להעתיק, להדפיס, ולשלוח
+                      לעצמכם או לי.
+                    </p>
+                    <button
+                      type="button"
+                      className="ld-cta bd-route__go w-full sm:w-auto"
+                      onClick={() => onChoose("five")}
+                    >
+                      לעבור על חמש השאלות
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {/* The short way: the one question, on a sheet of one row. */}
+            {onOne && !quickDone && (
+              <>
+                <div className="ld-sheet ld-stack bd-print">
+                  <div className="bd-sheet-head">
+                    <div className="bd-sheet-title">
+                      <h2
+                        id="sheet-title"
+                        className="font-heading text-2xl font-black text-foreground"
+                      >
+                        שאלה אחת
+                      </h2>
+                      <p className="bd-noprint text-sm font-semibold text-muted-foreground">
+                        השאלה הרביעית מתוך חמש השאלות
+                      </p>
+                    </div>
+                    <Strokes settled={settled} className="text-foreground" />
+                  </div>
+                  <div className="bd-row" data-state="open">
+                    <span className="bd-row__n" aria-hidden="true" />
+                    <div className="bd-row__body">
+                      <p className="text-xs font-bold text-primary">{LABELS[ONE]}</p>
+                      {field({
+                        id: "bidul-one",
+                        ask: ONE_Q.ask,
+                        why: ONE_Q.why,
+                        lines: 4,
+                        button: "להוציא את הדף",
+                      })}
+                    </div>
+                  </div>
+                </div>
+                {notes}
+              </>
+            )}
+
+            {onOne && quickDone && (
+              <>
+                <article className="ld-sheet ld-stack bd-print ld-in" aria-labelledby="sheet-title">
+                  <div className="bd-sheet-head">
+                    <p className="text-sm font-bold text-primary">
+                      דף עבודה, {dateLabel(state.quickAt)}
+                    </p>
+                    <Strokes settled={settled} className="text-foreground" />
+                  </div>
+                  <div className="bd-row" data-state="kept">
+                    <span className="bd-row__n" aria-hidden="true" />
+                    <div className="bd-row__body">
+                      <h2
+                        id="sheet-title"
+                        ref={resultRef}
+                        tabIndex={-1}
+                        className="text-xs font-bold text-primary"
+                      >
+                        {LABELS[ONE]}
+                      </h2>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {ONE_Q.ask}
+                      </p>
+                      <p className="bd-answer mt-2">
+                        <Marked text={state.quick} />
+                      </p>
+                    </div>
+                  </div>
+                  {sheetFoot("answer")}
+                </article>
+
+                <div className="bd-noprint mt-8">
+                  {sendRow}
+
+                  {/* The long way, with this answer already in its place. */}
+                  <div className="mt-6 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-foreground">
+                    <p>
+                      התשובה הזו תחכה בשאלה הרביעית. שלוש השאלות שלפניה עוברות
+                      על הלקוח ועל מה שעשיתם, ובסוף כותבים מכל זה משפט אחד.
+                    </p>
+                    <button type="button" className="bd-textbtn mt-1 font-bold" onClick={onToFive}>
+                      להמשיך לחמש השאלות
+                    </button>
+                  </div>
+
+                  {selfBlock()}
+                </div>
+              </>
+            )}
+
+            {state.route === "five" && !done && (
               <>
                 <div className="ld-sheet ld-stack bd-print">
                   <div className="bd-sheet-head">
@@ -756,42 +1170,11 @@ const Bidul = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="bd-noprint mt-7 text-sm leading-relaxed text-foreground">
-                  <p>אפשר גם לדבר במקום להקליד, עם המיקרופון שבמקלדת של הטלפון.</p>
-                  <p className="mt-2">
-                    מה שאתם כותבים נשמר רק בדפדפן הזה, כדי שתוכלו לחזור אליו.
-                    הוא לא נשלח לשום מקום עד שתבחרו לשלוח.
-                  </p>
-                  {started && !askClear && (
-                    <button
-                      type="button"
-                      className="bd-textbtn mt-1"
-                      onClick={() => setAskClear(true)}
-                    >
-                      למחוק הכול ולהתחיל מחדש
-                    </button>
-                  )}
-                  {askClear && (
-                    <p className="mt-1 flex flex-wrap items-center gap-x-5">
-                      <span className="font-semibold">למחוק את כל מה שכתבתם?</span>
-                      <button type="button" className="bd-textbtn" onClick={onClear}>
-                        כן, למחוק
-                      </button>
-                      <button
-                        type="button"
-                        className="bd-textbtn"
-                        onClick={() => setAskClear(false)}
-                      >
-                        להשאיר
-                      </button>
-                    </p>
-                  )}
-                </div>
+                {notes}
               </>
             )}
 
-            {done && (
+            {state.route === "five" && done && (
               <>
                 {/* The finished sheet: a dated document in the reader's words. */}
                 <article className="ld-sheet ld-stack bd-print ld-in" aria-labelledby="sheet-title">
@@ -837,77 +1220,12 @@ const Bidul = () => {
                     ))}
                   </ol>
 
-                  <div className="bd-sheet-foot text-sm leading-relaxed text-muted-foreground">
-                    <p>
-                      {anyMarked
-                        ? "הקו הגלי מסמן מילים מרשימה קבועה של מילים כלליות. הדף לא מבין את הטקסט, והוא יכול לפספס מילה או לסמן בטעות."
-                        : "הדף לא מצא כאן מילה מהרשימה הקבועה של מילים כלליות. הוא לא מבין את הטקסט, כך שזה עוד לא אומר שהמשפט חד."}
-                    </p>
-                    <p className="mt-2 text-foreground">
-                      לפני שאתם משתמשים במשפט, הקריאו אותו לאדם אחד שמכיר את
-                      העבודה שלכם, ושאלו אותו מה הוא שמע.
-                    </p>
-                    <p className="mt-2 font-semibold text-foreground">
-                      חמש השאלות, ארז טל-שיר
-                    </p>
-                  </div>
+                  {sheetFoot("sentence")}
                 </article>
 
                 <div className="bd-noprint mt-8">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-                    <a
-                      href={waHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackCtaClick("whatsapp_bidul_sheet")}
-                      className="ld-cta w-full shrink-0 sm:w-auto"
-                    >
-                      <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                      לשלוח את הדף לארז בוואטסאפ
-                      <span className="sr-only"> (נפתח בוואטסאפ)</span>
-                    </a>
-                    <p className="text-sm leading-relaxed text-foreground">
-                      הדף נפתח אצלכם בוואטסאפ כהודעה מוכנה, ואתם שולחים.
-                    </p>
-                  </div>
-                  <div className="mt-3 flex flex-wrap items-center gap-x-5">
-                    <button type="button" className="bd-textbtn" onClick={onCopy}>
-                      להעתיק את הדף
-                    </button>
-                    <button type="button" className="bd-textbtn" onClick={onPrint}>
-                      להדפיס או לשמור כקובץ
-                    </button>
-                    <button type="button" className="bd-textbtn" onClick={onReopen}>
-                      לערוך תשובות
-                    </button>
-                  </div>
-                  <p role="status" aria-live="polite" className="bd-note text-sm font-semibold text-foreground">
-                    {copied === "ok"
-                      ? "הדף הועתק."
-                      : copied === "fail"
-                        ? "ההעתקה לא עבדה בדפדפן הזה. אפשר לסמן את הטקסט בדף ולהעתיק."
-                        : ""}
-                  </p>
-
-                  {/* The break a page cannot give: the sheet goes to the
-                      reader's own chat, with the way back to it. */}
-                  <div className="mt-6 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-foreground">
-                    <p>
-                      אצל ארבעה משבעת האנשים שליוויתי בבידול, המשפט הכי ברור
-                      הגיע רק בפגישה השנייה, אחרי הפסקה. הדף שמור בדפדפן הזה,
-                      ואפשר לשלוח אותו לעצמכם ולחזור אליו מחר.
-                    </p>
-                    <a
-                      href={selfHref()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackCtaClick("whatsapp_bidul_self")}
-                      className="bd-textbtn mt-1"
-                    >
-                      לשלוח את הדף לעצמי בוואטסאפ
-                      <span className="sr-only"> (נפתח בוואטסאפ)</span>
-                    </a>
-                  </div>
+                  {sendRow}
+                  {selfBlock()}
                 </div>
               </>
             )}
@@ -959,7 +1277,7 @@ const Bidul = () => {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-                {done ? (
+                {sheetDone ? (
                   <a
                     href={waHref}
                     target="_blank"
@@ -977,7 +1295,7 @@ const Bidul = () => {
                     onClick={onStart}
                     className="ld-cta w-full shrink-0 sm:w-auto"
                   >
-                    {started ? "לחזור לדף ולסיים" : "להתחיל בשאלה הראשונה"}
+                    {started ? "לחזור לדף ולסיים" : startLabel}
                   </a>
                 )}
                 <p className="text-sm leading-relaxed text-muted-foreground">

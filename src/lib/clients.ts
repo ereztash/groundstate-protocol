@@ -6,8 +6,8 @@
  * add clients here who are not already public on the landing page — other names
  * that appear in internal material require separate, explicit consent.
  *
- * Two exceptions, and they name nobody: `sessionMoments` and `firstCallWords`,
- * further down.
+ * Three exceptions, and they name nobody: `sessionMoments`, `routeExamples`
+ * and `firstCallWords`, further down.
  */
 
 export type Testimonial = {
@@ -189,6 +189,39 @@ export const sessionMoments: SessionTurn[][] = [
     { who: "erez", text: "המשפט הזה בעיניי הוא שווה, שווה הכול." },
   ],
 ];
+
+/**
+ * The real answers beside the two ways to start /bidul (2026-11-26): one
+ * question, or all five. Shown with no name, the same way as `sessionMoments`,
+ * and under the same rule: each `text` is an unbroken run of one speaker, word
+ * for word out of a first differentiation session, and putting a name on it
+ * needs that person's consent first.
+ *
+ * `one` is the answer to the comparison question asked about a single client,
+ * the one question the short way asks. `five` is what the same person said a
+ * few lines earlier, about what was done for that client: the ground the long
+ * way covers before it gets there. A line that became someone's positioning
+ * line is not used here, since it points to them even without a name.
+ */
+export const routeExamples: { one: SessionTurn[]; five: SessionTurn[] } = {
+  one: [
+    {
+      who: "client",
+      text: "איש מקצוע אחר שהיה בא במקומי, יכול להיות שהוא היה פותר להם את הבעיה, אבל הם לא היו מבינים איך הוא פתר להם את הבעיה.",
+    },
+  ],
+  five: [
+    {
+      who: "client",
+      text: "בעצם אני הבנתי לעומק גם את התהליכים שהם עושים וגם את האנשים שהם.",
+    },
+    {
+      who: "client",
+      later: true,
+      text: "ואת כל זה בעצם אני ארגנתי גם לפתרונות, אבל גם לשיח מעמיק.",
+    },
+  ],
+};
 
 /**
  * What one person said in the last minutes of a first call with Erez, shown in

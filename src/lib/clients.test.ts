@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { approvedClients, firstCallWords, sessionMoments, testimonials, worksheetVoices } from "./clients";
+import {
+  approvedClients,
+  firstCallWords,
+  routeExamples,
+  sessionMoments,
+  testimonials,
+  worksheetVoices,
+} from "./clients";
 
 /**
  * The pull-quote rule.
@@ -79,6 +86,31 @@ describe("session moments", () => {
         expect(turn.text).not.toMatch(/https?:|\d/);
         for (const name of firstNames) {
           expect(turn.text.includes(name), `"${name}" appears in a session moment`).toBe(false);
+        }
+      }
+    });
+  });
+});
+
+/**
+ * The answers beside the two ways to start /bidul. Same limits as the session
+ * moments: the transcripts are not here, so this checks what must not be
+ * added. They are client lines only, since each one stands as an answer.
+ */
+describe("route examples", () => {
+  const firstNames = approvedClients.map((c) => c.name.split(" ")[0]);
+
+  (["one", "five"] as const).forEach((route) => {
+    it(`the ${route} example is a client's own lines, naming nobody and pointing nowhere`, () => {
+      const turns = routeExamples[route];
+      expect(turns.length).toBeGreaterThan(0);
+      for (const turn of turns) {
+        expect(turn.who).toBe("client");
+        const extra = Object.keys(turn).filter((k) => !["who", "text", "later"].includes(k));
+        expect(extra).toEqual([]);
+        expect(turn.text).not.toMatch(/https?:|\d/);
+        for (const name of [...firstNames, "ארז"]) {
+          expect(turn.text.includes(name), `"${name}" appears in a route example`).toBe(false);
         }
       }
     });

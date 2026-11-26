@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
 import Bidul from "./Bidul";
-import { sessionMoments } from "@/lib/clients";
+import { routeExamples, sessionMoments } from "@/lib/clients";
 
 const renderPage = () =>
   render(
@@ -26,6 +26,12 @@ const SENTENCE = "אני קוראת את החוזה כולו לפני הפגיש
 const field = () => screen.getByRole("textbox") as HTMLTextAreaElement;
 const write = (text: string) => fireEvent.change(field(), { target: { value: text } });
 const next = () => fireEvent.click(screen.getByRole("button", { name: "להמשיך" }));
+const chooseFive = () =>
+  fireEvent.click(screen.getByRole("button", { name: "לעבור על חמש השאלות" }));
+const chooseOne = () =>
+  fireEvent.click(screen.getByRole("button", { name: "לענות על שאלה אחת" }));
+const CHOOSER = "אפשר לענות על שאלה אחת, ואפשר על כל החמש.";
+const QUICK = "היא הבינה איך הגעתי לתשובה, ולא רק קיבלה אותה";
 
 function fillAll() {
   for (const answer of ANSWERS) {
@@ -44,6 +50,8 @@ describe("Bidul, the five-question sheet", () => {
   it("has no detectable a11y violations, empty and finished", async () => {
     const { container } = renderPage();
     expect(await axe(container)).toHaveNoViolations();
+    chooseFive();
+    expect(await axe(container)).toHaveNoViolations();
     fillAll();
     expect(await axe(container)).toHaveNoViolations();
   });
@@ -56,6 +64,7 @@ describe("Bidul, the five-question sheet", () => {
   it("says nothing about payment, before or after the sheet is done", () => {
     const { container } = renderPage();
     expect(container.textContent).not.toMatch(PAY);
+    chooseFive();
     fillAll();
     expect(container.textContent).not.toMatch(PAY);
   });
@@ -73,6 +82,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("lets the first question be skipped, and stops on an empty answer after it", () => {
     renderPage();
+    chooseFive();
     expect(screen.getByText("שאלה 1 מתוך 5")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "לדלג לשאלה הבאה" }));
     expect(screen.getByText("שאלה 2 מתוך 5")).toBeInTheDocument();
@@ -84,6 +94,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("asks about one client and one real thing before any sentence", () => {
     renderPage();
+    chooseFive();
     write(ANSWERS[0]);
     next();
     const ask = screen.getByRole("heading", { level: 3 }).textContent!;
@@ -93,6 +104,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("asks for the sentence last, as the fifth question, with no lead of ours", () => {
     renderPage();
+    chooseFive();
     for (const answer of ANSWERS) {
       write(answer);
       next();
@@ -106,6 +118,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("quotes a general word back while the reader is still writing", () => {
     renderPage();
+    chooseFive();
     write(ANSWERS[0]);
     next();
     write("אני פשוט מאוד יסודית");
@@ -114,6 +127,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("hands back the reader's own words, with the general ones marked", () => {
     const { container } = renderPage();
+    chooseFive();
     fillAll();
 
     const title = screen.getByRole("heading", { level: 2, name: new RegExp(SENTENCE) });
@@ -127,6 +141,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("sends the sheet in a chat that opens with the counted line", () => {
     renderPage();
+    chooseFive();
     fillAll();
 
     const link = screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ });
@@ -143,6 +158,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("lets the reader send the sheet to themselves, not to Erez, to come back to it", () => {
     renderPage();
+    chooseFive();
     fillAll();
 
     expect(document.body.textContent).toContain("המשפט הכי ברור הגיע רק בפגישה השנייה");
@@ -157,6 +173,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("ends with one question to put to a reader who knows the work", () => {
     renderPage();
+    chooseFive();
     fillAll();
     expect(document.body.textContent).toContain(
       "הקריאו אותו לאדם אחד שמכיר את העבודה שלכם, ושאלו אותו מה הוא שמע."
@@ -165,6 +182,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("keeps the sheet in this browser, and brings it back on return", () => {
     const first = renderPage();
+    chooseFive();
     write(ANSWERS[0]);
     next();
     write(ANSWERS[1]);
@@ -178,6 +196,7 @@ describe("Bidul, the five-question sheet", () => {
 
   it("erases everything only after the reader confirms", () => {
     renderPage();
+    chooseFive();
     write(ANSWERS[0]);
     next();
 
@@ -186,12 +205,16 @@ describe("Bidul, the five-question sheet", () => {
     fireEvent.click(screen.getByRole("button", { name: "כן, למחוק" }));
 
     expect(screen.queryByText(ANSWERS[0])).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: CHOOSER })).toBeInTheDocument();
+    expect(screen.queryByRole("textbox")).toBeNull();
+    chooseFive();
     expect(screen.getByText("שאלה 1 מתוך 5")).toBeInTheDocument();
     expect(field().value).toBe("");
   });
 
   it("lets the reader reopen a finished sheet and change an answer", () => {
     renderPage();
+    chooseFive();
     fillAll();
     fireEvent.click(screen.getByRole("button", { name: "לערוך תשובות" }));
     expect(field().value).toBe(SENTENCE);
@@ -200,5 +223,74 @@ describe("Bidul, the five-question sheet", () => {
       screen.getByRole("button", { name: /לערוך\s*, מה היה שונה אצל איש מקצוע אחר/ })
     );
     expect(field().value).toBe(ANSWERS[3]);
+  });
+
+  it("opens on the two ways, each with a real answer word for word, and nothing to type yet", () => {
+    renderPage();
+    const heading = screen.getByRole("heading", { level: 2, name: CHOOSER });
+    const section = heading.closest("section")!;
+    expect(screen.queryByRole("textbox")).toBeNull();
+    for (const turn of [...routeExamples.one, ...routeExamples.five]) {
+      expect(section.textContent).toContain(turn.text);
+    }
+    expect(section.textContent).toContain("לקוח, השם מושחר");
+    expect(section.textContent).toContain("כעשר דקות");
+    expect(section.querySelector("a")).toBeNull();
+    expect(section.textContent).not.toMatch(PAY);
+  });
+
+  it("on the short way, asks the one question and hands back a sheet of one answer", () => {
+    const { container } = renderPage();
+    chooseOne();
+    expect(screen.getByRole("heading", { level: 3 }).textContent).toContain(
+      "אם איש מקצוע אחר היה מטפל באותו לקוח"
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
+    expect(screen.getByText("כתבו כמה מילים, ואז נמשיך.")).toBeInTheDocument();
+
+    write(QUICK);
+    fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
+    expect(screen.queryByRole("textbox")).toBeNull();
+    expect(container.textContent).toContain(QUICK);
+    expect(container.textContent).not.toMatch(PAY);
+
+    const toErez = new URL(
+      screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ }).getAttribute("href")!
+    ).searchParams.get("text")!;
+    expect(toErez.startsWith("היי ארז, הגעתי מהאתר. מילאתי את דף חמש השאלות.")).toBe(true);
+    expect(toErez).toContain(QUICK);
+
+    const toSelf = new URL(
+      screen.getByRole("link", { name: /לשלוח את הדף לעצמי בוואטסאפ/ }).getAttribute("href")!
+    ).searchParams.get("text")!;
+    expect(toSelf).toContain(QUICK);
+    expect(toSelf).not.toContain("היי ארז");
+  });
+
+  it("carries the short answer into the fourth of the five questions", () => {
+    renderPage();
+    chooseOne();
+    write(QUICK);
+    fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
+    fireEvent.click(screen.getByRole("button", { name: "להמשיך לחמש השאלות" }));
+
+    expect(screen.getByText("שאלה 1 מתוך 5")).toBeInTheDocument();
+    for (const answer of ANSWERS.slice(0, 3)) {
+      write(answer);
+      next();
+    }
+    // The fourth already holds the short answer, so the sheet moves on to the
+    // sentence, with that answer kept in its row.
+    expect(screen.getByText("שאלה 5 מתוך 5")).toBeInTheDocument();
+    expect(screen.getByText(QUICK)).toBeInTheDocument();
+  });
+
+  it("goes back to the choice while nothing is written yet", () => {
+    renderPage();
+    chooseOne();
+    fireEvent.click(screen.getByRole("button", { name: "לבחור מסלול אחר" }));
+    expect(screen.getByRole("heading", { level: 2, name: CHOOSER })).toBeInTheDocument();
+    expect(screen.queryByRole("textbox")).toBeNull();
   });
 });
