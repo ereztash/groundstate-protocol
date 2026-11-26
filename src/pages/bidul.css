@@ -166,10 +166,6 @@
     hsl(var(--primary)) 2rem
   );
 }
-/* The words the sheet starts the sentence with sit right on the first line. */
-.bd-lead + .bd-field {
-  margin-top: 0.25rem;
-}
 /* Forced colours drop background images, so the rules would vanish. */
 @media (forced-colors: active) {
   .bd-field {
@@ -207,41 +203,6 @@
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
   border-radius: 2px;
-}
-
-/* Choosing which general word to ask about. A real radio sits over the chip,
-   so the keyboard and a screen reader get the native control. */
-.bd-chip {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 1px solid hsl(var(--foreground) / 0.32);
-  border-radius: 2px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background var(--dur-fast) var(--ease-out),
-    color var(--dur-fast) var(--ease-out);
-}
-.bd-chip input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-.bd-chip[data-on] {
-  background: hsl(var(--cta));
-  border-color: hsl(var(--cta));
-  color: hsl(var(--cta-foreground));
-}
-.bd-chip:focus-within {
-  outline: 3px solid hsl(var(--primary));
-  outline-offset: 2px;
 }
 
 /* The five strokes. Each one turns into line when its question is answered,
