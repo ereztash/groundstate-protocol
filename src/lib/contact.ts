@@ -93,6 +93,20 @@ export function whatsappSheetUrl(sentence: string, lines: SheetLine[]): string {
   return `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(text)}`;
 }
 
+/**
+ * A wa.me link with no number, so WhatsApp asks whom to send it to and the
+ * person can pick their own chat (2026-11-26). It carries the same sheet and
+ * the page's address, for coming back to it after a break. No opener: the
+ * message is to themselves, and it must not be counted as a chat with Erez.
+ */
+export function whatsappSelfUrl(sentence: string, lines: SheetLine[], pageUrl: string): string {
+  const tail = pageUrl ? `\n\n${pageUrl}` : "";
+  const sheet = sheetText(sentence, lines, SHEET_ANSWER_MAX);
+  const room = SHEET_TEXT_MAX - tail.length;
+  const body = sheet.length <= room ? sheet : `${sheet.slice(0, room - 1).trimEnd()}…`;
+  return `https://wa.me/?text=${encodeURIComponent(`${body}${tail}`)}`;
+}
+
 export const LINKEDIN_URL = "https://www.linkedin.com/in/erez-tal-shir/";
 
 /**

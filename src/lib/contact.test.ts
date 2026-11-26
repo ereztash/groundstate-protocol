@@ -3,6 +3,7 @@ import {
   LINKEDIN_URL,
   WHATSAPP_DISPLAY,
   sheetText,
+  whatsappSelfUrl,
   whatsappSheetUrl,
   whatsappUrl,
 } from "./contact";
@@ -63,5 +64,27 @@ describe("whatsappSheetUrl", () => {
   it("gives the copy button the whole text", () => {
     const whole = "מילה ".repeat(200).trim();
     expect(sheetText("", [{ label: "מקרה אחד", text: whole }])).toContain(whole);
+  });
+});
+
+describe("whatsappSelfUrl", () => {
+  const page = "https://ereztash.github.io/groundstate-protocol/bidul/";
+  const lines = [{ label: "לקוח אחד ודבר אחד", text: "שלחתי לה שלוש חלופות לחוזה" }];
+
+  it("names no number, so the person picks their own chat, and carries no opener to Erez", () => {
+    const url = new URL(whatsappSelfUrl("אני קוראת את החוזה כולו", lines, page));
+    expect(url.hostname).toBe("wa.me");
+    expect(url.pathname).toBe("/");
+    const t = url.searchParams.get("text")!;
+    expect(t).not.toContain("היי ארז");
+    expect(t).toContain("אני קוראת את החוזה כולו");
+    expect(t).toContain("שלחתי לה שלוש חלופות לחוזה");
+  });
+
+  it("keeps the way back to the page whole, even when the answers are clipped", () => {
+    const long = [1, 2, 3, 4].map((n) => ({ label: `שאלה ${n}`, text: "מילה ".repeat(400) }));
+    const t = new URL(whatsappSelfUrl("", long, page)).searchParams.get("text")!;
+    expect(t.endsWith(page)).toBe(true);
+    expect(t.length).toBeLessThanOrEqual(1700);
   });
 });

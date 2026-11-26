@@ -1,6 +1,5 @@
 import {
   useEffect,
-  useMemo,
   useReducer,
   useRef,
   useState,
@@ -24,6 +23,7 @@ import {
 } from "@/lib/clients";
 import {
   sheetText,
+  whatsappSelfUrl,
   whatsappSheetUrl,
   whatsappUrl,
   type SheetLine,
@@ -32,14 +32,23 @@ import { splitByGeneralWords, uniqueGeneralWords } from "@/lib/generalWords";
 import "./bidul.css";
 
 /**
- * /bidul, the five-question worksheet (2026-11-25).
+ * /bidul, the five-question worksheet (2026-11-25, reordered 2026-11-26).
  *
- * The five questions are the five moves Erez makes when he looks for a
- * client's differentiation, each one checked against session transcripts on
- * 2026-11-25. All five work on the client's own material. The same check
- * showed what does not work: Erez offering the wording himself. So the page
- * never writes a word for the reader. It asks, it quotes one of their own
- * general words back at them, and it hands back only what they wrote.
+ * The questions follow the order of states Erez moves a client through when
+ * he looks for their differentiation, read off the sprint transcripts and
+ * approved by him on 2026-11-26: what they say today, one client and one real
+ * thing done for them, what they did there and what they saw, what another
+ * professional would have left the client without, and only then one sentence
+ * to a client who does not believe it. Asking for the sentence directly, or
+ * offering a ready label, did not bring one in those transcripts. Offering the
+ * wording himself did not work either. So the page never writes a word for
+ * the reader. It asks, it quotes one of their own general words back at them,
+ * and it hands back only what they wrote, with no lead of ours on the sentence.
+ *
+ * Two states a page cannot hold, it hands over: the clearest sentence came
+ * after a break more often than not, so the sheet can be sent to oneself and
+ * reopened; and a sentence needs a reader, so the sheet ends with one question
+ * to put to someone who knows the work, and the WhatsApp step to Erez.
  *
  * The reader leaves with something that stands without a call: a sheet in
  * their own words, with a first sentence on it, that they can copy or print.
@@ -58,19 +67,19 @@ import "./bidul.css";
 
 const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
 
-const COUNT = 5;
-/** The step after the last question: completing the sentence. */
+/** The questions that build up to the sentence. */
+const COUNT = 4;
+/** The step after them: the sentence, which is the fifth question. */
 const SENTENCE = COUNT;
+const TOTAL = COUNT + 1;
 const LIMIT = 600;
-const KEY = "cor.bidul.v1";
-const LEAD = "בוחרים בי כי";
+/** v1 held five answers in another order; it is not read back into this one. */
+const KEY = "cor.bidul.v2";
 
 type State = {
-  /** 0 to 4 is a question, 5 is the sentence. */
+  /** 0 to 3 is a question, 4 is the sentence. */
   step: number;
   answers: string[];
-  /** The general word the second question asks about. */
-  word: string;
   sentence: string;
   /** ISO time the sheet was taken out, empty until then. */
   doneAt: string;
@@ -78,8 +87,7 @@ type State = {
 
 const EMPTY: State = {
   step: 0,
-  answers: ["", "", "", "", ""],
-  word: "",
+  answers: ["", "", "", ""],
   sentence: "",
   doneAt: "",
 };
@@ -88,7 +96,6 @@ type Action =
   | { type: "restore"; state: State }
   | { type: "write"; index: number; text: string }
   | { type: "sentence"; text: string }
-  | { type: "word"; word: string }
   | { type: "next" }
   | { type: "edit"; index: number }
   | { type: "finish"; at: string }
@@ -106,16 +113,9 @@ function reducer(state: State, action: Action): State {
       };
     case "sentence":
       return { ...state, sentence: action.text };
-    case "word":
-      return { ...state, word: action.word };
     case "next": {
-      let word = state.word;
-      // The word is chosen when the first answer is left, and kept once the
-      // second question has an answer that speaks about it.
-      if (state.step === 0 && state.answers[1].trim() === "") {
-        const found = uniqueGeneralWords(state.answers[0]);
-        word = found.includes(word) ? word : (found[0] ?? "");
-      }
+      // On to the next question still empty, or to the sentence. The first
+      // question may stay empty, so it is never gone back to.
       let step = SENTENCE;
       for (let i = state.step + 1; i < COUNT; i++) {
         if (state.answers[i].trim() === "") {
@@ -123,7 +123,7 @@ function reducer(state: State, action: Action): State {
           break;
         }
       }
-      return { ...state, word, step };
+      return { ...state, step };
     }
     case "edit":
       return { ...state, step: action.index, doneAt: "" };
@@ -151,7 +151,6 @@ function readSaved(): State | null {
     return {
       step,
       answers: v.answers.map((a) => text(a)),
-      word: text(v.word, 40),
       sentence: text(v.sentence),
       doneAt: text(v.doneAt, 40),
     };
@@ -162,58 +161,50 @@ function readSaved(): State | null {
 
 type Question = { ask: string; why: string };
 
-/** The five questions. The second one is built from the reader's own word. */
-function questionsFor(word: string): Question[] {
-  return [
-    {
-      ask: "מה אתם אומרים היום כששואלים אתכם מה אתם עושים?",
-      why: "אפשר להדביק מהפרופיל או מהאתר. גם בפגישה אני מתחיל ממה שכבר כתבתם לעצמכם.",
-    },
-    word
-      ? {
-          ask: `כתבתם "${word}". זו מילה גדולה וכללית. מה זה "${word}" אצלכם, בדוגמה אחת?`,
-          why: "מספיקה דוגמה אחת, של לקוח אחד ומה שעשיתם בשבילו.",
-        }
-      : {
-          ask: "איזו מילה ממה שכתבתם גם מישהו אחר מהתחום היה כותב על עצמו? ומה היא אומרת אצלכם, בדוגמה אחת?",
-          why: "הרשימה שלי לא מצאה מילה כזאת, אז הבחירה אצלכם.",
-        },
-    {
-      ask: "חשבו על לקוח אחד שהיה מרוצה. אם הייתי שואל אותו איך הוא מתאר אתכם, מה הוא היה אומר?",
-      why: "במילים שלו, כמו שהוא מדבר.",
-    },
-    {
-      ask: "מישהו אחר מהתחום מתמודד מולכם על אותו פרויקט. למה שיבחרו בכם ולא בו?",
-      why: "אם התשובה הראשונה היא משהו שגם הוא היה אומר על עצמו, כתבו את זו שבאה אחריה.",
-    },
-    {
-      ask: "היזכרו בפעם אחת שבה ראיתם משהו שהלקוח לא ראה. מה ראיתם, ואיך ידעתם?",
-      why: "מה שנראה לכם מובן מאליו, אני חושב ששם מסתתר הבידול.",
-    },
-  ];
-}
+/**
+ * The four questions before the sentence, in the approved order of states:
+ * what is said today, one client and one real thing, the act and what was
+ * seen, and the other professional, asked about the client's side.
+ */
+const QUESTIONS: Question[] = [
+  {
+    ask: "מה אתם עושים ללקוח? כתבו את זה כמו שאתם אומרים את זה היום.",
+    why: "אפשר להדביק מהפרופיל או מהאתר, ואפשר גם לדלג. גם בפגישה אני מתחיל ממה שכבר כתבתם לעצמכם.",
+  },
+  {
+    ask: "חשבו על לקוח אחד ועל דבר אחד ששלחתם לו או עשיתם איתו. אם הייתי שואל את הלקוח הזה מה עשיתם בשבילו, מה הוא היה אומר?",
+    why: "כדאי לפתוח משהו אמיתי ששלחתם לו, הצעה, מצגת או הודעה. אם עוד אין לקוח, חשבו על מישהו שעבד איתכם באמת.",
+  },
+  {
+    ask: "איזו מילה אחת ממה שהוא היה אומר הכי נכונה? מה עשיתם באותו רגע, ומה ראיתם שגרם לכם לעשות את זה?",
+    why: "מספיק רגע אחד, גם קטן.",
+  },
+  {
+    ask: "אם איש מקצוע אחר היה מטפל באותו לקוח ובאותה בעיה, מה היה שונה אצל הלקוח?",
+    why: "כתבו את זה מהצד של הלקוח, מה היה קורה אצלו.",
+  },
+];
+
+/** The fifth question, the sentence, asked only after the four. */
+const SENTENCE_Q: Question = {
+  ask: "כתבו את זה במשפט אחד, כאילו אני לקוח שלא מאמין לזה.",
+  why: "אפשר להשתמש במילים שכבר כתבתם למעלה. אפשר גם להשאיר ריק ולחזור מחר.",
+};
 
 /** The short name of each row, on the sheet and in the message that carries it. */
-function labelFor(index: number, word: string): string {
-  if (index === 1 && word) return `המילה "${word}"`;
-  return [
-    "מה שכתוב היום",
-    "המילה הכללית",
-    "מה לקוח היה אומר",
-    "מישהו אחר על אותו פרויקט",
-    "מקרה אחד",
-  ][index];
-}
+const LABELS = [
+  "מה שכתוב היום",
+  "לקוח אחד ודבר אחד",
+  "מה עשיתי ומה ראיתי",
+  "מה היה שונה אצל איש מקצוע אחר",
+];
 
 /** The words on the draft in the hero. Each one is in the fixed list. */
 const DRAFT_WORDS = ["מקצועי", "יחס אישי", "איכותי", "ניסיון רב"];
 
-/** The reader's sentence without a repeated lead or a closing mark. */
+/** The reader's sentence without a closing mark; the page adds the point. */
 function tailOf(sentence: string): string {
-  return sentence
-    .trim()
-    .replace(new RegExp(`^${LEAD}\\s*`), "")
-    .replace(/[.!?…\s]+$/, "");
+  return sentence.trim().replace(/[.!?…\s]+$/, "");
 }
 
 function dateLabel(iso: string): string {
@@ -234,7 +225,8 @@ function fit(el: HTMLTextAreaElement | null) {
 }
 
 /**
- * Five strokes, read from the right like the page. Each one stands off true
+ * Five strokes, read from the right like the page, one for each of the four
+ * questions and one for the sentence. Each one stands off true
  * until its question is answered, then turns into line and stops: the brand's
  * one motion, and the sheet's progress mark. Ink only. The copper point is
  * kept for the headline, and for the reader's sentence once it exists.
@@ -338,10 +330,12 @@ const Turn = ({ turn }: { turn: SessionTurn }) => (
 );
 
 const Bidul = () => {
+  // The title is in the words people search with: business differentiation,
+  // and a unique value proposition (Erez's choice, 2026-11-26).
   useDocumentMeta({
-    title: "למה שיבחרו דווקא בכם? חמש שאלות | COR-SYS",
+    title: "בידול עסקי לעצמאים בחמש שאלות | COR-SYS",
     description:
-      "חמש השאלות שאני שואל עצמאים כשאנחנו מחפשים את הבידול שלהם. כעשר דקות, ובסוף יש לכם דף אחד, במילים שלכם, שכתוב בו למה בוחרים דווקא בכם.",
+      "חמש השאלות שאני שואל עצמאים כשאנחנו מחפשים את הבידול העסקי שלהם. כעשר דקות, ובסוף יש לכם דף אחד וטיוטה של הצעת ערך ייחודית, במילים שלכם.",
     path: "/bidul",
     ogTitle: "למה שיבחרו דווקא בכם?",
     ogDescription: "חמש שאלות, כעשר דקות, ודף אחד במילים שלכם.",
@@ -393,42 +387,42 @@ const Bidul = () => {
     fit(fieldRef.current);
   }, [state.step, done, ready]);
 
-  const found = useMemo(() => uniqueGeneralWords(state.answers[0]), [state.answers]);
-  const questions = questionsFor(state.word);
   const onSentence = state.step === SENTENCE;
   const current = onSentence ? state.sentence : state.answers[state.step];
   const started = state.answers.some((a) => a.trim() !== "") || state.sentence.trim() !== "";
-  const settled = state.answers.map(
-    (a, i) => a.trim() !== "" && (done || state.step !== i)
-  );
+  const tail = tailOf(state.sentence);
+  const settled = [
+    ...state.answers.map((a, i) => a.trim() !== "" && (done || state.step !== i)),
+    done && tail !== "",
+  ];
 
-  // The same move the second question makes, live: a general word in what is
-  // being written is quoted back. It never blocks. The first answer is left
-  // alone, since it is meant to be what already exists.
-  const caught =
-    state.step === 0
-      ? []
-      : uniqueGeneralWords(current).filter(
-          (w) => !(state.step === 1 && w === state.word)
-        );
+  // A general word in what is being written is quoted back, live. It never
+  // blocks. The first answer is left alone, since it is meant to be what
+  // already exists.
+  const caught = state.step === 0 ? [] : uniqueGeneralWords(current);
   const note = nudge
     ? "כתבו כמה מילים, ואז נמשיך."
     : caught.length > 0
       ? `כתבתם "${caught[0]}". גם מישהו אחר מהתחום היה כותב את זה. מה זה אומר אצלכם, בדוגמה אחת?`
       : "";
 
-  const tail = tailOf(state.sentence);
-  const fullSentence = tail ? `${LEAD} ${tail}` : "";
+  // The sentence is the reader's alone: no lead of ours in front of it.
+  const fullSentence = tail;
   const lines: SheetLine[] = state.answers.map((text, i) => ({
-    label: labelFor(i, state.word),
+    label: LABELS[i],
     text,
   }));
   const waHref = whatsappSheetUrl(fullSentence, lines);
+  const selfHref = () =>
+    whatsappSelfUrl(fullSentence, lines, window.location.href.split("#")[0]);
   const anyMarked =
     uniqueGeneralWords([tail, ...state.answers].join("\n")).length > 0;
 
+  // The first question may be skipped; the next three need a few words.
+  const mayPass = onSentence || state.step === 0;
+
   const onNext = () => {
-    if (!onSentence && current.trim() === "") {
+    if (!mayPass && current.trim() === "") {
       setNudge(true);
       fieldRef.current?.focus();
       return;
@@ -512,11 +506,7 @@ const Bidul = () => {
       ? "להמשיך מאיפה שעצרתם"
       : "להתחיל בשאלה הראשונה";
 
-  const progress = done
-    ? ""
-    : onSentence
-      ? "נשאר המשפט"
-      : `שאלה ${state.step + 1} מתוך ${COUNT}`;
+  const progress = done ? "" : `שאלה ${state.step + 1} מתוך ${TOTAL}`;
 
   /** The open row: the question, the ruled field, the live note, the step on. */
   const field = (opts: {
@@ -525,8 +515,6 @@ const Bidul = () => {
     why: string;
     lines: 2 | 4;
     button: string;
-    withChips?: boolean;
-    lead?: string;
   }) => (
     <div className="ld-in">
       <h3 id={`${opts.id}-q`} className="bd-q mt-1.5">
@@ -535,34 +523,6 @@ const Bidul = () => {
       <p id={`${opts.id}-why`} className="mt-2 text-sm leading-relaxed text-muted-foreground">
         {opts.why}
       </p>
-
-      {opts.withChips && found.length > 1 && (
-        <fieldset className="mt-4">
-          <legend className="text-sm leading-relaxed text-muted-foreground">
-            הרשימה שלי מצאה כמה מילים כאלה במה שכתבתם. על איזו מהן לשאול?
-          </legend>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {found.map((w) => (
-              <label key={w} className="bd-chip" data-on={w === state.word ? "" : undefined}>
-                <input
-                  type="radio"
-                  name="bidul-word"
-                  value={w}
-                  checked={w === state.word}
-                  onChange={() => dispatch({ type: "word", word: w })}
-                />
-                {w}
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      )}
-
-      {opts.lead && (
-        <p className="bd-lead mt-5" aria-hidden="true">
-          {opts.lead}
-        </p>
-      )}
 
       <textarea
         ref={fieldRef}
@@ -635,7 +595,7 @@ const Bidul = () => {
                 </p>
               </div>
 
-              <p className="cor-overline-he mt-7 !text-base">לעצמאים, כעשר דקות</p>
+              <p className="cor-overline-he mt-7 !text-base">בידול עסקי לעצמאים, כעשר דקות</p>
 
               <h1 id="bidul-title" className="cor-display mt-5 text-foreground">
                 אני שואל חמש שאלות, ואתם כותבים למה בוחרים דווקא בכם
@@ -643,9 +603,10 @@ const Bidul = () => {
               </h1>
 
               <p className="cor-body-lg mt-6 max-w-xl font-medium text-foreground">
-                אלה השאלות שאני שואל עצמאים כשאנחנו מחפשים את הבידול שלהם. זה
-                לוקח כעשר דקות, ואני לא כותב בדף אף מילה, כך שכל מה שיהיה בו
-                יצא מכם.
+                אלה השאלות שאני שואל עצמאים כשאנחנו מחפשים את הבידול שלהם.
+                עוברים על לקוח אחד ועל דבר אחד שעשיתם בשבילו, ורק בסוף כותבים
+                משפט. זה לוקח כעשר דקות, ואני לא כותב בדף אף מילה, כך שכל מה
+                שיהיה בו יצא מכם.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
@@ -718,10 +679,10 @@ const Bidul = () => {
                   </div>
 
                   <ol className="bd-rows">
-                    {questions.map((q, i) => {
+                    {QUESTIONS.map((q, i) => {
                       const open = i === state.step;
                       const kept = !open && state.answers[i].trim() !== "";
-                      const label = labelFor(i, i < state.step || kept ? state.word : "");
+                      const label = LABELS[i];
                       return (
                         <li
                           key={i}
@@ -745,8 +706,10 @@ const Bidul = () => {
                                 ask: q.ask,
                                 why: q.why,
                                 lines: 4,
-                                button: "להמשיך",
-                                withChips: i === 1,
+                                button:
+                                  i === 0 && current.trim() === ""
+                                    ? "לדלג לשאלה הבאה"
+                                    : "להמשיך",
                               })}
                             {kept && (
                               <>
@@ -780,15 +743,14 @@ const Bidul = () => {
                       {onSentence ? (
                         field({
                           id: "bidul-sentence",
-                          ask: "קראו את מה שכתבתם, והשלימו את המשפט במילים שכבר מופיעות למעלה.",
-                          why: "אפשר גם להשאיר ריק ולהשלים אחר כך.",
+                          ask: SENTENCE_Q.ask,
+                          why: SENTENCE_Q.why,
                           lines: 2,
                           button: "להוציא את הדף",
-                          lead: LEAD,
                         })
                       ) : (
                         <p className="bd-lead mt-1" data-ahead="">
-                          {LEAD} <span className="bd-blank" aria-hidden="true" />
+                          <span className="bd-blank" aria-hidden="true" />
                         </p>
                       )}
                     </div>
@@ -796,7 +758,8 @@ const Bidul = () => {
                 </div>
 
                 <div className="bd-noprint mt-7 text-sm leading-relaxed text-foreground">
-                  <p>
+                  <p>אפשר גם לדבר במקום להקליד, עם המיקרופון שבמקלדת של הטלפון.</p>
+                  <p className="mt-2">
                     מה שאתם כותבים נשמר רק בדפדפן הזה, כדי שתוכלו לחזור אליו.
                     הוא לא נשלח לשום מקום עד שתבחרו לשלוח.
                   </p>
@@ -846,13 +809,12 @@ const Bidul = () => {
                       tabIndex={-1}
                       className="cor-title bd-result-title text-foreground"
                     >
-                      {LEAD}{" "}
                       {tail ? (
                         <Marked text={tail} />
                       ) : (
                         <>
                           <span className="bd-blank" aria-hidden="true" />
-                          <span className="sr-only">(עוד לא הושלם)</span>
+                          <span className="sr-only">המשפט עוד לא נכתב</span>
                         </>
                       )}
                       <span className="cor-point">.</span>
@@ -880,6 +842,10 @@ const Bidul = () => {
                       {anyMarked
                         ? "הקו הגלי מסמן מילים מרשימה קבועה של מילים כלליות. הדף לא מבין את הטקסט, והוא יכול לפספס מילה או לסמן בטעות."
                         : "הדף לא מצא כאן מילה מהרשימה הקבועה של מילים כלליות. הוא לא מבין את הטקסט, כך שזה עוד לא אומר שהמשפט חד."}
+                    </p>
+                    <p className="mt-2 text-foreground">
+                      לפני שאתם משתמשים במשפט, הקריאו אותו לאדם אחד שמכיר את
+                      העבודה שלכם, ושאלו אותו מה הוא שמע.
                     </p>
                     <p className="mt-2 font-semibold text-foreground">
                       חמש השאלות, ארז טל-שיר
@@ -922,6 +888,26 @@ const Bidul = () => {
                         ? "ההעתקה לא עבדה בדפדפן הזה. אפשר לסמן את הטקסט בדף ולהעתיק."
                         : ""}
                   </p>
+
+                  {/* The break a page cannot give: the sheet goes to the
+                      reader's own chat, with the way back to it. */}
+                  <div className="mt-6 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-foreground">
+                    <p>
+                      אצל ארבעה משבעת האנשים שליוויתי בבידול, המשפט הכי ברור
+                      הגיע רק בפגישה השנייה, אחרי הפסקה. הדף שמור בדפדפן הזה,
+                      ואפשר לשלוח אותו לעצמכם ולחזור אליו מחר.
+                    </p>
+                    <a
+                      href={selfHref()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackCtaClick("whatsapp_bidul_self")}
+                      className="bd-textbtn mt-1"
+                    >
+                      לשלוח את הדף לעצמי בוואטסאפ
+                      <span className="sr-only"> (נפתח בוואטסאפ)</span>
+                    </a>
+                  </div>
                 </div>
               </>
             )}
@@ -1048,6 +1034,12 @@ const Bidul = () => {
                 שהלקוח אמר, הוא ניסח מחדש במילים שלו יותר מאשר כשהבאתי לו כלי
                 או הסבר משלי. כשהצעתי ניסוח משלי, היו פעמים שהוא נדחה במקום.
                 בגלל זה הדף רק שואל.
+              </p>
+              <p className="cor-body-lg mt-4 max-w-xl text-foreground">
+                גם הסדר של השאלות בא משם. כששאלתי ישר מה מבדל אותם, אף אחד
+                משבעת האנשים שליוויתי לא ענה במשפט משלו. המשפט הגיע כשדיברנו
+                על לקוח אחד, ואחר כך על מה שהיה שונה אצלו עם איש מקצוע אחר,
+                או כשביקשתי להגיד את זה ללקוח שלא מאמין.
               </p>
               <Link to="/about" className="ld-link mt-6 inline-block">
                 עוד על הדרך שלי

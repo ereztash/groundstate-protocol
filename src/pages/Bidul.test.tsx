@@ -18,9 +18,8 @@ const PAY = /תשלום|לשלם|בחינם|חינם|ללא עלות|בלי על
 const ANSWERS = [
   "אני נותנת שירות מקצועי ואישי לעסקים קטנים",
   "לקוחה אחת קיבלה ממני תשובה באותו ערב, עם שלוש חלופות לחוזה",
-  "היא הייתה אומרת שאני עונה לפני שהיא מספיקה לדאוג",
-  "כי אני קוראת את החוזה כולו לפני הפגישה הראשונה",
   "ראיתי שהסעיף על הפיצוי סותר את מה שהיא סיפרה, כי שאלתי פעמיים",
+  "היא הייתה חותמת על החוזה בלי לדעת על הסעיף",
 ];
 const SENTENCE = "אני קוראת את החוזה כולו לפני הפגישה הראשונה";
 
@@ -72,34 +71,37 @@ describe("Bidul, the five-question sheet", () => {
     expect(section.querySelector("a")).toBeNull();
   });
 
-  it("does not move on from an empty answer, and says why", () => {
+  it("lets the first question be skipped, and stops on an empty answer after it", () => {
     renderPage();
+    expect(screen.getByText("שאלה 1 מתוך 5")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "לדלג לשאלה הבאה" }));
+    expect(screen.getByText("שאלה 2 מתוך 5")).toBeInTheDocument();
+
     next();
     expect(screen.getByText("כתבו כמה מילים, ואז נמשיך.")).toBeInTheDocument();
-    expect(screen.getByText("שאלה 1 מתוך 5")).toBeInTheDocument();
+    expect(screen.getByText("שאלה 2 מתוך 5")).toBeInTheDocument();
   });
 
-  it("builds the second question from a general word the reader wrote", () => {
+  it("asks about one client and one real thing before any sentence", () => {
     renderPage();
     write(ANSWERS[0]);
     next();
-    expect(screen.getByRole("heading", { level: 3 }).textContent).toContain('כתבתם "מקצועי"');
-
-    // Two general words were found, so the reader chooses which one to work on.
-    const choices = screen.getAllByRole("radio");
-    expect(choices.length).toBe(2);
-    fireEvent.click(choices[1]);
-    expect(screen.getByRole("heading", { level: 3 }).textContent).toContain('כתבתם "אישי"');
+    const ask = screen.getByRole("heading", { level: 3 }).textContent!;
+    expect(ask).toContain("לקוח אחד ועל דבר אחד");
+    expect(ask).not.toContain("משפט");
   });
 
-  it("asks the reader to choose a word when the list finds none", () => {
+  it("asks for the sentence last, as the fifth question, with no lead of ours", () => {
     renderPage();
-    write("אני בונה אתרים לרופאי שיניים");
-    next();
+    for (const answer of ANSWERS) {
+      write(answer);
+      next();
+    }
+    expect(screen.getByText("שאלה 5 מתוך 5")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3 }).textContent).toContain(
-      "איזו מילה ממה שכתבתם"
+      "כאילו אני לקוח שלא מאמין לזה"
     );
-    expect(screen.queryAllByRole("radio").length).toBe(0);
+    expect(document.body.textContent).not.toContain("בוחרים בי כי");
   });
 
   it("quotes a general word back while the reader is still writing", () => {
@@ -114,8 +116,8 @@ describe("Bidul, the five-question sheet", () => {
     const { container } = renderPage();
     fillAll();
 
-    const title = screen.getByRole("heading", { level: 2, name: /בוחרים בי כי/ });
-    expect(title.textContent).toContain(SENTENCE);
+    const title = screen.getByRole("heading", { level: 2, name: new RegExp(SENTENCE) });
+    expect(title.textContent).toBe(`${SENTENCE}.`);
     for (const answer of ANSWERS) {
       expect(container.textContent).toContain(answer);
     }
@@ -132,10 +134,33 @@ describe("Bidul, the five-question sheet", () => {
     expect(url.hostname).toBe("wa.me");
     const text = url.searchParams.get("text")!;
     expect(text.startsWith("היי ארז, הגעתי מהאתר. מילאתי את דף חמש השאלות.")).toBe(true);
-    expect(text).toContain(`בוחרים בי כי ${SENTENCE}`);
-    expect(text).toContain(ANSWERS[4]);
+    expect(text).toContain(SENTENCE);
+    expect(text).toContain(ANSWERS[3]);
+    expect(text).not.toContain("בוחרים בי כי");
     expect(link.getAttribute("target")).toBe("_blank");
     expect(link.getAttribute("rel")).toContain("noopener");
+  });
+
+  it("lets the reader send the sheet to themselves, not to Erez, to come back to it", () => {
+    renderPage();
+    fillAll();
+
+    expect(document.body.textContent).toContain("המשפט הכי ברור הגיע רק בפגישה השנייה");
+    const link = screen.getByRole("link", { name: /לשלוח את הדף לעצמי בוואטסאפ/ });
+    const url = new URL(link.getAttribute("href")!);
+    expect(url.hostname).toBe("wa.me");
+    expect(url.pathname).toBe("/");
+    const text = url.searchParams.get("text")!;
+    expect(text).toContain(SENTENCE);
+    expect(text).not.toContain("היי ארז");
+  });
+
+  it("ends with one question to put to a reader who knows the work", () => {
+    renderPage();
+    fillAll();
+    expect(document.body.textContent).toContain(
+      "הקריאו אותו לאדם אחד שמכיר את העבודה שלכם, ושאלו אותו מה הוא שמע."
+    );
   });
 
   it("keeps the sheet in this browser, and brings it back on return", () => {
@@ -171,7 +196,9 @@ describe("Bidul, the five-question sheet", () => {
     fireEvent.click(screen.getByRole("button", { name: "לערוך תשובות" }));
     expect(field().value).toBe(SENTENCE);
 
-    fireEvent.click(screen.getByRole("button", { name: /לערוך\s*, מקרה אחד/ }));
-    expect(field().value).toBe(ANSWERS[4]);
+    fireEvent.click(
+      screen.getByRole("button", { name: /לערוך\s*, מה היה שונה אצל איש מקצוע אחר/ })
+    );
+    expect(field().value).toBe(ANSWERS[3]);
   });
 });
