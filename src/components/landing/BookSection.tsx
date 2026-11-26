@@ -144,7 +144,7 @@ const BookSection = () => {
                 ״{firstCallWords.join(" … ")}״
               </blockquote>
               <figcaption className="mt-2 text-sm text-muted-foreground">
-                מהדקות האחרונות של שיחה ראשונה, מילה במילה מההקלטה
+                מהדקות האחרונות של שיחה איתי, מילה במילה מההקלטה
               </figcaption>
             </figure>
 
