@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { trackCtaClick } from "@/lib/analytics";
 import SectionHead from "./SectionHead";
 
 /**
@@ -15,6 +17,11 @@ import SectionHead from "./SectionHead";
  * found that people with several fields are proud of the combination and do
  * not present it as a problem, so the note described the coach's exercise,
  * not the reader.
+ *
+ * Under the list, a way in for the reader who recognised themselves and is not
+ * ready for a call (2026-11-26): the five questions at /bidul, said as what
+ * they get and how small the first step is. A plain link, so the booking
+ * button stays the one strong action on the page.
  *
  * The heading is the ICP line in the plural the site uses since 2026-09-30,
  * with "נתקעים" rather than the banned "מגמגמים". The notes keep main's plural
@@ -67,6 +74,20 @@ const WhatYouTriedSection = () => (
         ))}
       </ul>
 
+      <div className="mt-8 max-w-2xl border-s-2 border-primary ps-5">
+        <p className="text-lg leading-relaxed text-foreground">
+          רוצים להתחיל לבד? יש כאן חמש שאלות שאני שואל בפגישת בידול, ובסוף
+          כותבים משפט אחד במילים שלכם, למה לבחור דווקא בכם. אפשר להתחיל בשאלה
+          אחת.
+        </p>
+        <Link
+          to="/bidul"
+          onClick={() => trackCtaClick("bidul_home")}
+          className="ld-link mt-2 inline-block text-lg font-semibold"
+        >
+          לחמש השאלות
+        </Link>
+      </div>
     </div>
   </section>
 );

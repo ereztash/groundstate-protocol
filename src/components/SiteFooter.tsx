@@ -22,6 +22,7 @@ type FooterLink = { to: string; label: string; lang?: string };
 
 const LINKS: Record<Lang, FooterLink[]> = {
   he: [
+    { to: "/bidul", label: "חמש השאלות" },
     { to: "/protocol", label: "הפרוטוקול" },
     { to: "/insights", label: "תובנות" },
     { to: "/about", label: "אודות" },

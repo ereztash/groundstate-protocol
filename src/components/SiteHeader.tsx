@@ -30,6 +30,9 @@ import { WHATSAPP_DISPLAY, whatsappUrl, type Lang } from "@/lib/contact";
  */
 
 const NAV = [
+  // The five questions (2026-11-26): the one page that gives something before
+  // any contact, so it sits first, before the pages that explain.
+  { to: "/bidul", label: "חמש השאלות" },
   { to: "/protocol", label: "הפרוטוקול" },
   { to: "/insights", label: "תובנות" },
   { to: "/about", label: "אודות" },
