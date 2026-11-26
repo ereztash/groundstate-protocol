@@ -6,7 +6,8 @@
  * add clients here who are not already public on the landing page — other names
  * that appear in internal material require separate, explicit consent.
  *
- * One exception, and it names nobody: `sessionMoments`, further down.
+ * Two exceptions, and they name nobody: `sessionMoments` and `firstCallWords`,
+ * further down.
  */
 
 export type Testimonial = {
@@ -187,6 +188,28 @@ export const sessionMoments: SessionTurn[][] = [
     { who: "client", text: "זה מדייק את ההיסטוריה שלי לערך הייחודי שלי." },
     { who: "erez", text: "המשפט הזה בעיניי הוא שווה, שווה הכול." },
   ],
+];
+
+/**
+ * What one person said in the last minutes of a first call with Erez, shown in
+ * the booking section with no name, the same way as `sessionMoments`. In the
+ * call itself she agreed to the use of its last part, without her face. Her
+ * name goes beside it only if she says yes to that too, and then it belongs
+ * with the testimonials above.
+ *
+ * Each item is an unbroken run out of one line of the call transcript, word
+ * for word, with only its closing punctuation dropped. The page joins them
+ * with an ellipsis, and the ellipsis is the only mark of what was left out.
+ * The transcript is not in this repository, so clients.test.ts checks what
+ * must not be added: a name, a link, a date, or a cut hidden inside an item.
+ */
+export const firstCallWords: readonly string[] = [
+  "נתת לי פה איזשהו מראה לגבי עצמי",
+  "אתה באמת בא מעולמות מנוגדים וזה מביא המון ערך בעולם שלנו",
+  "אתה יועץ רגשי בעולמות אסטרטגיים",
+  "מפגש כזה קצת מוציא אותי מהפוקוס שלי",
+  "הוא מוציא אותי ומחזיר אותי בחזרה",
+  "ממקום אחר",
 ];
 
 export type ClientCredit = {
