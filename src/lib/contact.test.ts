@@ -68,7 +68,7 @@ describe("whatsappSheetUrl", () => {
 });
 
 describe("whatsappSelfUrl", () => {
-  const page = "https://ereztash.github.io/groundstate-protocol/bidul/";
+  const page = "https://corsys.co.il/bidul/";
   const lines = [{ label: "לקוח אחד ודבר אחד", text: "שלחתי לה שלוש חלופות לחוזה" }];
 
   it("names no number, so the person picks their own chat, and carries no opener to Erez", () => {

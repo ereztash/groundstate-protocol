@@ -6,7 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
-const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
+const SITE_ORIGIN = "https://corsys.co.il";
 
 /**
  * /about — an experiential, scroll-driven telling of who Erez is. A single

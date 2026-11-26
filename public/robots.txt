@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ereztash.github.io/groundstate-protocol/sitemap.xml
+Sitemap: https://corsys.co.il/sitemap.xml

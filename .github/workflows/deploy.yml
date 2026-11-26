@@ -25,14 +25,13 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-24.04
-    # Deploy target is the GitHub Pages project site (ereztash.github.io/
-    # groundstate-protocol/). Assets must be base-prefixed so they resolve at
-    # every route depth (the SSG emits nested pages like /protocol/index.html);
-    # a relative or root-absolute base 404s the CSS/JS on a subpath. Both the
-    # vite build and the prerender read this. When the ereztalshir.co.il apex
-    # domain is connected (served at root), change this to "/".
+    # Deploy target is the custom domain corsys.co.il, which GitHub Pages serves
+    # at the root; the old project sub-path (ereztash.github.io/
+    # groundstate-protocol/) redirects there. An absolute base keeps the CSS/JS
+    # resolving at every route depth (the SSG emits nested pages like
+    # /protocol/index.html). Both the vite build and the prerender read this.
     env:
-      VITE_BASE_PATH: /groundstate-protocol/
+      VITE_BASE_PATH: /
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -58,9 +57,9 @@ jobs:
           # relative-base artifact that works at both the project sub-path and
           # the apex domain. That is not what happens: VITE_BASE_PATH is set on
           # the job above, step env does not unset it, and the published HTML
-          # carries "/groundstate-protocol/assets/..." accordingly. The artifact
-          # is wired to the sub-path and will need the job env changed, or
-          # removed, when ereztalshir.co.il is connected.
+          # carries "/assets/..." accordingly (it carried
+          # "/groundstate-protocol/assets/..." while the site lived on the
+          # project sub-path).
           #
           # Removing it rather than setting it to "/" is the option that walks
           # into the prerender's modulepreload trap; see scripts/prerender.mjs.
@@ -117,13 +116,13 @@ jobs:
     # the site has, so a changed page is crawled in days instead of weeks.
     # Google does not take IndexNow; it reads the sitemap through Search
     # Console. The key file sits in public/, so its location covers every URL
-    # under /groundstate-protocol/. A failed ping never fails the deploy.
+    # under the site root. A failed ping never fails the deploy.
     name: Ping IndexNow
     needs: deploy
     runs-on: ubuntu-24.04
     continue-on-error: true
     env:
-      SITE: https://ereztash.github.io/groundstate-protocol
+      SITE: https://corsys.co.il
       KEY: 14e641f987b6e7a3d5eeca29eb06f6b0
     steps:
       - name: Wait for the key file to be live
@@ -139,7 +138,7 @@ jobs:
           urls=$(curl -fsS "$SITE/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//')
           [ -n "$urls" ] || { echo "no URLs in the sitemap"; exit 1; }
           list=$(printf '%s\n' $urls | jq -R . | jq -s .)
-          body=$(jq -n --arg host "ereztash.github.io" --arg key "$KEY" \
+          body=$(jq -n --arg host "corsys.co.il" --arg key "$KEY" \
             --arg loc "$SITE/$KEY.txt" --argjson urls "$list" \
             '{host: $host, key: $key, keyLocation: $loc, urlList: $urls}')
           code=$(curl -sS -o /tmp/indexnow.txt -w '%{http_code}' -X POST \

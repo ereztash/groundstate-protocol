@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
+const SITE_ORIGIN = "https://corsys.co.il";
 
 /** The two home pages are translations of each other; nothing else is. */
 const ALTERNATES: ReadonlyArray<readonly [string, string]> = [
