@@ -687,7 +687,7 @@ const Bidul = () => {
       </p>
       {!started && (
         <button type="button" className="bd-textbtn mt-1" onClick={() => onChoose("")}>
-          לבחור מסלול אחר
+          לחזור לבחירה
         </button>
       )}
       {started && !askClear && (
@@ -910,23 +910,23 @@ const Bidul = () => {
                   tabIndex={-1}
                   className="cor-title text-foreground"
                 >
-                  אפשר לענות על שאלה אחת, ואפשר על כל החמש.
+                  אפשר להתחיל בשאלה אחת, ואפשר בכל החמש.
                 </h2>
                 <p className="cor-body-lg mt-4 max-w-2xl text-foreground">
-                  ליד כל מסלול כתוב מה שואלים ומה יוצא, ויש תשובה אמיתית מתוך
-                  פגישת בידול, מילה במילה ובלי שם.
+                  מה שכותבים נשאר בדפדפן שלכם. בסוף אפשר לשלוח את הדף לעצמכם,
+                  או לי בוואטסאפ.
                 </p>
 
                 <ul className="bd-routes mt-8">
                   <li className="ld-sheet bd-route">
-                    <p className="text-xs font-bold text-primary">מסלול קצר, שאלה אחת</p>
+                    <p className="text-xs font-bold text-primary">שאלה אחת</p>
                     <h3 className="bd-q mt-1.5">
                       אם יש לכם זמן לשאלה אחת, זו השאלה שהייתי בוחר.
                     </h3>
                     <p className="bd-route__ask">{ONE_Q.ask}</p>
 
                     <div className="bd-eg">
-                      <p className="bd-eg__label">כך נשמעה תשובה לשאלה כזו, בפגישת בידול ראשונה</p>
+                      <p className="bd-eg__label">כך נשמעת תשובה לשאלה כזו, מתוך פגישת בידול</p>
                       {routeExamples.one.map((turn) => (
                         <Turn key={turn.text} turn={turn} />
                       ))}
@@ -934,8 +934,7 @@ const Bidul = () => {
 
                     <p className="bd-route__label">מה יוצא</p>
                     <p className="bd-route__out mt-1 text-sm leading-relaxed text-foreground">
-                      דף של שורה אחת עם התשובה שלכם, ששולחים לעצמכם או לי
-                      בוואטסאפ. אפשר להמשיך ממנו לחמש השאלות, והתשובה כבר
+                      דף עם התשובה שלכם. ממנו אפשר להמשיך לשאר השאלות, והתשובה
                       תחכה שם.
                     </p>
                     <button
@@ -948,10 +947,13 @@ const Bidul = () => {
                   </li>
 
                   <li className="ld-sheet bd-route">
-                    <p className="text-xs font-bold text-primary">מסלול ארוך, חמש השאלות</p>
+                    <p className="text-xs font-bold text-primary">כל חמש השאלות</p>
                     <h3 className="bd-q mt-1.5">
-                      זה הסדר שאני עובר עליו עם עצמאים בפגישת בידול, כעשר דקות.
+                      בסוף כותבים משפט אחד במילים שלכם, למה לבחור דווקא בכם.
                     </h3>
+                    <p className="bd-route__ask">
+                      כעשר דקות, בסדר שאני עובר עליו עם עצמאים בפגישת בידול.
+                    </p>
                     <ol className="bd-route__steps">
                       {[...LABELS, "המשפט, במילים שלכם"].map((label, i) => (
                         <li key={label}>
@@ -962,9 +964,7 @@ const Bidul = () => {
                     </ol>
 
                     <div className="bd-eg">
-                      <p className="bd-eg__label">
-                        באותה פגישה, כמה שורות לפני כן, על מה שנעשה בשביל אותו לקוח
-                      </p>
+                      <p className="bd-eg__label">מאותה פגישה, על מה שנעשה בשביל הלקוח</p>
                       {routeExamples.five.map((turn) => (
                         <Turn key={turn.text} turn={turn} />
                       ))}
@@ -972,9 +972,7 @@ const Bidul = () => {
 
                     <p className="bd-route__label">מה יוצא</p>
                     <p className="bd-route__out mt-1 text-sm leading-relaxed text-foreground">
-                      דף עם תאריך. המשפט שלכם בראש הדף, ארבע התשובות מתחתיו,
-                      והמילים הכלליות מסומנות. אפשר להעתיק, להדפיס, ולשלוח
-                      לעצמכם או לי.
+                      דף עם המשפט שלכם בראש, וארבע התשובות מתחתיו.
                     </p>
                     <button
                       type="button"
@@ -1000,9 +998,6 @@ const Bidul = () => {
                       >
                         שאלה אחת
                       </h2>
-                      <p className="bd-noprint text-sm font-semibold text-muted-foreground">
-                        השאלה הרביעית מתוך חמש השאלות
-                      </p>
                     </div>
                     <Strokes settled={settled} className="text-foreground" />
                   </div>
@@ -1061,8 +1056,8 @@ const Bidul = () => {
                   {/* The long way, with this answer already in its place. */}
                   <div className="mt-6 max-w-xl border-t border-foreground/15 pt-5 text-sm leading-relaxed text-foreground">
                     <p>
-                      התשובה הזו תחכה בשאלה הרביעית. שלוש השאלות שלפניה עוברות
-                      על הלקוח ועל מה שעשיתם, ובסוף כותבים מכל זה משפט אחד.
+                      בחמש השאלות כותבים בסוף משפט אחד במילים שלכם, למה לבחור
+                      דווקא בכם. התשובה הזו כבר תחכה שם, בשאלה הרביעית.
                     </p>
                     <button type="button" className="bd-textbtn mt-1 font-bold" onClick={onToFive}>
                       להמשיך לחמש השאלות

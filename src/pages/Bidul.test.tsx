@@ -30,7 +30,7 @@ const chooseFive = () =>
   fireEvent.click(screen.getByRole("button", { name: "לעבור על חמש השאלות" }));
 const chooseOne = () =>
   fireEvent.click(screen.getByRole("button", { name: "לענות על שאלה אחת" }));
-const CHOOSER = "אפשר לענות על שאלה אחת, ואפשר על כל החמש.";
+const CHOOSER = "אפשר להתחיל בשאלה אחת, ואפשר בכל החמש.";
 const QUICK = "היא הבינה איך הגעתי לתשובה, ולא רק קיבלה אותה";
 
 function fillAll() {
@@ -289,7 +289,7 @@ describe("Bidul, the five-question sheet", () => {
   it("goes back to the choice while nothing is written yet", () => {
     renderPage();
     chooseOne();
-    fireEvent.click(screen.getByRole("button", { name: "לבחור מסלול אחר" }));
+    fireEvent.click(screen.getByRole("button", { name: "לחזור לבחירה" }));
     expect(screen.getByRole("heading", { level: 2, name: CHOOSER })).toBeInTheDocument();
     expect(screen.queryByRole("textbox")).toBeNull();
   });

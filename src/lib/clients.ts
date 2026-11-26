@@ -199,9 +199,11 @@ export const sessionMoments: SessionTurn[][] = [
  *
  * `one` is the answer to the comparison question asked about a single client,
  * the one question the short way asks. `five` is what the same person said a
- * few lines earlier, about what was done for that client: the ground the long
- * way covers before it gets there. A line that became someone's positioning
- * line is not used here, since it points to them even without a name.
+ * little earlier, about what was done for that client: the ground the long
+ * way covers before it gets there. One line, ending one word early: the
+ * recording trails off on "שהם", and a dangling word reads as a typo. A
+ * line that became someone's positioning line is not used here, since it
+ * points to them even without a name.
  */
 export const routeExamples: { one: SessionTurn[]; five: SessionTurn[] } = {
   one: [
@@ -210,17 +212,7 @@ export const routeExamples: { one: SessionTurn[]; five: SessionTurn[] } = {
       text: "איש מקצוע אחר שהיה בא במקומי, יכול להיות שהוא היה פותר להם את הבעיה, אבל הם לא היו מבינים איך הוא פתר להם את הבעיה.",
     },
   ],
-  five: [
-    {
-      who: "client",
-      text: "בעצם אני הבנתי לעומק גם את התהליכים שהם עושים וגם את האנשים שהם.",
-    },
-    {
-      who: "client",
-      later: true,
-      text: "ואת כל זה בעצם אני ארגנתי גם לפתרונות, אבל גם לשיח מעמיק.",
-    },
-  ],
+  five: [{ who: "client", text: "בעצם אני הבנתי לעומק גם את התהליכים שהם עושים וגם את האנשים." }],
 };
 
 /**
