@@ -129,7 +129,7 @@ describe("Bidul, the five-question sheet", () => {
     renderPage();
     fillAll();
 
-    const link = screen.getByRole("link", { name: /לשלוח לי את הדף בוואטסאפ/ });
+    const link = screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ });
     const url = new URL(link.getAttribute("href")!);
     expect(url.hostname).toBe("wa.me");
     const text = url.searchParams.get("text")!;
