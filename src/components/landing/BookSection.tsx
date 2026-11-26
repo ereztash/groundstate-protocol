@@ -3,6 +3,7 @@ import { CALENDLY_URL } from "@/lib/calendly";
 import { trackCtaClick, trackEvent } from "@/lib/analytics";
 import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/contact";
 import { WhatsAppIcon } from "@/components/brand/SocialIcons";
+import { firstCallWords } from "@/lib/clients";
 import { useDiagnosticForm } from "./DiagnosticFormProvider";
 import SpotsLeft from "./SpotsLeft";
 import SectionHead from "./SectionHead";
@@ -133,6 +134,19 @@ const BookSection = () => {
                 <li key={s}>{s}</li>
               ))}
             </ol>
+
+            {/* What the half hour was like, in the words of someone who had
+              one, with no name (clients.ts, firstCallWords). It answers the
+              question a reader has before booking a free call: is it worth
+              the time, or is it a pitch. */}
+            <figure className="mt-8 border-t border-border pt-5">
+              <blockquote className="text-lg font-medium leading-relaxed text-foreground">
+                ״{firstCallWords.join(" … ")}״
+              </blockquote>
+              <figcaption className="mt-2 text-sm text-muted-foreground">
+                מהדקות האחרונות של שיחה ראשונה, מילה במילה מההקלטה
+              </figcaption>
+            </figure>
 
             {/* The ICP node's screening question, handed over as preparation. A
               sharp, owned answer means the reader does not need the programme;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { approvedClients, sessionMoments, testimonials, worksheetVoices } from "./clients";
+import { approvedClients, firstCallWords, sessionMoments, testimonials, worksheetVoices } from "./clients";
 
 /**
  * The pull-quote rule.
@@ -80,6 +80,29 @@ describe("session moments", () => {
         for (const name of firstNames) {
           expect(turn.text.includes(name), `"${name}" appears in a session moment`).toBe(false);
         }
+      }
+    });
+  });
+});
+
+/**
+ * The words from a first call, beside the booking calendar. Same limits as the
+ * session moments, plus one: the page marks every cut with an ellipsis between
+ * items, so an item that carries its own ellipsis would hide a second cut.
+ */
+describe("first call words", () => {
+  const firstNames = approvedClients.map((c) => c.name.split(" ")[0]);
+
+  it("has words to show", () => {
+    expect(firstCallWords.length).toBeGreaterThan(0);
+  });
+
+  firstCallWords.forEach((text, i) => {
+    it(`item ${i + 1} names nobody, points nowhere and hides no cut`, () => {
+      expect(text).not.toMatch(/https?:|\d|…|\.\.\./);
+      expect(text.trim()).toBe(text);
+      for (const name of [...firstNames, "ארז"]) {
+        expect(text.includes(name), `"${name}" appears in the first call words`).toBe(false);
       }
     });
   });
