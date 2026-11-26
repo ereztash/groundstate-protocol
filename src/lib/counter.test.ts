@@ -21,7 +21,7 @@ afterEach(() => {
 });
 
 describe("cookieless counter", () => {
-  it("loads nothing while no site code is set", async () => {
+  it("loads nothing when the site code is set to empty", async () => {
     const { countPage } = await freshCounter("");
     countPage();
     expect(scripts().length).toBe(0);

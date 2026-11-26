@@ -10,11 +10,14 @@
  * the people who pressed it. This one counts every page view and where it came
  * from (referring site, campaign), which is what a reading of the site needs.
  *
- * Until a site code is set nothing loads, and the prerender build is never
- * counted.
+ * Setting VITE_GOATCOUNTER_CODE to an empty string turns it off, and the
+ * prerender build is never counted.
  */
 
-const CODE = (import.meta.env.VITE_GOATCOUNTER_CODE as string | undefined) || "";
+// The site code is public by design (it is in every page's script tag), so it
+// has a fallback here, as clarity.ts does. The env var can still override it.
+const CODE =
+  (import.meta.env.VITE_GOATCOUNTER_CODE as string | undefined) ?? "corsys";
 
 type GoatCounter = {
   no_onload?: boolean;
