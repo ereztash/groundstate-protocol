@@ -45,4 +45,36 @@ describe("cookieless counter", () => {
     );
     expect(window.goatcounter?.no_onload).toBe(true);
   });
+
+  it("counts the page now on screen, not the one the canonical link still names, and credits the previous page as referrer", async () => {
+    vi.useFakeTimers();
+    const link = document.createElement("link");
+    link.rel = "canonical";
+    link.href = `${window.location.origin}/`;
+    document.head.appendChild(link);
+    try {
+      const { countPage } = await freshCounter("example");
+      const count = vi.fn();
+
+      countPage(); // first page: "/"
+      window.goatcounter!.count = count;
+      (scripts()[0] as HTMLScriptElement).dispatchEvent(new Event("load"));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(count).toHaveBeenLastCalledWith({ path: "/" });
+
+      // An in-app move to a lazily loaded page: the link names "/" for a while.
+      window.history.pushState({}, "", "/about");
+      countPage();
+      await vi.advanceTimersByTimeAsync(300);
+      expect(count).toHaveBeenCalledTimes(1); // still waiting for the page to set its link
+      link.href = `${window.location.origin}/about`;
+      await vi.advanceTimersByTimeAsync(200);
+      expect(count).toHaveBeenCalledTimes(2);
+      expect(count).toHaveBeenLastCalledWith({ path: "/about", referrer: `${window.location.origin}/` });
+    } finally {
+      link.remove();
+      window.history.pushState({}, "", "/");
+      vi.useRealTimers();
+    }
+  });
 });
