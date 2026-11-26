@@ -863,7 +863,7 @@ const Bidul = () => {
                       className="ld-cta w-full shrink-0 sm:w-auto"
                     >
                       <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                      לשלוח לי את הדף בוואטסאפ
+                      לשלוח את הדף לארז בוואטסאפ
                       <span className="sr-only"> (נפתח בוואטסאפ)</span>
                     </a>
                     <p className="text-sm leading-relaxed text-foreground">
