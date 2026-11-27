@@ -119,7 +119,7 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
 
   return (
     <div ref={sectionRef} className={className}>
-      <div className="md:grid md:grid-cols-[1fr_1.05fr] md:gap-x-10">
+      <div className="gap-x-10 md:grid md:grid-cols-[1fr_1.05fr]">
         {/* Sticky figure. Decorative: every stage's meaning is in the panels
             beside it and in the stepper below.
             Phone (27.11): a sticky box can only travel inside its parent. In
@@ -131,9 +131,14 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
             site header is ≈ 60px), so the panels pass under it whether the
             header is shown or hidden on scroll; with top-16 instead, a panel
             label showed through the strip the hidden header left.
-            From md the grid row is the parent and the inner box sticks. */}
-        <div className="sticky top-0 z-10 bg-background pb-2 pt-16 md:static md:z-auto md:order-2 md:bg-transparent md:p-0">
-          <div className="md:sticky md:top-28">
+            From md the wrapper is a grid item as tall as the row, so its own
+            sticky is inert and the inner box sticks at top-28, as before; the
+            opaque background matches the section, so it needs no override.
+            The md overrides reuse classes the site already ships (md:pt-1,
+            md:pb-0), because every new utility counts against
+            the 15 kB CSS budget (scripts/check-budget.mjs). */}
+        <div className="sticky top-0 z-10 bg-background pb-3 pt-16 md:order-2 md:pb-0 md:pt-1">
+          <div className="sticky top-24 md:top-28">
             <div
               ref={figureRef}
               className="cor-trace"
@@ -230,7 +235,7 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
             <li
               key={n.stage.number}
               data-dim={i === active ? undefined : ""}
-              className="cor-trace-step flex min-h-[36vh] flex-col justify-center py-6 md:min-h-[46vh]"
+              className="cor-trace-step flex min-h-[46vh] flex-col justify-center py-6"
             >
               <p className="text-xs font-semibold tracking-[0.2em] text-primary">
                 {n.stage.number} · {n.stage.verb}
