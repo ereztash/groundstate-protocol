@@ -27,7 +27,7 @@ const meta = (attr: "name" | "property", key: string) =>
 const canonical = () =>
   head().querySelector<HTMLLinkElement>('link[rel="canonical"]');
 
-const ORIGIN = "https://ereztash.github.io/groundstate-protocol";
+const ORIGIN = "https://corsys.co.il";
 
 describe("useDocumentMeta()", () => {
   beforeEach(() => {

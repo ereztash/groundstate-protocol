@@ -10,7 +10,7 @@ import { whatsappUrl } from "@/lib/contact";
 import { trackCtaClick } from "@/lib/analytics";
 import { WhatsAppIcon } from "@/components/brand/SocialIcons";
 
-const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
+const SITE_ORIGIN = "https://corsys.co.il";
 
 /**
  * /insights/:slug — a single article. The markdown body is rendered to HTML

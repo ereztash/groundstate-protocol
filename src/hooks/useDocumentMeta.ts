@@ -14,11 +14,10 @@ import { useEffect } from "react";
  * bakes these values into each route's static HTML at build time.
  */
 
-// Live GitHub Pages origin (project sub-path). Everything canonical points here
-// so the site is indexable today; the ereztalshir.co.il apex isn't connected.
-// AT DOMAIN LAUNCH: swap this to "https://ereztalshir.co.il" (and see the note
-// in index.html for the full switch checklist).
-const SITE_ORIGIN = "https://ereztash.github.io/groundstate-protocol";
+// The canonical origin: the custom domain GitHub Pages serves at the root. The
+// old project sub-path (ereztash.github.io/groundstate-protocol/) redirects here.
+// See the note in index.html before changing it.
+const SITE_ORIGIN = "https://corsys.co.il";
 
 export type DocumentMeta = {
   title: string;

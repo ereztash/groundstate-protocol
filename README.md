@@ -3,7 +3,7 @@
 The marketing site for COR-SYS, Erez Tal-Shir's consulting practice. Hebrew,
 right-to-left, statically rendered, deployed to GitHub Pages.
 
-**Live:** https://ereztash.github.io/groundstate-protocol/
+**Live:** https://corsys.co.il/
 
 It began as a Lovable scaffold (hence `vite_react_shadcn_ts` in `package.json`)
 and has since diverged substantially. What is worth reading here is not the
@@ -219,7 +219,7 @@ and returned 405 from Pages.
 | `VITE_APPS_SCRIPT_SECRET` | Token the Apps Script checks before writing a row. A spam deterrent, not authentication: it ships in the client bundle by design |
 | `VITE_GA_MEASUREMENT_ID` | GA4. Loads only after consent |
 | `VITE_CLARITY_PROJECT_ID` | Microsoft Clarity. Same consent gate |
-| `VITE_BASE_PATH` | Deploy base. `/groundstate-protocol/` for Pages; builds otherwise default to a relative base |
+| `VITE_BASE_PATH` | Deploy base. `/` for the corsys.co.il Pages deploy; builds otherwise default to a relative base |
 | `VITE_ENABLE_CASE_INTAKE` | `1` compiles the internal intake tool into a production build |
 
 Analytics do not load until the visitor accepts the consent banner.
@@ -261,5 +261,6 @@ Waiting on the operator, not on code:
 - **Case C1.** Sitting in `docs/cases/`, awaiting the client's publication
   consent. Granting it turns on the evidence chain, which is the highest
   value-per-effort item in the repo.
-- **Domain.** `ereztalshir.co.il` is not connected. Everything canonical points
-  at the Pages sub-path. `index.html` carries the full migration checklist.
+- **Domain.** `corsys.co.il`, DNS at Cloudflare in DNS-only mode, served by
+  GitHub Pages with Enforce HTTPS. The old Pages sub-path redirects to it.
+  `index.html` lists what to change if the domain moves again.
