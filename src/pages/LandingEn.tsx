@@ -8,12 +8,7 @@ import FullQuote from "@/components/landing/FullQuote";
 import StickyMobileCTA from "@/components/landing/StickyMobileCTA";
 import { CorSeal } from "@/components/brand/CorMark";
 import { LinkedInIcon, WhatsAppIcon } from "@/components/brand/SocialIcons";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { usePublicUrl } from "@/hooks/usePublicUrl";
 import { useHomeLanguage } from "@/hooks/useHomeLanguage";
@@ -423,14 +418,20 @@ function Faq() {
               </div>
             ))}
           </div>
-          <Accordion type="single" collapsible className="w-full border-t border-border">
-            {[...faqEn.rest, { q: "What if it doesn't work?", a: "I refund the payment in full. The exact terms are in the proposal, under the price." }].map(({ q, a }, i) => (
-              <AccordionItem key={q} value={`item-${i}`} className="border-b border-border">
-                <AccordionTrigger className="gap-4 py-5 text-start text-base font-bold text-foreground hover:no-underline">{q}</AccordionTrigger>
-                <AccordionContent className="pb-5 pt-1 leading-relaxed text-muted-foreground">{a}</AccordionContent>
-              </AccordionItem>
+          {/* Native details, not the script accordion: a closed answer is still
+              in the prerendered HTML, so it reaches readers and crawlers before
+              any script runs, and the browser gives the keyboard handling. */}
+          <div className="w-full border-t border-border">
+            {[...faqEn.rest, { q: "What if it doesn't work?", a: "I refund the payment in full. The exact terms are in the proposal, under the price." }].map(({ q, a }) => (
+              <details key={q} className="group border-b border-border">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-start text-base font-bold text-foreground [&::-webkit-details-marker]:hidden">
+                  <h3 className="text-base font-bold">{q}</h3>
+                  <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                </summary>
+                <p className="pb-5 pt-1 leading-relaxed text-muted-foreground">{a}</p>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </div>
       </div>
     </section>

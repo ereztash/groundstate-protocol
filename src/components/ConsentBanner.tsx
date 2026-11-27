@@ -1,8 +1,32 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getConsent, setConsent } from "@/lib/consent";
 import { initAnalytics } from "@/lib/analytics";
 import { initClarity } from "@/lib/clarity";
+
+/**
+ * The banner speaks the page's language. Only the home pages are translated,
+ * so /en is the one English route; the privacy policy exists in Hebrew only,
+ * and the English link says so.
+ */
+// [region label, text, policy link, decline, accept]. Positional to keep the
+// initial bundle at its ceiling.
+const COPY = {
+  he: [
+    "הסכמה לשימוש בכלי ניתוח",
+    "אני משתמש בכלי ניתוח (Google Analytics, Microsoft Clarity) כדי לשפר את האתר, הם נטענים רק לאחר אישור.",
+    "מדיניות הפרטיות",
+    "דחייה",
+    "אישור",
+  ],
+  en: [
+    "Consent to analytics tools",
+    "I use analytics tools (Google Analytics, Microsoft Clarity) to improve the site. They load only after you accept.",
+    "Privacy policy (in Hebrew)",
+    "Decline",
+    "Accept",
+  ],
+} as const;
 
 /**
  * Privacy-by-default consent gate. Analytics + session recording (GA4,
@@ -12,6 +36,9 @@ import { initClarity } from "@/lib/clarity";
  */
 const ConsentBanner = () => {
   const [show, setShow] = useState(false);
+  const { pathname } = useLocation();
+  const en = pathname === "/en" || pathname.startsWith("/en/");
+  const [region, text, policy, reject, accept] = COPY[en ? "en" : "he"];
 
   useEffect(() => {
     if (getConsent() !== null) return;
@@ -57,17 +84,17 @@ const ConsentBanner = () => {
 
   return (
     <div
-      dir="rtl"
+      dir={en ? "ltr" : "rtl"}
+      lang={en ? "en" : "he"}
       role="region"
-      aria-label="הסכמה לשימוש בכלי ניתוח"
+      aria-label={region}
       className="fixed inset-x-0 bottom-0 z-[60] border-t border-border bg-background/95 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-relaxed text-foreground">
-          אני משתמש בכלי ניתוח (Google Analytics, Microsoft Clarity) כדי לשפר את
-          האתר, הם נטענים רק לאחר אישור.{" "}
-          <Link to="/privacy" className="text-link">
-            מדיניות הפרטיות
+          {text}{" "}
+          <Link to="/privacy" hrefLang={en ? "he" : undefined} className="text-link">
+            {policy}
           </Link>
           .
         </p>
@@ -77,14 +104,14 @@ const ConsentBanner = () => {
             onClick={() => decide(false)}
             className="cta-ghost inline-flex h-10 items-center justify-center rounded-md px-4 text-sm"
           >
-            דחייה
+            {reject}
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
             className="cta-action inline-flex h-10 items-center justify-center rounded-md px-5 text-sm"
           >
-            אישור
+            {accept}
           </button>
         </div>
       </div>

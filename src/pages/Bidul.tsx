@@ -508,6 +508,17 @@ const Bidul = () => {
   const waHref = whatsappSheetUrl(fullSentence, lines);
   const selfHref = () =>
     whatsappSelfUrl(fullSentence, lines, window.location.href.split("#")[0]);
+  /* The chat links carry the reader's answers in their address. Analytics that
+     listen for link clicks on the document (the GA4 stream has outbound clicks
+     on) would read that address, so the click stops at the link. The link
+     still opens exactly as before; only the page-level listeners miss it. */
+  const keepToLink = (label: string) => ({
+    onClick: (e: MouseEvent) => {
+      trackCtaClick(label);
+      e.stopPropagation();
+    },
+    onAuxClick: (e: MouseEvent) => e.stopPropagation(),
+  });
   const anyMarked =
     uniqueGeneralWords([fullSentence, ...lines.map((l) => l.text)].join("\n")).length > 0;
 
@@ -745,7 +756,7 @@ const Bidul = () => {
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackCtaClick(onOne ? "whatsapp_bidul_one" : "whatsapp_bidul_sheet")}
+          {...keepToLink(onOne ? "whatsapp_bidul_one" : "whatsapp_bidul_sheet")}
           className="ld-cta w-full shrink-0 sm:w-auto"
         >
           <WhatsAppIcon className="h-5 w-5 shrink-0" />
@@ -791,7 +802,7 @@ const Bidul = () => {
         href={selfHref()}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackCtaClick("whatsapp_bidul_self")}
+        {...keepToLink("whatsapp_bidul_self")}
         className="bd-textbtn mt-1"
       >
         לשלוח את הדף לעצמי בוואטסאפ
@@ -1271,13 +1282,18 @@ const Bidul = () => {
                 יגיד "זה בשבילי". אם נקבע שיחה, נתחיל ממנו.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+              {/* Masked like the sheet: once it is done, this link's address
+                  holds the answers. */}
+              <div
+                data-clarity-mask="true"
+                className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5"
+              >
                 {sheetDone ? (
                   <a
                     href={waHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackCtaClick("whatsapp_bidul_between")}
+                    {...keepToLink("whatsapp_bidul_between")}
                     className="ld-cta w-full shrink-0 sm:w-auto"
                   >
                     <WhatsAppIcon className="h-5 w-5 shrink-0" />

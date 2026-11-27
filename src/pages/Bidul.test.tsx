@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { MemoryRouter } from "react-router-dom";
@@ -292,5 +292,78 @@ describe("Bidul, the five-question sheet", () => {
     fireEvent.click(screen.getByRole("button", { name: "לחזור לבחירה" }));
     expect(screen.getByRole("heading", { level: 2, name: CHOOSER })).toBeInTheDocument();
     expect(screen.queryByRole("textbox")).toBeNull();
+  });
+});
+
+describe("Bidul, what is written stays out of analytics", () => {
+  /** A made-up answer, so the test never carries anyone's words. */
+  const SYN = "ZQXSYNTH7731";
+  const seen: string[] = [];
+  const recordLink = (e: Event) => {
+    const a = (e.target as Element | null)?.closest?.("a");
+    if (a) seen.push(a.getAttribute("href") ?? "");
+  };
+  // jsdom cannot open a new tab; stop the default so it does not try.
+  const noNavigation = (e: Event) => e.preventDefault();
+
+  beforeEach(() => {
+    window.localStorage.clear();
+    seen.length = 0;
+    window.gtag = vi.fn();
+    window.clarity = vi.fn();
+    window.dataLayer = [];
+    window.addEventListener("click", noNavigation, true);
+    // The same hook GA4 uses for outbound clicks: document, bubble phase.
+    document.addEventListener("click", recordLink);
+    document.addEventListener("auxclick", recordLink);
+  });
+
+  afterEach(() => {
+    window.removeEventListener("click", noNavigation, true);
+    document.removeEventListener("click", recordLink);
+    document.removeEventListener("auxclick", recordLink);
+    delete window.gtag;
+    delete window.clarity;
+    delete window.dataLayer;
+  });
+
+  it("keeps the answers from page-level link listeners, events, the address, the title, and unmasked DOM", () => {
+    const { container } = renderPage();
+    chooseFive();
+    ANSWERS.forEach((answer, i) => {
+      write(`${answer} ${SYN}${i}`);
+      next();
+    });
+    write(`${SENTENCE} ${SYN}s`);
+    fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
+
+    // The reader's own send still carries the sheet: that is the point of it.
+    const carrying = Array.from(container.querySelectorAll<HTMLAnchorElement>(`a[href*="${SYN}"]`));
+    expect(carrying.length).toBeGreaterThanOrEqual(2);
+
+    for (const a of Array.from(container.querySelectorAll("a"))) {
+      fireEvent.click(a);
+      fireEvent(a, new MouseEvent("auxclick", { bubbles: true, button: 1 }));
+    }
+    expect(seen.length).toBeGreaterThan(0);
+    expect(seen.filter((href) => href.includes(SYN))).toEqual([]);
+
+    const sent = JSON.stringify([
+      (window.gtag as ReturnType<typeof vi.fn>).mock.calls,
+      (window.clarity as ReturnType<typeof vi.fn>).mock.calls,
+      window.dataLayer,
+    ]);
+    expect((window.gtag as ReturnType<typeof vi.fn>).mock.calls.length).toBeGreaterThan(0);
+    expect(sent).not.toContain(SYN);
+    expect(window.location.href).not.toContain(SYN);
+    expect(document.title).not.toContain(SYN);
+
+    // Session recording sees the DOM: anything holding the answers sits in a masked region.
+    const holders = Array.from(document.body.querySelectorAll("*")).filter((el) =>
+      Array.from(el.childNodes).some((n) => n.nodeType === Node.TEXT_NODE && n.textContent?.includes(SYN)) ||
+      Array.from(el.attributes).some((attr) => attr.value.includes(SYN))
+    );
+    expect(holders.length).toBeGreaterThan(0);
+    expect(holders.filter((el) => !el.closest('[data-clarity-mask="true"]')).map((el) => el.tagName)).toEqual([]);
   });
 });
