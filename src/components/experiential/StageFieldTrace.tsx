@@ -119,10 +119,25 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
 
   return (
     <div ref={sectionRef} className={className}>
-      <div className="grid gap-x-10 md:grid-cols-[1fr_1.05fr]">
+      <div className="gap-x-10 md:grid md:grid-cols-[1fr_1.05fr]">
         {/* Sticky figure. Decorative: every stage's meaning is in the panels
-            beside it and in the stepper below. */}
-        <div className="md:order-2">
+            beside it and in the stepper below.
+            Phone (27.11): a sticky box can only travel inside its parent. In
+            the one-column layout this wrapper was only as tall as the figure,
+            so the figure never stuck and scrolled away, leaving the panels as
+            text in empty space. On a phone the wrapper itself is the sticky
+            box, so its parent is the whole section. It sticks at the very
+            top with a header-tall opaque band above the figure (pt-16, the
+            site header is ≈ 60px), so the panels pass under it whether the
+            header is shown or hidden on scroll; with top-16 instead, a panel
+            label showed through the strip the hidden header left.
+            From md the wrapper is a grid item as tall as the row, so its own
+            sticky is inert and the inner box sticks at top-28, as before; the
+            opaque background matches the section, so it needs no override.
+            The md overrides reuse classes the site already ships (md:pt-1,
+            md:pb-0), because every new utility counts against
+            the 15 kB CSS budget (scripts/check-budget.mjs). */}
+        <div className="sticky top-0 z-10 bg-background pb-3 pt-16 md:order-2 md:pb-0 md:pt-1">
           <div className="sticky top-24 md:top-28">
             <div
               ref={figureRef}
