@@ -18,8 +18,8 @@ import { outreachCount, program } from "@/data/sprint-stages";
 export const PRICE = {
   label: program.priceLabel,
   installments: "in two payments of ₪2,000",
-  /** Erez is an exempt dealer: the price is final (see program.vatLabel). */
-  vat: "final, no VAT",
+  /** Erez is an exempt dealer: the price is final (see program.finalLabel). */
+  vat: "final price",
 } as const;
 
 export const hero = {
@@ -237,7 +237,7 @@ export const faqEn = {
     },
     {
       q: "What if stage 1 doesn't give me what I expected?",
-      a: "If the narrative isn't clear or accurate, we don't continue. I don't sell a sequence that starts with a failure.",
+      a: "If the narrative isn't clear or accurate, we don't continue, and I refund the payment in full. I don't sell a sequence that starts with a failure.",
     },
     {
       q: "Is thirty days realistic while I keep working?",
@@ -249,7 +249,7 @@ export const faqEn = {
     },
     {
       q: "How much does the program cost?",
-      a: `${program.priceLabel} for the whole program, in two payments of ₪2,000. The price is final, with no VAT. Four meetings and support between them. The stages aren't sold separately.`,
+      a: `${program.priceLabel} for the whole program, in two payments of ₪2,000. The price is final. Four meetings and support between them. The stages aren't sold separately.`,
     },
   ],
 } as const;

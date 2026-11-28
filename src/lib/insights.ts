@@ -21,6 +21,13 @@ export type Insight = {
    * small step, sending today's sentence on WhatsApp, with no word on price.
    */
   step?: "sentence";
+  /**
+   * "listed: no" in the frontmatter keeps the page live at its address but
+   * leaves it out of /insights and of "עוד תובנות". Erez, 28.11: the three
+   * articles that failed the readers' test of 24.11 leave the list, and their
+   * addresses stay so an old link does not break.
+   */
+  listed: boolean;
 };
 
 const raws = import.meta.glob("../../content/insights/*.md", {
@@ -67,6 +74,7 @@ export const insights: Insight[] = Object.entries(raws)
       date: data.date || "",
       body,
       step: data.step === "sentence" ? ("sentence" as const) : undefined,
+      listed: data.listed !== "no",
     };
   })
   // Newest first. An article with no date is treated as most-recent (it was

@@ -77,7 +77,11 @@ const PRINCIPLES = [
   },
 ];
 
-const DARK = "bg-[#1C1C2E] text-[hsl(var(--background))]";
+// The charcoal bands here paint their own background instead of wrapping in
+// `.dark`, so the booking button kept the light page's ink and sat charcoal on
+// charcoal (28.11). `cor-ink` (index.css) gives it the `.dark` button: clinical
+// white with charcoal text, as on the home page's dark bands.
+const DARK = "bg-[#1C1C2E] text-[hsl(var(--background))] cor-ink";
 
 const Methodology = () => {
   useDocumentMeta({
@@ -200,12 +204,9 @@ const Methodology = () => {
         >
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="max-w-2xl">
-              <p className="text-xs font-semibold text-[#D39A62]">
-                למה פרוטוקול
-              </p>
               <h2
                 id="why-title"
-                className="cor-title mt-2 text-[hsl(var(--background))]"
+                className="cor-title text-[hsl(var(--background))]"
               >
                 למה אני עובד ככה
               </h2>

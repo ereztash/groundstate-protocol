@@ -126,7 +126,7 @@ const Hero = () => {
               <dd className="text-muted-foreground">
                 {program.installmentsLabel}
                 <span className="hidden sm:inline">, </span>
-                <span className="block sm:inline">{program.vatLabel}</span>
+                <span className="block sm:inline">{program.finalLabel}</span>
               </dd>
             </div>
             <div className="flex items-baseline gap-2">

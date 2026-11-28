@@ -39,7 +39,7 @@ const InsightsIndex = () => {
         </Reveal>
 
         <RevealStagger className="mt-12 grid gap-6 sm:grid-cols-2" as="ul">
-          {insights.map((a) => (
+          {insights.filter((a) => a.listed).map((a) => (
             <RevealItem key={a.slug} as="li">
               <Link
                 to={`/insights/${a.slug}`}

@@ -74,7 +74,9 @@ export const faq: readonly QA[] = [
   },
   {
     q: "מה קורה אם שלב 1 לא מניב את מה שציפיתי?",
-    a: "אם הנרטיב לא ברור או לא מדויק, אנחנו לא ממשיכים. אני לא מוכר רצף שמתחיל בכשל.",
+    // Erez, 28.11 (ט): the money comes back too. "We don't continue" alone left a
+    // careful buyer asking whether the first payment stays (outside audit, 28.11).
+    a: "אם הנרטיב לא ברור או לא מדויק, אנחנו לא ממשיכים, ואני מחזיר את התשלום במלואו. אני לא מוכר רצף שמתחיל בכשל.",
   },
   {
     q: "שלושים ימים זה מציאותי כשעובדים במקביל?",
@@ -109,6 +111,6 @@ export const faq: readonly QA[] = [
   },
   {
     q: "כמה עולה התוכנית?",
-    a: `${program.priceLabel} לתוכנית כולה, ${program.installmentsLabel}. המחיר ${program.vatLabel}. ארבעה מפגשים וליווי בין הפגישות. השלבים לא נמכרים בנפרד.`,
+    a: `${program.priceLabel} לתוכנית כולה, ${program.installmentsLabel}. ${program.finalLabel}. ארבעה מפגשים וליווי בין הפגישות. השלבים לא נמכרים בנפרד.`,
   },
 ];
