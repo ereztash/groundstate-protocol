@@ -42,6 +42,20 @@ function fillAll() {
   fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
 }
 
+/**
+ * The address the browser follows when the reader taps a chat link. The page
+ * holds the bare address; the answers are written in only for the length of
+ * the click, so it is read straight after the click.
+ */
+function followed(link: HTMLElement) {
+  expect(new URL(link.getAttribute("href")!).search).toBe("");
+  const stay = (e: Event) => e.preventDefault();
+  window.addEventListener("click", stay, true);
+  fireEvent.click(link);
+  window.removeEventListener("click", stay, true);
+  return new URL(link.getAttribute("href")!);
+}
+
 describe("Bidul, the five-question sheet", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -145,7 +159,7 @@ describe("Bidul, the five-question sheet", () => {
     fillAll();
 
     const link = screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ });
-    const url = new URL(link.getAttribute("href")!);
+    const url = followed(link);
     expect(url.hostname).toBe("wa.me");
     const text = url.searchParams.get("text")!;
     expect(text.startsWith("היי ארז, הגעתי מהאתר. מילאתי את דף חמש השאלות.")).toBe(true);
@@ -163,7 +177,7 @@ describe("Bidul, the five-question sheet", () => {
 
     expect(document.body.textContent).toContain("המשפט הכי ברור הגיע רק בפגישה השנייה");
     const link = screen.getByRole("link", { name: /לשלוח את הדף לעצמי בוואטסאפ/ });
-    const url = new URL(link.getAttribute("href")!);
+    const url = followed(link);
     expect(url.hostname).toBe("wa.me");
     expect(url.pathname).toBe("/");
     const text = url.searchParams.get("text")!;
@@ -255,14 +269,14 @@ describe("Bidul, the five-question sheet", () => {
     expect(container.textContent).toContain(QUICK);
     expect(container.textContent).not.toMatch(PAY);
 
-    const toErez = new URL(
-      screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ }).getAttribute("href")!
+    const toErez = followed(
+      screen.getByRole("link", { name: /לשלוח את הדף לארז בוואטסאפ/ })
     ).searchParams.get("text")!;
     expect(toErez.startsWith("היי ארז, הגעתי מהאתר. מילאתי את דף חמש השאלות.")).toBe(true);
     expect(toErez).toContain(QUICK);
 
-    const toSelf = new URL(
-      screen.getByRole("link", { name: /לשלוח את הדף לעצמי בוואטסאפ/ }).getAttribute("href")!
+    const toSelf = followed(
+      screen.getByRole("link", { name: /לשלוח את הדף לעצמי בוואטסאפ/ })
     ).searchParams.get("text")!;
     expect(toSelf).toContain(QUICK);
     expect(toSelf).not.toContain("היי ארז");
@@ -299,9 +313,15 @@ describe("Bidul, what is written stays out of analytics", () => {
   /** A made-up answer, so the test never carries anyone's words. */
   const SYN = "ZQXSYNTH7731";
   const seen: string[] = [];
+  const seenFirst: string[] = [];
+  const hrefOf = (e: Event) => (e.target as Element | null)?.closest?.("a")?.getAttribute("href");
   const recordLink = (e: Event) => {
-    const a = (e.target as Element | null)?.closest?.("a");
-    if (a) seen.push(a.getAttribute("href") ?? "");
+    const href = hrefOf(e);
+    if (href != null) seen.push(href);
+  };
+  const recordFirst = (e: Event) => {
+    const href = hrefOf(e);
+    if (href != null) seenFirst.push(href);
   };
   // jsdom cannot open a new tab; stop the default so it does not try.
   const noNavigation = (e: Event) => e.preventDefault();
@@ -309,6 +329,7 @@ describe("Bidul, what is written stays out of analytics", () => {
   beforeEach(() => {
     window.localStorage.clear();
     seen.length = 0;
+    seenFirst.length = 0;
     window.gtag = vi.fn();
     window.clarity = vi.fn();
     window.dataLayer = [];
@@ -316,18 +337,24 @@ describe("Bidul, what is written stays out of analytics", () => {
     // The same hook GA4 uses for outbound clicks: document, bubble phase.
     document.addEventListener("click", recordLink);
     document.addEventListener("auxclick", recordLink);
+    // The hook Clarity uses to record every click and its link: document,
+    // capture phase, before any handler on the page runs.
+    document.addEventListener("click", recordFirst, true);
+    document.addEventListener("contextmenu", recordFirst, true);
   });
 
   afterEach(() => {
     window.removeEventListener("click", noNavigation, true);
     document.removeEventListener("click", recordLink);
     document.removeEventListener("auxclick", recordLink);
+    document.removeEventListener("click", recordFirst, true);
+    document.removeEventListener("contextmenu", recordFirst, true);
     delete window.gtag;
     delete window.clarity;
     delete window.dataLayer;
   });
 
-  it("keeps the answers from page-level link listeners, events, the address, the title, and unmasked DOM", () => {
+  it("keeps the answers from click recorders before and after the page, events, the address, the title, and unmasked DOM", async () => {
     const { container } = renderPage();
     chooseFive();
     ANSWERS.forEach((answer, i) => {
@@ -337,16 +364,37 @@ describe("Bidul, what is written stays out of analytics", () => {
     write(`${SENTENCE} ${SYN}s`);
     fireEvent.click(screen.getByRole("button", { name: "להוציא את הדף" }));
 
-    // The reader's own send still carries the sheet: that is the point of it.
-    const carrying = Array.from(container.querySelectorAll<HTMLAnchorElement>(`a[href*="${SYN}"]`));
-    expect(carrying.length).toBeGreaterThanOrEqual(2);
+    // At rest no address on the page carries the answers.
+    const atRest = () => container.querySelectorAll(`a[href*="${SYN}"]`).length;
+    expect(atRest()).toBe(0);
 
+    const followedTo: string[] = [];
+    const menuTo: string[] = [];
+    const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
     for (const a of Array.from(container.querySelectorAll("a"))) {
+      // A right click, in the order Chrome fires it on Windows.
+      fireEvent(a, new MouseEvent("auxclick", { bubbles: true, button: 2 }));
+      fireEvent.contextMenu(a, { button: 2 });
+      menuTo.push(a.getAttribute("href") ?? "");
+      await tick();
       fireEvent.click(a);
+      followedTo.push(a.getAttribute("href") ?? "");
+      await tick();
       fireEvent(a, new MouseEvent("auxclick", { bubbles: true, button: 1 }));
+      await tick();
     }
+    // The reader's own send still carries the sheet: that is the point of it.
+    expect(followedTo.filter((href) => href.includes(SYN)).length).toBeGreaterThanOrEqual(2);
+    // So do "copy link" and "open in new tab" from the menu.
+    expect(menuTo.filter((href) => href.includes(SYN)).length).toBeGreaterThanOrEqual(2);
+    // Neither the listener that runs before the page (Clarity) nor the one after it (GA4) saw them.
+    expect(seenFirst.length).toBeGreaterThan(0);
+    expect(seenFirst.filter((href) => href.includes(SYN))).toEqual([]);
     expect(seen.length).toBeGreaterThan(0);
     expect(seen.filter((href) => href.includes(SYN))).toEqual([]);
+    // And once the click is over, the answers are out of the address again.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(atRest()).toBe(0);
 
     const sent = JSON.stringify([
       (window.gtag as ReturnType<typeof vi.fn>).mock.calls,

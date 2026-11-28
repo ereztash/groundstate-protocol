@@ -508,17 +508,39 @@ const Bidul = () => {
   const waHref = whatsappSheetUrl(fullSentence, lines);
   const selfHref = () =>
     whatsappSelfUrl(fullSentence, lines, window.location.href.split("#")[0]);
-  /* The chat links carry the reader's answers in their address. Analytics that
-     listen for link clicks on the document (the GA4 stream has outbound clicks
-     on) would read that address, so the click stops at the link. The link
-     still opens exactly as before; only the page-level listeners miss it. */
-  const keepToLink = (label: string) => ({
-    onClick: (e: MouseEvent) => {
-      trackCtaClick(label);
+  /* The chat links carry the reader's answers, and nothing that reads the page
+     may see them. GA4 listens for outbound link clicks on the document, and
+     Clarity records the address of every clicked link from a capture-phase
+     listener, before any handler here runs, without scrubbing it in a masked
+     region (clarity-js interaction/click.ts). So the address on the page holds
+     no answers: the click writes them in just before the browser follows the
+     link, and takes them out again right after. The chat opens as before. A
+     right click fires auxclick before contextmenu on Windows, so only the
+     middle button follows there; the menu itself gets the answers on
+     contextmenu, after Clarity has read the address, so "copy link" and "open
+     in new tab" still carry the sheet. */
+  const keepToLink = (label: string, full: string) => {
+    const bare = full.split("?")[0];
+    const follow = (e: MouseEvent<HTMLAnchorElement>) => {
       e.stopPropagation();
-    },
-    onAuxClick: (e: MouseEvent) => e.stopPropagation(),
-  });
+      const a = e.currentTarget;
+      a.href = full;
+      window.setTimeout(() => {
+        a.href = bare;
+      });
+    };
+    return {
+      href: bare,
+      onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+        trackCtaClick(label);
+        follow(e);
+      },
+      onAuxClick: (e: MouseEvent<HTMLAnchorElement>) => {
+        if (e.button === 1) follow(e);
+      },
+      onContextMenu: follow,
+    };
+  };
   const anyMarked =
     uniqueGeneralWords([fullSentence, ...lines.map((l) => l.text)].join("\n")).length > 0;
 
@@ -753,10 +775,9 @@ const Bidul = () => {
     <>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
         <a
-          href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          {...keepToLink(onOne ? "whatsapp_bidul_one" : "whatsapp_bidul_sheet")}
+          {...keepToLink(onOne ? "whatsapp_bidul_one" : "whatsapp_bidul_sheet", waHref)}
           className="ld-cta w-full shrink-0 sm:w-auto"
         >
           <WhatsAppIcon className="h-5 w-5 shrink-0" />
@@ -799,10 +820,9 @@ const Bidul = () => {
         ואפשר לשלוח אותו לעצמכם ולחזור אליו מחר.
       </p>
       <a
-        href={selfHref()}
         target="_blank"
         rel="noopener noreferrer"
-        {...keepToLink("whatsapp_bidul_self")}
+        {...keepToLink("whatsapp_bidul_self", selfHref())}
         className="bd-textbtn mt-1"
       >
         לשלוח את הדף לעצמי בוואטסאפ
@@ -1290,10 +1310,9 @@ const Bidul = () => {
               >
                 {sheetDone ? (
                   <a
-                    href={waHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    {...keepToLink("whatsapp_bidul_between")}
+                    {...keepToLink("whatsapp_bidul_between", waHref)}
                     className="ld-cta w-full shrink-0 sm:w-auto"
                   >
                     <WhatsAppIcon className="h-5 w-5 shrink-0" />
