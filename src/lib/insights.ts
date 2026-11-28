@@ -13,6 +13,13 @@ export type Insight = {
   subtitle?: string;
   /** ISO date (YYYY-MM-DD). */
   date: string;
+  /**
+   * The /insights section that lists the article ("section: pricing") and its
+   * place there ("order: 2"). The sections are src/data/insightSections.ts.
+   * No section: the page stays live at its address and is not listed.
+   */
+  section?: string;
+  order?: number;
   /** Raw markdown body (frontmatter stripped). */
   body: string;
   /**
@@ -72,6 +79,8 @@ export const insights: Insight[] = Object.entries(raws)
       description: data.description || "",
       subtitle: data.subtitle,
       date: data.date || "",
+      section: data.section || undefined,
+      order: data.order ? Number(data.order) : undefined,
       body,
       step: data.step === "sentence" ? ("sentence" as const) : undefined,
       listed: data.listed !== "no",

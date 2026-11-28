@@ -168,7 +168,7 @@ const Methodology = () => {
           <div className="mx-auto max-w-4xl px-6">
             <Reveal className="mb-8 max-w-2xl">
               <p className="cor-overline-he">הרצף</p>
-              <h2 id="stages-title" className="cor-title mt-2 text-foreground">
+              <h2 id="stages-title" className="cor-title mt-2 scroll-mt-20 text-foreground">
                 ארבעה שלבים, תמיד באותו סדר
               </h2>
               <p className="mt-3 text-sm text-muted-foreground">
