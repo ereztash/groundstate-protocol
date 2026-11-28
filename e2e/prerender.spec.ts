@@ -121,4 +121,26 @@ test.describe("prerendered output", () => {
       }
     });
   }
+
+  // A closed accordion answer used to be absent until a script opened it
+  // (27.11.2026 check: 7 of 9 English answers missing from the HTML). Native
+  // details keep every answer in the file, closed or not.
+  test("/en carries every FAQ answer before any script runs", () => {
+    const html = readFileSync(join(DIST, "en", "index.html"), "utf8");
+    const faq = html.slice(html.indexOf('id="faq"'));
+    expect(faq.length, "no #faq section on /en").toBeGreaterThan(0);
+    const details = faq.match(/<details[\s\S]*?<\/details>/g) ?? [];
+    expect(details.length).toBeGreaterThanOrEqual(8);
+    for (const d of details) {
+      expect(d).toMatch(/<summary[\s\S]*?<h3[^>]*>[^<]{8,}\?<\/h3>/);
+      expect(d).toMatch(/<p[^>]*>[^<]{30,}/);
+    }
+    for (const answer of [
+      "Mapping five specific decision makers",
+      "for the whole program, in two payments of",
+      "I refund the payment in full",
+    ]) {
+      expect(faq).toContain(answer);
+    }
+  });
 });
