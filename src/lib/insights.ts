@@ -30,9 +30,10 @@ export type Insight = {
   step?: "sentence";
   /**
    * "listed: no" in the frontmatter keeps the page live at its address but
-   * leaves it out of /insights and of "עוד תובנות". Erez, 28.11: the three
-   * articles that failed the readers' test of 24.11 leave the list, and their
-   * addresses stay so an old link does not break.
+   * leaves it out of "עוד תובנות" at the foot of each article. (/insights
+   * lists by section; an article with none is not listed there.) Erez, 28.11:
+   * the three articles that failed the readers' test of 24.11 leave the list,
+   * and their addresses stay so an old link does not break.
    */
   listed: boolean;
 };
