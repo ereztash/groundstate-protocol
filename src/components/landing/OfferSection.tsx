@@ -131,7 +131,7 @@ const OfferSection = () => {
                     {program.installmentsLabel}
                   </span>
                   <span className="block text-sm text-muted-foreground">
-                    המחיר {program.vatLabel}
+                    {program.finalLabel}
                   </span>
                 </span>
               </div>

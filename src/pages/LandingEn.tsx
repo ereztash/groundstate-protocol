@@ -232,7 +232,7 @@ function Offer() {
                 <span className="text-end">
                   <span className="ld-price">{PRICE.label}</span>
                   <span className="mt-1 block text-sm text-muted-foreground">{PRICE.installments}</span>
-                  <span className="block text-sm text-muted-foreground">The price is {PRICE.vat}</span>
+                  <span className="block text-sm text-muted-foreground">The price is final</span>
                 </span>
               </div>
               <p className="mt-5 text-sm text-muted-foreground">{offer.spots}</p>

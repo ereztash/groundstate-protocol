@@ -148,12 +148,12 @@ const InsightArticle = () => {
 
         {/* Keep readers who aren't conversion-ready inside the library: up to
             two other articles (newest first) before the CTA dead-ends them. */}
-        {insights.filter((i) => i.slug !== article.slug).length > 0 && (
+        {insights.filter((i) => i.listed && i.slug !== article.slug).length > 0 && (
           <Reveal className="mt-14">
             <p className="cor-overline-he">עוד תובנות</p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2">
               {insights
-                .filter((i) => i.slug !== article.slug)
+                .filter((i) => i.listed && i.slug !== article.slug)
                 .slice(0, 2)
                 .map((i) => (
                   <li key={i.slug}>
