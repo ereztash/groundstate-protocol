@@ -767,8 +767,12 @@
 }
 
 /* The floating WhatsApp button lies on the page like the other ink. */
+/* The button is ink, the same charcoal as the dark bands, so on the hero and
+   the other dark sections it vanished into the page (Erez, 28.11, in Chrome).
+   A clinical-white ring outlines it there and all but disappears on paper. */
 .cor-wa-float {
   box-shadow:
+    0 0 0 2px hsl(40 36% 95% / 0.9),
     inset 0 -2px 0 hsl(0 0% 0% / 0.25),
     0 12px 24px -12px hsl(240 24% 15% / 0.55);
   transition: transform var(--dur-fast) var(--ease-out);

@@ -238,10 +238,12 @@ const StageFieldTrace = ({ transformations, className }: Props) => {
               className="cor-trace-step flex min-h-[46vh] flex-col justify-center py-6"
             >
               <p className="text-xs font-semibold tracking-[0.2em] text-primary">
-                {n.stage.number} · {n.stage.verb}
+                {n.stage.number} · {n.stage.name}
               </p>
+              {/* The buyer's words lead, as on the home page; the method's
+                  name stays in the label and its verb in the drawing. */}
               <h3 className="cor-heading mt-2 text-foreground">
-                {n.stage.name}
+                {n.stage.buyerTitle}
               </h3>
               <p className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 {transformations[n.stage.number]}
