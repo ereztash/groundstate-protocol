@@ -20,7 +20,10 @@ const portrait = `${import.meta.env.BASE_URL}portrait.webp`;
  * The origin paragraph is OriginStorySection's, cut to its first beat.
  */
 const FOR = [
-  "אתם בתחילת הדרך כעצמאים, ובוער לכם להבין מה בעצם אתם מוכרים.",
+  // "Already with first clients": stage 0 on /protocol tells someone with no
+  // clients that the programme is not for them yet, and this line used to
+  // invite exactly that reader (outside audit, 28.11).
+  "אתם בתחילת הדרך כעצמאים, כבר עם לקוחות ראשונים, ובוער לכם להבין מה בעצם אתם מוכרים.",
   "יש לכם כבר לקוחות מרוצים, אבל קשה לכם להסביר למי שעוד לא עבד איתכם למה לבחור דווקא בכם.",
   "אתם משלבים שני עולמות, ולא מצליחים להסביר את השילוב במשפט אחד.",
   "אתם מוכנים לפגישה בשבוע ולמשימה קצרה בין הפגישות, במשך חודש.",
