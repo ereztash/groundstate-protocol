@@ -13,6 +13,13 @@ export type Insight = {
   subtitle?: string;
   /** ISO date (YYYY-MM-DD). */
   date: string;
+  /**
+   * The /insights section that lists the article ("section: pricing") and its
+   * place there ("order: 2"). The sections are src/data/insightSections.ts.
+   * No section: the page stays live at its address and is not listed.
+   */
+  section?: string;
+  order?: number;
   /** Raw markdown body (frontmatter stripped). */
   body: string;
   /**
@@ -23,9 +30,10 @@ export type Insight = {
   step?: "sentence";
   /**
    * "listed: no" in the frontmatter keeps the page live at its address but
-   * leaves it out of /insights and of "עוד תובנות". Erez, 28.11: the three
-   * articles that failed the readers' test of 24.11 leave the list, and their
-   * addresses stay so an old link does not break.
+   * leaves it out of "עוד תובנות" at the foot of each article. (/insights
+   * lists by section; an article with none is not listed there.) Erez, 28.11:
+   * the three articles that failed the readers' test of 24.11 leave the list,
+   * and their addresses stay so an old link does not break.
    */
   listed: boolean;
 };
@@ -72,6 +80,8 @@ export const insights: Insight[] = Object.entries(raws)
       description: data.description || "",
       subtitle: data.subtitle,
       date: data.date || "",
+      section: data.section || undefined,
+      order: data.order ? Number(data.order) : undefined,
       body,
       step: data.step === "sentence" ? ("sentence" as const) : undefined,
       listed: data.listed !== "no",

@@ -124,4 +124,24 @@ export function useDocumentMeta({
       for (const restore of restores.reverse()) restore();
     };
   }, [title, description, path, ogTitle, ogDescription, robots]);
+
+  // Land an address with a hash (/insights/#pricing, /protocol/#stages-title)
+  // on its target. With JavaScript off the browser does this alone, on the
+  // prerendered HTML. With it on, a lazy route draws the page again
+  // (createRoot) behind an empty Suspense fallback, the page collapses for a
+  // moment and the browser's jump is lost: on 28.11, /protocol/#stages-title
+  // opened at 1280px stayed at the top. React Router does not scroll to hashes
+  // either. Landing.tsx does the same for /#book. The target's own
+  // scroll-margin keeps it clear of the fixed header. It sits here, in the
+  // hook every inner page already loads, so it adds no file to the first load.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ block: "start" });
+      }),
+    );
+    return () => cancelAnimationFrame(raf);
+  }, []);
 }
