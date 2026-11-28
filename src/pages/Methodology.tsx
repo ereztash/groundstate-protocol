@@ -79,10 +79,9 @@ const PRINCIPLES = [
 
 // The charcoal bands here paint their own background instead of wrapping in
 // `.dark`, so the booking button kept the light page's ink and sat charcoal on
-// charcoal (28.11). These two variables give it the `.dark` button: clinical
+// charcoal (28.11). `cor-ink` (index.css) gives it the `.dark` button: clinical
 // white with charcoal text, as on the home page's dark bands.
-const DARK =
-  "bg-[#1C1C2E] text-[hsl(var(--background))] [--cta:40_36%_95%] [--cta-foreground:240_24%_15%]";
+const DARK = "bg-[#1C1C2E] text-[hsl(var(--background))] cor-ink";
 
 const Methodology = () => {
   useDocumentMeta({
